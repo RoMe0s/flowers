@@ -28,6 +28,7 @@ class UserUpdateRequest extends FormRequest
         $rules = [
             'email'     => 'required|email|unique:users,email,'.$id,
             'activated' => 'required|boolean',
+            'notifications'         => 'required|boolean'
         ];
 
         return array_merge($rules, app('App\Http\Requests\Backend\User\UserInfoRequest')->rules());

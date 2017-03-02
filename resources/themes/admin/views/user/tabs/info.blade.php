@@ -29,6 +29,36 @@
         </div>
     </div>
 
+    <div class="form-group @if ($errors->has('start_discount')) has-error @endif">
+        {!! Form::label('start_discount', trans('labels.start_discount'), ['class' => 'col-md-3 control-label']) !!}
+
+        <div class="col-md-3">
+            {!! Form::text('start_discount', null, ['placeholder' => trans('labels.start_discount'), 'class' => 'form-control input-sm']) !!}
+
+            {!! $errors->first('start_discount', '<p class="help-block error">:message</p>') !!}
+        </div>
+    </div>
+
+    <div class="form-group @if ($errors->has('discount')) has-error @endif">
+        {!! Form::label('discount', trans('labels.discount'), ['class' => 'col-md-3 control-label']) !!}
+
+        <div class="col-md-3">
+            {!! Form::text('discount', null, ['placeholder' => trans('labels.discount'), 'class' => 'form-control input-sm']) !!}
+
+            {!! $errors->first('discount', '<p class="help-block error">:message</p>') !!}
+        </div>
+    </div>
+
+    <div class="form-group required @if ($errors->has('notifications')) has-error @endif">
+        {!! Form::label('notifications', trans('labels.notifications'), ['class' => 'col-md-3 control-label']) !!}
+
+        <div class="col-xs-3">
+            {!! Form::select('notifications', ['0' => trans('labels.no'), '1' => trans('labels.yes'),], null, ['class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'required' => true]) !!}
+
+            {!! $errors->first('notifications', '<p class="help-block error">:message</p>') !!}
+        </div>
+    </div>
+
     @if(empty($model->id))
         <div class="form-group @if ($errors->has('password')) has-error @endif">
             {!! Form::label('password', trans('labels.password'), ['class' => 'col-md-3 control-label']) !!}
@@ -58,29 +88,6 @@
             {!! Form::select('activated', ['0' => trans('labels.no'), '1' => trans('labels.yes'),], null, ['class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'required' => true]) !!}
 
             {!! $errors->first('activated', '<p class="help-block error">:message</p>') !!}
-        </div>
-    </div>
-
-    <div class="form-group @if ($errors->has('gender')) has-error @endif">
-        {!! Form::label('gender', trans('labels.gender'), ['class' => 'col-md-3 control-label']) !!}
-
-        <div class="col-md-3">
-            {!! Form::select('gender', $genders, null, ['class' => 'form-control select2',  'aria-hidden' => 'true']) !!}
-
-            {!! $errors->first('gender', '<p class="help-block error">:message</p>') !!}
-        </div>
-    </div>
-
-    <div class="form-group @if ($errors->has('birthday')) has-error @endif">
-        {!! Form::label('birthday', trans('labels.birthday'), ['class' => 'col-md-3 control-label']) !!}
-
-        <div class="col-md-3">
-            <div class="input-group">
-                {!! Form::text('birthday', null, ['placeholder' => trans('labels.birthday'), 'class' => 'form-control input-sm inputmask-birthday datepicker-birthday']) !!}
-                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-            </div>
-
-            {!! $errors->first('birthday', '<p class="help-block error">:message</p>') !!}
         </div>
     </div>
 

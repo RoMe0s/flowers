@@ -4,7 +4,7 @@
             <span class="logo-mini upper-case">{!! str_limit(config('app.name'), 3, '') !!}</span>
 
             <span class="logo-lg upper-case">
-                {!! config('app.name') !!}
+                {!! str_limit(config('app.name'), 7, '') !!}
             </span>
         </a>
 
@@ -22,13 +22,13 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        @include('partials.image', ['src' => $user->avatar, 'attributes' => ['width' => 160, 'height' => 160, 'class' => 'user-image']])
+                        @include('partials.image', ['src' => '/uploads/system/user.png', 'attributes' => ['width' => 160, 'height' => 160, 'class' => 'user-image']])
 
                         <span class="hidden-xs">{!! $user->getFullName() !!}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            @include('partials.image', ['src' => $user->avatar, 'attributes' => ['width' => 160, 'height' => 160, 'class' => 'img-circle']])
+                            @include('partials.image', ['src' => '/uploads/system/user.png', 'attributes' => ['width' => 160, 'height' => 160, 'class' => 'img-circle']])
                             <p>
                                 {!! $user->getFullName() !!} - {!! $user->groups()->first()->name !!}
                             </p>

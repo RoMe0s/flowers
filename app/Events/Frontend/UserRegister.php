@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 04.11.15
- * Time: 16:33
- */
 
 namespace App\Events\Frontend;
 

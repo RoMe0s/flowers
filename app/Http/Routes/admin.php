@@ -41,6 +41,38 @@ $router->group(
                 );
                 $router->resource('page', 'Backend\PageController');
 
+
+                // subscriptions
+                $router->post(
+                    'subscription/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.subscription.ajax_field',
+                        'uses'       => 'Backend\SubscriptionController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('subscription', 'Backend\SubscriptionController');
+
+                //categories
+                $router->resource('category', 'Backend\CategoryController');
+
+                //boxes
+                $router->resource('box', 'Backend\BoxController');
+
+                //colors
+                $router->resource('color', 'Backend\ColorController');
+
+                //flowers
+                $router->post(
+                    'flower/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.flower.ajax_field',
+                        'uses'       => 'Backend\FlowerController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('flower', 'Backend\FlowerController');
+
                 // tag
                 $router->post(
                     'tag/{id}/ajax_field',

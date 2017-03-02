@@ -30,7 +30,7 @@ class Menu extends Model
     /**
      * @var array
      */
-    protected $fillable = ['layout_position', 'class', 'name', 'template', 'show_title', 'position', 'status'];
+    protected $fillable = ['name', 'template', 'status'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -56,16 +56,5 @@ class Menu extends Model
     public function scopeVisible($query)
     {
         return $query->whereStatus(true);
-    }
-
-    /**
-     * @param        $query
-     * @param string $order
-     *
-     * @return mixed
-     */
-    public function scopePositionSorted($query, $order = 'ASC')
-    {
-        return $query->orderBy('position', $order);
     }
 }

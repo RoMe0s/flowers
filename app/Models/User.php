@@ -30,6 +30,9 @@ class User extends SentryUser implements FrontLink
     protected $fillable = [
         'email',
         'password',
+        'start_discount',
+        'discount',
+        'notifications'
     ];
 
     /**

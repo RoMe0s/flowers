@@ -30,7 +30,7 @@ class PageCreateRequest extends FormRequest
         $rules = [
             'status'   => 'required|boolean',
             'slug'     => 'unique:pages,slug',
-            'position' => 'required|integer',
+            'template' => 'required',
             'image'    => ['regex:'.$regex],
         ];
 

@@ -36,9 +36,12 @@ class PageService
      */
     public function getPageTemplate(Page $model)
     {
-        $template = str_replace('-', '_', $model->slug);
+        if(view()->exists($model->template . '.index')) {
 
-        return $this->module.'.'.
-            (view()->exists($this->module.'.'.$template) ? $template : 'index');
+            return $model->template . '.index';
+
+        }
+
+        return 'index';
     }
 }

@@ -22,9 +22,9 @@ class CreateUserInfoTable extends Migration
 
                 $table->string('name', 255)->nullable();
                 $table->string('phone', 255)->nullable();
-                $table->enum('gender', ["male", "female"])->default("male");
-                $table->date('birthday')->nullable()->default("0000-00-00");
-                $table->string('avatar', 255)->nullable();
+//                $table->enum('gender', ["male", "female"])->default("male");
+//                $table->date('birthday')->nullable()->default("0000-00-00");
+//                $table->string('avatar', 255)->nullable();
 
                 $table->timestamps();
 

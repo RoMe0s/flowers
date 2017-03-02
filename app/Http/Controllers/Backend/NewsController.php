@@ -1,24 +1,13 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 26.02.16
- * Time: 13:36
- */
 
 namespace App\Http\Controllers\Backend;
 
-use App\Events\Backend\NewsDelete;
-use App\Http\Requests\Backend\News\NewsCreateRequest;
-use App\Http\Requests\Backend\News\NewsUpdateRequest;
+use App\Http\Requests\Backend\News\NewsRequest;
 use App\Models\News;
 use App\Models\User;
-use App\Services\NewsService;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
-use App\Traits\Controllers\ProcessTagsTrait;
 use Datatables;
 use DB;
-use Event;
 use Exception;
 use FlashMessages;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -36,7 +25,6 @@ class NewsController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
-    use ProcessTagsTrait;
 
     /**
      * @var string
@@ -58,19 +46,11 @@ class NewsController extends BackendController
     ];
 
     /**
-     * @var NewsService
-     */
-    private $newsService;
-
-    /**
      * @param \Illuminate\Contracts\Routing\ResponseFactory $response
-     * @param \App\Services\NewsService                     $newsService
      */
-    public function __construct(ResponseFactory $response, NewsService $newsService)
+    public function __construct(ResponseFactory $response)
     {
         parent::__construct($response);
-
-        $this->newsService = $newsService;
 
         Meta::title(trans('labels.news'));
 
@@ -94,8 +74,7 @@ class NewsController extends BackendController
                 'news.id',
                 'news_translations.name',
                 'status',
-                'position',
-                'slug'
+                'position'
             );
 
             return $dataTables = Datatables::of($list)
@@ -129,18 +108,11 @@ class NewsController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
-                ->removeColumn('short_content')
                 ->removeColumn('content')
-                ->removeColumn('meta_keywords')
-                ->removeColumn('meta_title')
-                ->removeColumn('meta_description')
-                ->removeColumn('parent')
                 ->removeColumn('translations')
                 ->removeColumn('slug')
                 ->make();
         }
-
-        $this->_fillAdditionTemplateData();
 
         $this->data('page_title', trans('labels.news'));
         $this->breadcrumbs(trans('labels.news_list'));
@@ -162,8 +134,6 @@ class NewsController extends BackendController
 
         $this->breadcrumbs(trans('labels.news_create'));
 
-        $this->_fillAdditionTemplateData();
-
         return $this->render('views.news.create');
     }
 
@@ -171,23 +141,21 @@ class NewsController extends BackendController
      * Store a newly created resource in storage.
      * POST /news
      *
-     * @param NewsCreateRequest $request
+     * @param NewsRequest $request
      *
      * @return \Response
      */
-    public function store(NewsCreateRequest $request)
+    public function store(NewsRequest $request)
     {
         $input = $request->all();
 
         DB::beginTransaction();
 
         try {
+
             $model = new News($input);
+
             $model->save();
-
-            $this->newsService->setExternalUrl($model);
-
-            $this->processTags($model);
 
             DB::commit();
 
@@ -227,7 +195,7 @@ class NewsController extends BackendController
     public function edit($id)
     {
         try {
-            $model = News::with('translations', 'tags')->whereId($id)->firstOrFail();
+            $model = News::with('translations')->whereId($id)->firstOrFail();
 
             $this->data('page_title', '"'.$model->name.'"');
 
@@ -248,11 +216,11 @@ class NewsController extends BackendController
      * PUT /news/{id}
      *
      * @param  int              $id
-     * @param NewsUpdateRequest $request
+     * @param NewsRequest $request
      *
      * @return \Response
      */
-    public function update($id, NewsUpdateRequest $request)
+    public function update($id, NewsRequest $request)
     {
         try {
             $model = News::findOrFail($id);
@@ -262,9 +230,8 @@ class NewsController extends BackendController
             DB::beginTransaction();
 
             $model->fill($input);
-            $model->update();
 
-            $this->processTags($model);
+            $model->update();
 
             DB::commit();
 
@@ -298,8 +265,6 @@ class NewsController extends BackendController
             if (!$model->delete()) {
                 FlashMessages::add("error", trans("messages.destroy_error"));
             } else {
-                Event::fire(new NewsDelete($id));
-
                 FlashMessages::add('success', trans("messages.destroy_ok"));
             }
         } catch (ModelNotFoundException $e) {
@@ -309,17 +274,5 @@ class NewsController extends BackendController
         }
 
         return Redirect::route('admin.news.index');
-    }
-
-    /**
-     * set to template addition variables for add\update news
-     *
-     * @param News|null $model
-     */
-    private function _fillAdditionTemplateData($model = null)
-    {
-        $this->data('tags', $this->getTagsList());
-
-        $this->data('selected_tags', $this->getSelectedTagsList($model));
     }
 }

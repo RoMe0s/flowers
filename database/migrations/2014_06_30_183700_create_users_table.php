@@ -34,6 +34,11 @@ class CreateUsersTable extends Migration
                 $table->string('ip_address')->nullable();
                 $table->dateTime('last_activity')->nullable();
 
+
+                $table->integer('start_discount')->unsigned()->default(0);
+                $table->integer('discount')->unsigned()->nullable();
+                $table->boolean('notifications')->default(true);
+
                 $table->timestamps();
             }
         );

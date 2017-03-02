@@ -1,15 +1,3 @@
-<div class="form-group required @if ($errors->has('slug')) has-error @endif">
-    {!! Form::label('slug', trans('labels.slug'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
-
-    <div class="col-xs-12 col-sm-7 col-md-4">
-        {!! Form::text('slug', null, ['placeholder' => trans('labels.slug'), 'required' => true, 'class' => 'form-control input-sm']) !!}
-
-        {!! $errors->first('slug', '<p class="help-block error">:message</p>') !!}
-    </div>
-
-    <a href="#" class="btn btn-success btn-flat btn-xs margin-top-4 slug-generate">{!! trans('labels.generate') !!}</a>
-</div>
-
 <div class="form-group required @if ($errors->has('status')) has-error @endif">
     {!! Form::label('status', trans('labels.status'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 
@@ -37,7 +25,7 @@
     {!! Form::label('position', trans('labels.position'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-        {!! Form::text('position', $model->position ?: 0, ['placeholder' => trans('labels.position'), 'class' => 'form-control input-sm']) !!}
+        {!! Form::text('position', $model->position ?: 0 , ['placeholder' => trans('labels.position'), 'class' => 'form-control input-sm']) !!}
 
         {!! $errors->first('position', '<p class="help-block error">:message</p>') !!}
     </div>

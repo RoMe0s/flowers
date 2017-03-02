@@ -18,11 +18,11 @@ class CreateNewsTable extends Migration
             function (Blueprint $table) {
                 $table->increments('id');
 
-                $table->string('slug', 255);
+                // $table->string('slug', 255);
                 $table->string('image', 255)->nullable();
-                $table->string('external_url', 255)->nullable();
+                // $table->string('external_url', 255)->nullable();
                 $table->integer('position')->unsigned();
-                $table->integer('view_count')->default(0);
+                // $table->integer('view_count')->default(0);
                 $table->boolean('status')->default(true);
 
                 $table->timestamps();
@@ -35,13 +35,13 @@ class CreateNewsTable extends Migration
                 $table->increments('id');
                 $table->integer('news_id')->unsigned();
                 $table->string('locale')->index();
-                $table->string('name')->nullable();
-                $table->text('short_content')->nullable();
+                $table->string('name');
+                // $table->text('short_content')->nullable();
                 $table->text('content')->nullable();
 
-                $table->string('meta_title')->nullable();
-                $table->string('meta_keywords')->nullable();
-                $table->text('meta_description')->nullable();
+                // $table->string('meta_title')->nullable();
+                // $table->string('meta_keywords')->nullable();
+                // $table->text('meta_description')->nullable();
 
                 $table->unique(['news_id', 'locale']);
                 $table->foreign('news_id')->references('id')->on('news')->onDelete('cascade')->onUpdate('cascade');

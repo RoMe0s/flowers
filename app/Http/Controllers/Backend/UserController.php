@@ -102,6 +102,11 @@ class UserController extends BackendController
                 ->filterColumn('user_info.name', 'where', 'user_info.name', 'LIKE', '%$1%')
                 ->filterColumn('email', 'where', 'email', 'LIKE', '%$1%')
                 ->filterColumn('user_info.phone', 'where', 'user_info.phone', 'LIKE', '%$1%')
+                ->editColumn('phone',
+                    function($model) {
+                        return isset($model->info->phone) && strlen($model->info->phone) > 0 ? $model->info->phone : trans('labels.no');
+                    }
+                )
                 ->editColumn(
                     'activated',
                     function ($model) {
@@ -163,12 +168,6 @@ class UserController extends BackendController
     {
         $input = $request->only('email', 'activated', 'password');
         $user_info = $request->all();
-
-        if (!$this->validateImage('avatar')) {
-            FlashMessages::add('warning', trans('messages.bad image'));
-
-            return Redirect::back()->withInput($input);
-        }
 
         DB::beginTransaction();
 
@@ -264,12 +263,6 @@ class UserController extends BackendController
 
         $input = $request->only('email', 'activated');
         $user_info = $request->all();
-
-        if (!$this->validateImage('avatar')) {
-            FlashMessages::add('warning', trans('messages.bad image'));
-
-            return Redirect::back()->withInput($input);
-        }
 
         DB::beginTransaction();
 
@@ -457,7 +450,6 @@ class UserController extends BackendController
     private function _processInfo(User $user, $user_info = [])
     {
         $user_info['id'] = $user->id;
-        $this->setImage($user_info, 'avatar', $this->module);
 
         $info = $user->info()->first();
         if (empty($info)) {

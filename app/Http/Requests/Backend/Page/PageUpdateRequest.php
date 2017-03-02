@@ -32,7 +32,7 @@ class PageUpdateRequest extends FormRequest
         $rules = [
             'status'   => 'required|boolean',
             'slug'     => 'unique:pages,slug,'.$id.',id',
-            'position' => 'required|integer',
+            'template' => 'required',
             'image'    => ['regex:'.$regex],
         ];
 

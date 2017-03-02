@@ -77,14 +77,11 @@ class MenuController extends BackendController
             $list = Menu::withTranslations()->joinTranslations('menus', 'menu_translations')->select(
                 'menus.id',
                 'menu_translations.name',
-                'menus.layout_position',
-                'menus.status',
-                'menus.position'
+                'menus.status'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('menus.id', 'where', 'menus.id', '=', '$1')
-                ->filterColumn('layout_position', 'where', 'menus.layout_position', 'LIKE', '%$1%')
                 ->filterColumn('name', 'where', 'menu_translations.name', 'LIKE', '%$1%')
                 ->editColumn(
                     'status',
@@ -92,15 +89,6 @@ class MenuController extends BackendController
                         return view(
                             'partials.datatables.toggler',
                             ['model' => $model, 'type' => $this->module, 'field' => 'status']
-                        )->render();
-                    }
-                )
-                ->editColumn(
-                    'position',
-                    function ($model) {
-                        return view(
-                            'partials.datatables.text_input',
-                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
                         )->render();
                     }
                 )

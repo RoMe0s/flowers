@@ -33,7 +33,6 @@ class PopulateUsersTable extends Migration
 
         $user_info = new UserInfo([
             'name' => 'admin',
-            'gender' => 'male',
         ]);
         $adminUser->info()->save($user_info);
 

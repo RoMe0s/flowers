@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 27.10.15
- * Time: 14:36
- */
 
 namespace App\Decorators;
 

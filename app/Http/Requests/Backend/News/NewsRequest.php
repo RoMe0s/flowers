@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 26.02.16
- * Time: 13:36
- */
 
 namespace App\Http\Requests\Backend\News;
 
 use App\Http\Requests\FormRequest;
 
 /**
- * Class NewsCreateRequest
+ * Class NewsRequest
  * @package App\Http\Requests\Backend\News
  */
-class NewsCreateRequest extends FormRequest
+class NewsRequest extends FormRequest
 {
 
     /**
@@ -28,7 +22,6 @@ class NewsCreateRequest extends FormRequest
 
         $rules = [
             'status'     => 'required|boolean',
-            'slug'       => 'unique:pages,slug',
             'position'   => 'required|integer',
             'image'      => ['regex:'.$regex],
             'publish_at' => 'date_format:d-m-Y',

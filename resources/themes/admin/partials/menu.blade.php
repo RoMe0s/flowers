@@ -18,7 +18,7 @@
                 </li>
             @endif
 
-            @if ($user->hasAccess('tag.read'))
+{{--            @if ($user->hasAccess('tag.read'))
                 <li class="{!! active_class('admin.tag*') !!}">
                     <a href="{!! route('admin.tag.index') !!}">
                         <i class="fa fa-tags"></i>
@@ -32,7 +32,7 @@
                         @endif
                     </a>
                 </li>
-            @endif
+            @endif--}}
 
             @if ($user->hasAccess('news.read'))
                 <li class="{!! active_class('admin.news*') !!}">
@@ -50,7 +50,7 @@
                 </li>
             @endif
 
-            @if ($user->hasAccess('question.read'))
+            {{--@if ($user->hasAccess('question.read'))
                 <li class="{!! active_class('admin.question*') !!}">
                     <a href="{!! route('admin.question.index') !!}">
                         <i class="fa fa-question-circle"></i>
@@ -64,7 +64,7 @@
                         @endif
                     </a>
                 </li>
-            @endif
+            @endif--}}
 
             @if ($user->hasAccess('menu.read'))
                 <li class="{!! active_class('admin.menu*') !!}">
@@ -82,7 +82,7 @@
                 </li>
             @endif
 
-            @if ($user->hasAccess('banner.read'))
+{{--            @if ($user->hasAccess('banner.read'))
                 <li class="{!! active_class('admin.banner*') !!}">
                     <a href="{!! route('admin.banner.index') !!}">
                         <i class="fa fa-picture-o"></i>
@@ -113,7 +113,7 @@
                         @endif
                     </a>
                 </li>
-            @endif
+            @endif--}}
 
             @if ($user->hasAccess('variablevalue.read'))
                 <li class="{!! active_class('admin.variable*') !!}">
@@ -124,11 +124,96 @@
                 </li>
             @endif
 
-            @if ($user->hasAccess('comments.read'))
+{{--            @if ($user->hasAccess('comments.read'))
                 <li class="{!! active_class('admin.comment*') !!}">
                     <a href="{!! route('admin.comment.index') !!}">
                         <i class="fa fa-comment"></i>
                         <span>@lang('labels.comments')</span>
+                    </a>
+                </li>
+            @endif--}}
+
+            <li class="header">@lang('labels.flowers')</li>
+
+
+            @if ($user->hasAccess('flower.read'))
+                <li class="{!! active_class('admin.flower*') !!}">
+                    <a href="{!! route('admin.flower.index') !!}">
+                        <i class="fa fa-leaf"></i>
+                        <span>@lang('labels.flowers')</span>
+
+                        @if ($user->hasAccess('flower.create'))
+                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_flower')"
+                                   data-href="{!! route('admin.flower.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
+
+                @if ($user->hasAccess('category.read'))
+                    <li class="{!! active_class('admin.category*') !!}">
+                        <a href="{!! route('admin.category.index') !!}">
+                            <i class="fa fa-files-o"></i>
+                            <span>@lang('labels.categories')</span>
+
+                            @if ($user->hasAccess('category.create'))
+                                <small class="label create-label pull-right bg-green" title="@lang('labels.add_category')"
+                                    data-href="{!! route('admin.category.create') !!}">
+                                    <i class="fa fa-plus"></i>
+                                </small>
+                            @endif
+                        </a>
+                    </li>
+                @endif
+
+            @if ($user->hasAccess('box.read'))
+                <li class="{!! active_class('admin.box*') !!}">
+                    <a href="{!! route('admin.box.index') !!}">
+                        <i class="fa fa-cubes"></i>
+                        <span>@lang('labels.boxes')</span>
+
+                        @if ($user->hasAccess('box.create'))
+                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_box')"
+                                   data-href="{!! route('admin.box.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
+
+            @if ($user->hasAccess('color.read'))
+                <li class="{!! active_class('admin.color*') !!}">
+                    <a href="{!! route('admin.color.index') !!}">
+                        <i class="fa fa-paint-brush"></i>
+                        <span>@lang('labels.colors')</span>
+
+                        @if ($user->hasAccess('color.create'))
+                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_color')"
+                                   data-href="{!! route('admin.color.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
+
+            <li class="header">@lang('labels.market')</li>
+
+            @if ($user->hasAccess('subscription.read'))
+                <li class="{!! active_class('admin.subscription*') !!}">
+                    <a href="{!! route('admin.subscription.index') !!}">
+                        <i class="fa fa-envelope-open-o"></i>
+                        <span>@lang('labels.subscriptions')</span>
+
+                        @if ($user->hasAccess('subscription.create'))
+                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_subscription')"
+                                   data-href="{!! route('admin.subscription.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
                     </a>
                 </li>
             @endif

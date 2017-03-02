@@ -18,13 +18,13 @@ class CreateMenusTable extends Migration
             function (Blueprint $table) {
                 $table->increments('id');
 
-                $table->string('layout_position')->nullable();
+//                $table->string('layout_position')->nullable();
                 $table->string('template')->nullable();
-                $table->string('class')->nullable();
+//                $table->string('class')->nullable();
 
-                $table->boolean('show_title')->default(false);
+//                $table->boolean('show_title')->default(false);
 
-                $table->integer('position')->unsigned();
+//                $table->integer('position')->unsigned();
                 $table->boolean('status')->default(true);
 
                 $table->timestamps();

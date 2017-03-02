@@ -25,9 +25,6 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'layout_position' => 'required',
-            'show_title'      => 'required|boolean',
-            'position'        => 'required|integer',
             'status'          => 'required|boolean',
             'template'        => 'required',
         ];

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 03.02.16
- * Time: 14:06
- */
 
 Widget::register('widget__text_widget', 'App\Widgets\TextWidget\TextWidgetWidget@index');
 

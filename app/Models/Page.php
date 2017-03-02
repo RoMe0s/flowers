@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 29.08.15
- * Time: 15:53
- */
 
 namespace App\Models;
 
@@ -46,7 +40,6 @@ class Page extends Eloquent implements FrontLink, SearchableContract, MetaGettab
         'slug',
         'parent_id',
         'status',
-        'position',
         'name',
         'image',
         'short_content',
@@ -54,6 +47,7 @@ class Page extends Eloquent implements FrontLink, SearchableContract, MetaGettab
         'meta_keywords',
         'meta_title',
         'meta_description',
+        'template'
     ];
 
     /**

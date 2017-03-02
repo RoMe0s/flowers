@@ -34,9 +34,6 @@ class UserInfo extends Eloquent
         'user_id',
         'name',
         'phone',
-        'gender',
-        'birthday',
-        'avatar',
     ];
 
     /**

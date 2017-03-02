@@ -55,7 +55,7 @@ class PageController extends FrontendController
 
         $this->fillMeta($model, $this->module);
 
-        return $this->render('home');
+        return $this->render($this->pageService->getPageTemplate($model));
     }
 
     /**

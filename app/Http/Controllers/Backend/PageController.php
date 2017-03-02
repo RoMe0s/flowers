@@ -1,23 +1,14 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 29.08.15
- * Time: 15:53
- */
 
 namespace App\Http\Controllers\Backend;
 
-use App\Events\Backend\PageDelete;
 use App\Http\Requests\Backend\Page\PageCreateRequest;
 use App\Http\Requests\Backend\Page\PageUpdateRequest;
 use App\Models\Page;
-use App\Models\User;
 use App\Services\PageService;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
 use Datatables;
 use DB;
-use Event;
 use Exception;
 use FlashMessages;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -88,13 +79,12 @@ class PageController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Page::with(['parent'])->withTranslations()->joinTranslations('pages', 'page_translations')->select(
+            $list = Page::joinTranslations('pages', 'page_translations')->select(
                 'pages.id',
                 'page_translations.name',
-                'status',
-                'position',
-                'parent_id',
-                'slug'
+                'pages.status',
+                'pages.parent_id',
+                'pages.slug'
             );
 
             return $dataTables = Datatables::of($list)
@@ -106,15 +96,6 @@ class PageController extends BackendController
                         return view(
                             'partials.datatables.toggler',
                             ['model' => $model, 'type' => $this->module, 'field' => 'status']
-                        )->render();
-                    }
-                )
-                ->editColumn(
-                    'position',
-                    function ($model) {
-                        return view(
-                            'partials.datatables.text_input',
-                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
                         )->render();
                     }
                 )
@@ -133,8 +114,6 @@ class PageController extends BackendController
                 ->removeColumn('meta_keywords')
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
-                ->removeColumn('parent')
-                ->removeColumn('translations')
                 ->removeColumn('parent_id')
                 ->removeColumn('slug')
                 ->make();
@@ -299,8 +278,6 @@ class PageController extends BackendController
         try {
             $model = Page::findOrFail($id);
 
-            Event::fire(new PageDelete($model->id));
-
             if (!$model->delete()) {
                 FlashMessages::add("error", trans("messages.destroy_error"));
             } else {
@@ -331,6 +308,12 @@ class PageController extends BackendController
         } else {
             $list = Page::with('translations')->get();
         }
+
+        $this->data(
+            'templates',
+            get_templates(base_path('resources/themes/'.config('app.theme').'/views'))
+        );
+
         $parents = ['' => trans('labels.no')];
         foreach ($list as $item) {
             $parents[$item->id] = $item->name;
