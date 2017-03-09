@@ -20,6 +20,13 @@
 
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li>
+                    <a href="{!! route('admin.basket') !!}">
+                        <i class="fa fa-shopping-cart"></i>
+                        &nbsp;
+                        <span class="badge basket-count">{!! count(session()->get('basket_items')) !!}</span>
+                    </a>
+                </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         @include('partials.image', ['src' => '/uploads/system/user.png', 'attributes' => ['width' => 160, 'height' => 160, 'class' => 'user-image']])

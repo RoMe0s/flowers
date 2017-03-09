@@ -39,16 +39,6 @@
         </div>
     </div>
 
-    <div class="form-group @if ($errors->has('discount')) has-error @endif">
-        {!! Form::label('discount', trans('labels.discount'), ['class' => 'col-md-3 control-label']) !!}
-
-        <div class="col-md-3">
-            {!! Form::text('discount', null, ['placeholder' => trans('labels.discount'), 'class' => 'form-control input-sm']) !!}
-
-            {!! $errors->first('discount', '<p class="help-block error">:message</p>') !!}
-        </div>
-    </div>
-
     <div class="form-group required @if ($errors->has('notifications')) has-error @endif">
         {!! Form::label('notifications', trans('labels.notifications'), ['class' => 'col-md-3 control-label']) !!}
 

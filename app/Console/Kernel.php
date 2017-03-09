@@ -14,8 +14,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Inspire::class,
-        UpdateSearchIndex::class,
     ];
 
     /**
@@ -27,6 +25,5 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('search:update-index')->cron('0 * * * *');
     }
 }

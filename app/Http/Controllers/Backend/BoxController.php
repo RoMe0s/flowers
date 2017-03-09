@@ -92,7 +92,7 @@ class BoxController extends BackendController
                     function ($model) {
                         return view(
                             'partials.datatables.control_buttons',
-                            ['model' => $model, 'front_link' => true, 'type' => $this->module]
+                            ['model' => $model, 'type' => $this->module]
                         )->render();
                     }
                 )

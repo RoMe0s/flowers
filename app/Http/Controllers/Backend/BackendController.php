@@ -203,6 +203,7 @@ class BackendController extends BaseController
                 'lang_errorValidation'             => trans('messages.validation_failed'),
                 'lang_errorEmptyData'              => trans('messages.you have not entered any data'),
                 'lang_errorEmptyNameField'         => trans('messages.name field not set'),
+                'lang_error'                       => trans('messages.an error has occurred, try_later'),
                 'upload_max_filesize'              => $upload_max_filesize,
                 'elfinderConnectorUrl'             => route('admin.elfinder.connector'),
             ]

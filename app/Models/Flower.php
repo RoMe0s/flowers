@@ -46,4 +46,8 @@ class Flower extends Model
         return $this->belongsToMany(Color::class, 'flowers_colors');
     }
 
+    public function sets() {
+        return $this->belongsToMany(Set::class, 'sets_flowers');
+    }
+
 }

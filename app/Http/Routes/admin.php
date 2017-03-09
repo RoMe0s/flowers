@@ -73,16 +73,95 @@ $router->group(
                 );
                 $router->resource('flower', 'Backend\FlowerController');
 
-                // tag
+                //codes
                 $router->post(
-                    'tag/{id}/ajax_field',
+                    'code/{id}/ajax_field',
                     [
                         'middleware' => ['ajax'],
-                        'as'         => 'admin.tag.ajax_field',
-                        'uses'       => 'Backend\TagController@ajaxFieldChange',
+                        'as'         => 'admin.code.ajax_field',
+                        'uses'       => 'Backend\CodeController@ajaxFieldChange',
                     ]
                 );
-                $router->resource('tag', 'Backend\TagController');
+                $router->resource('code', 'Backend\CodeController');
+
+                //individuals
+                $router->resource('individual', 'Backend\IndividualController',
+                    ['except' => ['create', 'store']]
+                );
+
+                //discount
+                $router->resource('discount', 'Backend\DiscountController');
+
+                //products
+                $router->post(
+                    'product/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.product.ajax_field',
+                        'uses'       => 'Backend\ProductController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('product', 'Backend\ProductController');
+
+                //bouquets
+                $router->post(
+                    'bouquet/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.bouquet.ajax_field',
+                        'uses'       => 'Backend\BouquetController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('bouquet', 'Backend\BouquetController');
+
+                //types
+                $router->resource('type', 'Backend\TypeController');
+
+                //sales
+                $router->post(
+                    'sale/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.sale.ajax_field',
+                        'uses'       => 'Backend\SaleController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('sale', 'Backend\SaleController');
+
+                //sets
+                $router->post(
+                    'set/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.set.ajax_field',
+                        'uses'       => 'Backend\SetController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('set', 'Backend\SetController');
+
+                //orders
+                $router->post(
+                    'order/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.order.ajax_field',
+                        'uses'       => 'Backend\OrderController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('order', 'Backend\OrderController');
+                $router->get(
+                    '/order/items/add', 'Backend\OrderController@addBasketItemToOrder'
+                );
+                $router->get('basket', [
+                    'as' => 'admin.basket',
+                    'uses' =>  'Backend\OrderController@basket'
+                ]);
+                //basket
+                $router->group(['prefix' => 'basket'], function () use ($router){
+                   $router->get('/add', 'Backend\OrderController@add');
+                   $router->get('/remove', 'Backend\OrderController@remove');
+                   $router->get('/add/order', 'Backend\OrderController@addToOrder');
+                });
 
                 // news
                 $router->post(
@@ -94,47 +173,6 @@ $router->group(
                     ]
                 );
                 $router->resource('news', 'Backend\NewsController');
-
-                // articles
-                $router->post(
-                    'article/{id}/ajax_field',
-                    [
-                        'middleware' => ['ajax'],
-                        'as'         => 'admin.article.ajax_field',
-                        'uses'       => 'Backend\ArticleController@ajaxFieldChange',
-                    ]
-                );
-                $router->resource(
-                    'article',
-                    'Backend\ArticleController',
-                    ['only' => ['index', 'edit', 'update', 'destroy']]
-                );
-
-                // comments
-                $router->post(
-                    'comment/{id}/ajax_field',
-                    array (
-                        'middleware' => ['ajax'],
-                        'as'         => 'admin.comment.ajax_field',
-                        'uses'       => 'Backend\CommentController@ajaxFieldChange',
-                    )
-                );
-                $router->resource(
-                    'comment',
-                    'Backend\CommentController',
-                    ['only' => ['index', 'edit', 'update', 'destroy']]
-                );
-
-                // questions
-                $router->post(
-                    'question/{id}/ajax_field',
-                    [
-                        'middleware' => ['ajax'],
-                        'as'         => 'admin.question.ajax_field',
-                        'uses'       => 'Backend\QuestionController@ajaxFieldChange',
-                    ]
-                );
-                $router->resource('question', 'Backend\QuestionController');
 
                 // menus
                 $router->post(

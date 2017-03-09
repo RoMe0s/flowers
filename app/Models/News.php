@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 26.02.16
- * Time: 13:48
- */
 
 namespace App\Models;
 

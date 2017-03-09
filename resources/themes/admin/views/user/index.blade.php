@@ -15,10 +15,11 @@
                                     ['text' => trans('labels.email')],
                                     ['text' => trans('labels.phone')],
                                     ['text' => trans('labels.activated')],
+                                    ['text' => trans('labels.groups')],
                                     ['text' => trans('labels.actions')]
                                 ])
                                 ->addFoot([
-                                    ['attr' => ['colspan' => 6]]
+                                    ['attr' => ['colspan' => 7]]
                                 ])
                                 ->make()
                         !!}

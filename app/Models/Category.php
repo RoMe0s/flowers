@@ -28,5 +28,14 @@ class Category extends Model
         'image',
         'title'
     ];
+
+
+    public function products() {
+        return $this->belongsToMany(Product::class, 'products_categories');
+    }
+
+    public function sets() {
+        return $this->hasMany(Set::class);
+    }
     
 }

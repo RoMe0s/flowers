@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Contracts\FrontLink;
 use App\Contracts\MetaGettable;
-use App\Contracts\SearchableContract;
-use App\Traits\Models\SearchableTrait;
 use App\Traits\Models\WithTranslationsTrait;
 use Dimsav\Translatable\Translatable;
 use Eloquent;
@@ -14,12 +12,11 @@ use Eloquent;
  * Class Page
  * @package App\Models
  */
-class Page extends Eloquent implements FrontLink, SearchableContract, MetaGettable
+class Page extends Eloquent implements FrontLink, MetaGettable
 {
 
     use Translatable;
     use WithTranslationsTrait;
-    use SearchableTrait;
 
     /**
      * @var array

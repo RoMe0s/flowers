@@ -207,7 +207,6 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
 
-        App\Providers\SearchServiceProvider::class,
         App\Providers\VariableServiceProvider::class,
     ],
 

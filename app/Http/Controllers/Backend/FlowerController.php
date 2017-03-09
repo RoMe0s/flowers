@@ -283,15 +283,15 @@ class FlowerController extends BackendController
 
     private function _proccessColors(Flower $model) {
 
-        $new_colors = request('colors');
+        $new = request('colors');
 
-        $old_colors = $model->colors->lists('color_id')->toArray();
+        $old = $model->colors->lists('color_id')->toArray();
 
-        $remove_colors = array_diff($old_colors, $new_colors);
+        $remove_colors = array_diff($old, $new);
 
         $model->colors()->detach($remove_colors);
 
-        $model->colors()->attach(array_diff($new_colors, $old_colors));
+        $model->colors()->attach(array_diff($new, $old));
 
     }
 

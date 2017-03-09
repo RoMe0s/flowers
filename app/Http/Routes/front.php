@@ -22,28 +22,6 @@ $router->group(
         $router->get('news', ['as' => 'news.index', 'uses' => 'Frontend\NewsController@index']);
         $router->get('news/{slug}', ['as' => 'news.show', 'uses' => 'Frontend\NewsController@show']);
 
-        // comments
-        $router->group(
-            [
-                'prefix'     => 'comments',
-                'middleware' => 'ajax',
-            ],
-            function () use ($router) {
-                $router->get('/', ['as' => 'comments.index', 'uses' => 'Frontend\CommentController@index']);
-
-                $router->post('/', ['as' => 'comments.store', 'uses' => 'Frontend\CommentController@store']);
-            }
-        );
-
-        // likes
-        $router->post(
-            '/likes',
-            ['middleware' => ['auth', 'ajax'], 'as' => 'likes.index', 'uses' => 'Frontend\LikeController@store']
-        );
-
-        // search
-        $router->get('search', ['as' => 'search.index', 'uses' => 'Frontend\SearchController@index']);
-
         // faq
         $router->get('faq', ['as' => 'questions.index', 'uses' => 'Frontend\QuestionController@index']);
 

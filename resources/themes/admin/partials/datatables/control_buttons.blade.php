@@ -20,4 +20,10 @@
         </a>
     @endif
 
+    @if (isset($basket_link) && $basket_link === true )
+        <a class="btn btn-primary btn-sm btn-flat add_to_basket" href="#" title="@lang('labels.add_to_basket')" data-id="{!! $model->id !!}" data-type="{!! class_basename($model) !!}">
+            <i class="fa fa-plus"></i>
+        </a>
+    @endif
+
 {!! Form::close() !!}

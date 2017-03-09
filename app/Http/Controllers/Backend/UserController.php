@@ -107,6 +107,12 @@ class UserController extends BackendController
                         return isset($model->info->phone) && strlen($model->info->phone) > 0 ? $model->info->phone : trans('labels.no');
                     }
                 )
+                ->addColumn(
+                    'group',
+                    function ($model) {
+                        return trim(implode(',', $model->groups->lists('name')->toArray()), ',');
+                    }
+                )
                 ->editColumn(
                     'activated',
                     function ($model) {

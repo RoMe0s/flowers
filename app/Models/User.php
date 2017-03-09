@@ -31,7 +31,6 @@ class User extends SentryUser implements FrontLink
         'email',
         'password',
         'start_discount',
-        'discount',
         'notifications'
     ];
 
@@ -191,4 +190,14 @@ class User extends SentryUser implements FrontLink
     {
         return localize_route('profiles.show', $this->id);
     }
+
+    public function codes() {
+        return $this->belongsToMany(Code::class, 'users_codes');
+    }
+
+    public function subscriptions() {
+        return $this->belongsToMany(Subscription::class, 'users_subscriptions')->withPivot(['paid_before']);
+    }
+
+
 }

@@ -16,8 +16,6 @@ class BoxRequest extends FormRequest
         $regex = '/^.*\.('.implode('|', config('image.allowed_image_extension')).')$/';
 
         $rules = [
-            'position'  => 'required',
-            'status'   => 'required|boolean',
             'category_id'   => 'required',
             'length'    => 'required',
             'width'     => 'required',

@@ -109,4 +109,6 @@ return array (
   'you can\\\\\\\'t edit this translations group' => 'Вы не можете редактировать эту группу переводов',
   'you can\\\'t edit this translations group' => 'Вы не можете редактировать эту группу переводов',
   'to' => 'до',
+    'add to basket ok' => 'Добавление в корзину успешно',
+    'item count added' => 'Количество товара обновлено'
 );
