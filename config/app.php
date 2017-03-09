@@ -208,6 +208,7 @@ return [
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
 
         App\Providers\VariableServiceProvider::class,
+        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
     ],
 
     /*
