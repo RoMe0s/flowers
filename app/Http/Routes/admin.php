@@ -156,6 +156,9 @@ $router->group(
                     'as' => 'admin.basket',
                     'uses' =>  'Backend\OrderController@basket'
                 ]);
+                $router->get('order/status/change', 'Backend\OrderController@changeStatus');
+
+
                 //basket
                 $router->group(['prefix' => 'basket'], function () use ($router){
                    $router->get('/add', 'Backend\OrderController@add');

@@ -25,6 +25,8 @@ use App\Models\Address;
  */
 class OrderController extends BackendController
 {
+    public $statuses = [];
+
     /**
      * @var string
      */
@@ -54,6 +56,11 @@ class OrderController extends BackendController
         $this->breadcrumbs(trans('labels.orders'), route('admin.order.index'));
 
         Meta::title(trans('labels.order'));
+
+        $this->statuses = [
+            '1' => trans('labels.wait for accept'),
+            '2' => trans('labels.wait for payment')
+        ];
     }
 
     /**
@@ -67,11 +74,16 @@ class OrderController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
+
             $list = Order::select(
                 'id',
                 'recipient_name',
                 'status'
             );
+
+            if($request->get('status')) {
+                $list->where('status', $request->get('status'));
+            }
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('orders.id', 'where', 'orders.id', '=', '$1')
@@ -86,8 +98,8 @@ class OrderController extends BackendController
                     'status',
                     function ($model) {
                         return view(
-                            'partials.datatables.toggler',
-                            ['model' => $model, 'type' => $this->module, 'field' => 'status']
+                            'order.partials.status_switcher',
+                            ['model' => $model, 'statuses' => $this->statuses]
                         )->render();
                     }
                 )
@@ -106,7 +118,7 @@ class OrderController extends BackendController
 
         $this->data('page_title', trans('labels.orders'));
         $this->breadcrumbs(trans('labels.orders_list'));
-
+        $this->data('statuses', $this->statuses);
         return $this->render('views.order.index');
     }
 
@@ -320,10 +332,7 @@ class OrderController extends BackendController
             '100' => '100%'
         ));
 
-        $this->data('statuses', array(
-            '1' => trans('labels.wait for accept'),
-            '2' => trans('labels.wait for payment')
-        ));
+        $this->data('statuses', $this->statuses);
 
         if($model) {
 
@@ -588,5 +597,19 @@ class OrderController extends BackendController
 
         return ['status' => 'error', 'message' => trans('messages.an error has occurred, try_later')];
 
+    }
+
+    public function changeStatus(Request $request) {
+        DB::beginTransaction();
+        try {
+            Order::where('id', $request->get('id'))->update([
+                'status' => $request->get('status')
+            ]);
+            DB::commit();
+            return ['status' => 'success', 'message' => trans('messages.save_ok')];
+        } catch (Exception $e) {
+            DB::rollBack();
+            return ['status' => 'success', 'message' => trans('messages.an error has occurred, try_later')];
+        }
     }
 }

@@ -458,6 +458,8 @@ return array (
     'total' => 'Итого',
     'rub' => 'руб.',
     'basket' => 'Корзина',
-    'market' => 'Магазин'
+    'market' => 'Магазин',
+    'wait for accept' => 'Ждет подтверждения',
+    'wait for payment' => 'Ждет оплаты'
 
 );

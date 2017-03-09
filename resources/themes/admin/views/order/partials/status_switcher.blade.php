@@ -1,0 +1,1 @@
+{!! Form::select(null, $statuses, $model->status, array('data-id' => $model->id, 'data-old_status' => $model->status, 'class' => 'form-control select2 input-sm order-status-changer')) !!}

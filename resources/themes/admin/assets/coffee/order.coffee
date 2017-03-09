@@ -71,12 +71,32 @@ $(document).on 'click', '.add-basket-item-to-order', (e)->
       _selected.remove()
       message.show(response.message, response.status)
       $('.basket-count').html(response.count)
-      console.log(response.html)
       if response.update != false
         $('tr.row-id-' + response.update).remove()
       $('table.duplication tbody').append(response.html)
 
     ).error(() ->
+      message.show(window.lang_error, 'error')
+    )
+
+$(document).on 'change', '.order-status-changer', (e)->
+  _this = $(this)
+  _old = _this.data('old_status')
+  $row = _this.closest('tr')
+  if _this.val() != _old
+    $.ajax({
+      url: '/admin/order/status/change',
+      type: 'GET'
+      data: {
+        status: _this.val()
+        id: _this.data('id')
+      }
+    }).done((response)->
+      $row.removeClass('order-status-' + _old)
+      $row.addClass('order-status-' + _this.val())
+      message.show(response.message, response.status)
+      _this.data('old_status', _this.val())
+    ).error(()->
       message.show(window.lang_error, 'error')
     )
 
