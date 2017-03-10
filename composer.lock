@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a08389bc0dceb64c995b0f0d407739f3",
-    "content-hash": "305c162f4d442b0cc801d2cc8aff48a3",
+    "hash": "0e5071dd9fcf3826b7cc77b774c644dd",
+    "content-hash": "f15a8906e506a4658195f53dbd48621a",
     "packages": [
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -987,6 +987,56 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+            "name": "gloudemans/shoppingcart",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crinsane/LaravelShoppingcart.git",
+                "reference": "195cc095f53c66b60afaf0753295bc9c6b2773c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crinsane/LaravelShoppingcart/zipball/195cc095f53c66b60afaf0753295bc9c6b2773c3",
+                "reference": "195cc095f53c66b60afaf0753295bc9c6b2773c3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/events": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/session": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "gloudemans/notify": "Simple flash notifications for Laravel"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gloudemans\\Shoppingcart\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Gloudemans",
+                    "email": "info@robgloudemans.nl"
+                }
+            ],
+            "description": "Laravel Shoppingcart",
+            "keywords": [
+                "laravel",
+                "shoppingcart"
+            ],
+            "time": "2017-01-25 09:56:35"
+        },
+        {
             "name": "guzzlehttp/psr7",
             "version": "1.3.0",
             "source": {
@@ -1054,7 +1104,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/22088b04728a039bd1fc32f7e79a89a118b78698",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/c9a162592dda7ae4ad3b49305da41e82155f9b9a",
                 "reference": "22088b04728a039bd1fc32f7e79a89a118b78698",
                 "shasum": ""
             },
@@ -1545,7 +1595,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelRUS/localized-carbon/zipball/fc0905b060713c4c1ecba60edf5a479931bb2def",
+                "url": "https://api.github.com/repos/LaravelRUS/localized-carbon/zipball/0a7b47b974668695479fa605fcfbff1cbf751650",
                 "reference": "fc0905b060713c4c1ecba60edf5a479931bb2def",
                 "shasum": ""
             },
@@ -3713,7 +3763,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/8589559fa48ca463d69fcdcb09119d5711c54734",
+                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/4d91fce088f133e2465e62e56d1066e26fd886d3",
                 "reference": "8589559fa48ca463d69fcdcb09119d5711c54734",
                 "shasum": ""
             },

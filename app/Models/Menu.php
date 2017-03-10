@@ -30,14 +30,14 @@ class Menu extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'template', 'status'];
+    protected $fillable = ['name', 'template', 'status', 'layout_position'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function items()
     {
-        return $this->hasMany(MenuItem::class, 'menu_id')->positionSorted();
+        return $this->hasMany(MenuItem::class, 'menu_id')->with('translations')->positionSorted();
     }
 
     /**

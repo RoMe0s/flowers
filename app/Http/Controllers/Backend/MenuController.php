@@ -76,12 +76,14 @@ class MenuController extends BackendController
         if ($request->get('draw')) {
             $list = Menu::withTranslations()->joinTranslations('menus', 'menu_translations')->select(
                 'menus.id',
+                'menus.layout_position',
                 'menu_translations.name',
                 'menus.status'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('menus.id', 'where', 'menus.id', '=', '$1')
+                ->filterColumn('menus.layout_position', 'where', 'menus.layout_position', '=', '$1')
                 ->filterColumn('name', 'where', 'menu_translations.name', 'LIKE', '%$1%')
                 ->editColumn(
                     'status',
@@ -184,7 +186,7 @@ class MenuController extends BackendController
         try {
             $model = Menu::with('items')->findOrFail($id);
 
-            $this->_fillAdditionalTemplateData();
+            $this->_fillAdditionalTemplateData($model);
 
             $this->data('page_title', '"'.$model->name.'"');
 
@@ -263,12 +265,26 @@ class MenuController extends BackendController
     /**
      * fill additional template data
      */
-    private function _fillAdditionalTemplateData()
+    private function _fillAdditionalTemplateData($model = null)
     {
         $this->data(
             'templates',
             get_templates(base_path('resources/themes/'.config('app.theme').'/widgets/menu/templates'))
         );
+
+        $parents = array();
+
+        if($model) {
+
+            $parents = $model->items->lists('name', 'id')->toArray();
+
+        }
+
+        $this->data('parents', $parents);
+
+        $this->data('classes', [
+            'float-right' => 'float-right'
+        ]);
     }
 
     /**
@@ -289,6 +305,12 @@ class MenuController extends BackendController
 
         $data = request('items.old', []);
         foreach ($data as $key => $item) {
+            if(!$item['parent_id'] || $item['parent_id'] == "") {
+                $item['parent_id'] = null;
+            }
+            if(!$item['class'] || $item['class'] == "") {
+                $item['class'] = null;
+            }
             try {
                 $_item = MenuItem::findOrFail($key);
                 $_item->update($item);
@@ -303,6 +325,12 @@ class MenuController extends BackendController
 
         $data = request('items.new', []);
         foreach ($data as $item) {
+            if(!$item['parent_id'] || $item['parent_id'] == "") {
+                $item['parent_id'] = null;
+            }
+            if(!$item['class'] || $item['class'] == "") {
+                $item['class'] = null;
+            }
             try {
                 $item = new MenuItem($item);
                 $model->items()->save($item);

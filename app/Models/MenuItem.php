@@ -34,12 +34,12 @@ class MenuItem extends Model
         'menu_id',
         'name',
         'title',
-        'description',
-        'class',
         'link',
         'position',
         'status',
         'register_only',
+        'parent_id',
+        'class'
     ];
 
     /**

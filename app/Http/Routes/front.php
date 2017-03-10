@@ -19,61 +19,57 @@ $router->group(
         );
 
         // news
-        $router->get('news', ['as' => 'news.index', 'uses' => 'Frontend\NewsController@index']);
-        $router->get('news/{slug}', ['as' => 'news.show', 'uses' => 'Frontend\NewsController@show']);
+//        $router->get('news', ['as' => 'news.index', 'uses' => 'Frontend\NewsController@index']);
+//        $router->get('news/{slug}', ['as' => 'news.show', 'uses' => 'Frontend\NewsController@show']);
 
-        // faq
-        $router->get('faq', ['as' => 'questions.index', 'uses' => 'Frontend\QuestionController@index']);
+        $router->get('cart', [
+            'as' => 'cart',
+            'uses' => 'Frontend\CartController@index'
+        ]);
 
-        // feedback
-        $router->group(
-            [
-                'prefix'     => 'feedback',
-                'middleware' => 'ajax',
-            ],
-            function () use ($router) {
-                $router->post(
-                    '/',
-                    ['as' => 'feedback.store', 'uses' => 'Frontend\FeedbackController@store']
-                );
-            }
-        );
+        $router->group([], function() use ($router) {
 
-        // subscribes
-        $router->post(
-            '/subscribes',
-            ['middleware' => 'ajax', 'as' => 'subscribes.store', 'uses' => 'Frontend\SubscribeController@store']
-        );
+            $router->get('login', [
+                'as' => 'login',
+                'uses' => 'Frontend\AuthController@getLogin'
+            ]);
+
+            $router->get('reg', [
+                'as' => 'reg',
+                'uses' => 'Frontend\AuthController@getRegister'
+            ]);
+
+        });
 
         // profiles
         $router->group(
             [
-                'prefix'     => 'profiles',
+                'prefix'     => 'profile',
                 'middleware' => 'auth',
             ],
             function () use ($router) {
                 $router->get(
-                    '/index',
-                    ['as' => 'profiles.index', 'uses' => 'Frontend\ProfileController@index']
+                    '/',
+                    ['as' => 'profile', 'uses' => 'Frontend\ProfileController@index']
                 );
 
                 $router->get(
-                    '{id}/show',
-                    ['as' => 'profiles.show', 'uses' => 'Frontend\ProfileController@show']
+                    'subscriptions',
+                    ['as' => 'profile.subscriptions', 'uses' => 'Frontend\ProfileController@subscriptions']
                 );
 
                 $router->get(
-                    'edit',
-                    ['as' => 'profiles.edit', 'uses' => 'Frontend\ProfileController@edit']
+                    'discounts',
+                    ['as' => 'profile.discounts', 'uses' => 'Frontend\ProfileController@discounts']
                 );
                 $router->post(
-                    'update',
-                    ['as' => 'profiles.update', 'uses' => 'Frontend\ProfileController@update']
+                    'orders',
+                    ['as' => 'profile.orders', 'uses' => 'Frontend\ProfileController@orders']
                 );
 
                 $router->get(
-                    'edit/password',
-                    ['as' => 'profiles.edit.password', 'uses' => 'Frontend\ProfileController@editPassword']
+                    'addresses',
+                    ['as' => 'profile.addresses', 'uses' => 'Frontend\ProfileController@addresses']
                 );
                 $router->post(
                     'update/password',

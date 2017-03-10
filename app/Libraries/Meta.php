@@ -233,7 +233,7 @@ class Meta
             {
                 $value = self::_getSocialMeta($property);
 
-                if (!empty($value))
+                if (!empty($value) && !is_object($value))
                 {
                     $output .= sprintf(self::$tags['social'], $property, $value);
                 }

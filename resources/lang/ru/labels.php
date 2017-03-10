@@ -460,6 +460,9 @@ return array (
     'basket' => 'Корзина',
     'market' => 'Магазин',
     'wait for accept' => 'Ждет подтверждения',
-    'wait for payment' => 'Ждет оплаты'
+    'wait for payment' => 'Ждет оплаты',
+
+    'parent' => 'Родитель',
+    'register_only' => 'Авторизированным'
 
 );

@@ -1,3 +1,13 @@
+<div class="form-group required @if ($errors->has('layout_position')) has-error @endif">
+    {!! Form::label('layout_position', trans('labels.layout_position'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
+
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+        {!! Form::text('layout_position', null, ['class' => 'form-control input-sm', 'aria-hidden' => 'true', 'required' => true, 'placeholder' => trans('labels.layout_position')]) !!}
+
+        {!! $errors->first('layout_position', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group required @if ($errors->has('status')) has-error @endif">
     {!! Form::label('status', trans('labels.status'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 

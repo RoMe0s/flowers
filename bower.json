@@ -1,9 +1,7 @@
 {
   "name": "default",
   "version": "0.0.1",
-  "authors": [
-    "DDiimmkkaass"
-  ],
+  "authors": [],
   "license": "GPL",
   "private": true,
   "ignore": [
@@ -26,6 +24,9 @@
     "sly": "https://github.com/darsain/sly/archive/master.zip",
     "bootstrap-validator": "~0.9",
     "jquery.inputmask": "3.2.5",
-    "components-font-awesome": "~4.5.0"
+    "components-font-awesome": "~4.5.0",
+    "select2": "^4.0.3",
+    "lightbox2": "lightbox#^2.9.0",
+    "jquery.countdown": "^2.2.0"
   }
 }

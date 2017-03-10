@@ -18,7 +18,7 @@ class CreateMenusTable extends Migration
             function (Blueprint $table) {
                 $table->increments('id');
 
-//                $table->string('layout_position')->nullable();
+                $table->string('layout_position')->nullable();
                 $table->string('template')->nullable();
 //                $table->string('class')->nullable();
 

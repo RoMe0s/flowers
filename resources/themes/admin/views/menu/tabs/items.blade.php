@@ -3,8 +3,10 @@
         <tbody>
         <tr>
             <th>{!! trans('labels.name') !!}<span class="required">*</span></th>
-            <th>{!! trans('labels.link') !!}<span class="required">*</span></th>
-            <th>{!! trans('labels.css_class') !!}</th>
+            <th>{!! trans('labels.link') !!}<span class="required">*</span>&nbsp;&nbsp;/<br/>
+            {!! trans('labels.class') !!}
+            </th>
+            <th>{!! trans('labels.parent') !!}&nbsp;/<br />{!! trans('labels.register_only') !!}<span class="required">*</span></th>
             <th class="col-sm-1 col-md-1 col-lg-1">{!! trans('labels.status') !!}<span class="required">*</span></th>
             <th class="col-sm-1 col-md-1 col-lg-1">{!! trans('labels.position') !!}<span class="required">*</span></th>
             <th>{!! trans('labels.delete') !!}</th>
@@ -37,10 +39,16 @@
                         <div class="form-group required @if ($errors->has('items.old.' .$item->id. '.link')) has-error @endif">
                             {!! Form::text('items[old][' .$item->id. '][link]', $item->link, ['id' => 'items.old.' .$item->id. '.link', 'required' => true, 'class' => 'form-control input-sm']) !!}
                         </div>
+                        <div class="form-group @if ($errors->has('items.old.' .$item->id. '.class')) has-error @endif">
+                            {!! Form::select('items[old][' .$item->id. '][class]',$classes, $item->class, ['class' => 'form-control input-sm select2', 'placeholder' => trans('labels.class')]) !!}
+                        </div>
                     </td>
                     <td>
-                        <div class="form-group @if ($errors->has('items.old.' .$item->id. '.class')) has-error @endif">
-                            {!! Form::text('items[old][' .$item->id. '][class]', $item->class, ['id' => 'items.old.' .$item->id. '.class', 'class' => 'form-control input-sm']) !!}
+                        <div class="form-group @if ($errors->has('items.old.' .$item->id. '.parent_id')) has-error @endif">
+                            {!! Form::select('items[old][' .$item->id. '][parent_id]', $parents, $item->parent_id, ['id' => 'items.old.' .$item->id. '.parent_id', 'class' => 'form-control input-sm select2', 'placeholder' => trans('labels.parent')]) !!}
+                        </div>
+                        <div class="form-group @if ($errors->has('items.old.' .$item->id. '.register_only')) has-error @endif">
+                            {!! Form::select('items[old][' . $item->id . '][register_only]', array(-1 => trans('labels.all'), 0 => trans('labels.no'), 1 => trans('labels.yes')), $item->register_only, ['class' => 'form-control select2 input-sm' , 'placeholder' => trans('labels.register_only'), 'required' => true]) !!}
                         </div>
                     </td>
                     <td>
@@ -88,10 +96,16 @@
                             <div class="form-group required @if ($errors->has('items.new.' .$item_key. '.link')) has-error @endif">
                                 {!! Form::text('items[new][' .$item_key. '][link]', $item['link'], ['id' => 'items.new.' .$item_key. '.link', 'class' => 'form-control input-sm', 'required' => true]) !!}
                             </div>
+                            <div class="form-group @if ($errors->has('items.new.' .item_key. '.class')) has-error @endif">
+                                {!! Form::select('items[new][' .$item_key. '][class]',$classes, $item['class'], ['class' => 'form-control input-sm select2', 'placeholder' => trans('labels.class')]) !!}
+                            </div>
                         </td>
                         <td>
-                            <div class="form-group @if ($errors->has('items.new.' .$item_key. '.class')) has-error @endif">
-                                {!! Form::text('items[new][' .$item_key. '][class]', $item['class'], ['id' => 'items.new.' .$item_key. '.class', 'class' => 'form-control input-sm']) !!}
+                            <div class="form-group @if ($errors->has('items.new.' .$item_key. '.parent_id')) has-error @endif">
+                                {!! Form::select('items[new][' .$item_key. '][parent_id]', $parents, $item['parent_id'], ['id' => 'items.new.' .$item_key. '.parent_id', 'class' => 'form-control input-sm select2', 'placeholder' => trans('labels.parent')]) !!}
+                            </div>
+                            <div class="form-group @if ($errors->has('items.new.' .$item_key. '.register_only')) has-error @endif">
+                                {!! Form::select('items[new][' . $item_key . '][register_only]', array(-1 => trans('labels.all'), 0 => trans('labels.no'), 1 => trans('labels.yes')), $item['register_only'], ['class' => 'form-control select2 input-sm' , 'placeholder' => trans('labels.register_only'), 'required' => true]) !!}
                             </div>
                         </td>
                         <td>
@@ -149,10 +163,21 @@
                 <div class="form-group required">
                     <input data-name="items[new][replaseme][link]" data-required="required" class="form-control input-sm">
                 </div>
+                <div class="form-group">
+                    {!! Form::select(null, $classes, null, array('class' => 'form-control input-sm select2', 'data-name' => 'items[new][replaseme][class]', 'placeholder' => trans('labels.class'))) !!}
+                </div>
             </td>
             <td>
                 <div class="form-group">
-                    <input data-name="items[new][replaseme][class]" class="form-control input-sm">
+                    {!! Form::select(null, $parents, null, array('class' => 'form-control input-sm select2', 'data-name' => 'items[new][replaseme][parent_id]', 'placeholder' => trans('labels.parent'))) !!}
+                </div>
+                <div class="form-group required">
+                    <select class="form-control select2 input-sm" data-required="required" aria-hidden="true" data-name="items[new][replaseme][register_only]">
+                        <option selected="selected">@lang('labels.register_only')</option>
+                        <option value="-1">@lang('labels.all')</option>
+                        <option value="0">@lang('labels.no')</option>
+                        <option value="1">@lang('labels.yes')</option>
+                    </select>
                 </div>
             </td>
             <td>

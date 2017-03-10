@@ -10,6 +10,7 @@ namespace App\Widgets\Menu;
 
 use App\Models\Menu;
 use Pingpong\Widget\Widget;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class MenuWidget
@@ -17,12 +18,6 @@ use Pingpong\Widget\Widget;
  */
 class MenuWidget extends Widget
 {
-
-    /**
-     * @var string
-     */
-    private $_view = 'default';
-
     /**
      * @param string $position
      *
@@ -30,26 +25,19 @@ class MenuWidget extends Widget
      */
     public function index($position)
     {
-        $menus = [];
 
-        $list = Menu::with(['translations', 'visible_items', 'visible_items.translations'])
-            ->whereLayoutPosition($position)
-            ->visible()
-            ->positionSorted()
-            ->get();
+        Cache::flush();
 
-        if (count($list)) {
-            foreach ($list as $model) {
-                if (view()->exists('widgets.menu.templates.'.$model->template.'.index')) {
-                    $this->_view = $model->template;
-                }
+        $menu = Cache::remember('menu_' . $position, 10, function() use ($position) {
+            return Menu::with(['translations', 'visible_items'])
+                ->whereLayoutPosition($position)
+                ->visible()
+                ->first();
+        });
 
-                $menus[] = view('widgets.menu.templates.'.$this->_view.'.index')
-                    ->with(['model' => $model, 'template' => $this->_view])
-                    ->render();
-            }
+        if(isset($menu) && view()->exists('widgets.menu.templates.' . $menu->template . '.index')) {
 
-            return view('widgets.menu.index')->with(compact('menus'))->render();
+            return view('widgets.menu.templates.' . $menu->template . '.index')->with(compact('menu'))->render();
         }
     }
 }

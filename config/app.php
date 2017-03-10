@@ -208,7 +208,7 @@ return [
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
 
         App\Providers\VariableServiceProvider::class,
-        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
     ],
 
     /*
@@ -276,6 +276,7 @@ return [
         'Form'                => Collective\Html\FormFacade::class,
         'Widget'              => Pingpong\Widget\WidgetFacade::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 
     ],
 

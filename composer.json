@@ -29,7 +29,8 @@
         "pingpong/widget": "~2.0",
         "dimsav/laravel-translatable": "5.5",
         "mcamara/laravel-localization": "1.1.*",
-        "nicolaslopezj/searchable": "1.*"
+        "nicolaslopezj/searchable": "1.*",
+        "gloudemans/shoppingcart": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

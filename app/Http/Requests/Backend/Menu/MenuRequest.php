@@ -25,6 +25,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         $rules = [
+            'layout_position' => 'required',
             'status'          => 'required|boolean',
             'template'        => 'required',
         ];
@@ -43,9 +44,11 @@ class MenuRequest extends FormRequest
             'items.new.*.link'     => 'required',
             'items.new.*.status'   => 'required|boolean',
             'items.new.*.position' => 'required|integer',
+            'items.new.*.register_only' => 'required|integer',
             'items.old.*.link'     => 'required',
             'items.old.*.status'   => 'required|boolean',
             'items.old.*.position' => 'required|integer',
+            'items.old.*.register_only' => 'required|integer',
         ];
 
         $itemsLanguageRules = [
