@@ -8,7 +8,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Category;
 use App\Models\Page;
+use App\Models\Set;
 use App\Services\PageService;
 use Response;
 use View;

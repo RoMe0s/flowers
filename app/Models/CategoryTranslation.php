@@ -9,6 +9,11 @@ class CategoryTranslation extends Model
     public $timestamps = false;
 
     public $fillable = [
-        'title'
+        'name',
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+        'content',
+        'short_content'
     ];
 }

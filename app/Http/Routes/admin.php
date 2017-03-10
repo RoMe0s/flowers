@@ -54,6 +54,14 @@ $router->group(
                 $router->resource('subscription', 'Backend\SubscriptionController');
 
                 //categories
+                $router->post(
+                    'category/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.category.ajax_field',
+                        'uses'       => 'Backend\CategoryController@ajaxFieldChange',
+                    ]
+                );
                 $router->resource('category', 'Backend\CategoryController');
 
                 //boxes

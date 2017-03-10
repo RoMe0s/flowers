@@ -293,7 +293,7 @@ class ProductController extends BackendController
 
     private function _fillAdditionalTemplateData() {
 
-        $this->data('categories', CategoryTranslation::lists('title', 'category_id')->toArray());
+        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
 
     }
 

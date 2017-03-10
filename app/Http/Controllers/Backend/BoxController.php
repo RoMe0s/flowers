@@ -269,6 +269,6 @@ class BoxController extends BackendController
 
     private function _fillAdditionTemplateData()
     {
-        $this->data('categories', CategoryTranslation::lists('title', 'category_id')->toArray());
+        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
     }
 }

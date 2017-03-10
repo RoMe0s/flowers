@@ -6,7 +6,6 @@ use App\Traits\Models\WithTranslationsTrait;
 use Carbon;
 use Dimsav\Translatable\Translatable;
 use Eloquent;
-
 /**
  * Class News
  * @package App\Models
@@ -120,5 +119,17 @@ class News extends Eloquent
     public function scopeDateSorted($query, $order = 'ASC')
     {
         return $query->orderBy('created_at', $order);
+    }
+
+    /**
+     * @param int|bool $limit
+     *
+     * @return string
+     */
+    public function getShortContent($limit = false)
+    {
+        $limit = $limit === true ? config('page.default_short_content_length') : $limit;
+
+        return $limit ? str_limit(strip_tags($this->content), $limit) : $this->content;
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests\Backend\Category\CategoryRequest;
+use App\Http\Requests\Backend\Category\CategoryCreateRequest;
+use App\Http\Requests\Backend\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use Datatables;
 use DB;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Meta;
 use Redirect;
 use Response;
+use App\Traits\Controllers\AjaxFieldsChangerTrait;
 
 /**
  * Class CategoryController
@@ -21,6 +23,9 @@ use Response;
  */
 class CategoryController extends BackendController
 {
+
+    use AjaxFieldsChangerTrait;
+
     /**
      * @var string
      */
@@ -67,22 +72,50 @@ class CategoryController extends BackendController
         if ($request->get('draw')) {
             $list = Category::joinTranslations('categories', 'category_translations')->select(
                 'categories.id',
-                'category_translations.title'
+                'category_translations.name',
+                'categories.status',
+                'categories.position',
+                'categories.slug'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('id', 'where', 'categories.id', '=', '$1')
                 ->filterColumn('category_translations.title', 'where', 'category_translations.title', 'LIKE', '%$1%')
                 ->editColumn(
+                    'status',
+                    function ($model) {
+                        return view(
+                            'partials.datatables.toggler',
+                            ['model' => $model, 'type' => $this->module, 'field' => 'status']
+                        )->render();
+                    }
+                )
+                ->editColumn(
+                    'position',
+                    function ($model) {
+                        return view(
+                            'partials.datatables.text_input',
+                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
+                        )->render();
+                    }
+                )
+                ->editColumn(
                     'actions',
                     function ($model) {
                         return view(
                             'partials.datatables.control_buttons',
-                            ['model' => $model, 'type' => $this->module]
+                            ['model' => $model, 'type' => $this->module, 'front_link' => true]
                         )->render();
                     }
                 )
                 ->setIndexColumn('id')
+                ->removeColumn('slug')
+                ->removeColumn('image')
+                ->removeColumn('meta_title')
+                ->removeColumn('meta_description')
+                ->removeColumn('content')
+                ->removeColumn('short_content')
+                ->removeColumn('meta_keywords')
                 ->make();
         }
 
@@ -114,11 +147,11 @@ class CategoryController extends BackendController
      * Store a newly created resource in storage.
      * POST /category
      *
-     * @param CategoryRequest $request
+     * @param CategoryCreateRequest $request
      *
      * @return \Response
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryCreateRequest $request)
     {
         $input = $request->all();
 
@@ -174,7 +207,7 @@ class CategoryController extends BackendController
             return Redirect::route('admin.category.index');
         }
 
-        $this->data('page_title', '"'.$model->title.'"');
+        $this->data('page_title', '"'.$model->name.'"');
 
         $this->breadcrumbs(trans('labels.category_editing'));
 
@@ -186,11 +219,11 @@ class CategoryController extends BackendController
      * PUT /category/{id}
      *
      * @param  int              $id
-     * @param CategoryRequest $request
+     * @param CategoryUpdateRequest $request
      *
      * @return \Response
      */
-    public function update($id, CategoryRequest $request)
+    public function update($id, CategoryUpdateRequest $request)
     {
         try {
             $model = Category::findOrFail($id);

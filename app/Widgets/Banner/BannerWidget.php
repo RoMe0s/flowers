@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Newway, info@newway.com.ua
- * User: ddiimmkkaass, ddiimmkkaass@gmail.com
- * Date: 31.08.15
- * Time: 15:16
- */
 
 namespace App\Widgets\Banner;
 

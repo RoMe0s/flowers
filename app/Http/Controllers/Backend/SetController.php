@@ -301,7 +301,7 @@ class SetController extends BackendController
 
         $this->data('flowers', FlowerTranslation::lists('title', 'flower_id')->toArray());
 
-        $this->data('categories', CategoryTranslation::lists('title', 'category_id')->toArray());
+        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
 
         $this->data('boxes', BoxTranslation::lists('title', 'box_id')->toArray());
 

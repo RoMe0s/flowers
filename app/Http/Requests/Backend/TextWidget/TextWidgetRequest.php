@@ -27,7 +27,6 @@ class TextWidgetRequest extends FormRequest
         $rules = [
             'layout_position' => 'required',
             'status'          => 'required|boolean',
-            'position'        => 'required|integer',
         ];
 
         $languageRules = [

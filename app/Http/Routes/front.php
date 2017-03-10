@@ -19,8 +19,7 @@ $router->group(
         );
 
         // news
-//        $router->get('news', ['as' => 'news.index', 'uses' => 'Frontend\NewsController@index']);
-//        $router->get('news/{slug}', ['as' => 'news.show', 'uses' => 'Frontend\NewsController@show']);
+       $router->get('news', ['as' => 'news', 'uses' => 'Frontend\NewsController@index']);
 
         $router->get('cart', [
             'as' => 'cart',
@@ -40,6 +39,11 @@ $router->group(
             ]);
 
         });
+
+        $router->get('subscriptions', [
+            'as' => 'subscriptions',
+            'uses' => 'Frontend\SubscriptionController@index'
+        ]);
 
         // profiles
         $router->group(

@@ -1,6 +1,6 @@
 <nav class="nav navbar-pills">
     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#nav-collapse">
-        @lang('front_labels.menu') <i class="fa fa-bars"></i>
+        Меню <i class="fa fa-bars"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="nav-collapse">
@@ -27,7 +27,7 @@
                             <ul class="dropdown-menu">
                                 @foreach($child_items as $item)
                                     <li>
-                                        <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->link !!}">{!! $item->name !!}</a>
+                                        <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->name !!}">{!! $item->name !!}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -46,7 +46,7 @@
                                 <ul class="dropdown-menu">
                                     @foreach($child_items as $item)
                                         <li>
-                                            <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->link !!}">{!! $item->name !!}</a>
+                                            <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->name !!}">{!! $item->name !!}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -70,7 +70,7 @@
                           <ul class="dropdown-menu">
                               @foreach($child_items as $item)
                                   <li>
-                                      <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->link !!}">{!! $item->name !!}</a>
+                                      <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->name !!}">{!! $item->name !!}</a>
                                   </li>
                               @endforeach
                           </ul>

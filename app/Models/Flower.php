@@ -23,7 +23,6 @@ class Flower extends Model
      */
     protected $fillable = [
         'status',
-        'position',
         'title'
     ];
 
@@ -35,11 +34,6 @@ class Flower extends Model
     public function scopeVisible($query)
     {
         return $query->where('status', true);
-    }
-
-
-    public function scopePositionSorted($query, $type = 'ASC') {
-        return $query->orderBy('position', $type);
     }
 
     public function colors() {

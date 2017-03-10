@@ -19,6 +19,14 @@ use Illuminate\Database\Eloquent\Model;
 class TextWidget extends Model
 {
 
+    public static function getAllowed() {
+        return array(
+            0 => 'Футер',
+            1 => 'Цветочная подписка',
+            2 => 'Наши преимущества'
+        );
+    }
+
     use Translatable;
     use WithTranslationsTrait;
 
@@ -30,7 +38,7 @@ class TextWidget extends Model
     /**
      * @var array
      */
-    protected $fillable = ['layout_position', 'status', 'position', 'title', 'content'];
+    protected $fillable = ['layout_position', 'status', 'title', 'content'];
 
     /**
      * @param $query
@@ -40,16 +48,5 @@ class TextWidget extends Model
     public function scopeVisible($query)
     {
         return $query->whereStatus(true);
-    }
-
-    /**
-     * @param        $query
-     * @param string $order
-     *
-     * @return mixed
-     */
-    public function scopePositionSorted($query, $order = 'ASC')
-    {
-        return $query->orderBy('position', $order);
     }
 }

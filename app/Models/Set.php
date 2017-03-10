@@ -88,14 +88,24 @@ class Set extends Model implements MetaGettable
     }
 
     public function flowers() {
-        return $this->belongsToMany(Flower::class, 'sets_flowers');
+        return $this->belongsToMany(Flower::class, 'sets_flowers')->with('translations');
+    }
+
+    public function visible_flowers() {
+        return $this->flowers()->visible();
     }
 
     public function box() {
-        return $this->belongsTo(Box::class);
+        return $this->belongsTo(Box::class)->with('translations');
     }
 
     public function category() {
         return $this->belongsTo(Category::class);
+    }
+
+    public function hasInStock() {
+        $visible_flowers = $this->visible_flowers();
+
+        return sizeof($visible_flowers) ? true : false;
     }
 }

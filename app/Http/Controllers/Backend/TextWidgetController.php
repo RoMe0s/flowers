@@ -85,7 +85,6 @@ class TextWidgetController extends BackendController
                     'text_widget_translations.title',
                     'text_widgets.layout_position',
                     'text_widgets.status',
-                    'text_widgets.position',
                     DB::raw('1 as actions')
                 );
 
@@ -97,15 +96,6 @@ class TextWidgetController extends BackendController
                         return view(
                             'partials.datatables.toggler',
                             ['model' => $model, 'type' => $this->module, 'field' => 'status']
-                        )->render();
-                    }
-                )
-                ->editColumn(
-                    'position',
-                    function ($model) {
-                        return view(
-                            'partials.datatables.text_input',
-                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
                         )->render();
                     }
                 )
@@ -142,6 +132,8 @@ class TextWidgetController extends BackendController
         $this->data('page_title', trans('labels.text_widget_creating'));
 
         $this->breadcrumbs(trans('labels.text_widget_creating'));
+
+        $this->data('positions', TextWidget::getAllowed());
 
         return $this->render('views.text_widget.create');
     }
@@ -206,6 +198,8 @@ class TextWidgetController extends BackendController
         }
 
         $this->data('page_title', '"'.$model->title.'"');
+
+        $this->data('positions', TextWidget::getAllowed());
 
         $this->breadcrumbs(trans('labels.text_widget_editing'));
 

@@ -18,22 +18,6 @@
                 </li>
             @endif
 
-{{--            @if ($user->hasAccess('tag.read'))
-                <li class="{!! active_class('admin.tag*') !!}">
-                    <a href="{!! route('admin.tag.index') !!}">
-                        <i class="fa fa-tags"></i>
-                        <span>@lang('labels.tags')</span>
-
-                        @if ($user->hasAccess('tag.create'))
-                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_tag')"
-                                   data-href="{!! route('admin.tag.create') !!}">
-                                <i class="fa fa-plus"></i>
-                            </small>
-                        @endif
-                    </a>
-                </li>
-            @endif--}}
-
             @if ($user->hasAccess('news.read'))
                 <li class="{!! active_class('admin.news*') !!}">
                     <a href="{!! route('admin.news.index') !!}">
@@ -49,22 +33,6 @@
                     </a>
                 </li>
             @endif
-
-            {{--@if ($user->hasAccess('question.read'))
-                <li class="{!! active_class('admin.question*') !!}">
-                    <a href="{!! route('admin.question.index') !!}">
-                        <i class="fa fa-question-circle"></i>
-                        <span>@lang('labels.questions')</span>
-
-                        @if ($user->hasAccess('question.create'))
-                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_question')"
-                                   data-href="{!! route('admin.question.create') !!}">
-                                <i class="fa fa-plus"></i>
-                            </small>
-                        @endif
-                    </a>
-                </li>
-            @endif--}}
 
             @if ($user->hasAccess('menu.read'))
                 <li class="{!! active_class('admin.menu*') !!}">
@@ -96,7 +64,7 @@
                         @endif
                     </a>
                 </li>
-            @endif
+            @endif--}}
 
             @if ($user->hasAccess('textwidget.read'))
                 <li class="{!! active_class('admin.text_widget*') !!}">
@@ -113,7 +81,7 @@
                         @endif
                     </a>
                 </li>
-            @endif--}}
+            @endif
 
             @if ($user->hasAccess('variablevalue.read'))
                 <li class="{!! active_class('admin.variable*') !!}">

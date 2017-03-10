@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {!! Meta::render() !!}
     <!-- Icons -->
-    <link rel = "shortcut icon" type = "image/x-icon" href = "{{ asset('images/logo.png') }}">
-    <link rel = "apple-touch-icon" type = "image/x-icon" href = "{{ asset('images/logo.png') }}">
+    <link rel = "shortcut icon" type = "image/x-icon" href = "{{ Theme::asset('images/logo.png') }}">
+    <link rel = "apple-touch-icon" type = "image/x-icon" href = "{{ Theme::asset('images/logo.png') }}">
     <!-- Skype toolbar tags -->
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
 

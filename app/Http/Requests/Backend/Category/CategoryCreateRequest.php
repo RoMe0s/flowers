@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend\Category;
 
 use App\Http\Requests\FormRequest;
 
-class CategoryRequest extends FormRequest
+class CategoryCreateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,10 +17,13 @@ class CategoryRequest extends FormRequest
 
         $rules = [
             'image'    => ['regex:'.$regex],
+            'slug'     => 'required|unique:categories',
+            'status'   => 'required|boolean',
+            'position' => 'required|integer'
         ];
 
         $languageRules = [
-            'title' => 'required',
+            'name' => 'required',
         ];
 
         foreach (config('app.locales') as $locale) {

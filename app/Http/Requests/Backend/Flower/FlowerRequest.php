@@ -14,7 +14,6 @@ class FlowerRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'position'    => 'required',
             'status'      => 'required|boolean',
             'colors'      => 'required'
         ];

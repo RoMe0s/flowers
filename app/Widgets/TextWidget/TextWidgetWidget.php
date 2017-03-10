@@ -9,8 +9,8 @@
 namespace App\Widgets\TextWidget;
 
 use Pingpong\Widget\Widget;
-use Illuminate\Support\Facades\View;
 use App\Models\TextWidget;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class TextWidgetWidget
@@ -20,13 +20,21 @@ class TextWidgetWidget extends Widget
 {
     /**
      * @param string $position
-     * @param string $delimiter
      */
-    function index($position, $delimiter = '')
+    function index($position)
     {
-        $list = TextWidget::where('layout_position', $position)->visible()->positionSorted()->get();
 
-        return View::make('widgets.text_widget.index')->with(compact("list", "delimiter"));
+        Cache::flush();
+
+        $widget = Cache::remember('text_widget_' . $position, 10, function() use($position) {
+
+            return TextWidget::where('layout_position', $position)->visible()->first();
+
+        });
+
+        if($widget) {
+            return $widget->content;
+        }
     }
 }
  

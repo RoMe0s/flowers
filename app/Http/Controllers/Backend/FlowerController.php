@@ -73,8 +73,7 @@ class FlowerController extends BackendController
             $list = Flower::joinTranslations('flowers', 'flower_translations')->select(
                 'flowers.id',
                 'flower_translations.title',
-                'flowers.status',
-                'flowers.position'
+                'flowers.status'
             );
 
             return $dataTables = Datatables::of($list)
@@ -86,15 +85,6 @@ class FlowerController extends BackendController
                         return view(
                             'partials.datatables.toggler',
                             ['model' => $model, 'type' => $this->module, 'field' => 'status']
-                        )->render();
-                    }
-                )
-                ->editColumn(
-                    'position',
-                    function ($model) {
-                        return view(
-                            'partials.datatables.text_input',
-                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
                         )->render();
                     }
                 )
