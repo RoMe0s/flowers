@@ -144,3 +144,9 @@ var Alert = {
         Alert.create(message, 'notify-danger');
     }
 };
+
+$(document).ready(function () {
+    $(document).ready(function () {
+        $('select[multiple]').select2();
+    });
+});

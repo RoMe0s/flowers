@@ -11,14 +11,12 @@
                             TablesBuilder::create(['id' => "datatable1", 'class' => "table table-bordered table-striped table-hover"], ['bStateSave' => true])
                             ->addHead([
                                 ['text' => trans('labels.id')],
-                                ['text' => trans('labels.code')],
-                                ['text' => trans('labels.discount')],
-                                ['text' => trans('labels.date')],
-                                ['text' => trans('labels.status')],
+                                ['text' => trans('labels.price') . '(' . trans('labels.rub') . ')'],
+                                ['text' => trans('labels.discount') . ' ' . trans('labels.percent')],
                                 ['text' => trans('labels.actions')]
                             ])
                             ->addFoot([
-                                ['attr' => ['colspan' => 6]]
+                                ['attr' => ['colspan' => 4]]
                             ])
                              ->make()
                         !!}

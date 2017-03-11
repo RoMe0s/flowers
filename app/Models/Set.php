@@ -31,7 +31,6 @@ class Set extends Model implements MetaGettable
         'image',
         'price',
         'box_id',
-        'category_id',
         'position',
         'status',
         'count',
@@ -100,11 +99,11 @@ class Set extends Model implements MetaGettable
     }
 
     public function category() {
-        return $this->belongsTo(Category::class);
+        return $this->box->category;
     }
 
     public function hasInStock() {
-        $visible_flowers = $this->visible_flowers();
+        $visible_flowers = $this->visible_flowers;
 
         return sizeof($visible_flowers) ? true : false;
     }

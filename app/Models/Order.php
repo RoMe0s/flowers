@@ -37,21 +37,39 @@ class Order extends Model
     }
 
     public function items() {
-        return $this->hasMany(OrderItem::class)->with('itemable');
+        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable.translations');
     }
 
     public function getTotal() {
         $total_price = 0;
 
         foreach ($this->items as $item) {
-            $total_price += ($item->price - $item->discount) * $item->count;
+            $total_price += $item->price * $item->count;
         }
+
+        $total_price -= ($total_price * ($this->discount / 100));
 
         $total_price += $this->delivery_price;
 
-        $total_price /= ($this->discount == 0 ? 1 : ($this->discount / 100) );
-
         return $total_price;
+
+    }
+
+    public function totalPrepay() {
+
+        return $this->getTotal() * ($this->prepay / 100);
+
+    }
+
+    public function images() {
+
+        $result = [];
+
+        try {
+            $result = json_decode($this->result, true);
+        } catch (\Exception $e) {}
+
+        return $result;
 
     }
 
@@ -67,6 +85,28 @@ class Order extends Model
         }
     }
 
+
+    public static function getStatuses($key = null) {
+
+        $statuses = [
+            '1' => 'Ожидает подтверждения',
+            '2' => 'Ожидает оплаты',
+            '3' => 'Оплачен',
+            '4' => 'Выполняется',
+            '5' => 'Доставлен',
+            '0' => 'Отменён'
+        ];
+
+        if($key !== null) return $statuses[$key];
+
+        return $statuses;
+
+    }
+
+    public function getStringStatus() {
+        return static::getStatuses($this->status);
+    }
+
     /**
      * @param string $value
      *
@@ -77,5 +117,14 @@ class Order extends Model
         if($value) {
             return Carbon::createFromFormat('Y-m-d', $value)->format('d-m-Y');
         }
+    }
+
+
+    public function getAddress() {
+
+        if(isset($this->address)) {
+            return $this->address->address;
+        }
+
     }
 }

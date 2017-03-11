@@ -19,7 +19,7 @@
                     @foreach($right_items->where('register_only', 1) as $parent_item)
                         @php($child_items = $menu->visible_items->where('parent_id', $parent_item->id)->where('register_only', 1))
                     <li @if(sizeof($child_items)) class="dropdown" @endif>
-                        <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) @endif href="{!! $parent_item->link !!}" title="{!! $parent_item->title !!}">
+                        <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) href="{!! $parent_item->link !!}" @endif  title="{!! $parent_item->title !!}">
                              {!! $parent_item->name !!} @if(sizeof($child_items)) <i class="caret-down"></i> @endif
                         </a>
 
@@ -38,7 +38,7 @@
                     @foreach($right_items->where('register_only', 0) as $parent_item)
                         @php($child_items = $menu->visible_items->where('parent_id', $parent_item->id)->where('register_only', 0))
                         <li @if(sizeof($child_items)) class="dropdown" @endif>
-                            <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) @endif href="{!! $parent_item->link !!}" title="{!! $parent_item->title !!}">
+                            <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) href="{!! $parent_item->link !!}" @endif title="{!! $parent_item->title !!}">
                                 {!! $parent_item->name !!} @if(sizeof($child_items)) <i class="caret-down"></i> @endif
                             </a>
 
@@ -60,9 +60,10 @@
             @if(sizeof($left_items))
             <ul>
                 @foreach($left_items->where('register_only', -1) as $parent_item)
+
                 @php($child_items = $menu->visible_items->where('parent_id', $parent_item->id)->where('register_only', -1))
                   <li @if(sizeof($child_items)) class="dropdown" @endif>
-                      <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) @endif href="{!! $parent_item->link !!}" title="{!! $parent_item->title !!}">
+                      <a @if(sizeof($child_items)) class="dropdown-toggle" data-toggle="dropdown" @endif @if(trim(request()->path(), '/') != trim($parent_item->link, '/')) href="{!! $parent_item->link !!}" @endif title="{!! $parent_item->title !!}">
                           {!! $parent_item->name !!} @if(sizeof($child_items)) <i class="caret-down"></i> @endif
                       </a>
 

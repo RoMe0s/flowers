@@ -19,7 +19,8 @@ class CategoryCreateRequest extends FormRequest
             'image'    => ['regex:'.$regex],
             'slug'     => 'required|unique:categories',
             'status'   => 'required|boolean',
-            'position' => 'required|integer'
+            'position' => 'required|integer',
+            'type'     => 'required'
         ];
 
         $languageRules = [

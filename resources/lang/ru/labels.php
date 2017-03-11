@@ -463,6 +463,10 @@ return array (
     'wait for payment' => 'Ждет оплаты',
 
     'parent' => 'Родитель',
-    'register_only' => 'Авторизированным'
+    'register_only' => 'Авторизированным',
+    'vip' => 'VIP',
+    'client' => 'Клиент',
+
+    'content_two' => 'Вторая часть контента'
 
 );

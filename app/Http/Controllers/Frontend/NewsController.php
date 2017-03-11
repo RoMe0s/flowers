@@ -8,8 +8,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\News;
+use App\Models\Page;
 use App\Services\NewsService;
+use App\Services\PageService;
 
 /**
  * Class NewsController
@@ -28,16 +29,20 @@ class NewsController extends FrontendController
      */
     protected $newsService;
 
+    protected $pageService;
+
     /**
      * NewsController constructor.
      *
      * @param \App\Services\NewsService $newsService
      */
-    public function __construct(NewsService $newsService)
+    public function __construct(NewsService $newsService, PageService $pageService)
     {
         parent::__construct();
 
         $this->newsService = $newsService;
+
+        $this->pageService = $pageService;
     }
 
     /**
@@ -45,28 +50,16 @@ class NewsController extends FrontendController
      */
     public function index()
     {
-        $this->data('list', $this->newsService->getList());
-
-        return $this->render($this->module.'.index');
-    }
-
-    /**
-     * @param string $slug
-     *
-     * @return $this|\App\Http\Controllers\Frontend\NewsController
-     */
-    public function show($slug = '')
-    {
-        $model = News::with(['translations', 'tags', 'tags.tag.translations'])->visible()->whereSlug($slug)->first();
+        $model = Page::withTranslations()->whereSlug($this->module)->first();
 
         abort_if(!$model, 404);
-
-        $this->newsService->getRelatedNewsForNews($model);
 
         $this->data('model', $model);
 
         $this->fillMeta($model, $this->module);
 
-        return $this->render($this->module.'.show');
+        $this->data('news', $this->newsService->getList());
+
+        return $this->render($this->pageService->getPageTemplate($model));
     }
 }

@@ -87,6 +87,6 @@ class Product extends Model implements MetaGettable
     }
 
     public function categories() {
-        return $this->belongsToMany(Category::class, 'products_categories');
+        return $this->belongsToMany(Category::class, 'products_categories')->with('translations');
     }
 }

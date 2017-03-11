@@ -41,12 +41,6 @@ class UserService
     {
         $input = $request->all();
 
-        $input['avatar'] = $request->file('avatar_new') ?
-            ImageUploader::upload($request->file('avatar_new'), 'user') :
-            $input['avatar_old'];
-
-        $input['birthday'] = Carbon::now()->format('d-m-Y');
-
         return $input;
     }
     
@@ -56,7 +50,10 @@ class UserService
      */
     public function update(User $model, $input = [])
     {
-        $model->email = $input['email'];
+        if(isset($input['email'])) {
+            $model->email = $input['email'];
+        }
+
         $model->save();
 
         $this->processUserInfo($model, $input);

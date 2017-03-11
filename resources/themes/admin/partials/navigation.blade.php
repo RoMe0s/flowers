@@ -24,7 +24,7 @@
                     <a href="{!! route('admin.basket') !!}">
                         <i class="fa fa-shopping-cart"></i>
                         &nbsp;
-                        <span class="badge basket-count">{!! count(session()->get('basket_items')) !!}</span>
+                        <span class="badge basket-count">{!! session()->get('basket_count', 0) !!}</span>
                     </a>
                 </li>
                 <li class="dropdown user user-menu">

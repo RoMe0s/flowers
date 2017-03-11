@@ -18,9 +18,10 @@ class FeedbackRequest extends FormRequest
     public function rules()
     {
         return [
-            'fio'     => 'required',
+            'name'     => 'required',
             'email'   => 'required|email',
-            'message' => 'required',
+            'phone'    => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'text' => 'required',
         ];
     }
 }

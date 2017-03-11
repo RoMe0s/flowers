@@ -34,7 +34,7 @@
     {!! Form::label('category', trans('labels.category'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
-        {!! Form::select('categories[]', $categories, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'multiple' => true, 'required' => true)) !!}
+        {!! Form::select('categories[]', $categories, isset($model->categories) ? $model->categories->lists('id')->toArray() : null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'multiple' => true, 'required' => true)) !!}
 
         {!! $errors->first('category', '<p class="help-block error">:message</p>') !!}
     </div>

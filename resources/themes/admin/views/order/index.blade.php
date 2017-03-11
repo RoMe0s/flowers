@@ -40,7 +40,7 @@
 
                                     _select.on('change', function () {
 
-                                        _val = $(this).val();
+                                        _val = parseInt($(this).val());
 
                                         $table.ajax.url(window.location.href + '?status=' + _val).load();
 

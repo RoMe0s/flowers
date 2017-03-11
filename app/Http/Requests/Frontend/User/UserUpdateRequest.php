@@ -27,10 +27,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'email'  => 'required|email|unique:users,email,' . Sentry::getUser()->getId() . ',id',
             'phone'  => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
-            'name'   => 'required',
-            'gender' => 'in:' . implode(',', UserInfo::$genders),
+            'name'   => 'required'
         ];
 
         return $rules;

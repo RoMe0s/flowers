@@ -24,7 +24,8 @@ class Category extends Model implements MetaGettable
         'meta_keywords',
         'meta_description',
         'content',
-        'short_content'
+        'short_content',
+        'content_two'
     ];
 
     /**
@@ -35,6 +36,7 @@ class Category extends Model implements MetaGettable
         'slug',
         'position',
         'status',
+        'type',
 
 
         'name',
@@ -42,8 +44,18 @@ class Category extends Model implements MetaGettable
         'meta_keywords',
         'meta_description',
         'content',
-        'short_content'
+        'short_content',
+        'content_two'
     ];
+
+    public static function getTypes($type = null) {
+        $types = array(
+            (string)Bouquet::class => 'Букеты',
+            (string)Set::class => 'Наборы'
+        );
+
+        return $type !== null ? $types[$type] : $types;
+    }
 
 
     public function products() {
@@ -52,6 +64,10 @@ class Category extends Model implements MetaGettable
 
     public function sets() {
         return $this->hasMany(Set::class);
+    }
+
+    public function boxes() {
+        return $this->hasMany(Box::class);
     }
 
     /**
@@ -73,6 +89,14 @@ class Category extends Model implements MetaGettable
     public function scopePositionSorted($query, $order = 'ASC')
     {
         return $query->orderBy('position', $order);
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return empty($this->content) ? $this->short_content : $this->content;
     }
 
     public function getMetaDescription()

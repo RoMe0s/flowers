@@ -23,7 +23,7 @@ class BouquetCreateRequest extends FormRequest
             'slug'     => 'unique:products',
             'price' => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
-            'type_id'      => 'required',
+            'category_id'      => 'required',
             'count'      => 'required',
             'flowers'    => 'required'
         ];

@@ -122,9 +122,6 @@ $router->group(
                 );
                 $router->resource('bouquet', 'Backend\BouquetController');
 
-                //types
-                $router->resource('type', 'Backend\TypeController');
-
                 //sales
                 $router->post(
                     'sale/{id}/ajax_field',
@@ -196,17 +193,6 @@ $router->group(
                 );
                 $router->resource('menu', 'Backend\MenuController');
 
-                // banners
-                $router->post(
-                    'banner/{id}/ajax_field',
-                    [
-                        'middleware' => ['ajax'],
-                        'as'         => 'admin.banner.ajax_field',
-                        'uses'       => 'Backend\BannerController@ajaxFieldChange',
-                    ]
-                );
-                $router->resource('banner', 'Backend\BannerController');
-
                 // text_widgets
                 $router->post(
                     'text_widget/{id}/ajax_field',
@@ -240,16 +226,6 @@ $router->group(
                     ]
                 );
                 $router->resource('variable', 'Backend\VariableController');
-
-                // translations
-                $router->get(
-                    'translation/{group}',
-                    ['as' => 'admin.translation.index', 'uses' => 'Backend\TranslationController@index']
-                );
-                $router->post(
-                    'translation/{group}',
-                    ['as' => 'admin.translation.update', 'uses' => 'Backend\TranslationController@update']
-                );
             }
         );
 

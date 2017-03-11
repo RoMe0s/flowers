@@ -172,7 +172,7 @@ class UserController extends BackendController
      */
     public function store(UserCreateRequest $request)
     {
-        $input = $request->only('email', 'activated', 'password');
+        $input = $request->only('email', 'activated', 'password', 'notifications', 'start_discount', 'discount');
         $user_info = $request->all();
 
         DB::beginTransaction();
@@ -267,7 +267,7 @@ class UserController extends BackendController
             return Redirect::route('admin.user.index');
         }
 
-        $input = $request->only('email', 'activated');
+        $input = $request->only('email', 'activated', 'notifications', 'start_discount', 'discount');
         $user_info = $request->all();
 
         DB::beginTransaction();

@@ -8,9 +8,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Category;
 use App\Models\Page;
-use App\Models\Set;
+use App\Services\CategoryService;
 use App\Services\PageService;
 use Response;
 use View;
@@ -32,16 +31,20 @@ class PageController extends FrontendController
      */
     protected $pageService;
 
+    protected $categoryService;
+
     /**
      * PageController constructor.
-     *
-     * @param \App\Services\PageService $pageService
+     * @param PageService $pageService
+     * @param CategoryService $categoryService
      */
-    public function __construct(PageService $pageService)
+    public function __construct(PageService $pageService, CategoryService $categoryService)
     {
         parent::__construct();
 
         $this->pageService = $pageService;
+
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -63,16 +66,15 @@ class PageController extends FrontendController
     /**
      * @return $this|\App\Http\Controllers\Frontend\PageController
      */
-    public function getPage()
+    public function getPage($slug)
     {
-        $slug = func_get_args();
-        $slug = array_pop($slug);
-
         if ($slug == 'home') {
             return redirect(route('home'), 301);
         }
 
         $model = Page::with(['translations', 'parent', 'parent.translations'])->visible()->whereSlug($slug)->first();
+
+        $model = !$model ? $this->categoryService->find($slug) : $model;
 
         abort_if(!$model, 404);
 
@@ -80,7 +82,13 @@ class PageController extends FrontendController
 
         $this->fillMeta($model, $this->module);
 
-        return $this->render($this->pageService->getPageTemplate($model));
+        if($model instanceof Page) {
+            $view = $this->pageService->getPageTemplate($model);
+        } else {
+            $view = $this->categoryService->getView();
+        }
+
+        return $this->render($view);
     }
 
     /**

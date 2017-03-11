@@ -50,22 +50,6 @@
                 </li>
             @endif
 
-{{--            @if ($user->hasAccess('banner.read'))
-                <li class="{!! active_class('admin.banner*') !!}">
-                    <a href="{!! route('admin.banner.index') !!}">
-                        <i class="fa fa-picture-o"></i>
-                        <span>@lang('labels.banners')</span>
-
-                        @if ($user->hasAccess('banner.create'))
-                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_banner')"
-                                   data-href="{!! route('admin.banner.create') !!}">
-                                <i class="fa fa-plus"></i>
-                            </small>
-                        @endif
-                    </a>
-                </li>
-            @endif--}}
-
             @if ($user->hasAccess('textwidget.read'))
                 <li class="{!! active_class('admin.text_widget*') !!}">
                     <a href="{!! route('admin.text_widget.index') !!}">
@@ -91,15 +75,6 @@
                     </a>
                 </li>
             @endif
-
-{{--            @if ($user->hasAccess('comments.read'))
-                <li class="{!! active_class('admin.comment*') !!}">
-                    <a href="{!! route('admin.comment.index') !!}">
-                        <i class="fa fa-comment"></i>
-                        <span>@lang('labels.comments')</span>
-                    </a>
-                </li>
-            @endif--}}
 
             <li class="header">@lang('labels.flowers')</li>
 
@@ -161,22 +136,6 @@
                         @if ($user->hasAccess('category.create'))
                             <small class="label create-label pull-right bg-green" title="@lang('labels.add_category')"
                                    data-href="{!! route('admin.category.create') !!}">
-                                <i class="fa fa-plus"></i>
-                            </small>
-                        @endif
-                    </a>
-                </li>
-            @endif
-
-            @if ($user->hasAccess('type.read'))
-                <li class="{!! active_class('admin.type*') !!}">
-                    <a href="{!! route('admin.type.index') !!}">
-                        <i class="fa fa-filter"></i>
-                        <span>@lang('labels.types')</span>
-
-                        @if ($user->hasAccess('type.create'))
-                            <small class="label create-label pull-right bg-green" title="@lang('labels.add_type')"
-                                   data-href="{!! route('admin.type.create') !!}">
                                 <i class="fa fa-plus"></i>
                             </small>
                         @endif
@@ -354,26 +313,6 @@
                             </small>
                         @endif
                     </a>
-                </li>
-            @endif
-
-            <li class="header">@lang('labels.settings')</li>
-            @if ($user->hasAccess('settings.translations'))
-                <li class="treeview {!! active_class('admin.translation.index*') !!}">
-                    <a href="#">
-                        <i class="fa fa-language"></i>
-                        <span>@lang('labels.translations')</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        @foreach($translation_groups as $group)
-                            <li class="{!! front_active_class(route('admin.translation.index', $group)) !!}">
-                                <a href="{!! route('admin.translation.index', $group) !!}">
-                                    <span>@lang('labels.translation_group_' . $group)</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
                 </li>
             @endif
         </ul>

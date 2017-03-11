@@ -5,15 +5,12 @@ use App\Exceptions\NotValidImageException;
 use App\Services\AuthService;
 use App\Http\Requests\Frontend\Auth\UserRegisterRequest;
 use App\Models\User;
-use App\Models\UserInfo;
+use App\Services\PageService;
 use App\Services\UserService;
-use App\Traits\Controllers\SaveImageTrait;
-use Carbon;
 use Cartalyst\Sentry\Throttling\UserBannedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Users\LoginRequiredException;
 use Cartalyst\Sentry\Users\PasswordRequiredException;
-use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
@@ -24,6 +21,7 @@ use FlashMessages;
 use Illuminate\Http\Request;
 use Mail;
 use Sentry;
+use App\Models\Page;
 
 /**
  * Class AuthController
@@ -31,8 +29,8 @@ use Sentry;
  */
 class AuthController extends FrontendController
 {
-    
-    use SaveImageTrait;
+
+    public $module = 'profile';
     
     /**
      * @var \App\Services\AuthService
@@ -43,6 +41,10 @@ class AuthController extends FrontendController
      * @var \App\Services\UserService
      */
     protected $userService;
+
+    protected $pageService;
+
+    protected $page = null;
     
     /**
      * AuthController constructor.
@@ -50,14 +52,32 @@ class AuthController extends FrontendController
      * @param \App\Services\AuthService $authService
      * @param \App\Services\UserService $userService
      */
-    public function __construct(AuthService $authService, UserService $userService)
+    public function __construct(AuthService $authService, UserService $userService, PageService $pageService)
     {
         parent::__construct();
         
         $this->authService = $authService;
         $this->userService = $userService;
+        $this->pageService = $pageService;
 
-        $this->setRedirectTo();
+    }
+
+    private function _init() {
+
+        $type = explode('/', request()->path());
+
+        $type = array_pop($type);
+
+        $model = Page::with(['translations', 'parent', 'parent.translations'])->visible()->whereSlug($type)->first();
+
+        abort_if(!$model, 404);
+
+        $this->data('model', $model);
+
+        $this->fillMeta($model, $this->module);
+
+        $this->page = $model;
+
     }
     
     /**
@@ -65,17 +85,10 @@ class AuthController extends FrontendController
      */
     public function getLogin()
     {
-        try {
-            return [
-                'status' => 'success',
-                'html'   => view('partials.popups.auth')->render(),
-            ];
-        } catch (Exception $e) {
-            return [
-                'status'  => 'error',
-                'message' => trans('messages.an error has occurred, try_later'),
-            ];
-        }
+
+        $this->_init();
+
+        return $this->render($this->pageService->getPageTemplate($this->page));
     }
     
     /**
@@ -92,43 +105,20 @@ class AuthController extends FrontendController
         
         try {
             if ($user = $this->authService->login($credentials)) {
-                FlashMessages::add('success', trans('messages.you have successfully logged in'));
-                
-                return ['status' => 'success', 'redirect' => session('redirect', false)];
+                return redirect()->to(route('profile'));
             }
-            
-            $error = trans('messages.access_denied');
-        } catch (LoginRequiredException $e) {
-            $error = trans('messages.enter your login');
-        } catch (PasswordRequiredException $e) {
-            $error = trans('messages.enter your password');
-        } catch (WrongPasswordException $e) {
-            $error = trans('messages.you have entered a wrong password');
-        } catch (UserNotFoundException $e) {
-            $error = trans('messages.user with such email was not found');
-        } catch (UserNotActivatedException $e) {
-            $error = trans('messages.user with such email was not activated');
-        } catch (UserSuspendedException $e) {
-            $error = trans('messages.user with such email was blocked');
-            
-            $user = User::where('email', $credentials['email'])->first();
-            
-            $throttle = Sentry::findThrottlerByUserId($user->id);
-            
-            $timestamp = strtotime($throttle->suspended_at);
-            if ($timestamp) {
-                $suspensionTime = $throttle->getSuspensionTime();
-                $carbon = Carbon::createFromTimestamp($timestamp)->addMinutes($suspensionTime);
-                
-                $error .= ' '.trans('messages.to').' '.$carbon->format('d.m.Y H:i');
-            }
-        } catch (UserBannedException $e) {
-            $error = trans('messages.user with such email was banned');
-        } catch (Exception $e) {
-            $error = trans('messages.an error has occurred, try_later');
         }
-        
-        return ['status' => 'error', 'message' => $error];
+        catch (UserNotFoundException $e) {
+            FlashMessages::add('error', 'Пользователя с таким Email не существует');
+        }
+        catch (WrongPasswordException $e) {
+            FlashMessages::add('error', 'Неверный логин или пароль');
+        }
+        catch (Exception $e) {
+            FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
+        }
+        return redirect()->back()->withInput($credentials);
+
     }
     
     /**
@@ -148,13 +138,10 @@ class AuthController extends FrontendController
      */
     public function getRegister()
     {
-        $genders = [];
-        foreach (UserInfo::$genders as $gender) {
-            $genders[$gender] = trans('labels.'.$gender);
-        }
-        $this->data('genders', $genders);
-        
-        return $this->render('auth.register');
+
+        $this->_init();
+
+        return $this->render($this->pageService->getPageTemplate($this->page));
     }
     
     /**
@@ -189,7 +176,7 @@ class AuthController extends FrontendController
                 trans('messages.user register success message')
             );
             
-            return redirect()->to($this->getRedirectTo());
+            return redirect()->back();
         } catch (NotValidImageException $e) {
             FlashMessages::add(
                 'error',
@@ -205,39 +192,17 @@ class AuthController extends FrontendController
         
         return redirect()->back()->withInput($input);
     }
-    
+
+
     /**
-     * @param string $email
-     * @param string $code
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
-    public function getActivate($email, $code)
+    public function getReset()
     {
-        try {
-            $user = Sentry::findUserByLogin($email);
-            
-            if ($user->attemptActivation($code)) {
-                FlashMessages::add(
-                    'success',
-                    trans('messages.congratulations, you have successfully activate your account')
-                );
-                
-                return redirect()->home();
-            } else {
-                $error = trans('messages.user activation failed, wrong activation code');
-            }
-        } catch (UserNotFoundException $e) {
-            $error = trans('messages.user with such email was not found');
-        } catch (UserAlreadyActivatedException $e) {
-            $error = trans('messages.user with such email already activated');
-        } catch (Exception $e) {
-            $error = trans('messages.user activation failed, try again later');
-        }
-        
-        FlashMessages::add('error', $error);
-        
-        return redirect()->home();
+
+        $this->_init();
+
+        return $this->render($this->pageService->getPageTemplate($this->page));
     }
     
     /**
@@ -287,7 +252,7 @@ class AuthController extends FrontendController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getReset($email = '', $token = '')
+/*    public function getReset($email = '', $token = '')
     {
         try {
             $user = Sentry::findUserByLogin($email);
@@ -328,34 +293,5 @@ class AuthController extends FrontendController
         FlashMessages::add('error', $error);
         
         return redirect()->home();
-    }
-    
-    /**
-     * set redirect after register login
-     */
-    private function setRedirectTo()
-    {
-        if (
-            url()->previous() !== url()->current() &&
-            strpos(url()->previous(), '/auth/') === false &&
-            strpos(url()->previous(), '/profiles/') &&
-            check_local()
-        ) {
-            session()->put('returnTo', url()->previous());
-        }
-    }
-    
-    /**
-     * @return string
-     */
-    private function getRedirectTo()
-    {
-        $url = session('returnTo', false);
-        
-        if ($url) {
-            session()->forget('returnTo');
-        }
-        
-        return localize_url($url ? : url('/'));
-    }
+    }*/
 }

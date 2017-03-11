@@ -13,7 +13,7 @@
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
         <div class="input-group">
-            {!! Form::text('publish_at', null, ['placeholder' => trans('labels.publish_at'), 'class' => 'form-control input-sm inputmask-birthday publish_atpicker-birthday', 'required' => true]) !!}
+            {!! Form::text('publish_at', null, ['placeholder' => trans('labels.publish_at'), 'class' => 'form-control input-sm inputmask-birthday datepicker-birthday', 'required' => true]) !!}
             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
         </div>
 

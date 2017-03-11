@@ -31,7 +31,7 @@ class OrderRequest extends FormRequest
             'address' => 'required',
             'code'    => 'required',
             'delivery_price' => 'required',
-//            'discount'      => 'required',
+            'discount'      => 'required',
             'prepay'    => 'required',
             'recipient_name' => 'required',
             'recipient_phone'    => 'required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
@@ -39,7 +39,8 @@ class OrderRequest extends FormRequest
             'date' => 'date',
             'prepay' => 'required',
             'status' => 'required',
-            'password' => 'required_without:user_id'
+            'password' => 'required_without:user_id',
+            'card_text' => 'max:150'
         ];
 
         $items_rules = [

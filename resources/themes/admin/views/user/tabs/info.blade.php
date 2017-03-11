@@ -30,12 +30,22 @@
     </div>
 
     <div class="form-group @if ($errors->has('start_discount')) has-error @endif">
-        {!! Form::label('start_discount', trans('labels.start_discount'), ['class' => 'col-md-3 control-label']) !!}
+        {!! Form::label('start_discount', trans('labels.start_discount') . ' ' . trans('labels.vip'), ['class' => 'col-md-3 control-label']) !!}
 
         <div class="col-md-3">
             {!! Form::text('start_discount', null, ['placeholder' => trans('labels.start_discount'), 'class' => 'form-control input-sm']) !!}
 
             {!! $errors->first('start_discount', '<p class="help-block error">:message</p>') !!}
+        </div>
+    </div>
+
+    <div class="form-group @if ($errors->has('discount')) has-error @endif">
+        {!! Form::label('discount', trans('labels.discount'), ['class' => 'col-md-3 control-label']) !!}
+
+        <div class="col-md-3">
+            {!! Form::text('discount', null, ['placeholder' => trans('labels.discount'), 'class' => 'form-control input-sm']) !!}
+
+            {!! $errors->first('discount', '<p class="help-block error">:message</p>') !!}
         </div>
     </div>
 

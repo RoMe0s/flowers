@@ -43,8 +43,6 @@
                 </p>
             </div>
         </div>
-
-        @include('errors.form')
     </div>
 
     @widget__menu(1)

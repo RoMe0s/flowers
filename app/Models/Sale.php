@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Sale extends Model
 {
@@ -15,26 +16,13 @@ class Sale extends Model
     ];
 
     /**
-     * @return mixed
-     */
-    public function getDates()
-    {
-        return array_merge(parent::getDates(), ['publish_at']);
-    }
-
-    /**
      * @param string $value
      *
      * @return string
      */
     public function setPublishAtAttribute($value)
     {
-        if (empty($value)) {
-            $this->attributes['publish_at'] = Carbon::now();
-        } else {
-            $this->attributes['publish_at'] = Carbon::createFromFormat('d-m-Y', $value)->startOfDay()
-                ->format('Y-m-d H:i:s');
-        }
+        $this->attributes['publish_at'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
     }
 
     /**
@@ -44,11 +32,7 @@ class Sale extends Model
      */
     public function getPublishAtAttribute($value)
     {
-        if (empty($value) || $value == '0000-00-00 00:00:00') {
-            return null;
-        } else {
-            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y');
-        }
+        return Carbon::createFromFormat('Y-m-d', $value)->format('d-m-Y');
     }
 
     /**

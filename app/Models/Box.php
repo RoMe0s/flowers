@@ -55,4 +55,8 @@ class Box extends Model
     public function sets() {
         return $this->hasMany(Set::class);
     }
+
+    public function size($separator = 'x') {
+        return $this->length.' '.$separator.' '.$this->width;
+    }
 }

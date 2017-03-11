@@ -22,17 +22,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class NewsService
 {
-
-    /**
-     * @param \App\Models\News $model
-     */
-    public function setExternalUrl(News $model)
-    {
-        $model->external_url = get_hashed_url($model, 'news');
-
-        $model->save();
-    }
-
     /**
      * @return LengthAwarePaginator
      */
@@ -40,36 +29,7 @@ class NewsService
     {
         $list = News::withTranslations()->visible()->publishAtSorted()->positionSorted();
 
-        $list = $this->_implodeFilters($list);
-
         return $list->paginate(config('news.per_page'));
-    }
-
-    /**
-     * @param Builder $list
-     *
-     * @return Builder
-     */
-    private function _implodeFilters(Builder $list)
-    {
-        if (request('tag')) {
-            $list->whereExists(
-                function ($query) {
-                    $query
-                        ->leftJoin('tags', 'tags.id', '=', 'tagged.tag_id')
-                        ->select(DB::raw('1'))
-                        ->from('tagged')
-                        ->whereRaw(
-                            '
-                            news.id = tagged.taggable_id AND
-                            tagged.taggable_type = \''.str_replace('\\', '\\\\', News::class).'\' AND
-                            tags.slug = \''.request('tag').'\''
-                        );
-                }
-            );
-        }
-
-        return $list;
     }
 
     /**

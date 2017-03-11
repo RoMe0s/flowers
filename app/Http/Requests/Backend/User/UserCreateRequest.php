@@ -32,7 +32,9 @@ class UserCreateRequest extends FormRequest
             'password_confirmation' => 'required',
             'groups'                => 'array',
             'activated'             => 'required|boolean',
-            'notifications'         => 'required|boolean'
+            'notifications'         => 'required|boolean',
+            'start_discount'        => 'integer',
+            'discount'              => 'integer'
         ];
 
         return array_merge($rules, app('App\Http\Requests\Backend\User\UserInfoRequest')->rules());

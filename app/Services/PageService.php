@@ -36,12 +36,12 @@ class PageService
      */
     public function getPageTemplate(Page $model)
     {
-        if(view()->exists($model->template . '.index')) {
+        if(view()->exists('views.' . $model->template . '.index')) {
 
-            return $model->template . '.index';
+            return 'views.' . $model->template . '.index';
 
         }
 
-        return 'index';
+        return 'views.default.index';
     }
 }

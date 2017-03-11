@@ -21,7 +21,8 @@ class CategoryUpdateRequest extends FormRequest
             'image'    => ['regex:'.$regex],
             'slug'     => 'required|unique:categories,slug,'.$id.',id',
             'status'   => 'required|boolean',
-            'position' => 'required|integer'
+            'position' => 'required|integer',
+            'type'     => 'required'
         ];
 
         $languageRules = [

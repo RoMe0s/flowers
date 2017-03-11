@@ -11,10 +11,10 @@
                             TablesBuilder::create(['id' => "datatable1", 'class' => "table table-bordered table-striped table-hover"], ['bStateSave' => true])
                             ->addHead([
                                 ['text' => trans('labels.id')],
-                                ['text' => trans('labels.code')],
-                                ['text' => trans('labels.discount')],
-                                ['text' => trans('labels.date')],
+                                ['text' => trans('labels.price')],
+                                ['text' => trans('labels.publish_at')],
                                 ['text' => trans('labels.status')],
+                                ['text' => trans('labels.position')],
                                 ['text' => trans('labels.actions')]
                             ])
                             ->addFoot([

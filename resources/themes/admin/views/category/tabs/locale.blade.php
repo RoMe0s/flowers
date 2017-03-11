@@ -30,6 +30,17 @@
 </div>
 @include('partials.tabs.ckeditor', ['id' => $locale . '[content]'])
 
+<div class="form-group @if ($errors->has($locale . '[content_two]')) has-error @endif">
+    {!! Form::label($locale . '[content_two]', trans('labels.content_two'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
+
+    <div class="col-xs-8 col-sm-7 col-md-10">
+        {!! Form::textarea($locale . '[content_two]', isset($model->translate($locale)->content_two) ? $model->translate($locale)->content_two : '', ['rows' => '3', 'placeholder' => trans('labels.content_two'), 'class' => 'form-control input-sm content_two_' . $locale]) !!}
+
+        {!! $errors->first($locale . '[content_two]', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+@include('partials.tabs.ckeditor', ['id' => $locale . '[content_two]'])
+
 <div class="form-group @if ($errors->has($locale.'.meta_title')) has-error @endif">
     {!! Form::label($locale . '[meta_title]', trans('labels.meta_title'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 

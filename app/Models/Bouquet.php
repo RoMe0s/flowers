@@ -34,7 +34,7 @@ class Bouquet extends Model implements MetaGettable
         'price',
         'image',
         'slug',
-        'type_id',
+        'category_id',
 
         'name',
         'short_content',
@@ -91,7 +91,17 @@ class Bouquet extends Model implements MetaGettable
         return $this->belongsToMany(Flower::class, 'bouquets_flowers')->with('translations');
     }
 
-    public function type(){
-        return $this->belongsTo(Type::class)->with('translations');
+    public function visible_flowers() {
+        return $this->flowers()->visible();
+    }
+
+    public function hasInStock() {
+        $visible_flowers = $this->visible_flowers;
+
+        return sizeof($visible_flowers) ? true : false;
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class)->with('translations');
     }
 }

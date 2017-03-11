@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Events\Frontend\SendAdminEmailAboutNewUser',
             'App\Listeners\Events\Frontend\SendUserActivationEmail',
         ],
+
+        'App\Events\Frontend\IndividualStored' => [
+            'App\Listeners\Events\Frontend\SendAdminAboutNewIndividual',
+        ],
     ];
 
     /**

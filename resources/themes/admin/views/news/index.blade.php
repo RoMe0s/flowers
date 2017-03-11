@@ -12,12 +12,13 @@
                             ->addHead([
                                 ['text' => trans('labels.id')],
                                 ['text' => trans('labels.name')],
+                                ['text' => trans('labels.publish_at')],
                                 ['text' => trans('labels.status')],
                                 ['text' => trans('labels.position')],
                                 ['text' => trans('labels.actions')]
                             ])
                             ->addFoot([
-                                ['attr' => ['colspan' => 5]]
+                                ['attr' => ['colspan' => 6]]
                             ])
                              ->make()
                         !!}

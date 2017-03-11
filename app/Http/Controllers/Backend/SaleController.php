@@ -83,17 +83,20 @@ class SaleController extends BackendController
                 ->filterColumn('price', 'where', 'price', 'LIKE', '%$1%')
                 ->filterColumn('publish_at', 'where', 'publish_at', 'LIKE', '%$1%')
                 ->editColumn(
-                    'publish_at',
-                    function ($model) {
-                        return $model->format('d-m-Y');
-                    }
-                )
-                ->editColumn(
                     'status',
                     function ($model) {
                         return view(
                             'partials.datatables.toggler',
                             ['model' => $model, 'type' => $this->module, 'field' => 'status']
+                        )->render();
+                    }
+                )
+                ->editColumn(
+                    'position',
+                    function ($model) {
+                        return view(
+                            'partials.datatables.text_input',
+                            ['model' => $model, 'type' => $this->module, 'field' => 'position']
                         )->render();
                     }
                 )

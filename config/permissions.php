@@ -26,6 +26,11 @@ return array (
     'administrator',
 
     /*
+     * VIP клиент
+     */
+    'vip',
+
+    /*
     |--------------------------------------------------------------------------
     | menu
     |------------------------------------------------------------------------
@@ -104,11 +109,6 @@ return array (
     'category.read',
     'category.write',
     'category.delete',
-
-    'type.create',
-    'type.read',
-    'type.write',
-    'type.delete',
 
     'order.create',
     'order.read',

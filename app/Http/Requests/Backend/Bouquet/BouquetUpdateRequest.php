@@ -25,7 +25,7 @@ class BouquetUpdateRequest extends FormRequest
             'slug'     => 'unique:products,slug,'.$id.',id',
             'price' => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
-            'type_id'      => 'required',
+            'category_id'      => 'required',
             'count'      => 'required',
             'flowers' => 'required'
         ];

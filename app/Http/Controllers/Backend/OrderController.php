@@ -57,10 +57,7 @@ class OrderController extends BackendController
 
         Meta::title(trans('labels.order'));
 
-        $this->statuses = [
-            '1' => trans('labels.wait for accept'),
-            '2' => trans('labels.wait for payment')
-        ];
+        $this->statuses = Order::getStatuses();
     }
 
     /**
@@ -78,10 +75,11 @@ class OrderController extends BackendController
             $list = Order::select(
                 'id',
                 'recipient_name',
-                'status'
+                'status',
+                'delivery_price'
             );
 
-            if($request->get('status')) {
+            if($request->get('status') !== null && $request->get('status') !== "") {
                 $list->where('status', $request->get('status'));
             }
 
@@ -113,6 +111,7 @@ class OrderController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
+                ->removeColumn('delivery_price')
                 ->make();
         }
 
@@ -170,8 +169,9 @@ class OrderController extends BackendController
             $input['user_id'] = isset($input['user_id']) && $input['user_id'] != "" ? $input['user_id'] : $this->_processUser();
 
             if(!isset($input['address_id'])) {
-                $input['address_id'] = $this->_proccessAddress();
+                $input['address_id'] = $this->_proccessAddress($input['user_id']);
             }
+
 
             $model = new Order($input);
             $model->save();
@@ -236,6 +236,10 @@ class OrderController extends BackendController
             $input = $request->all();
 
             $input['user_id'] = isset($input['user_id']) && $input['user_id'] != "" ? $input['user_id'] : $this->_processUser();
+
+            if(!isset($input['address_id'])) {
+                $input['address_id'] = $this->_proccessAddress($input['user_id']);
+            }
 
             $model = Order::findOrFail($id);
 
@@ -320,11 +324,11 @@ class OrderController extends BackendController
         $this->data('addresses', Address::all());
 
         $this->data('times', array(
-           '1' => trans('labels.from 10 to 13'),
-            '2' => trans('labels.from 13 to 16'),
-            '3' => trans('labels.from 16 to 19'),
-            '4' => trans('labels.from 19 to 22'),
-            '5' => trans('labels.from 22 to 10')
+            '1' => 'с 10:00 до 13:00',
+            '2' => 'с 13:00 до 16:00',
+            '3' => 'с 16:00 до 19:00',
+            '4' => 'с 19:00 до 22:00',
+            '5' => 'с 22:00 до 10:00'
         ));
 
         $this->data('prepay', array(
@@ -428,9 +432,10 @@ class OrderController extends BackendController
         }
     }
 
-    private function _proccessAddress() {
+    private function _proccessAddress($user_id) {
         $input['address'] = request('address');
         $input['code'] = request('code');
+        $input['user_id'] = $user_id;
         $address = new Address();
         $address->fill($input);
         $address->save();
@@ -467,13 +472,14 @@ class OrderController extends BackendController
 
             $count = 0;
             foreach($basket_items as $par_items)
-                foreach ($par_items as $item)
-                    $count++;
+                $count += count($par_items);
             if($count > 0) {
                 session()->put('basket_items', $basket_items);
+                session()->pub('basket_count', $count);
             }
             else {
                 session()->forget('basket_items');
+                session()->forget('basket_count');
             }
 
             return ['status' => 'success', 'message' => trans('messages.save_ok'), 'html' => $html, 'count' => $count, 'update' => isset($already_item) ? $item->id : false];
@@ -514,9 +520,9 @@ class OrderController extends BackendController
             $class = "App\\Models\\" . $request->get('type');
             $item = $class::find($request->get('id'));
             $already_items = session()->get('basket_items', []);
-            ;
+
             if(isset($already_items[strtolower($request->get('type'))][$request->get('id')])) {
-                $already_items[strtolower($request->get('type'))][$request->get('id')]->basket_count = $already_items[strtolower($request->get('type'))][$request->get('id')]->basket_coun++;
+                $already_items[strtolower($request->get('type'))][$request->get('id')]->basket_count = $already_items[strtolower($request->get('type'))][$request->get('id')]->basket_count+1;
                 $message = trans('messages.item count added');
             } else {
                 $item->basket_count = 1;
@@ -526,8 +532,8 @@ class OrderController extends BackendController
             session()->put('basket_items', $already_items);
             $count = 0;
             foreach($already_items as $par_items)
-                foreach ($par_items as $item)
-                    $count++;
+                $count += count($par_items);
+            session()->put('basket_count', $count);
             return ['status' => 'success', 'message' => $message, 'count' => $count];
         } catch (Exception $e) {
             return ['status' => 'error', 'message' => trans('messages.an error has occurred, try_later')];
@@ -539,12 +545,13 @@ class OrderController extends BackendController
         unset($already_items[strtolower($request->get('type'))][$request->get('id')]);
         $count = 0;
         foreach($already_items as $par_items)
-            foreach ($par_items as $item)
-                $count++;
+            $count += count($par_items);
         if($count > 0) {
             session()->put('basket_items', $already_items);
+            session()->put('basket_count', $count);
         }
         else {
+            session()->forget('basket_count');
             session()->forget('basket_items');
             $already_items = array();
         }

@@ -84,7 +84,7 @@ class BoxController extends BackendController
                 ->editColumn(
                     'category_id',
                     function ($model) {
-                        return isset($model->category) ? $model->category->title : trans('labels.no');
+                        return isset($model->category) ? $model->category->name : trans('labels.no');
                     }
                 )
                 ->editColumn(

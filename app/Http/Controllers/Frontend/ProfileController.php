@@ -10,13 +10,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Requests\Frontend\User\UserPasswordUpdateRequest;
 use App\Http\Requests\Frontend\User\UserUpdateRequest;
-use App\Models\User;
+use App\Models\Discount;
+use App\Models\Page;
 use App\Models\UserInfo;
 use App\Services\UserService;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use Exception;
 use FlashMessages;
-use Meta;
 use Sentry;
 
 /**
@@ -36,6 +36,8 @@ class ProfileController extends FrontendController
      */
     private $userService;
 
+    private $currentUser;
+
     /**
      * ProfileController constructor.
      *
@@ -46,26 +48,37 @@ class ProfileController extends FrontendController
         parent::__construct();
 
         $this->userService = $userService;
-    }
 
-    /**
-     * public user page
-     *
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function show($id)
-    {
-        $model = $this->userService->getUserById($id);
+        $model = Page::with(['translations', 'parent', 'parent.translations'])->visible()->whereSlug($this->module)->first();
 
         abort_if(!$model, 404);
 
         $this->data('model', $model);
 
-        Meta::title($model->getFullName());
+        $titles = [
+            'profile' => 'Профиль',
+            'subscriptions' => 'Подписки',
+            'discounts' => 'Накопительные скидки',
+            'orders' => 'История заказов',
+            'addresses' => 'Адреса доставки'
+        ];
 
-        return $this->render($this->module.'.show');
+        try {
+            $selected = explode('/', request()->path());
+            $selected = $titles[array_pop($selected)];
+            $model->name = $model->name . ' | ' . $selected;
+            $model->meta_title = $model->name;
+        } catch (Exception $e) {
+            $selected = null;
+        }
+
+        $this->data('title', $selected);
+
+        $this->fillMeta($model, $this->module);
+
+        $this->currentUser = $this->_getUser();
+
+        view()->share('user', $this->currentUser);
     }
     
     /**
@@ -73,29 +86,9 @@ class ProfileController extends FrontendController
      */
     public function index()
     {
-        $user = $this->_getUser();
-
-        view()->share('user', $user);
-
-        Meta::title($user->getFullName());
-        
         return $this->render($this->module.'.index');
     }
 
-    /**
-     * @return $this
-     */
-    public function edit()
-    {
-        $user = $this->_getUser();
-
-        view()->share('user', $user);
-        
-        $this->fillAdditionalTemplateData();
-        
-        return $this->render($this->module.'.edit');
-    }
-    
     /**
      * @param \App\Http\Requests\Frontend\User\UserUpdateRequest $request
      *
@@ -103,67 +96,58 @@ class ProfileController extends FrontendController
      */
     public function update(UserUpdateRequest $request)
     {
-        $model = $this->_getUser();
-        
+        $model = $this->currentUser;
+
         try {
             $input = $this->userService->prepareInput($request);
-            
+
             $this->userService->update($model, $input);
-            
-            FlashMessages::add('success', trans('messages.changes successfully saved'));
 
-            return redirect()->route('profiles.index');
+            FlashMessages::add('success', 'Изменения успешно сохранены');
+
+            return redirect()->route('profile');
         } catch (Exception $e) {
-            FlashMessages::add('error', trans('messages.an error has occurred, try_later'));
-        }
-        
-        return redirect()->route('profiles.edit');
-    }
-
-    /**
-     * @return $this
-     */
-    public function editPassword()
-    {
-        return $this->render($this->module.'.change_password');
-    }
-
-    /**
-     * @param \App\Http\Requests\Frontend\User\UserPasswordUpdateRequest $request
-     *
-     * @return mixed
-     */
-    public function updatePassword(UserPasswordUpdateRequest $request)
-    {
-        $model = $this->_getUser();
-
-        try {
-            Sentry::findUserByCredentials(['email' => $model->email, 'password' => $request->get('old_password')]);
-
-            $this->userService->updatePassword($model, $request->get('password'));
-
-            FlashMessages::add('success', trans('messages.changes successfully saved'));
-
-            return redirect()->route('profiles.index');
-        } catch (WrongPasswordException $e) {
-            FlashMessages::add('error', trans('messages.you have entered a wrong password'));
-        } catch (Exception $e) {
-            FlashMessages::add('error', trans('messages.an error has occurred, try_later'));
+            FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
         }
 
-        return redirect()->back();
+        return redirect()->route('profile');
     }
 
-    /**
-     * fill additional template data
-     */
-    public function fillAdditionalTemplateData()
-    {
-        $genders = [];
-        foreach (UserInfo::$genders as $gender) {
-            $genders[$gender] = trans('labels.'.$gender);
-        }
-        $this->data('genders', $genders);
+    public function subscriptions() {
+
+        $subscriptions = $this->currentUser->subscriptions;
+
+        $this->data('subscriptions', $subscriptions);
+
+        return $this->render($this->module.'.subscriptions');
+
+    }
+
+    public function discounts() {
+
+        $discounts = Discount::all()->toArray();
+
+        $this->data('discounts', $discounts);
+
+        return $this->render($this->module.'.discounts');
+    }
+
+    public function orders() {
+
+        $orders = $this->currentUser->orders()->with(['items'])->orderBy('id', 'DESC')->get();
+
+        $this->data('orders', $orders);
+
+        return $this->render($this->module.'.orders');
+    }
+
+    public function addresses() {
+
+        $addresses = $this->currentUser->addresses()->select('address')->orderBy('id', 'DESC')->get();
+
+        $this->data('addresses', $addresses);
+
+        return $this->render($this->module.'.addresses');
     }
     
     /**

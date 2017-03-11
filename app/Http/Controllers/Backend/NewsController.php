@@ -73,6 +73,7 @@ class NewsController extends BackendController
             $list = News::withTranslations()->joinTranslations('news', 'news_translations')->select(
                 'news.id',
                 'news_translations.name',
+                'news.publish_at',
                 'status',
                 'position'
             );
@@ -200,8 +201,6 @@ class NewsController extends BackendController
             $this->data('page_title', '"'.$model->name.'"');
 
             $this->breadcrumbs(trans('labels.news_editing'));
-
-            $this->_fillAdditionTemplateData($model);
 
             return $this->render('views.news.edit', compact('model'));
         } catch (ModelNotFoundException $e) {

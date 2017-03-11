@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Requests\Backend\Set\SetUpdateRequest;
 use App\Http\Requests\Backend\Set\SetCreateRequest;
 use App\Models\BoxTranslation;
+use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\FlowerTranslation;
 use App\Models\Set;
@@ -303,7 +304,13 @@ class SetController extends BackendController
 
         $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
 
-        $this->data('boxes', BoxTranslation::lists('title', 'box_id')->toArray());
+        $boxes = array();
+
+        foreach(Category::with('boxes')->get() as $item) {
+            $boxes[$item->name] = $item->boxes->lists('title', 'id')->toArray();
+        }
+
+        $this->data('boxes', $boxes);
 
     }
 

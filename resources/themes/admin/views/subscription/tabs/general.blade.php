@@ -22,7 +22,7 @@
     {!! Form::label('position', trans('labels.position'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
-        {!! Form::text('position', null, ['placeholder' => trans('labels.position'), 'class' => 'form-control input-sm', 'required' => true]) !!}
+        {!! Form::text('position', $model->position ?: 0, ['placeholder' => trans('labels.position'), 'class' => 'form-control input-sm', 'required' => true]) !!}
 
         {!! $errors->first('position', '<p class="help-block error">:message</p>') !!}
     </div>

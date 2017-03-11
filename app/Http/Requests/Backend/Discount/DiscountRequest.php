@@ -17,7 +17,7 @@ class DiscountRequest extends FormRequest
         $pregex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
 
         return [
-            'price' => ['required','reges:'.$pregex],
+            'price' => ['required','regex:'.$pregex],
             'discount' => 'required|numeric'
         ];
     }

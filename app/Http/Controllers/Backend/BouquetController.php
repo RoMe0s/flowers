@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Requests\Backend\Bouquet\BouquetCreateRequest;
 use App\Http\Requests\Backend\Bouquet\BouquetUpdateRequest;
 use App\Models\Bouquet;
+use App\Models\CategoryTranslation;
 use App\Models\FlowerTranslation;
-use App\Models\TypeTranslation;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
 use Datatables;
 use DB;
@@ -76,7 +76,7 @@ class BouquetController extends BackendController
                 'bouquets.id',
                 'bouquet_translations.name',
                 'bouquets.price',
-                'bouquets.type_id',
+                'bouquets.category_id',
                 'bouquets.status',
                 'bouquets.position'
             );
@@ -87,9 +87,9 @@ class BouquetController extends BackendController
                 ->filterColumn('bouquets.price', 'where', 'bouquets.price', 'LIKE', '%$1%')
                 ->filterColumn('bouquets.type_id', 'where', 'bouquets.type_id', 'LIKE', '%$1%')
                 ->editColumn(
-                    'type_id',
+                    'category_id',
                     function ($model) {
-                        return isset($model->type) ? $model->type->title : trans('labels.no');
+                        return isset($model->category) ? $model->category->name : trans('labels.no');
                     }
                 )
                 ->editColumn(
@@ -125,6 +125,7 @@ class BouquetController extends BackendController
                 ->removeColumn('meta_keywords')
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
+                ->removeColumn('translations')
 
                 ->removeColumn('slug')
                 ->removeColumn('image')
@@ -305,7 +306,7 @@ class BouquetController extends BackendController
 
         $this->data('flowers', FlowerTranslation::lists('title', 'flower_id')->toArray());
 
-        $this->data('types', TypeTranslation::lists('title', 'type_id')->toArray());
+        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
 
     }
 

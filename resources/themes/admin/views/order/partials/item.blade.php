@@ -1,8 +1,8 @@
 <?php
 if($item->itemable instanceof \App\Models\Individual) {
-    $name = trans('labels.individual product') . ' #' . $item->id;
+    $name = 'Инд. товар #' . $item->id;
 } elseif($item->itemable instanceof \App\Models\Sale) {
-    $name = trans('labels.sale product') . ' #' . $item->id;
+    $name = 'Акция #' . $item->id;
 } else {
     $name = $item->itemable->name;
 }
@@ -25,7 +25,7 @@ if($item->itemable instanceof \App\Models\Individual) {
     </td>
     <td>
         <div class="form-group required @if ($errors->has('items.old.' .$item->id. '.count')) has-error @endif">
-            {!! Form::text(null, $item->discount ?: 0, ['class' => 'form-control input-sm', 'disabled' => true]) !!}
+            {!! Form::text(null, ($item->price * ($discount / 100)), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
         </div>
     </td>
     <td>
@@ -35,7 +35,7 @@ if($item->itemable instanceof \App\Models\Individual) {
     </td>
     <td>
         <div class="form-group required @if ($errors->has('items.' .$item->id. '.total')) has-error @endif">
-            {!! Form::text(null, $item->count * ($item->price - ($item->price * $item->discount) ), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
+            {!! Form::text(null, $item->count * ($item->price - ($item->price * ($discount / 100)) ), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
         </div>
     </td>
     <td class="coll-actions">

@@ -31,7 +31,8 @@ class User extends SentryUser implements FrontLink
         'email',
         'password',
         'start_discount',
-        'notifications'
+        'notifications',
+        'discount'
     ];
 
     /**
@@ -58,14 +59,6 @@ class User extends SentryUser implements FrontLink
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'users_groups', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function articles()
-    {
-        return $this->hasMany(Article::class, 'user_id');
     }
 
     /**
@@ -197,6 +190,26 @@ class User extends SentryUser implements FrontLink
 
     public function subscriptions() {
         return $this->belongsToMany(Subscription::class, 'users_subscriptions')->withPivot(['paid_before']);
+    }
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
+    public function addresses() {
+        return $this->hasMany(Address::class);
+    }
+
+    public function hasSubscription($id) {
+
+        $subscriptions = $this->subscriptions()->lists('id')->toArray();
+
+        return in_array($id, $subscriptions) ? true : false;
+
+    }
+
+    public function getDiscount() {
+        return $this->discount + $this->start_discount;
     }
 
 

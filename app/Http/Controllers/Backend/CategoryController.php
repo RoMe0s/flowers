@@ -73,14 +73,21 @@ class CategoryController extends BackendController
             $list = Category::joinTranslations('categories', 'category_translations')->select(
                 'categories.id',
                 'category_translations.name',
+                'categories.slug',
+                'type',
                 'categories.status',
-                'categories.position',
-                'categories.slug'
+                'categories.position'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('id', 'where', 'categories.id', '=', '$1')
                 ->filterColumn('category_translations.title', 'where', 'category_translations.title', 'LIKE', '%$1%')
+                ->editColumn(
+                    'type',
+                    function ($model) {
+                        return $model->type ? Category::getTypes($model->type) : trans('labels.no');
+                    }
+                )
                 ->editColumn(
                     'status',
                     function ($model) {
@@ -114,6 +121,7 @@ class CategoryController extends BackendController
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
                 ->removeColumn('content')
+                ->removeColumn('content_two')
                 ->removeColumn('short_content')
                 ->removeColumn('meta_keywords')
                 ->make();
@@ -139,6 +147,8 @@ class CategoryController extends BackendController
         $this->data('page_title', trans('labels.category_create'));
 
         $this->breadcrumbs(trans('labels.category_create'));
+
+        $this->_fillAdditionalTemplateData();
 
         return $this->render('views.category.create');
     }
@@ -206,6 +216,8 @@ class CategoryController extends BackendController
 
             return Redirect::route('admin.category.index');
         }
+
+        $this->_fillAdditionalTemplateData();
 
         $this->data('page_title', '"'.$model->name.'"');
 
@@ -279,5 +291,9 @@ class CategoryController extends BackendController
         }
 
         return Redirect::route('admin.category.index');
+    }
+
+    private function _fillAdditionalTemplateData() {
+        $this->data('types', Category::getTypes());
     }
 }

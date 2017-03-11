@@ -17,5 +17,13 @@
             @endforeach
         @endif
         </tbody>
+        @if(sizeof($model->items))
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-right"><strong>Итого:</strong></td>
+                <td colspan="2">{!! $model->getTotal() !!} руб.</td>
+            </tr>
+            </tfoot>
+        @endif
     </table>
 </div>

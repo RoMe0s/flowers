@@ -120,6 +120,7 @@ class ProductController extends BackendController
                 ->removeColumn('slug')
                 ->removeColumn('image')
                 ->removeColumn('size')
+                ->removeColumn('translations')
                 ->make();
         }
 
