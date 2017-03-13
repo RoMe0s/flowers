@@ -35,4 +35,28 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '1833017613587125',
+        'client_secret' => '4f0819f30657bab4cd08d05af1ca4b3a',
+        'redirect' => env('APP_URL').'/login/facebook/callback'
+    ],
+
+    'vkontakte' => [
+        'client_id' => '5615179',
+        'client_secret' => 'AnBxF3OzSfL3jfLbPfkJ',
+        'redirect' => env('APP_URL').'/login/vkontakte/callback',
+    ],
+
+    'instagram' => [
+        'client_id' => '218914fa10bb471380f32be95c1e85f5',
+        'client_secret' => 'fd0f1bf27b214c129c664ad08c02e419',
+        'redirect' => env('APP_URL').'/login/instagram/callback',
+    ],
+
+    'google' => [
+        'client_id' => '401753573301-g2l9dr1p31qa8u6p6ruuqftmuvnfdinl.apps.googleusercontent.com',
+        'client_secret' => 'pFGxOHfmme3rm_7TGytswR27',
+        'redirect' => env('APP_URL').'/login/google/callback',
+    ],
+
 ];

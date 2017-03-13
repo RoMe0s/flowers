@@ -225,7 +225,7 @@ class UserController extends BackendController
     public function edit($id)
     {
         try {
-            $model = User::with(['info', 'fields'])->whereId($id)->firstOrFail();
+            $model = User::with(['info', 'fields', 'subscriptions', 'orders', 'subscriptions.translations'])->whereId($id)->firstOrFail();
         } catch (Exception $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
 

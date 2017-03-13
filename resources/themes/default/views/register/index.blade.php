@@ -47,7 +47,7 @@
                     </div>
 
                     <p>
-                        <input type="checkbox" name="agreement" value="1" required> Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
+                        <input type="checkbox" name="agreement" value="1" required @if( old('agreement') ) checked @endif> Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
                     </p>
                     <p class="text-center">
                         <input class="btn btn-default" type="submit" value="Зарегистрироваться">

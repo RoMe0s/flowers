@@ -25,7 +25,6 @@ class SetUpdateRequest extends FormRequest
             'slug'     => 'required|unique:products,slug,'.$id.',id',
             'price' => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
-            'category_id'    => 'required',
             'box_id'   => 'required',
             'flowers' => 'required'
         ];

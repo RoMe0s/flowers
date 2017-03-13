@@ -69,11 +69,7 @@ class AuthService
     {
         $input = $request->only(['name', 'email', 'phone', 'password']);
 
-        $input['avatar'] = $request->file('avatar') ? ImageUploader::upload($request->file('avatar'), 'user') : null;
-
-        $input['birthday'] = Carbon::now()->format('d-m-Y');
-
-        $input['activated'] = false;
+        $input['activated'] = true;
         $input['ip_address'] = !empty($input['ip_address']) ? $input['ip_address'] : Request::getClientIp();
 
         return $input;

@@ -13,7 +13,7 @@
 
         @if (count($model->items))
             @foreach($model->items as $item)
-                @include('order.partials.item')
+                    @include('order.partials.item')
             @endforeach
         @endif
         </tbody>

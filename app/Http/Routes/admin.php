@@ -162,6 +162,7 @@ $router->group(
                     'uses' =>  'Backend\OrderController@basket'
                 ]);
                 $router->get('order/status/change', 'Backend\OrderController@changeStatus');
+                $router->get('order/items/reload', 'Backend\OrderController@reloadItems');
 
 
                 //basket

@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'slug.set'                => \App\Http\Middleware\SetSlug::class,
         'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'cart'                    => \App\Http\Middleware\NotEmptyCart::class,
     ];
 }

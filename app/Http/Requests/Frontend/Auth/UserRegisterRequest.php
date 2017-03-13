@@ -28,10 +28,11 @@ class UserRegisterRequest extends FormRequest
         $rules = [
             'name'                  => 'required',
             'email'                 => 'required|email|unique:users',
-            'phone'                 => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'phone'                 => 'string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'password'              => 'required|confirmed:password_confirmation|min:' .
                 config('auth.passwords.min_length'),
             'password_confirmation' => 'required',
+            'agreement'             => 'required'
         ];
         
         return $rules;

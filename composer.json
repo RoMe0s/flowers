@@ -30,7 +30,10 @@
         "dimsav/laravel-translatable": "5.5",
         "mcamara/laravel-localization": "1.1.*",
         "nicolaslopezj/searchable": "1.*",
-        "gloudemans/shoppingcart": "^2.3"
+        "laravel/socialite": "2.*",
+        "socialiteproviders/vkontakte": "2.*",
+        "socialiteproviders/instagram": "2.*",
+        "kingpabel/shoppingcart": "^1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

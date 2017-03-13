@@ -7,8 +7,8 @@
 
     <ul class="nav nav-pills nav-stacked">
         @foreach($menu->visible_items as $item)
-            @if(strpos('administrator', $item->link) !== FALSE)
-                @if($user->hasAccess('admin'))
+            @if(strpos($item->link, 'admin') !== FALSE)
+                @if($user->hasAccess('administrator'))
                     <li>
                         <a @if(trim(request()->path(), '/') != trim($item->link, '/')) href="{!! $item->link !!}" @endif title="{!! $item->title !!}">{!! $item->name !!}</a>
                     </li>

@@ -21,12 +21,14 @@
                         }
                         if($item instanceof \App\Models\Individual) {
                             $name = 'Инд. товар #' . $item->id;
-                        } elseif($item instanceof \App\Models\Sale) {
-                            $name = 'Акция #' . $item->id;
                         } else {
                             $name = $item->name;
                         }
-                        $discount = $user->discount + $user->start_discount;
+                        $item_discount = 0;
+                        if(!$item instanceof \App\Models\Sale) {
+                            $item_discount = ($item->price * ($discount / 100));
+                        }
+                        $item_price_with_discount = $item->price - $item_discount;
                     ?>
                     {!! Form::hidden('items[new]['.$item->id.'][itemable_type]', "App\\Models\\" . class_basename($item)) !!}
                     {!! Form::hidden('items[new]['.$item->id.'][itemable_id]', $item->id) !!}
@@ -50,7 +52,7 @@
                         </td>
                         <td>
                             <div class="form-group required @if ($errors->has('items.' .$item->id. '.discount')) has-error @endif">
-                                {!! Form::text(null, ($item->price * ($discount / 100)), ['id' => 'items.' .$item->id. '.discount', 'class' => 'form-control input-sm', 'disabled' => true]) !!}
+                                {!! Form::text(null, $item_discount, ['id' => 'items.' .$item->id. '.discount', 'class' => 'form-control input-sm', 'disabled' => true]) !!}
                             </div>
                         </td>
                         <td>
@@ -59,7 +61,7 @@
                             </div>
                         </td>
                         <td>
-                            @php($item_total = $item->basket_count * ($item->price - ($item->price * ($discount / 100))))
+                            @php($item_total = $item->basket_count * $item_price_with_discount)
                             <div class="form-group required @if ($errors->has('items.' .$item->id. '.total')) has-error @endif">
                                 {!! Form::text(null, $item_total, ['class' => 'form-control input-sm', 'disabled' => true]) !!}
                             </div>

@@ -2,6 +2,7 @@
 
 use App\Events\Frontend\UserRegister;
 use App\Exceptions\NotValidImageException;
+use App\Models\Discount;
 use App\Services\AuthService;
 use App\Http\Requests\Frontend\Auth\UserRegisterRequest;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Cartalyst\Sentry\Throttling\UserBannedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Users\LoginRequiredException;
 use Cartalyst\Sentry\Users\PasswordRequiredException;
+use Cartalyst\Sentry\Users\UserExistsException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
@@ -18,7 +20,9 @@ use DB;
 use Event;
 use Exception;
 use FlashMessages;
+use Kingpabel\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 use Mail;
 use Sentry;
 use App\Models\Page;
@@ -105,6 +109,26 @@ class AuthController extends FrontendController
         
         try {
             if ($user = $this->authService->login($credentials)) {
+
+                $price = $user->getTotalOrdersPrice();
+
+                $discount = Discount::where('price', '<=', $price)->orderBy('price', 'DESC')->first();
+
+                if(isset($discount) && $discount->discount > $user->discount) {
+
+                    $user->discount = $discount->discount;
+
+                    $user->save();
+
+                }
+
+                if (sizeof(Cart::count())) {
+                    foreach (Cart::content() as $row) {
+                        if ($row->options['category'] != 'sales')
+                            Cart::update($row->rowid, ['discount' => CartController::_itemDiscount($row->price)]);
+                    }
+                }
+
                 return redirect()->to(route('profile'));
             }
         }
@@ -157,8 +181,7 @@ class AuthController extends FrontendController
         DB::beginTransaction();
         
         try {
-            $this->validateImage('image');
-            
+
             $input = $this->authService->prepareRegisterInput($request);
             
             $user = $authService->register($input);
@@ -166,24 +189,22 @@ class AuthController extends FrontendController
             $this->userService->processUserInfo($user, $input);
 
             $this->userService->processFields($user);
-            
-            Event::fire(new UserRegister($user, $input));
+
+            $user->addGroup(Sentry::findGroupByName('Clients'));
+
+            $user->activated = true;
+
+            $user->save();
             
             DB::commit();
             
-            FlashMessages::add(
-                'success',
-                trans('messages.user register success message')
-            );
-            
-            return redirect()->back();
-        } catch (NotValidImageException $e) {
-            FlashMessages::add(
-                'error',
-                trans('messages.trying to load is too large file or not supported file extension')
-            );
-        } catch (Exception $e) {
-            $message = trans('messages.user register error');
+            return redirect()->to(route('login'));
+
+        } catch (UserExistsException $e) {
+            $message = 'Пользователь с таким Email уже существует';
+        }
+        catch (Exception $e) {
+            $message = 'Произошла ошибка, попробуйте пожалуйста позже';
         }
         
         DB::rollBack();
@@ -294,4 +315,155 @@ class AuthController extends FrontendController
         
         return redirect()->home();
     }*/
+
+
+    /**
+     * Socialite auth callback method
+     *
+     * @param null $provider
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function socialiteCallback($provider = null) {
+        $user = Socialite::with($provider)->user();
+
+        if ($user) {
+            switch ($provider) {
+                case "vkontakte":
+                    $user = $this->authWithVK($user);
+                    break;
+                case "google":
+                    $user = $this->authWithGoogle($user);
+                    break;
+                case "facebook":
+                    $user = $this->authWithFacebook($user);
+                    break;
+                case "instagram":
+                    $user = $this->authWithInstagram($user);
+                    break;
+                default:
+                    abort(404);
+            }
+
+            if (is_array($user)) return redirect(route('reg', $user));
+
+            Sentry::login($user, true);
+
+            $price = $user->getTotalOrdersPrice();
+
+            $discount = Discount::where('price', '<=', $price)->orderBy('price', 'DESC')->first();
+
+            if(isset($discount) && $discount->discount > $user->discount) {
+
+                $user->discount = $discount->discount;
+
+                $user->save();
+
+            }
+
+            if (Cart::count() != 0) {
+                foreach (Cart::content() as $row) {
+                    if ($row->options['category'] != 'sales')
+                        Cart::update($row->rowid, ['discount' => $user->getDiscount()]);
+                }
+            }
+
+            return redirect()->to(route('profile'));
+        }
+
+        FlashMessages::add('error', 'Ошибка авторизации');
+
+        return redirect()->to(route('reg'));
+    }
+
+    /**
+     * Authorize with Vkontakte via Socialite
+     *
+     * @param $user
+     * @return array
+     */
+    private function authWithVK($user) {
+        $user = $user->user;
+        $user_exists = User::with('info')->where('email', $user['email'])->first();
+
+        if (is_null($user_exists)) return [
+            'name' => $user['first_name'].' '.$user['last_name'],
+            'email' => $user['email']
+        ];
+
+        return $user_exists;
+    }
+
+    /**
+     * Authorize with Google+ via Socialite
+     *
+     * @param $user
+     * @return array
+     */
+    private function authWithGoogle($user) {
+        $email = $user->email;
+        $name = $user->user['name']['givenName'].' '.$user->user['name']['familyName'];
+
+        $user_exists = User::with('info')->where('email', $email)->first();
+
+        if (is_null($user_exists)) return [
+            'name' => $name,
+            'email' => $email
+        ];
+
+        return $user_exists;
+    }
+
+    /**
+     * Authorize with Facebook via Socialite
+     *
+     * @param $user
+     * @return array
+     */
+    private function authWithFacebook($user) {
+        $email = $user->email;
+        $name = $user->name;
+
+        $user_exists = User::with('info')->where('email', $email)->first();
+
+        if (is_null($user_exists)) return [
+            'name' => $name,
+            'email' => $email
+        ];
+
+        return $user_exists;
+    }
+
+    /**
+     * Authorize with Instagram via Socialite
+     *
+     * @param $user
+     * @return array
+     */
+    private function authWithInstagram($user) {
+        $email = $user->email;
+        $name = $user->name;
+
+        $user_exists = User::with('info')->where('email', $email)->first();
+
+        if (is_null($user_exists)) return [
+            'name' => $name,
+            'email' => $email
+        ];
+
+        return $user_exists;
+    }
+
+
+    /**
+     * Socialite auth redirect method
+     *
+     * @param null $provider
+     * @return mixed
+     */
+    public function socialiteRedirect($provider = null) {
+
+        if (!config('services.'.$provider)) abort(400);
+
+        return Socialite::with($provider)->redirect();
+    }
 }

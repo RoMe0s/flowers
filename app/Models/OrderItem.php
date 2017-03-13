@@ -26,4 +26,26 @@ class OrderItem extends Model
     {
         return array_merge(parent::getDates(), ['deleted_at']);
     }
+
+    public function getDiscount($discount = null) {
+
+        $discount = !isset($discount) ? $this->order->discount : $discount;
+
+        if($this->itemable instanceof Sale) {
+
+            return 0;
+
+        } else {
+
+            return ($this->price * ($discount / 100));
+
+        }
+
+    }
+
+    public function getPrice($discount = null) {
+
+        return $this->price - $this->getDiscount($discount);
+
+    }
 }

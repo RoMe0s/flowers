@@ -97,12 +97,11 @@ $router->group(
                'as' => 'api.feedback'
            ]);
 
-/*          Route::any('/get/box/sets', 'ApiController@getBoxSets');
-
-            Route::any('/cart/add/set', 'CartController@addSet');
-            Route::any('/cart/add/bouquet', 'CartController@addBouquet');
-            Route::any('/cart/add/sale', 'CartController@addSale');
-            Route::any('/cart/add/product', 'CartController@addProduct');*/
+            $router->any('/cart/add/set', 'Frontend\CartController@addSet');
+            $router->any('/cart/add/bouquet', 'Frontend\CartController@addBouquet');
+            $router->any('/cart/add/sale', 'Frontend\CartController@addSale');
+            $router->any('/cart/add/product', 'Frontend\CartController@addProduct');
+           
         });
 
         //auth
@@ -126,23 +125,52 @@ $router->group(
                 'uses' => 'Frontend\AuthController@postRegister'
             ]);
 
-            $router->get('password-reset', [
-                'as' => 'password.reset',
-                'uses' => 'Frontend\AuthController@getReset'
-            ]);
+            // Socialite routes
+            $router->any('/login/{provider}/redirect', 'Frontend\AuthController@socialiteRedirect');
+            $router->any('/login/{provider}/callback', 'Frontend\AuthController@socialiteCallback');
 
-            $router->post('password-reset', [
-                'as' => 'post.password.reset',
-                'uses' => 'Frontend\AuthController@postReset'
-            ]);
+
+//            $router->get('password-reset', [
+//                'as' => 'password.reset',
+//                'uses' => 'Frontend\AuthController@getReset'
+//            ]);
+//
+//            $router->post('password-reset', [
+//                'as' => 'post.password.reset',
+//                'uses' => 'Frontend\AuthController@postReset'
+//            ]);
 
         });
 
         //cart
+
+
         $router->get('cart', [
             'as' => 'cart',
             'uses' => 'Frontend\CartController@index'
         ]);
+
+        $router->group(['middleware' => 'cart', 'prefix' => 'cart'], function () use ($router) {
+//            $router->get('/make/fast/order', 'Frontend\OrderController@getFast');
+//            $router->post('/make/fast/order', 'Frontend\OrderController@makeFast');
+
+            $router->any('/{id}/qty/plus', 'Frontend\CartController@qtyPlus');
+            $router->any('/{id}/qty/minus', 'Frontend\CartController@qtyMinus');
+            $router->any('/{item}/{id}/remove', 'Frontend\CartController@removeItem');
+            $router->any('/clear', 'Frontend\CartController@clear');
+
+            $router->group(['middleware' => ['auth']], function () use ($router) {
+//                $router->get('/make/order', 'Frontend\OrderController@create');
+//                $router->post('/make/order', 'Frontend\OrderController@store');
+                $router->any('/apply/code', 'Frontend\CartController@applyCode');
+            });
+
+        });
+//        Route::get('/order/{id}/pay', 'OrderController@show');
+//        Route::any('/order/{id}/cancel', 'OrderController@destroy');
+//
+//        Route::any('/order/success', 'OrderController@success');
+//        Route::any('/order/fail', 'OrderController@fail');
 
 
         // pages + categories

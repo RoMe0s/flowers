@@ -22,8 +22,6 @@
                 </li>
             </ul>
 
-            @php($discount = isset($model->id) ? $model->discount : $user->getDiscount())
-
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="client">
                     @include('order.tabs.client')

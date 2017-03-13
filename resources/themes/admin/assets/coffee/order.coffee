@@ -1,3 +1,17 @@
+reloadItems = (_discount, _old)->
+  $.ajax({
+    url: '/admin/order/items/reload'
+    type: 'GET'
+    data: {
+      discount: _discount
+      id: _old
+    }
+  }).done((response)->
+    $('#items').html(response.html)
+  ).error(()->
+    message.show(window.lang_error, 'error')
+  )
+
 hidePassworField = (hide)->
   _field = $(document).find("input#password")
   _div = _field.closest('.form-group')
@@ -10,37 +24,38 @@ hidePassworField = (hide)->
     _div.addClass('required')
     _div.show()
 
-$(document).ready ()->
-  _this = $('select.admin-order-user')
-  if _this.val() > 0
-    hidePassworField(true)
-  else
-    hidePassworField(false)  
-
-$(document).on 'change', 'select.admin-order-user', (e)->
-  _this = $(this)
+hideUser = (item)->
+  _this = item
   _form = _this.closest('form')
   _name = _form.find("input[name='recipient_name']")
   _email = _form.find("input[name='email']")
   _phone = _form.find("input[name='recipient_phone']")
+  _discount = _form.find("input#order-discount")
   _name.val('')
   _email.val('')
   _form.find("input[name='password']").val('')
   _phone.val('')
+  _discount.val(0)
   if _this.val() > 0
     _selected = _this.find(':selected')
     _name.val(_selected.data('name'))
     _phone.val(_selected.data('phone'))
     _email.val(_selected.data('email'))
+    _discount.val(_selected.data('discount'))
+    _name.closest('.form-group').hide()
+    _phone.closest('.form-group').hide()
+    _email.closest('.form-group').hide()
     hidePassworField(true)
+    reloadItems(_selected.data('discount'), _this.data('id'))
   else
+    _name.closest('.form-group').show()
+    _phone.closest('.form-group').show()
+    _email.closest('.form-group').show()
     hidePassworField(false)
   return
 
-
-
-$(document).on 'change', '.admin-order-address', (e)->
-  _this = $(this)
+hideAddress = (item)->
+  _this = item
   _form = _this.closest('form')
   _address = _form.find("textarea[name='address']")
   _code = _form.find("input[name='code']")
@@ -50,6 +65,23 @@ $(document).on 'change', '.admin-order-address', (e)->
     _selected = _this.find(':selected')
     _address.val(_selected.data('address'))
     _code.val(_selected.data('code'))
+    _address.closest('.form-group').hide()
+    _code.closest('.form-group').hide()
+  else
+    _address.closest('.form-group').show()
+    _code.closest('.form-group').show()
+
+$(document).ready ()->
+  _user = $('select.admin-order-user')
+  hideUser(_user)
+  _address = $('select.admin-order-address')
+  hideAddress(_address)
+
+$(document).on 'change', 'select.admin-order-user', (e)->
+  hideUser($(this))
+
+$(document).on 'change', '.admin-order-address', (e)->
+  hideAddress($(this))
 
 $(document).on 'click', '.add-basket-item-to-order', (e)->
   _select = $('.order-basket-items select')

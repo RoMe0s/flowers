@@ -212,5 +212,17 @@ class User extends SentryUser implements FrontLink
         return $this->discount + $this->start_discount;
     }
 
+    public function getTotalOrdersPrice() {
+        $total = 0;
+
+        foreach($this->orders as $order) {
+
+            $total += $order->getTotal();
+
+        }
+
+        return $total;
+    }
+
 
 }

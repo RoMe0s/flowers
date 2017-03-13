@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests\Backend\Sale\SaleRequest;
+use App\Http\Requests\Backend\Sale\SaleCreateRequest;
+use App\Http\Requests\Backend\Sale\SaleUpdateRequest;
 use App\Models\Sale;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
 use Datatables;
@@ -70,16 +71,18 @@ class SaleController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Sale::select(
-                'id',
-                'price',
-                'publish_at',
-                'status',
-                'position'
+            $list = Sale::joinTranslations('sales')->select(
+                'sales.id',
+                'sale_translations.name',
+                'sales.price',
+                'sales.publish_at',
+                'sales.status',
+                'sales.position'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('id', 'where', 'sales.id', '=', '$1')
+                ->filterColumn('sale_translations.name', 'where', 'sale_translations.name', 'LIKE', '%$1%')
                 ->filterColumn('price', 'where', 'price', 'LIKE', '%$1%')
                 ->filterColumn('publish_at', 'where', 'publish_at', 'LIKE', '%$1%')
                 ->editColumn(
@@ -110,6 +113,11 @@ class SaleController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
+                ->removeColumn('short_content')
+                ->removeColumn('content')
+                ->removeColumn('meta_keywords')
+                ->removeColumn('meta_title')
+                ->removeColumn('meta_description')
                 ->removeColumn('image')
                 ->make();
         }
@@ -142,11 +150,11 @@ class SaleController extends BackendController
      * Store a newly created resource in storage.
      * POST /sale
      *
-     * @param SaleRequest $request
+     * @param SaleCreateRequest $request
      *
      * @return \Response
      */
-    public function store(SaleRequest $request)
+    public function store(SaleCreateRequest $request)
     {
         $input = $request->all();
 
@@ -195,14 +203,14 @@ class SaleController extends BackendController
     public function edit($id)
     {
         try {
-            $model = Sale::findOrFail($id);
+            $model = Sale::with('translations')->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
 
             return Redirect::route('admin.sale.index');
         }
 
-        $this->data('page_title', '"'.$model->id.'"');
+        $this->data('page_title', '"'.$model->name.'"');
 
         $this->breadcrumbs(trans('labels.sale_editing'));
 
@@ -214,11 +222,11 @@ class SaleController extends BackendController
      * PUT /sale/{id}
      *
      * @param  int              $id
-     * @param SaleRequest $request
+     * @param SaleUpdateRequest $request
      *
      * @return \Response
      */
-    public function update($id, SaleRequest $request)
+    public function update($id, SaleUpdateRequest $request)
     {
         try {
             $model = Sale::findOrFail($id);

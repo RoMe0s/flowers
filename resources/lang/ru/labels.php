@@ -176,6 +176,8 @@ return array (
   'or' => 'или',
   'ordinary_people' => 'Просто люди',
   'others' => 'Другое',
+    'tab_orders' => 'Заказы пользователя',
+    'tab_subscriptions' => 'Подписки пользователя',
   'page' => 'Страница',
   'page_create' => 'Создать страницу',
   'page_edit' => 'Редактировать страницу',

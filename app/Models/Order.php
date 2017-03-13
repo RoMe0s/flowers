@@ -44,10 +44,9 @@ class Order extends Model
         $total_price = 0;
 
         foreach ($this->items as $item) {
-            $total_price += $item->price * $item->count;
-        }
 
-        $total_price -= ($total_price * ($this->discount / 100));
+            $total_price += $item->getPrice($this->discount) * $item->count;
+        }
 
         $total_price += $this->delivery_price;
 

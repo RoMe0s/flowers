@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend\Sale;
 
 use App\Http\Requests\FormRequest;
 
-class SaleRequest extends FormRequest
+class SaleUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,16 +13,32 @@ class SaleRequest extends FormRequest
      */
     public function rules()
     {
+
+        $id = $this->route()->parameter('sale');
+
         $regex = '/^.*\.('.implode('|', config('image.allowed_image_extension')).')$/';
 
         $pregex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
 
-        return [
+        $rules = [
             'image'    => ['regex:'.$regex],
             'price'    => ['required', 'regex:'.$pregex],
+            'slug'     => 'unique:sales,slug,'.$id.',id',
             'publish_at' => ['required', 'date_format:d-m-Y'],
             'status'    => 'required|boolean',
             'position'  => 'required'
         ];
+
+        $languageRules = [
+            'name' => 'required',
+        ];
+
+        foreach (config('app.locales') as $locale) {
+            foreach ($languageRules as $name => $rule) {
+                $rules[$locale.'.'.$name] = $rule;
+            }
+        }
+
+        return $rules;
     }
 }

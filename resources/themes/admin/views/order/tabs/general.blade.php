@@ -12,7 +12,7 @@
     {!! Form::label('discount', trans('labels.discount') . ' '.  trans('labels.percent'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-md-3">
-        {!! Form::text('discount', $discount , ['placeholder' => trans('labels.discount'), 'class' => 'form-control input-sm', 'required' => true]) !!}
+        {!! Form::text('discount', $discount , ['placeholder' => trans('labels.discount'), 'id' => 'order-discount', 'class' => 'form-control input-sm', 'required' => true]) !!}
 
         {!! $errors->first('discount', '<p class="help-block error">:message</p>') !!}
     </div>

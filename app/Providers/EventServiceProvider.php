@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\Frontend\IndividualStored' => [
             'App\Listeners\Events\Frontend\SendAdminAboutNewIndividual',
+        ],
+        SocialiteWasCalled::class => [
+            'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
+            'SocialiteProviders\Instagram\InstagramExtendSocialite@handle',
         ],
     ];
 

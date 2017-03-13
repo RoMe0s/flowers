@@ -32,7 +32,7 @@
                             @foreach($sets as $set)
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <a href="{{ $set->image }}" title="Нажмите чтобы увеличить" data-lightbox="sets">
-                                        <div class="photo" style="background-image: url('{{ asset('images/sets/thumb_'.$set->image) }}');">
+                                        <div class="photo" style="background-image: url('{{ $set->image }}');">
                                             <div class="layout">
                                                 <p>Состав: {{ implode(", ", $set->flowers->pluck('title')->all()) }}</p>
                                             </div>

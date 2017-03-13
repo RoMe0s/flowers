@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Set;
+namespace App\Http\Requests\Backend\Sale;
 
 use App\Http\Requests\FormRequest;
 
-class SetCreateRequest extends FormRequest
+class SaleCreateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -18,13 +18,12 @@ class SetCreateRequest extends FormRequest
         $pregex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
 
         $rules = [
-            'position'  => 'required',
-            'status'   => 'required|boolean',
-            'slug'     => 'required|unique:products',
-            'price'     => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
-            'box_id'   => 'required',
-            'flowers' => 'required'
+            'price'    => ['required', 'regex:'.$pregex],
+            'slug'     => 'unique:sales',
+            'publish_at' => ['required', 'date_format:d-m-Y'],
+            'status'    => 'required|boolean',
+            'position'  => 'required'
         ];
 
         $languageRules = [

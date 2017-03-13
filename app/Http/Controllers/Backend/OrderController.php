@@ -144,6 +144,8 @@ class OrderController extends BackendController
 
         $this->data('items', $basket_items);
 
+        $this->data('discount', 0);
+
         $this->breadcrumbs(trans('labels.order_create'));
 
         $this->_fillAdditionalTemplateData();
@@ -175,6 +177,14 @@ class OrderController extends BackendController
 
             $model = new Order($input);
             $model->save();
+
+            if($model->discount == 0) {
+
+                $model->discount = $model->user->getDiscount();
+
+                $model->save();
+
+            }
 
             $this->_processItems($model);
 
@@ -211,6 +221,8 @@ class OrderController extends BackendController
             $this->data('page_title', '"'.$model->recipient_name.'"');
 
             $this->breadcrumbs(trans('labels.order_editing'));
+
+            $this->data('discount', $model->discount);
 
             return $this->render('views.order.edit', compact('model'));
         } catch (ModelNotFoundException $e) {
@@ -313,7 +325,8 @@ class OrderController extends BackendController
             'users.id',
             'user_info.phone',
             'user_info.name',
-            'users.email'
+            'users.email',
+            'users.discount'
         ])
         ->leftJoin('user_info','users.id', '=', 'user_info.user_id')
         ->leftJoin('users_groups', 'users.id', '=', 'users_groups.user_id')
@@ -351,7 +364,6 @@ class OrderController extends BackendController
                 data-itemable_id='{$item->id}'
                 data-itemable_type='" . class_basename($item) . "'
                 data-price='{$item->price}'
-                data-discount='{$item->discount}'
                 >{$item->name}</option>";
 
 
@@ -448,6 +460,7 @@ class OrderController extends BackendController
         try {
             $input = $request->except('id');
             $input['itemable_type'] = "App\\Models\\" . $input['itemable_type'];
+            $model = Order::find($request->get('id'));
             $already_item = OrderItem::where('itemable_id', $input['itemable_id'])
                 ->where('itemable_type', $input['itemable_type'])
                 ->where('order_id', $request->get('id'))
@@ -461,10 +474,10 @@ class OrderController extends BackendController
             } else {
                 $item = new OrderItem();
                 $item->fill($input);
-                $model = Order::find($request->get('id'));
                 $model->items()->save($item);
             }
-            $html = view('order.partials.item', compact('item'))->render();
+
+            $html = view('order.partials.item')->with(['item' => $item, 'discount' => $model->discount, 'model' => $model])->render();
 
             $basket_items = session()->get('basket_items', []);
 
@@ -511,6 +524,8 @@ class OrderController extends BackendController
         $basket_items = session()->get('basket_items', []);
 
         $this->data('items', $basket_items);
+
+        $this->data('discount', 0);
 
         return $this->render('views.order.basket');
     }
@@ -618,5 +633,27 @@ class OrderController extends BackendController
             DB::rollBack();
             return ['status' => 'success', 'message' => trans('messages.an error has occurred, try_later')];
         }
+    }
+
+    public function reloadItems(Request $request) {
+
+        $discount = $request->get('discount');
+
+        if(!$request->get('id')) {
+
+            $items = session()->get('basket_items', []);
+
+            $html = view('order.tabs.basket_items')->with(['items' => $items, 'discount' => $discount])->render();
+
+        } else {
+
+            $model = Order::with('items')->find($request->get('id'));
+
+            $html = view('order.tabs.items')->with(['model' => $model, 'discount' => $discount])->render();
+
+        }
+
+        return ['html' => $html];
+
     }
 }
