@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Frontend\CartController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Kingpabel\Shoppingcart\Facades\Cart;
 
 class Order extends Model
 {
@@ -54,6 +56,22 @@ class Order extends Model
 
     }
 
+    public function getTotalWithoutDiscount() {
+
+        $total_price = 0;
+
+        foreach ($this->items as $item) {
+
+            $total_price += $item->getPrice(0) * $item->count;
+
+        }
+
+        $total_price += $this->delivery_price;
+
+        return $total_price;
+
+    }
+
     public function totalPrepay() {
 
         return $this->getTotal() * ($this->prepay / 100);
@@ -80,8 +98,8 @@ class Order extends Model
     public function setDateAttribute($value)
     {
         if($value) {
-            $this->attributes['date'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
-        }
+                $this->attributes['date'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+            }
     }
 
 
@@ -126,4 +144,49 @@ class Order extends Model
         }
 
     }
+
+    /**
+     * @param array $data
+     * @return Order
+     */
+    public static function make(Array $data, User $user) {
+        try {
+            $order = Order::create([
+                'user_id' => $user->id,
+                'address_id' => $data['address_id'],
+                'prepay' => $data['prepay'] ?: 50,
+                'recipient_name' => !isset($data['recipient_name']) ?: $user->getFullName(),
+                'recipient_phone' => !isset($data['recipient_phone']) ?: $user->phone,
+                'status' => 1,
+                'date' => $data['date'],
+                'time' => $data['time'],
+                'card_text' => $data['card_text'],
+                'desc' => $data['desc'],
+                'discount' => CartController::_cartDiscount(true)
+            ]);
+
+            static::_proccessItemsFromCart($order);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        return $order;
+    }
+
+
+    private static function _proccessItemsFromCart(Order $order) {
+
+        foreach(Cart::content() as $item) {
+            $orderItem = new OrderItem();
+            $orderItem->fill([
+                'itemable_id' => $item->id,
+                'itemable_type' => $item->options['type'],
+                'price' => $item->price,
+                'count' => $item->qty
+            ]);
+            $order->items()->save($orderItem);
+        }
+
+    }
+
 }

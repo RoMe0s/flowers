@@ -57,7 +57,14 @@ class AuthService
      */
     public function register($input)
     {
-        return Sentry::getUserProvider()->create($input);
+        $user = Sentry::getUserProvider()->create($input);
+
+        $user->activated = true;
+
+        $user->save();
+
+        return $user;
+
     }
 
     /**

@@ -15,7 +15,7 @@ class CodeCreateRequest extends FormRequest
     {
         return [
             'status'    => 'required|boolean',
-            'code' => 'required|unique:codes',
+            'code' => 'required|unique:codes|min:3|max:10',
             'discount'  => 'required|numeric',
             'date'      => 'required'
         ];

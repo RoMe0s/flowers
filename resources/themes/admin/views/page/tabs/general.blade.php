@@ -2,12 +2,13 @@
     {!! Form::label('slug', trans('labels.slug'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-7 col-md-4">
-        {!! Form::text('slug', null, ['placeholder' => trans('labels.slug'), 'required' => true, 'class' => 'form-control input-sm']) !!}
+        {!! Form::text('slug', null, ['placeholder' => trans('labels.slug'), 'required' => true, 'class' => 'form-control input-sm', 'disabled' => !is_system_page($model->slug) ? false : true]) !!}
 
         {!! $errors->first('slug', '<p class="help-block error">:message</p>') !!}
     </div>
-
-    <a href="#" class="btn btn-success btn-flat btn-xs margin-top-4 slug-generate">{!! trans('labels.generate') !!}</a>
+    @if(!is_system_page($model->slug))
+        <a href="#" class="btn btn-success btn-flat btn-xs margin-top-4 slug-generate">{!! trans('labels.generate') !!}</a>
+    @endif
 </div>
 
 <div class="form-group required @if ($errors->has('template')) has-error @endif">

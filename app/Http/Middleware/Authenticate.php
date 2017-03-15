@@ -61,16 +61,16 @@ class Authenticate
         if (!Sentry::check()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(json_encode([
-                    'status' => 'notice',
-                    'message' => trans('messages.auth middleware error message')
+                    'status' => 'info',
+                    'message' => 'Необходимо авторизоваться'
                 ]), 401);
             } else {
                 session()->put('redirect', URL::full());
                 session()->put('show_login_form', true);
 
-                FlashMessages::add('notice', trans('messages.auth middleware error message'));
+                FlashMessages::add('info', 'Необходимо авторизоваться');
 
-                return $this->response->redirectToRoute('home');
+                return $this->response->redirectToRoute('login');
             }
         } else {
             if ($redirect = Session::get('redirect')) {

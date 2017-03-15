@@ -27,7 +27,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'phone'  => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'phone'  => 'string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'name'   => 'required'
         ];
 

@@ -242,14 +242,6 @@ class Page extends Eloquent implements FrontLink, MetaGettable
     }
 
     /**
-     * @return array
-     */
-    public function getBreadcrumbs()
-    {
-        // TODO: Implement getBreadcrumbs() method.
-    }
-
-    /**
      * @return string
      */
     public function getMetaTitle()

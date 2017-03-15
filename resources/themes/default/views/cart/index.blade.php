@@ -3,11 +3,13 @@
 @section('content')
     <section>
         <h2 class="text-center">
-            КОРЗИНА
+            {!! $model->name !!}
             <hr class="bag">
         </h2>
 
-        <br>
+        {!! $model->content !!}
+
+        @include('errors.form')
 
         <div class="panel panel-default">
             @if(Cart::count() == 0)

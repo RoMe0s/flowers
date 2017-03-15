@@ -628,3 +628,16 @@ if (! function_exists('variable')) {
         return app('variable')->get($key, $default);
     }
 }
+
+
+if(! function_exists('is_system_page')) {
+
+    function is_system_page($slug) {
+
+        $pages = config('system.pages');
+
+        return in_array($slug, $pages) !== FALSE ? true : false;
+
+    }
+
+}

@@ -34,9 +34,9 @@ class CreateOrdersTable extends Migration
 
             $table->string('recipient_phone');
 
-            $table->string('date');
+            $table->string('date')->nullable();
 
-            $table->enum('time', array('1', '2', '3', '4', '5'));
+            $table->enum('time', array('1', '2', '3', '4', '5'))->nullable();
 
             $table->string('card_text')->nullable();
 

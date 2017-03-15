@@ -4,9 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "50e512b933829bcde0d3931193e3627f",
-    "content-hash": "5a7127be2a8e6b7ef9e6591c055d7150",
+    "hash": "628cfb311f85e28e4a813d9e282e5233",
+    "content-hash": "edfabe12954ffa251fed2511cc571458",
     "packages": [
+        {
+            "name": "artem328/laravel-yandex-kassa",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artem328/laravel-yandex-kassa.git",
+                "reference": "6e6360e2db9838232356b6a3e395ccc6725780ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artem328/laravel-yandex-kassa/zipball/6e6360e2db9838232356b6a3e395ccc6725780ce",
+                "reference": "6e6360e2db9838232356b6a3e395ccc6725780ce",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.1",
+                "php": "~5.5|~7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Artem328\\LaravelYandexKassa\\": "src/LaravelYandexKassa"
+                },
+                "files": [
+                    "src/LaravelYandexKassa/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Vozhzhov",
+                    "email": "vojjov.artem@ya.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yandex Kassa integration with Laravel framework",
+            "homepage": "https://github.com/artem328/laravel-yandex-kassa",
+            "keywords": [
+                "kassa",
+                "laravel",
+                "money",
+                "yandex",
+                "деньги",
+                "касса",
+                "яндекс"
+            ],
+            "time": "2016-05-30 10:05:11"
+        },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
             "version": "v0.2.0",
@@ -987,56 +1043,6 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
-        },
-        {
-            "name": "gloudemans/shoppingcart",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Crinsane/LaravelShoppingcart.git",
-                "reference": "195cc095f53c66b60afaf0753295bc9c6b2773c3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Crinsane/LaravelShoppingcart/zipball/195cc095f53c66b60afaf0753295bc9c6b2773c3",
-                "reference": "195cc095f53c66b60afaf0753295bc9c6b2773c3",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/events": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/session": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.0",
-                "orchestra/testbench": "~3.0",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "gloudemans/notify": "Simple flash notifications for Laravel"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Gloudemans\\Shoppingcart\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Gloudemans",
-                    "email": "info@robgloudemans.nl"
-                }
-            ],
-            "description": "Laravel Shoppingcart",
-            "keywords": [
-                "laravel",
-                "shoppingcart"
-            ],
-            "time": "2017-01-25 09:56:35"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2263,16 +2269,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.22.0",
+            "version": "1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bad29cb8d18ab0315e6c477751418a82c850d558",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1e044bc4b34e91743943479f1be7a1d5eb93add0",
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
                 "shasum": ""
             },
             "require": {
@@ -2337,7 +2343,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2017-03-13 07:08:03"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2756,16 +2762,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774"
+                "reference": "965cdeb01fdcab7653253aa81d40441d261f1e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/965cdeb01fdcab7653253aa81d40441d261f1e66",
+                "reference": "965cdeb01fdcab7653253aa81d40441d261f1e66",
                 "shasum": ""
             },
             "require": {
@@ -2800,7 +2806,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-03-18 20:34:03"
+            "time": "2017-03-13 16:22:52"
         },
         {
             "name": "pingpong/widget",
@@ -4233,12 +4239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-translation-manager.git",
-                "reference": "4d91fce088f133e2465e62e56d1066e26fd886d3"
+                "reference": "b18e9065d55a9b37e2f689cd35a0963dea4e944b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/4d91fce088f133e2465e62e56d1066e26fd886d3",
-                "reference": "4d91fce088f133e2465e62e56d1066e26fd886d3",
+                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/b18e9065d55a9b37e2f689cd35a0963dea4e944b",
+                "reference": "b18e9065d55a9b37e2f689cd35a0963dea4e944b",
                 "shasum": ""
             },
             "require": {
@@ -4274,7 +4280,7 @@
                 "translations",
                 "translator"
             ],
-            "time": "2017-03-04 14:44:15"
+            "time": "2017-03-14 08:39:43"
         },
         {
             "name": "barryvdh/reflection-docblock",

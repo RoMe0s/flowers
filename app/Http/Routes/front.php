@@ -62,6 +62,11 @@ $router->group(
             }
         );
 
+        $router->group(['middleware' => 'auth'], function () use ($router) {
+            $router->any('/subscribe/{id}', 'Frontend\OrderController@subscribe');
+            $router->any('/subscription/{id}/pay', 'Frontend\OrderController@makeSubscription');
+        });
+
         //products
         $router->get('/related-goods', [
             'as' => 'products',
@@ -113,6 +118,10 @@ $router->group(
            'as' => 'post.login',
             'uses' => 'Frontend\AuthController@postLogin'
         ]);
+        $router->any('logout', [
+           'as' => 'logout',
+            'uses' => 'Frontend\AuthController@logout'
+        ]);
 
         $router->group(['middleware' => 'guest'], function() use ($router) {
 
@@ -130,47 +139,73 @@ $router->group(
             $router->any('/login/{provider}/callback', 'Frontend\AuthController@socialiteCallback');
 
 
-//            $router->get('password-reset', [
-//                'as' => 'password.reset',
-//                'uses' => 'Frontend\AuthController@getReset'
-//            ]);
+            $router->get('password-reset', [
+                'as' => 'password.reset',
+                'uses' => 'Frontend\AuthController@getReset'
+            ]); //TODO: todo it
 //
-//            $router->post('password-reset', [
-//                'as' => 'post.password.reset',
-//                'uses' => 'Frontend\AuthController@postReset'
-//            ]);
+            $router->post('password-reset', [
+                'as' => 'post.password.reset',
+                'uses' => 'Frontend\AuthController@postReset'
+            ]);
+
+            $router->get('password-reset/{email}/{token}', [
+                'as' => 'password.token',
+                'uses' => 'Frontend\AuthController@getRestore'
+            ]);
+
+            $router->post('password-reset/{email}/{token}', [
+                'as' => 'post.password.token',
+                'uses' => 'FrontendAuthController@postRestore'
+            ]);
 
         });
 
         //cart
+        $router->group(['prefix' => 'cart'], function () use ($router) {
 
+            $router->get('/', [
+                'as' => 'cart',
+                'uses' => 'Frontend\CartController@index'
+            ]);
 
-        $router->get('cart', [
-            'as' => 'cart',
-            'uses' => 'Frontend\CartController@index'
-        ]);
+            $router->group(['middleware' => 'auth'], function () use ($router) {
+                $router->get('/make/order', [
+                    'as' => 'get.order',
+                    'uses' => 'Frontend\OrderController@create'
+                ]);
+                $router->post('/make/order', [
+                    'as' => 'post.order',
+                    'uses' => 'Frontend\OrderController@store'
+                ]);
+            });
 
-        $router->group(['middleware' => 'cart', 'prefix' => 'cart'], function () use ($router) {
-//            $router->get('/make/fast/order', 'Frontend\OrderController@getFast');
-//            $router->post('/make/fast/order', 'Frontend\OrderController@makeFast');
-
-            $router->any('/{id}/qty/plus', 'Frontend\CartController@qtyPlus');
-            $router->any('/{id}/qty/minus', 'Frontend\CartController@qtyMinus');
-            $router->any('/{item}/{id}/remove', 'Frontend\CartController@removeItem');
-            $router->any('/clear', 'Frontend\CartController@clear');
-
-            $router->group(['middleware' => ['auth']], function () use ($router) {
-//                $router->get('/make/order', 'Frontend\OrderController@create');
-//                $router->post('/make/order', 'Frontend\OrderController@store');
+            $router->group(['middleware' => 'cart'], function() use ($router) {
+                $router->get('/make/fast/order', [
+                    'as' => 'get.fast.order',
+                    'uses' => 'Frontend\OrderController@getFast'
+                ]);
+                $router->post('/make/fast/order', [
+                    'as'   => 'post.fast.order',
+                    'uses' => 'Frontend\OrderController@makeFast'
+                ]);
+                $router->any('/clear', 'Frontend\CartController@clear');
+                $router->any('/{id}/qty/plus', 'Frontend\CartController@qtyPlus');
+                $router->any('/{id}/qty/minus', 'Frontend\CartController@qtyMinus');
+                $router->any('/{item}/{id}/remove', 'Frontend\CartController@removeItem');
                 $router->any('/apply/code', 'Frontend\CartController@applyCode');
             });
 
         });
-//        Route::get('/order/{id}/pay', 'OrderController@show');
-//        Route::any('/order/{id}/cancel', 'OrderController@destroy');
-//
-//        Route::any('/order/success', 'OrderController@success');
-//        Route::any('/order/fail', 'OrderController@fail');
+
+        //pay
+        $router->get('/order/{id}/pay', [
+            'as' => 'order.pay',
+            'uses' => 'Frontend\OrderController@show'
+        ]);
+        $router->any('/order/{id}/cancel', 'Frontend\OrderController@destroy');
+        $router->any('/order/success', 'Frontend\OrderController@success');
+        $router->any('/order/fail', 'Frontend\OrderController@fail');
 
 
         // pages + categories

@@ -27,7 +27,6 @@
         @include('partials.header')
     @show
 
-
     <main>
         @yield('content')
     </main>

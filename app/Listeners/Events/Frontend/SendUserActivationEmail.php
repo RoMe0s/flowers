@@ -39,11 +39,11 @@ class SendUserActivationEmail implements ShouldQueue
     public function handle(UserRegister $event)
     {
         Mail::queue(
-            'emails.auth.activation',
-            ['user' => serialize($event->user), 'password' => $event->input['password']],
+            'emails.reg',
+            ['email' => $event->user->email, 'password' => $event->input['password']],
             function ($message) use ($event) {
                 $message->to($event->user->email, $event->user->getFullName())
-                    ->subject(trans('subjects.profile activation').' '.config('app.name'));
+                    ->subject('Регистрация на ' . config('app.name'));
             }
         );
     }

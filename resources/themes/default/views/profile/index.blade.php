@@ -8,7 +8,9 @@
             </div>
             <div class="col-lg-9 col-sm-9 col-xs-12">
                 <h2 class="text-center">{!! $title ?: $model->name !!}</h2>
+
                 @include('errors.form')
+
                 @section('profile-content')
                     <div class="col-md-offset-3 col-md-6">
                         <form action="{!! route('profile.post') !!}" method="post">

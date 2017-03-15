@@ -54,7 +54,7 @@ class PageController extends FrontendController
     {
         $model = Page::withTranslations()->whereSlug('home')->first();
 
-        abort_if(!$model, 404);
+        abort_if(!$model || is_system_page($model->slug), 404);
 
         $this->data('model', $model);
 
@@ -76,7 +76,7 @@ class PageController extends FrontendController
 
         $model = !$model ? $this->categoryService->find($slug) : $model;
 
-        abort_if(!$model, 404);
+        abort_if(!$model || is_system_page($model->slug), 404);
 
         $this->data('model', $model);
 

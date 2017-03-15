@@ -224,5 +224,18 @@ class User extends SentryUser implements FrontLink
         return $total;
     }
 
+    public function addCode(Code $code) {
+        $this->codes()->attach($code->id);
+    }
+
+    public function hasCode($code) {
+
+        $code = $this->codes()->where('code', $code)->first();
+
+        return isset($code) ? true : false;
+
+
+    }
+
 
 }

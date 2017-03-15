@@ -209,7 +209,8 @@ return [
 
         App\Providers\VariableServiceProvider::class,
         Kingpabel\Shoppingcart\ShoppingcartServiceProvider::class,
-        SocialiteProviders\Manager\ServiceProvider::class
+        SocialiteProviders\Manager\ServiceProvider::class,
+        Artem328\LaravelYandexKassa\YandexKassaServiceProvider::class,
     ],
 
     /*
@@ -279,6 +280,7 @@ return [
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Cart'                => Kingpabel\Shoppingcart\Facades\Cart::class,
         'Socialite'           => Laravel\Socialite\Facades\Socialite::class,
+        'Kassa'     => Artem328\LaravelYandexKassa\Facades\YandexKassa::class,
 
     ],
 

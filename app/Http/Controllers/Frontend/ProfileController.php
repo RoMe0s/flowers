@@ -12,6 +12,7 @@ use App\Http\Requests\Frontend\User\UserPasswordUpdateRequest;
 use App\Http\Requests\Frontend\User\UserUpdateRequest;
 use App\Models\Discount;
 use App\Models\Page;
+use App\Models\Subscription;
 use App\Models\UserInfo;
 use App\Services\UserService;
 use Cartalyst\Sentry\Users\WrongPasswordException;
@@ -134,7 +135,9 @@ class ProfileController extends FrontendController
 
     public function orders() {
 
-        $orders = $this->currentUser->orders()->with(['items'])->orderBy('id', 'DESC')->get();
+        $orders = $this->currentUser->orders()->with(['items'])->whereHas('items', function($query) {
+            return $query->where('itemable_type', '<>', (string)Subscription::class);
+        })->orderBy('id', 'DESC')->get();
 
         $this->data('orders', $orders);
 

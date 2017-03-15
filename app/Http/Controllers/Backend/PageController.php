@@ -233,15 +233,22 @@ class PageController extends BackendController
      */
     public function update($id, PageUpdateRequest $request)
     {
+
+        $input = $request->all();
+
         try {
             $model = Page::findOrFail($id);
+
+            if(is_system_page($model->slug)) {
+                unset($input['slug']);
+            }
+
         } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
 
             return Redirect::route('admin.page.index');
         }
 
-        $input = $request->all();
         $input['parent_id'] = isset($input['parent_id']) ? $input['parent_id'] : null;
 
         DB::beginTransaction();
@@ -278,10 +285,18 @@ class PageController extends BackendController
         try {
             $model = Page::findOrFail($id);
 
-            if (!$model->delete()) {
-                FlashMessages::add("error", trans("messages.destroy_error"));
+            if(!is_system_page($model->slug)) {
+
+                if (!$model->delete()) {
+                    FlashMessages::add("error", trans("messages.destroy_error"));
+                } else {
+                    FlashMessages::add('success', trans("messages.destroy_ok"));
+                }
+
             } else {
-                FlashMessages::add('success', trans("messages.destroy_ok"));
+
+                FlashMessages::add("error", 'Системная страница');
+
             }
         } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));

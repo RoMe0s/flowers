@@ -18,7 +18,7 @@ class CodeUpdateRequest extends Request
 
         return [
             'status'    => 'required|boolean',
-            'code' => 'required|unique:codes,' . $id . ',id',
+            'code' => 'min:3|max:10|required|unique:codes,' . $id . ',id',
             'discount'  => 'required|numeric',
             'date'      => 'required'
         ];

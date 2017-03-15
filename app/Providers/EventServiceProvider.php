@@ -30,6 +30,15 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
             'SocialiteProviders\Instagram\InstagramExtendSocialite@handle',
         ],
+        'App\Events\Frontend\FastOrderStored' => [
+            'App\Listeners\Events\Frontend\SendAdminAboutNewOrder'
+        ],
+        'Artem328\LaravelYandexKassa\Events\BeforeCheckOrderResponse' => [
+            'App\Listeners\Events\Pay\CheckOrderRequisites',
+        ],
+        'Artem328\LaravelYandexKassa\Events\BeforePaymentAvisoResponse' => [
+            'App\Listeners\Events\Pay\ChangeOrderStatusWhenPaymentSuccessful',
+        ]
     ];
 
     /**
