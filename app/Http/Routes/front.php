@@ -207,6 +207,12 @@ $router->group(
         $router->any('/order/success', 'Frontend\OrderController@success');
         $router->any('/order/fail', 'Frontend\OrderController@fail');
 
+        // products
+        $router->get('/{category}/{slug}',[
+            'as' => 'product.show',
+            'uses' => 'Frontend\ProductController@show'
+        ]);
+
 
         // pages + categories
         $router->get(

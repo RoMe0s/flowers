@@ -76,7 +76,8 @@ class ProductController extends BackendController
                 'product_translations.name',
                 'products.price',
                 'products.status',
-                'products.position'
+                'products.position',
+                'products.slug'
             );
 
             return $dataTables = Datatables::of($list)

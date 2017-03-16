@@ -84,7 +84,7 @@ class Bouquet extends Model implements MetaGettable
 
     public function getUrl()
     {
-        // TODO: Implement getUrl() method.
+        return route('product.show', ['category' => $this->category->slug, 'slug' => $this->slug]);
     }
 
     public function flowers() {
@@ -103,5 +103,13 @@ class Bouquet extends Model implements MetaGettable
 
     public function category(){
         return $this->belongsTo(Category::class)->with('translations');
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return empty($this->content) ? $this->short_content : $this->content;
     }
 }

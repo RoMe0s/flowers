@@ -74,13 +74,15 @@ class SetController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Set::joinTranslations('sets', 'set_translations')->select(
+            $list = Set::with(['box', 'box.category'])->joinTranslations('sets', 'set_translations')->select(
                 'sets.id',
                 'set_translations.name',
                 'sets.price',
                 'sets.count',
                 'sets.status',
-                'sets.position'
+                'sets.position',
+                'sets.box_id',
+                'sets.slug'
             );
 
             return $dataTables = Datatables::of($list)
@@ -123,6 +125,7 @@ class SetController extends BackendController
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
 
+                ->removeColumn('box')
                 ->removeColumn('box_id')
                 ->removeColumn('slug')
                 ->removeColumn('image')

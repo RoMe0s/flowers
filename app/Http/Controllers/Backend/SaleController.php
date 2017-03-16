@@ -77,7 +77,8 @@ class SaleController extends BackendController
                 'sales.price',
                 'sales.publish_at',
                 'sales.status',
-                'sales.position'
+                'sales.position',
+                'sales.slug'
             );
 
             return $dataTables = Datatables::of($list)
@@ -119,6 +120,7 @@ class SaleController extends BackendController
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
                 ->removeColumn('image')
+                ->removeColumn('slug')
                 ->make();
         }
 

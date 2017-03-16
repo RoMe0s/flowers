@@ -72,13 +72,14 @@ class BouquetController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Bouquet::withTranslations()->joinTranslations('bouquets', 'bouquet_translations')->select(
+            $list = Bouquet::with(['translations', 'category'])->joinTranslations('bouquets', 'bouquet_translations')->select(
                 'bouquets.id',
                 'bouquet_translations.name',
                 'bouquets.price',
                 'bouquets.category_id',
                 'bouquets.status',
-                'bouquets.position'
+                'bouquets.position',
+                'bouquets.slug'
             );
 
             return $dataTables = Datatables::of($list)
@@ -127,6 +128,7 @@ class BouquetController extends BackendController
                 ->removeColumn('meta_description')
                 ->removeColumn('translations')
 
+                ->removeColumn('category')
                 ->removeColumn('slug')
                 ->removeColumn('image')
                 ->removeColumn('size')

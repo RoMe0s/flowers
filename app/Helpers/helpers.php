@@ -641,3 +641,44 @@ if(! function_exists('is_system_page')) {
     }
 
 }
+
+if(! function_exists('find_product')) {
+
+    function find_product($category, $slug) {
+
+        switch ($category) {
+
+            case 'related-goods':
+                return \App\Models\Product::with(['translations'])->visibile()->whereSlug($slug)->first();
+                break;
+
+            case 'shares':
+                return \App\Models\Sale::with(['translations'])->visible()->whereSlug($slug)->where('publish_at', \Carbon\Carbon::now()->format('Y-m-d'))->first();
+                break;
+
+            default:
+
+                $model = \App\Models\Set::with(['translations', 'box', 'box.category', 'visible_flowers'])->whereHas('box', function ($query) use ($category) {
+                    return $query->whereHas('category', function($query) use ($category) {
+                       return $query->where('slug', $category);
+                    });
+                })->visible()->whereSlug($slug)->first();
+
+                if($model) return $model;
+
+                $model = \App\Models\Bouquet::with(['translations', 'visible_flowers', 'category'])->whereHas('category', function ($query) use ($category) {
+                    return $query->where('slug', $category);
+                })->visible()->whereSlug($slug)->first();
+
+                return $model;
+
+                break;
+
+        }
+
+
+        return null;
+
+    }
+
+}

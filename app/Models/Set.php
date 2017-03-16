@@ -83,7 +83,7 @@ class Set extends Model implements MetaGettable
 
     public function getUrl()
     {
-        // TODO: Implement getUrl() method.
+        return route('product.show', ['category' => $this->box->category->slug, 'slug' => $this->slug]);
     }
 
     public function flowers() {
@@ -106,5 +106,13 @@ class Set extends Model implements MetaGettable
         $visible_flowers = $this->visible_flowers;
 
         return sizeof($visible_flowers) ? true : false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return empty($this->content) ? $this->short_content : $this->content;
     }
 }

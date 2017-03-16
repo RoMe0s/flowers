@@ -83,10 +83,18 @@ class Product extends Model implements MetaGettable
 
     public function getUrl()
     {
-        // TODO: Implement getUrl() method.
+        return route('product.show', ['category' => 'related-goods', 'slug' => $this->slug]);
     }
 
     public function categories() {
         return $this->belongsToMany(Category::class, 'products_categories')->with('translations');
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return empty($this->content) ? $this->short_content : $this->content;
     }
 }
