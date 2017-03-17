@@ -37,6 +37,10 @@ class SetCreateRequest extends FormRequest
             }
         }
 
-        return $rules;
+        $items_rules = [
+            'images.*.link'     => 'required',
+        ];
+
+        return array_merge($rules, $items_rules);
     }
 }

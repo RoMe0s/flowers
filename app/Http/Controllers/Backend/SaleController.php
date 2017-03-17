@@ -6,6 +6,7 @@ use App\Http\Requests\Backend\Sale\SaleCreateRequest;
 use App\Http\Requests\Backend\Sale\SaleUpdateRequest;
 use App\Models\Sale;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
+use App\Traits\Controllers\SaveImagesTrait;
 use Datatables;
 use DB;
 use Event;
@@ -26,6 +27,8 @@ class SaleController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
+
+    use SaveImagesTrait;
 
     /**
      * @var string
@@ -121,6 +124,7 @@ class SaleController extends BackendController
                 ->removeColumn('meta_description')
                 ->removeColumn('image')
                 ->removeColumn('slug')
+                ->removeColumn('images')
                 ->make();
         }
 
@@ -166,6 +170,8 @@ class SaleController extends BackendController
             $model = new Sale($input);
 
             $model->save();
+
+            $this->_processImages($model);
 
             DB::commit();
 
@@ -246,6 +252,8 @@ class SaleController extends BackendController
             $model->fill($input);
 
             $model->update();
+
+            $this->_processImages($model);
 
             DB::commit();
 

@@ -20,6 +20,7 @@ class CategoryService
     public $_view = 'index';
 
     public function find($slug) {
+
         $model =  Category::with(['translations'])->visible()->where('slug', $slug)->first();
 
         if($model) {

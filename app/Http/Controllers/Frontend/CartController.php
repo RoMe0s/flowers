@@ -185,7 +185,7 @@ class CartController extends FrontendController
             else return redirect()->back()->withErrors('Ошибка добавления в корзину');
         }
 
-        $sale = Sale::get($data['id']);
+        $sale = Sale::find($data['id']);
 
         if (!$request->ajax()) $this->_cartDestroy();
 
@@ -220,7 +220,7 @@ class CartController extends FrontendController
         $data = $request->all();
 
         $val = Validator::make($data, [
-            'id' => 'required|integer|exists:related_products,id'
+            'id' => 'required|integer|exists:products,id'
         ]);
 
         if ($val->fails()) {
@@ -230,7 +230,13 @@ class CartController extends FrontendController
 
         $product = Product::find($data['id']);
 
-        if (!$request->ajax()) static::_cartDestroy();
+        if (!$request->ajax()) {
+
+            Cart::destroy();
+
+            session()->forget('cart_discount_code');
+
+        }
 
         $size = !empty($product->size)? ' ('.$product->size.')': '';
 

@@ -649,7 +649,7 @@ if(! function_exists('find_product')) {
         switch ($category) {
 
             case 'related-goods':
-                return \App\Models\Product::with(['translations'])->visibile()->whereSlug($slug)->first();
+                return \App\Models\Product::with(['translations'])->visible()->whereSlug($slug)->first();
                 break;
 
             case 'shares':

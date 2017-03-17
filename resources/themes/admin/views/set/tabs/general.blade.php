@@ -60,13 +60,13 @@
     </div>
 </div>
 
-<div class="form-group required @if ($errors->has('flower')) has-error @endif">
+<div class="form-group required @if ($errors->has('flowers')) has-error @endif">
     {!! Form::label('flower', trans('labels.flower'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
         {!! Form::select('flowers[]', $flowers, $model->flowers()->lists('flower_id')->toArray(), array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'multiple' => true, 'required' => true)) !!}
 
-        {!! $errors->first('flower', '<p class="help-block error">:message</p>') !!}
+        {!! $errors->first('flowers', '<p class="help-block error">:message</p>') !!}
     </div>
 </div>
 

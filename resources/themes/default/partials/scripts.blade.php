@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{!! asset('assets/components/elastislide/js/modernizr.custom.17475.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/jquery/dist/jquery.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/bootstrap/dist/js/bootstrap.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/jquery.countdown/dist/jquery.countdown.min.js') !!}"></script>

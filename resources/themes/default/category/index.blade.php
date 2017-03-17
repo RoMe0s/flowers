@@ -30,9 +30,9 @@
 
                         <div class="row">
                             @foreach($sets as $set)
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <a href="{{ $set->image }}" title="Нажмите чтобы увеличить" data-lightbox="sets">
-                                        <div class="photo" style="background-image: url('{{ $set->image }}');">
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <a @if($set->image) href="{{ $set->image }}" data-lightbox="sets" title="Нажмите чтобы увеличить" @endif>
+                                        <div class="photo" style="background-image: url('{{ $set->image ? $set->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
                                             <div class="layout">
                                                 <p>Состав: {{ implode(", ", $set->flowers->pluck('title')->all()) }}</p>
                                             </div>
@@ -40,7 +40,7 @@
                                     </a>
 
                                     <h4 class="text-center">
-                                        {{ $set->box->title }}<br>{{ $set->box->size() }} см.
+                                        <a href="{!! $set->getUrl() !!}">{{ $set->box->title }}<br>{{ $set->box->size() }} см.</a>
                                     </h4>
 
                                     <p class="text-center">

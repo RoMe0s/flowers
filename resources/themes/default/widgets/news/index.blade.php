@@ -16,7 +16,7 @@
                 @for($i = 0; $i < count($news); $i++)
                     @if($i % 2 == 0 && $i != 0) </div><br><div class="row"> @endif
 
-                    <div class="col-lg-6 col-xs-12">
+                    <div class="col-lg-6 col-xs-6">
                         <article>
                             <div class="row">
                                 <div class="col-md-5 col-sm-6 col-xs-12">

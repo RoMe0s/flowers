@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Requests\Backend\Bouquet\BouquetCreateRequest;
 use App\Http\Requests\Backend\Bouquet\BouquetUpdateRequest;
 use App\Models\Bouquet;
+use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\FlowerTranslation;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
+use App\Traits\Controllers\SaveImagesTrait;
 use Datatables;
 use DB;
 use Exception;
@@ -27,6 +29,8 @@ class BouquetController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
+
+    use SaveImagesTrait;
 
     /**
      * @var string
@@ -133,6 +137,7 @@ class BouquetController extends BackendController
                 ->removeColumn('image')
                 ->removeColumn('size')
                 ->removeColumn('count')
+                ->removeColumn('images')
                 ->make();
         }
 
@@ -182,6 +187,8 @@ class BouquetController extends BackendController
             $model->save();
 
             $this->_proccessFlowers($model);
+
+            $this->_processImages($model);
 
             DB::commit();
 
@@ -261,6 +268,8 @@ class BouquetController extends BackendController
 
             $this->_proccessFlowers($model);
 
+            $this->_processImages($model);
+
             DB::commit();
 
             FlashMessages::add('success', trans('messages.save_ok'));
@@ -308,7 +317,7 @@ class BouquetController extends BackendController
 
         $this->data('flowers', FlowerTranslation::lists('title', 'flower_id')->toArray());
 
-        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
+        $this->data('categories', Category::where('type', (string)Bouquet::class)->joinTranslations('categories')->lists('category_translations.name', 'categories.id')->toArray());
 
     }
 

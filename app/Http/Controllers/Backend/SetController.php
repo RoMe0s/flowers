@@ -10,6 +10,7 @@ use App\Models\CategoryTranslation;
 use App\Models\FlowerTranslation;
 use App\Models\Set;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
+use App\Traits\Controllers\SaveImagesTrait;
 use Datatables;
 use DB;
 use Exception;
@@ -29,6 +30,8 @@ class SetController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
+
+    use SaveImagesTrait;
 
     /**
      * @var string
@@ -130,6 +133,7 @@ class SetController extends BackendController
                 ->removeColumn('slug')
                 ->removeColumn('image')
                 ->removeColumn('category_id')
+                ->removeColumn('images')
                 ->make();
         }
 
@@ -179,6 +183,8 @@ class SetController extends BackendController
             $model->save();
 
             $this->_proccessFlowers($model);
+
+            $this->_processImages($model);
 
             DB::commit();
 
@@ -245,7 +251,7 @@ class SetController extends BackendController
      */
     public function update($id, SetUpdateRequest $request)
     {
-        try {
+//        try {
             $model = Set::findOrFail($id);
 
             $input = $request->all();
@@ -258,18 +264,20 @@ class SetController extends BackendController
 
             $this->_proccessFlowers($model);
 
+            $this->_processImages($model);
+
             DB::commit();
 
             FlashMessages::add('success', trans('messages.save_ok'));
 
             return Redirect::route('admin.set.index');
-        } catch (ModelNotFoundException $e) {
+/*        } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
         } catch (Exception $e) {
             DB::rollBack();
 
             FlashMessages::add("error", trans('messages.update_error').': '.$e->getMessage());
-        }
+        }*/
 
         return Redirect::back()->withInput($input);
     }
@@ -305,11 +313,9 @@ class SetController extends BackendController
 
         $this->data('flowers', FlowerTranslation::lists('title', 'flower_id')->toArray());
 
-        $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
-
         $boxes = array();
 
-        foreach(Category::with('boxes')->get() as $item) {
+        foreach(Category::where('type', (string)Set::class)->with('boxes')->get() as $item) {
             $boxes[$item->name] = $item->boxes->lists('title', 'id')->toArray();
         }
 

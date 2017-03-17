@@ -6,7 +6,7 @@
 
 <div class="collapse navbar-collapse filters-collapse">
     <form action="{!! url()->current() !!}" method="get">
-        {!! Form::hidden('is_request', true) !!}
+        {!! Form::hidden('is_request', '1') !!}
         <div class="form-card">
             <h4>Сортировка</h4>
             <p>

@@ -675,3 +675,36 @@ footer ul {
 footer ul li {
     padding: 2px 0;
 }
+
+.product-description {
+    font-size: 18px;
+}
+div.product-table {
+    margin-top: 15px;
+}
+
+.product-image {
+    margin: 25px;
+}
+
+.elastislide-wrapper  {
+    box-shadow: none !important;
+}
+
+.elastislide-wrapper nav  {
+    position: absolute !important;
+    top: 44px !important;
+}
+
+.product-image-wrapper {
+    float: left;
+}
+
+@media screen and (max-width: 540px) {
+    .product-image-wrapper {
+        float: none;
+    }
+    .btn-group-vertical .btn {
+        font-size: 12px;
+    }
+}

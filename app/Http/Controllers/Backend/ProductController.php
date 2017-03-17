@@ -7,6 +7,7 @@ use App\Http\Requests\Backend\Product\ProductCreateRequest;
 use App\Models\Product;
 use App\Models\CategoryTranslation;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
+use App\Traits\Controllers\SaveImagesTrait;
 use Datatables;
 use DB;
 use Exception;
@@ -26,6 +27,8 @@ class ProductController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
+
+    use SaveImagesTrait;
 
     /**
      * @var string
@@ -122,6 +125,7 @@ class ProductController extends BackendController
                 ->removeColumn('image')
                 ->removeColumn('size')
                 ->removeColumn('translations')
+                ->removeColumn('images')
                 ->make();
         }
 
@@ -171,6 +175,8 @@ class ProductController extends BackendController
             $model->save();
 
             $this->_proccessCategories($model);
+
+            $this->_processImages($model);
 
             DB::commit();
 
@@ -249,6 +255,8 @@ class ProductController extends BackendController
             $model->update();
 
             $this->_proccessCategories($model);
+
+            $this->_processImages($model);
 
             DB::commit();
 

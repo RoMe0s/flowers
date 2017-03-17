@@ -12,6 +12,18 @@ class Set extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
+    protected $with = ['images'];
+
+    public function images() {
+        return $this->morphOne(Image::class, 'imagable');
+    }
+
+    public function getImages() {
+
+        return isset($this->images) ? $this->images->images : array();
+
+    }
+
     /**
      * @var array
      */
@@ -102,6 +114,10 @@ class Set extends Model implements MetaGettable
         return $this->box->category;
     }
 
+    public function getCategoryId() {
+        return $this->box->category_id;
+    }
+
     public function hasInStock() {
         $visible_flowers = $this->visible_flowers;
 
@@ -114,5 +130,16 @@ class Set extends Model implements MetaGettable
     public function getContent()
     {
         return empty($this->content) ? $this->short_content : $this->content;
+    }
+
+    public function getDataForTable() {
+
+        return [
+            'Коробка' => $this->box->title,
+            'Состав' => implode(", ", $this->flowers->pluck('title')->all()),
+            'Количество цветов' => $this->count,
+            'Размер' => $this->box->size() . ' см.'
+        ];
+
     }
 }

@@ -2,7 +2,7 @@
     @php($counter = 0)
     @foreach($categories as $key => $category)
         @if($counter == 0) <div class="row"> @endif
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-sm-6 col-xs-6">
                 <a href="{!! url($category->slug) !!}">
                     <div class="photo" style="background-image: url('{!! $category->image !!}');">
                         <div class="title">{!! $category->name !!}</div>

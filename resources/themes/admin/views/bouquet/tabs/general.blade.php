@@ -40,13 +40,12 @@
     </div>
 </div>
 
-<div class="form-group required @if ($errors->has('flower')) has-error @endif">
+<div class="form-group required @if ($errors->has('flowers')) has-error @endif">
     {!! Form::label('flower', trans('labels.flower'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
-        {!! Form::select('flowers[]', $flowers, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'multiple' => true, 'required' => true)) !!}
-
-        {!! $errors->first('flower', '<p class="help-block error">:message</p>') !!}
+        {!! Form::select('flowers[]', $flowers, isset($model->flowers) ? $model->flowers->lists('id')->toArray() : array(), array('required' => true, 'class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'multiple' => true)) !!}
+        {!! $errors->first('flowers', '<p class="help-block error">:message</p>') !!}
     </div>
 </div>
 
@@ -54,7 +53,7 @@
     {!! Form::label('image', trans('labels.image'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-7 col-md-4">
-        {!! Form::imageInput('image', $model->image) !!}
+        {!! Form::imageInput('image', $model->image ? $model->image : null, array()) !!}
 
         {!! $errors->first('image', '<p class="help-block error">:message</p>') !!}
     </div>

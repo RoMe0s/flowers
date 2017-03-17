@@ -17,6 +17,10 @@
                 <li>
                     <a aria-expanded="false" href="#general" data-toggle="tab">@lang('labels.tab_general')</a>
                 </li>
+
+                    <li>
+                        <a aria-expanded="false" href="#images" data-toggle="tab">@lang('labels.tab_images')</a>
+                    </li>
             </ul>
 
             <div class="tab-content">
@@ -29,6 +33,10 @@
                 <div class="tab-pane" id="general">
                     @include('sale.tabs.general')
                 </div>
+
+                    <div class="tab-pane" id="images">
+                        @include('set.tabs.images')
+                    </div>
             </div>
         </div>
 

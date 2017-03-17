@@ -12,6 +12,18 @@ class Product extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
+    protected $with = ['images'];
+
+    public function images() {
+        return $this->morphOne(Image::class, 'imagable');
+    }
+
+    public function getImages() {
+
+        return isset($this->images) ? $this->images->images : array();
+
+    }
+
     /**
      * @var array
      */
@@ -97,4 +109,23 @@ class Product extends Model implements MetaGettable
     {
         return empty($this->content) ? $this->short_content : $this->content;
     }
+
+    public function getCategoryId() {
+        return -1;
+    }
+
+    public function getDataForTable() {
+
+        if($this->size) {
+
+            return [
+                'Количество' => $this->size . ' шт.'
+            ];
+
+        }
+
+        return [];
+
+    }
+
 }

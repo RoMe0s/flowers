@@ -12,6 +12,18 @@ class Bouquet extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
+    protected $with = ['images'];
+
+    public function images() {
+        return $this->morphOne(Image::class, 'imagable');
+    }
+
+    public function getImages() {
+
+        return isset($this->images) ? $this->images->images : array();
+
+    }
+
     /**
      * @var array
      */
@@ -111,5 +123,18 @@ class Bouquet extends Model implements MetaGettable
     public function getContent()
     {
         return empty($this->content) ? $this->short_content : $this->content;
+    }
+
+    public function getCategoryId() {
+        return $this->category_id;
+    }
+
+    public function getDataForTable() {
+
+        return [
+            'Состав' => implode(", ", $this->flowers->pluck('title')->all()),
+            'Количество цветов' => $this->count
+        ];
+
     }
 }
