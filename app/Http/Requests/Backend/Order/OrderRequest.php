@@ -28,8 +28,6 @@ class OrderRequest extends FormRequest
 
         $rules = [
             'courier_id' => 'required',
-            'address' => 'required',
-            'code'    => 'required',
             'delivery_price' => 'required',
             'discount'      => 'required',
             'prepay'    => 'required',
@@ -37,11 +35,19 @@ class OrderRequest extends FormRequest
             'recipient_phone'    => 'required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'email' => 'required|email',
             'date' => 'date',
-            'prepay' => 'required',
             'status' => 'required',
             'password' => 'required_without:user_id',
             'card_text' => 'max:150'
         ];
+
+        if(!$this->request->has('address_need')) {
+
+            $rules = [
+                'address' => 'required',
+                'code'    => 'required'
+            ];
+
+        }
 
         $items_rules = [
             'items.new.*.price'     => ['required', 'regex:' . $pregex],

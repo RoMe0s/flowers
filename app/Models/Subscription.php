@@ -13,6 +13,8 @@ class Subscription extends Model
     use Translatable;
     use WithTranslationsTrait;
 
+    protected $with = ['translations'];
+
     /**
      * @var array
      */

@@ -6,6 +6,7 @@
         <a href="{!! route('pages.show' ,['slug' => $category->slug]) !!}"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;К списку</a>
     </div>
         <div class="col-sm-12">
+            <h1 class="text-center">{!! $model->name !!}</h1>
             <div class="col-md-4 col-sm-12 text-center product-image-wrapper">
                 @if(isset($model->image) && $model->image != "")
                     <div class="product-image">
@@ -34,7 +35,6 @@
                 </p>
                 {!! $content !!}
             </div>
-            <h1>{!! $model->name !!}</h1>
             {!! $model->getContent() !!}
         </div>
         <div class="col-sm-12 product-table">

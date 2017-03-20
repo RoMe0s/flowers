@@ -9,9 +9,11 @@
                     <a aria-expanded="false" href="#client" data-toggle="tab">@lang('labels.tab_client')</a>
                 </li>
 
-                <li>
-                    <a aria-expanded="false" href="#address" data-toggle="tab">@lang('labels.tab_address')</a>
-                </li>
+                @if(!$model->isSubscriptionOrder())
+                    <li>
+                        <a aria-expanded="false" href="#address" data-toggle="tab">@lang('labels.tab_address')</a>
+                    </li>
+                @endif
 
                 <li>
                     <a aria-expanded="false" href="#general" data-toggle="tab">@lang('labels.tab_general')</a>
@@ -27,9 +29,13 @@
                     @include('order.tabs.client')
                 </div>
 
-                <div class="tab-pane" id="address">
-                    @include('order.tabs.address')
-                </div>
+                @if(!$model->isSubscriptionOrder())
+                    <div class="tab-pane" id="address">
+                        @include('order.tabs.address')
+                    </div>
+                @else
+                    {!! Form::hidden('address_need', '1') !!}
+                @endif
 
                 <div class="tab-pane" id="general">
                     @include('order.tabs.general')

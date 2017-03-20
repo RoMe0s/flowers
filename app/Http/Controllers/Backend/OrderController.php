@@ -75,8 +75,11 @@ class OrderController extends BackendController
             $list = Order::select(
                 'id',
                 'recipient_name',
-                'status',
-                'delivery_price'
+                'delivery_price',
+                'prepay',
+                'date',
+                'created_at',
+                'status'
             );
 
             if($request->get('status') !== null && $request->get('status') !== "") {
@@ -84,12 +87,16 @@ class OrderController extends BackendController
             }
 
             return $dataTables = Datatables::of($list)
-                ->filterColumn('orders.id', 'where', 'orders.id', '=', '$1')
-                ->filterColumn('name', 'where', 'order_translations.name', 'LIKE', '%$1%')
                 ->editColumn(
-                    'total',
+                    'delivery_price',
                     function ($model) {
-                        return $model->getTotal();
+                        return $model->getTotal() . ' руб.';
+                    }
+                )
+                ->editColumn(
+                    'prepay',
+                    function ($model) {
+                        return $model->totalPrepay() . ' руб.(' . $model->prepay . '%)';
                     }
                 )
                 ->editColumn(
@@ -111,7 +118,6 @@ class OrderController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
-                ->removeColumn('delivery_price')
                 ->make();
         }
 
@@ -128,7 +134,15 @@ class OrderController extends BackendController
      */
     public function show($id)
     {
-        return $this->edit($id);
+        $model = Order::with('items')->findOrFail($id);
+
+        $this->data('model', $model);
+
+        $this->data('page_title', '"'.$model->recipient_name . ' ' . $model->created_at . '"');
+
+        $this->breadcrumbs($model->id);
+
+        return $this->render('views.order.show');
     }
 
     /**
@@ -218,7 +232,7 @@ class OrderController extends BackendController
 
             $this->_fillAdditionalTemplateData($model);
 
-            $this->data('page_title', '"'.$model->recipient_name.'"');
+            $this->data('page_title', '"'.$model->recipient_name . ' ' . $model->created_at . '"');
 
             $this->breadcrumbs(trans('labels.order_editing'));
 

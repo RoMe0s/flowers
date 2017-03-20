@@ -20,8 +20,6 @@ class MenuWidget extends Widget
     public function index($position)
     {
 
-        Cache::flush();
-
         $menu = Cache::remember('menu_' . $position, 10, function() use ($position) {
             return Menu::with(['translations', 'visible_items'])
                 ->whereLayoutPosition($position)

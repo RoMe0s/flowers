@@ -127,6 +127,7 @@ class SetController extends BackendController
                 ->removeColumn('meta_keywords')
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
+                ->removeColumn('translations')
 
                 ->removeColumn('box')
                 ->removeColumn('box_id')
@@ -324,7 +325,7 @@ class SetController extends BackendController
     }
 
     private function _proccessFlowers(Set $model) {
-        $new = request('flowers');
+/*        $new = request('flowers');
 
         $old = $model->flowers->lists('flower_id')->toArray();
 
@@ -332,6 +333,10 @@ class SetController extends BackendController
 
         $model->flowers()->detach($remove);
 
-        $model->flowers()->attach(array_diff($new, $old));
+        $model->flowers()->attach(array_diff($new, $old));*/
+
+        $model->flowers()->detach();
+
+        $model->flowers()->attach(request('flowers', []));
     }
 }

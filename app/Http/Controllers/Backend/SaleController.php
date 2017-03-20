@@ -122,6 +122,7 @@ class SaleController extends BackendController
                 ->removeColumn('meta_keywords')
                 ->removeColumn('meta_title')
                 ->removeColumn('meta_description')
+                ->removeColumn('translations')
                 ->removeColumn('image')
                 ->removeColumn('slug')
                 ->removeColumn('images')

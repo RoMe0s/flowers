@@ -1,13 +1,21 @@
-<nav class="nav navbar-pills">
+<nav class="nav navbar-pills header-menu">
+    <a @if(request()->url() != route('cart')) href="{!! route('cart') !!}" @endif class="navbar-toggle float-left mobile-cart">
+        <i class="fa fa-shopping-bag"></i>
+        <span class="cart-count">
+            {!! Cart::count() !!}
+        </span>
+    </a>
     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#nav-collapse">
         Меню <i class="fa fa-bars"></i>
     </button>
 
+    <div class="clearfix"></div>
+
     <div class="collapse navbar-collapse" id="nav-collapse">
         <div class="container">
             <ul class="float-right">
-                <li>
-                    <a href="{!! route('cart') !!}">
+                <li class="mobile-hidden">
+                    <a @if(request()->url() != route('cart')) href="{!! route('cart') !!}" @endif>
                         <i class="fa fa-shopping-bag">
                         </i> <span class="cart-count">
                         {!! Cart::count() !!}

@@ -322,7 +322,7 @@ class BouquetController extends BackendController
     }
 
     private function _proccessFlowers(Bouquet $model) {
-        $new = request('flowers');
+/*        $new = request('flowers');
 
         $old = $model->flowers->lists('flower_id')->toArray();
 
@@ -330,6 +330,10 @@ class BouquetController extends BackendController
 
         $model->flowers()->detach($remove);
 
-        $model->flowers()->attach(array_diff($new, $old));
+        $model->flowers()->attach(array_diff($new, $old));*/
+
+        $model->flowers()->detach();
+
+        $model->flowers()->attach(request('flowers', []));
     }
 }

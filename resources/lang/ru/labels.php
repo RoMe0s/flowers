@@ -1,6 +1,8 @@
 <?php
 
 return array (
+    'delivery date' => 'Дата доставки',
+    'created_at' => 'Дата создания',
   'accept' => 'Подтвердить',
   'actions' => 'Действия',
   'activate_profile_as_action' => 'Активировать профиль',

@@ -17,8 +17,6 @@ class CategoryWidget extends Widget
     public function index()
     {
 
-        Cache::flush();
-
         $categories = Cache::remember('categories', 5, function() {
             return Category::visible()->positionSorted()->with('translations')->get();
         });

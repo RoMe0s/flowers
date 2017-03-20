@@ -11,19 +11,19 @@
 
         @include('errors.form')
 
-        <div class="panel panel-default">
+        <div class="panel panel-default table-responsive">
             @if(Cart::count() == 0)
                 <div class="panel-body text-center">Пусто</div>
             @else
                 <table class="table cart">
                     <thead>
-                    <th></th>
-                    <th></th>
-                    <th>Название</th>
-                    <th>Цена</th>
-                    <th>Скидка</th>
-                    <th>Кол-во</th>
-                    <th>Сумма</th>
+                    <th class="col-sm-1"></th>
+                    <th class="col-sm-1"></th>
+                    <th class="col-sm-2">Название</th>
+                    <th class="col-sm-2">Цена</th>
+                    <th class="col-sm-2">Скидка</th>
+                    <th class="col-sm-2">Кол-во</th>
+                    <th class="col-sm-2">Сумма</th>
                     </thead>
                     <tbody>
                     @foreach(Cart::content() as $item)
@@ -40,9 +40,13 @@
                             <td>{{ $item->price }} руб</td>
                             <td>{{ $item->discount }} руб</td>
                             <td>
-                                <div class="btn-group-xs">
+                                <div class="btn-group-sm card-qty">
                                     @if($item->qty != 1)
                                         <a class="btn btn-default" href="/cart/{{ $item->rowid }}/qty/minus">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-default" disabled="disabled">
                                             <i class="fa fa-minus"></i>
                                         </a>
                                     @endif

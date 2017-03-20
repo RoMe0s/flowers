@@ -47,6 +47,19 @@ $(document).on "click", ".front-home-link", (e) ->
   window.open($(this).data('href'),'_blank');
 
 $(document).ready ->
+
+  $('.copy-button').on 'click', (e) ->
+    $(this).css 'pointer-events', 'none'
+    $temp = $('<input>')
+    element = $('.pay-link')
+    $('body').append $temp
+    $temp.val($(element).html()).select()
+    document.execCommand 'copy'
+    $temp.remove()
+    message.show 'Скопировано в буфер обмена', 'info'
+    $(this).css 'pointer-events', ''
+    e.preventDefault()
+
   initToggles()
 
   #select

@@ -25,8 +25,6 @@ class RelatedProducts extends Widget
             $current_id = $model->id;
         }
 
-        Cache::flush();
-
         $products = Cache::remember('category_' . $category_id.$current_id, 5, function() use ($category_id, $current_id) {
             if($category_id != -1) {
                 $query = Product::whereHas('categories', function ($query) use ($category_id) {

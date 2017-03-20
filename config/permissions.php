@@ -51,11 +51,6 @@ return array (
     'menu.write',
     'menu.delete',
 
-    'banner.create',
-    'banner.read',
-    'banner.write',
-    'banner.delete',
-
     'textwidget.create',
     'textwidget.read',
     'textwidget.write',
@@ -70,9 +65,6 @@ return array (
     'variable.read',
     'variable.write',
     'variable.delete',
-    
-    'translation.read',
-    'translation.write',
 
     'user.create',
     'user.read',

@@ -39,7 +39,7 @@ class Order extends Model
     }
 
     public function items() {
-        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable.translations');
+        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable');
     }
 
     public function getTotal() {
@@ -186,6 +186,23 @@ class Order extends Model
             ]);
             $order->items()->save($orderItem);
         }
+
+    }
+
+    public function isSubscriptionOrder() {
+        if($this->items->count() == 1) {
+
+            $item = $this->items->first();
+
+            if($item->itemable_type == (string)Subscription::class) {
+
+                return true;
+
+            }
+
+        }
+
+        return false;
 
     }
 

@@ -7,18 +7,21 @@
         <div class="row">
             @foreach($products as $product)
                 <div class="col-sm-3 col-xs-6">
-                    <a @if($product->image) href="{{ $product->image }}" data-lightbox="products" @endif>
+                    <a href="{!! $product->getUrl() !!}" title="{!! $product->name !!}">
                         <div class="photo" style="background-image: url('{{ $product->image ? $product->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
                             <div class="layout">
-                                <i class="fa fa-search"></i>
+                                {{ $product->name }} {{ (!empty($product->size))? '('.$product->size.')': '' }}
                             </div>
                         </div>
                     </a>
 
-                    <p class="text-center">
+                    <h4 class="text-center">
                         <a href="{!! $product->getUrl() !!}">
-                            <span class="price">{{ $product->name }} {{ (!empty($product->size))? '('.$product->size.')': '' }}<br/>{{ $product->price }} руб.</span>
+                            {{ $product->name }} {{ (!empty($product->size))? '('.$product->size.')': '' }}
                         </a>
+                    </h4>
+                    <p class="text-center">
+                        <span class="price">{{ $product->price }} руб.</span>
                     </p>
                     <p class="text-center">
                         <span class="btn-group-vertical">

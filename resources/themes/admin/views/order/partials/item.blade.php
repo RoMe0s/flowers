@@ -3,6 +3,8 @@ if($item->itemable instanceof \App\Models\Individual) {
     $name = 'Инд. товар #' . $item->id;
 } elseif($item->itemable instanceof \App\Models\Sale) {
     $name = 'Акция #' . $item->id;
+} elseif($item->itemable instanceof \App\Models\Subscription) {
+    $name = $item->itemable->title;
 } else {
     if($item->itemable) {
         $name = $item->itemable->name;

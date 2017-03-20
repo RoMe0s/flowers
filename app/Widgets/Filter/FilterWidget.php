@@ -17,8 +17,6 @@ class FilterWidget extends Widget
     public function index()
     {
 
-        Cache::flush();
-
         $boxes = Cache::remember('filter_boxes', 5, function() {
             return Box::all();
         });

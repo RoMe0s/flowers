@@ -13,19 +13,23 @@
     <div class="row">
         @foreach($sets as $set)
             <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="photo" style="background-image: url('{!! $set->image ? $set->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' !!}');">
-                    <div class="layout">
-                        <p>
-                            Состав: {!! implode(", ", $set->flowers->pluck('title')->all()) !!}
-                        </p>
+                <a href="{!! $set->getUrl() !!}" title="{!! $set->name !!}">
+                    <div class="photo" style="background-image: url('{!! $set->image ? $set->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' !!}');">
+                        <div class="layout">
+                            <p>
+                                Состав: {!! implode(", ", $set->flowers->pluck('title')->all()) !!}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <br>
-
-                <p class="text-center"><a href="{!! $set->getUrl() !!}">{!! $set->box->category->title !!}</a></p>
+                <h4 class="text-center">
+                    <a href="{!! $set->getUrl() !!}" title="{!! $set->name !!}">
+                        {!! $set->name !!}
+                    </a>
+                </h4>
                 <p class="text-center">
-                    <a href="{!! $set->getUrl() !!}"><span class="price">{!! $set->name !!}<br />{!! $set->price !!} руб.</span></a>
+                    <span class="price">{!! $set->price !!} руб.</span>
                 </p>
                 <p class="text-center">
                     @if($set->hasInStock())

@@ -39,7 +39,7 @@
                     @if($i % 4 == 0 && $i != 0) {!! '</div><br><div class="row">' !!} @endif
 
                     <div class="col-lg-3 col-sm-3 col-xs-6">
-                        <a @if($bouquet->image) href="{{ $bouquet->image }}" data-lightbox="bouquets" @endif>
+                        <a href="{!! $bouquet->getUrl() !!}" title="{!! $bouquet->name !!}">
                             <div class="photo" style="background-image: url('{{ $bouquet->image ? $bouquet->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
                                 <div class="layout">
                                     <p>
@@ -49,7 +49,9 @@
                             </div>
                         </a>
 
-                        <p class="text-center"><a href="{!! $bouquet->getUrl() !!}">{{ $bouquet->title }}</a></p>
+                        <h4 class="text-center">
+                            <a href="{!! $bouquet->getUrl() !!}">{{ $bouquet->name }}</a>
+                        </h4>
                         <p class="text-center">
                             <span class="price">{{ $bouquet->price }} руб.</span>
                         </p>

@@ -24,8 +24,6 @@ class TextWidgetWidget extends Widget
     function index($position)
     {
 
-        Cache::flush();
-
         $widget = Cache::remember('text_widget_' . $position, 10, function() use($position) {
 
             return TextWidget::where('layout_position', $position)->visible()->first();

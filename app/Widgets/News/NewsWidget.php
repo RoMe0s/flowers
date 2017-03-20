@@ -18,8 +18,6 @@ class NewsWidget extends Widget
     public function index()
     {
 
-        Cache::flush();
-
         $news = Cache::remember('news', 5, function() {
            return News::with('translations')->visible()->publishAtSorted()->limit(4)->get();
         });

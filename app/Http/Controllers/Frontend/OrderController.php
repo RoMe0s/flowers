@@ -97,7 +97,11 @@ class OrderController extends FrontendController
 
             }
 
-            Sentry::login($user, false);
+            $cuser = Sentry::getUser();
+
+            if($user != $cuser) {
+                Sentry::login($user, false);
+            }
 
             $order = Order::make([
                 'address_id' => null,
