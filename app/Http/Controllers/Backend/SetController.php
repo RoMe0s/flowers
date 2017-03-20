@@ -79,6 +79,7 @@ class SetController extends BackendController
         if ($request->get('draw')) {
             $list = Set::with(['box', 'box.category'])->joinTranslations('sets', 'set_translations')->select(
                 'sets.id',
+                'sets.image',
                 'set_translations.name',
                 'sets.price',
                 'sets.count',
@@ -93,6 +94,12 @@ class SetController extends BackendController
                 ->filterColumn('set_translations.name', 'where', 'set_translations.name', 'LIKE', '%$1%')
                 ->filterColumn('sets.count', 'where', 'sets.count', '=', '$1')
                 ->filterColumn('sets.price', 'where', 'sets.price', 'LIKE', '%$1%')
+                ->editColumn(
+                    'image',
+                    function ($model) {
+                        return $model->image ? "<div class='text-center'><img src='{$model->image}' style='max-width: 75px; max-height: 75px;' /></div>" : trans('labels.no');
+                    }
+                )
                 ->editColumn(
                     'status',
                     function ($model) {
@@ -132,7 +139,6 @@ class SetController extends BackendController
                 ->removeColumn('box')
                 ->removeColumn('box_id')
                 ->removeColumn('slug')
-                ->removeColumn('image')
                 ->removeColumn('category_id')
                 ->removeColumn('images')
                 ->make();

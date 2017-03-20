@@ -78,6 +78,7 @@ class BouquetController extends BackendController
         if ($request->get('draw')) {
             $list = Bouquet::with(['translations', 'category'])->joinTranslations('bouquets', 'bouquet_translations')->select(
                 'bouquets.id',
+                'bouquets.image',
                 'bouquet_translations.name',
                 'bouquets.price',
                 'bouquets.category_id',
@@ -91,6 +92,12 @@ class BouquetController extends BackendController
                 ->filterColumn('bouquet_translations.name', 'where', 'bouquet_translations.name', 'LIKE', '%$1%')
                 ->filterColumn('bouquets.price', 'where', 'bouquets.price', 'LIKE', '%$1%')
                 ->filterColumn('bouquets.type_id', 'where', 'bouquets.type_id', 'LIKE', '%$1%')
+                ->editColumn(
+                    'image',
+                    function ($model) {
+                        return $model->image ? "<div class='text-center'><img src='{$model->image}' style='max-width: 75px; max-height: 75px;' /></div>" : trans('labels.no');
+                    }
+                )
                 ->editColumn(
                     'category_id',
                     function ($model) {
@@ -134,7 +141,6 @@ class BouquetController extends BackendController
 
                 ->removeColumn('category')
                 ->removeColumn('slug')
-                ->removeColumn('image')
                 ->removeColumn('size')
                 ->removeColumn('count')
                 ->removeColumn('images')

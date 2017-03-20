@@ -42,7 +42,7 @@ class OrderRequest extends FormRequest
 
         if(!$this->request->has('address_need')) {
 
-            $rules = [
+            $rules += [
                 'address' => 'required',
                 'code'    => 'required'
             ];

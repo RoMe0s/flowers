@@ -44,7 +44,9 @@ if($item->itemable instanceof \App\Models\Individual) {
             {!! Form::text(null, $item->count *  $item->getPrice($discount), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
         </div>
     </td>
+    @if(!isset($editable) || $editable == true)
     <td class="coll-actions">
         <a class="btn btn-flat btn-danger btn-xs action exist destroy" data-id="{!! $item->id !!}" data-name="items[remove][]"><i class="fa fa-remove"></i></a>
     </td>
+    @endif
 </tr>

@@ -42,15 +42,15 @@ hideUser = (item)->
     _phone.val(_selected.data('phone'))
     _email.val(_selected.data('email'))
     _discount.val(_selected.data('discount'))
-    _name.closest('.form-group').hide()
-    _phone.closest('.form-group').hide()
-    _email.closest('.form-group').hide()
+#    _name.closest('.form-group').hide()
+#    _phone.closest('.form-group').hide()
+#    _email.closest('.form-group').hide()
     hidePassworField(true)
     reloadItems(_selected.data('discount'), _this.data('id'))
   else
-    _name.closest('.form-group').show()
-    _phone.closest('.form-group').show()
-    _email.closest('.form-group').show()
+#    _name.closest('.form-group').show()
+#    _phone.closest('.form-group').show()
+#    _email.closest('.form-group').show()
     hidePassworField(false)
   return
 
@@ -65,11 +65,11 @@ hideAddress = (item)->
     _selected = _this.find(':selected')
     _address.val(_selected.data('address'))
     _code.val(_selected.data('code'))
-    _address.closest('.form-group').hide()
-    _code.closest('.form-group').hide()
-  else
-    _address.closest('.form-group').show()
-    _code.closest('.form-group').show()
+#    _address.closest('.form-group').hide()
+#    _code.closest('.form-group').hide()
+#  else
+#    _address.closest('.form-group').show()
+#    _code.closest('.form-group').show()
 
 $(document).ready ()->
   _user = $('select.admin-order-user')

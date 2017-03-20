@@ -4,7 +4,7 @@
     <div class="col-md-12">
 
         <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
+{{--            <ul class="nav nav-tabs">
                 <li class="active">
                     <a aria-expanded="false" href="#client" data-toggle="tab">@lang('labels.tab_client')</a>
                 </li>
@@ -22,14 +22,39 @@
                 <li>
                     <a aria-expanded="false" href="#items" data-toggle="tab">@lang('labels.tab_items')</a>
                 </li>
-            </ul>
+            </ul>--}}
 
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="client">
-                    @include('order.tabs.client')
+                <h4 class="text-center">Элементы</h4>
+                <div class="tab-pane fade in active">
+                    @if(isset($model->id))
+                    <div id="items">
+                        @include('order.tabs.items')
+                    </div>
+                    @else
+                        <div class="basket-items-list" id="items">
+                            @include('order.tabs.basket_items')
+                        </div>
+                    @endif
+                    <h4 class="text-center">Клиент</h4>
+                    <div class="tab-pane" id="client">
+                        @include('order.tabs.client')
+                    </div>
+                        @if(!$model->isSubscriptionOrder())
+                            <h4 class="text-center">Адрес</h4>
+                            <div id="address">
+                                @include('order.tabs.address')
+                            </div>
+                        @else
+                            {!! Form::hidden('address_need', '1') !!}
+                        @endif
+                    <h4 class="text-center">Основные</h4>
+                    <div class="tab-pane" id="general">
+                            @include('order.tabs.general')
+                    </div>
                 </div>
 
-                @if(!$model->isSubscriptionOrder())
+{{--            @if(!$model->isSubscriptionOrder())
                     <div class="tab-pane" id="address">
                         @include('order.tabs.address')
                     </div>
@@ -47,8 +72,8 @@
                     @else
                     <div class="tab-pane basket-items-list" id="items">
                         @include('order.tabs.basket_items')
-                    </div>    
-                    @endif   
+                    </div>
+                @endif --}}
             </div>
         </div>
 
