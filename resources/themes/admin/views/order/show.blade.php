@@ -122,10 +122,18 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if(sizeof($model->items))
                             @foreach($model->items as $item)
                                 @include('order.partials.item', ['discount' => $model->discount, 'editable' => false])
                             @endforeach
                         </tbody>
+                        @else
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    @lang('labels.no')
+                                </td>
+                            </tr>
+                        @endif
                     </table>
                     <table class="table table-responsive">
                         <tbody>
