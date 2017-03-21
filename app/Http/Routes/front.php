@@ -1,9 +1,29 @@
 <?php
 
+$router->get('/test_login', function () {
+
+    return view('test_login')->render();
+
+});
+
+$router->post('/test_login', function (){
+
+    if(request()->get('password') == "123!321") {
+
+        session()->put('allow_test_site',  true);
+
+        return redirect()->to(route('home'));
+
+    }
+
+    return redirect()->back();
+
+});
+
 $router->group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect'],
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'test'],
     ],
     function () use ($router) {
         // home
