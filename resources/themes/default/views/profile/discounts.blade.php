@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td>Итого:</td>
-                <td>{!! $user->discount + $user->start_discount !!}%</td>
+                <td>{!! $user->getDiscount() !!}%</td>
             </tr>
             </tfoot>
         </table>
