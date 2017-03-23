@@ -5,7 +5,9 @@
         {!! $model->name !!}
     </h3>
 
-    @include('errors.form')
+    <section>
+        @include('errors.form')
+    </section>
 
     <form style="width: 250px; margin: 20px auto 0;" class="form" action="{!! route('post.password.reset') !!}" method="post">
         {!! csrf_field() !!}

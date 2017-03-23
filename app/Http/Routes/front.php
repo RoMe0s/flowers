@@ -176,7 +176,7 @@ $router->group(
 
             $router->post('password-reset/{email}/{token}', [
                 'as' => 'post.password.token',
-                'uses' => 'FrontendAuthController@postRestore'
+                'uses' => 'Frontend\AuthController@postRestore'
             ]);
 
         });
