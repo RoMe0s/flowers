@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         'App\Events\Frontend\UserRegister' => [
-            'App\Listeners\Events\Frontend\SendAdminEmailAboutNewUser',
+//            'App\Listeners\Events\Frontend\SendAdminEmailAboutNewUser',
             'App\Listeners\Events\Frontend\SendUserActivationEmail',
         ],
 

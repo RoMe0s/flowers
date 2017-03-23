@@ -901,4 +901,46 @@ $router->group(['prefix' => 'mergeDB'], function() use ($router) {
         return "<h1>Well Done!</h1>";
     });
 
+    $router->get('/order_results', function () {
+
+        \DB::beginTransaction();
+
+        \App\Models\Order::chunk(100, function($orders) {
+
+            foreach($orders as $order) {
+
+                $result_images = array();
+
+                if($order->result) {
+
+                    foreach ($order->result as $image) {
+
+                        if(strpos($image, '/uploads/orders/') === FALSE) {
+
+                            $result_images[] = '/uploads/orders/' . $image;
+
+                        }
+
+                    }
+
+                }
+
+                if(!empty($result_images)) {
+
+                    $order->result = $result_images;
+
+                    $order->save();
+
+                }
+
+            }
+
+        });
+
+        \DB::commit();
+
+        return "<h1>Well Done!</h1>";
+
+    });
+
 });

@@ -49,9 +49,15 @@
                             {!! Form::hidden('address_need', '1') !!}
                         @endif
                     <h4 class="text-center">Основные</h4>
-                    <div class="tab-pane" id="general">
+                    <div id="general">
                             @include('order.tabs.general')
                     </div>
+                    @if(in_array($model->status, [4,5]))
+                     <h4 class="text-center">Результат</h4>
+                    <div id="result">
+                        @include('order.tabs.result')
+                    </div>
+                    @endif
                 </div>
 
 {{--            @if(!$model->isSubscriptionOrder())

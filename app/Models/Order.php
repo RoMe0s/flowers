@@ -23,7 +23,12 @@ class Order extends Model
         'time',
         'card_text',
         'status',
-        'desc'
+        'desc',
+        'result'
+    ];
+
+    protected $casts = [
+        'result' => 'array'
     ];
 
     public function user() {
@@ -81,13 +86,11 @@ class Order extends Model
 
     public function images() {
 
-        $result = [];
+        if(empty($this->result)) {
+            return $this->result;
+        }
 
-        try {
-            $result = json_decode($this->result, true);
-        } catch (\Exception $e) {}
-
-        return $result;
+        return array();
 
     }
 

@@ -14,11 +14,17 @@ class SetWidget extends Widget
     /**
      * @return $this
      */
-    public function index($count = 4)
+    public function index($count = 4, $model = null)
     {
 
 //        $sets = Cache::remember('random_sets', 5, function() use ($count) {
-            $sets = Set::visible()->with(['translations', 'visible_flowers', 'box'])->inRandomOrder()->limit($count)->get();
+            $sets = Set::visible()->with(['translations', 'visible_flowers', 'box'])->inRandomOrder();
+
+                if(isset($model) && $model instanceof Set) {
+                    $sets = $sets->where('id', '<>', $model->id);
+                }
+
+            $sets = $sets->limit($count)->get();
 //        });
 
         return view('widgets.set.index', compact('sets'))->render();

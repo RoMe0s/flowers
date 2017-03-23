@@ -81,6 +81,28 @@
     .mobile-text-center {
         text-align: center;
     }
+
+    .photo {
+        height: 150px;
+    }
+
+    .photo .layout {
+        line-height: 150px;
+    }
+
+    .photo .layout p {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+
+    .photo .title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1071px) {

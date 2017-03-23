@@ -40,7 +40,7 @@ class SendAdminEmailAboutNewUser implements ShouldQueue
     {
         Mail::queue(
             'emails.admin.new_user',
-            ['user' => serialize($event->user)],
+            ['user' => $event->user],
             function ($message) {
                 $message->to(config('app.email'), config('app.name'))->subject(trans('subjects.new_user'));
             }

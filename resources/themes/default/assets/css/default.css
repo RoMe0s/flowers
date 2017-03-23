@@ -443,6 +443,7 @@ main .bullets h4 {
     top: 0;
     left: 0;
     position: absolute;
+    padding: 0 5px;
 }
 
 .photo.photo-long {
@@ -684,7 +685,12 @@ div.product-table {
 }
 
 .product-image {
-    margin: 25px;
+    margin: 25px 0;
+}
+
+.breadcrumbs {
+    padding: 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .elastislide-wrapper  {
@@ -696,8 +702,12 @@ div.product-table {
     top: 44px !important;
 }
 
-.product-image-wrapper {
-    float: left;
+.product-image-wrapper .photo {
+    min-height: 500px;
+}
+
+.product-image-wrapper .photo .layout {
+    line-height: 500px;
 }
 
 .mobile-cart {
@@ -724,13 +734,24 @@ div.product-table {
 }
 
 @media screen and (max-width: 540px) {
-    .product-image-wrapper {
-        float: none;
+
+    .product-layout {
+        padding: 0 !important;
     }
+
+    .product-layout .product-image-wrapper {
+        padding: 0 !important;
+    }
+
+    .product-layout .product-info {
+        padding: 0 !important;
+    }
+
     .btn-group-vertical {
         padding: 0 !important;
         width: 100%;
     }
+
     .btn-group-vertical .btn {
         font-size: 10px;
         padding: 5px !important;
@@ -756,4 +777,30 @@ a:focus, a:hover {
 .related-product-item h4 {
     height: 18px;
     overflow: hidden;
+}
+
+.product-info .btn-group-vertical {
+
+    display: block;
+
+}
+
+.product-info .btn-group-vertical button, .product-info .btn-group-vertical a {
+
+    font-size: 16px;
+    line-height: 24px;
+
+}
+
+.product-info .description {
+    text-align: justify;
+}
+
+.product-info h1 {
+    font-size: 24px;
+}
+
+.elastislide-list img {
+    max-height: 100px;
+    width: auto;
 }

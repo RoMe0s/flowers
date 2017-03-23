@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers\Frontend;
 
 use App\Events\Frontend\UserRegister;
-use App\Exceptions\NotValidImageException;
 use App\Http\Requests\Frontend\User\PasswordChange;
 use App\Models\Discount;
 use App\Services\AuthService;
@@ -9,12 +8,7 @@ use App\Http\Requests\Frontend\Auth\UserRegisterRequest;
 use App\Models\User;
 use App\Services\PageService;
 use App\Services\UserService;
-use Cartalyst\Sentry\Throttling\UserBannedException;
-use Cartalyst\Sentry\Throttling\UserSuspendedException;
-use Cartalyst\Sentry\Users\LoginRequiredException;
-use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserExistsException;
-use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use DB;
@@ -202,7 +196,9 @@ class AuthController extends FrontendController
             $user->addGroup(Sentry::findGroupByName('Clients'));
             
             DB::commit();
-            
+
+            Event::fire(new UserRegister($user, $input));
+
             return redirect()->to(route('login'));
 
         } catch (UserExistsException $e) {
@@ -211,7 +207,7 @@ class AuthController extends FrontendController
         catch (Exception $e) {
             $message = 'Произошла ошибка, попробуйте пожалуйста позже';
         }
-        
+
         DB::rollBack();
         
         FlashMessages::add('error', $message);
