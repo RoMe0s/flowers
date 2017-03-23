@@ -24,29 +24,32 @@ hidePassworField = (hide)->
     _div.addClass('required')
     _div.show()
 
-hideUser = (item)->
+hideUser = (item, discount)->
   _this = item
   _form = _this.closest('form')
   _name = _form.find("input[name='recipient_name']")
   _email = _form.find("input[name='email']")
   _phone = _form.find("input[name='recipient_phone']")
-  _discount = _form.find("input#order-discount")
+  if(discount == true)
+    _discount = _form.find("input#order-discount")
   _name.val('')
   _email.val('')
   _form.find("input[name='password']").val('')
   _phone.val('')
-  _discount.val(0)
+  if(discount == true)
+    _discount.val(0)
   if _this.val() > 0
     _selected = _this.find(':selected')
     _name.val(_selected.data('name'))
     _phone.val(_selected.data('phone'))
     _email.val(_selected.data('email'))
-    _discount.val(_selected.data('discount'))
 #    _name.closest('.form-group').hide()
 #    _phone.closest('.form-group').hide()
 #    _email.closest('.form-group').hide()
     hidePassworField(true)
-    reloadItems(_selected.data('discount'), _this.data('id'))
+    if(discount == true)
+      _discount.val(_selected.data('discount'))
+      reloadItems(_selected.data('discount'), _this.data('id'))
   else
 #    _name.closest('.form-group').show()
 #    _phone.closest('.form-group').show()
@@ -73,12 +76,12 @@ hideAddress = (item)->
 
 $(document).ready ()->
   _user = $('select.admin-order-user')
-  hideUser(_user)
+  hideUser(_user, false)
   _address = $('select.admin-order-address')
   hideAddress(_address)
 
 $(document).on 'change', 'select.admin-order-user', (e)->
-  hideUser($(this))
+  hideUser($(this), true)
 
 $(document).on 'change', '.admin-order-address', (e)->
   hideAddress($(this))

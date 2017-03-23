@@ -49,6 +49,8 @@ class RouteServiceProvider extends ServiceProvider
                         'namespace'  => $this->namespace,
                     ],
                     function ($router) {
+                        include app_path('Http/Routes/mergeDB.php');
+
                         include app_path('Http/Routes/admin.php');
 
                         include app_path('Http/Routes/auth.php');

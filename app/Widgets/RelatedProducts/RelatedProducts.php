@@ -25,32 +25,39 @@ class RelatedProducts extends Widget
             $current_id = $model->id;
         }
 
-        $products = Cache::remember('category_' . $category_id.$current_id, 5, function() use ($category_id, $current_id) {
-            if($category_id != -1) {
-                $query = Product::whereHas('categories', function ($query) use ($category_id) {
-                    return $query->where('id', $category_id);
-                })
-                    ->with('translations')
-                    ->visible()
-                    ->orderBy('price', 'DESC');
-            } else {
+/*        $products = Cache::remember('category_' . $category_id.$current_id, 5, function() use ($category_id, $current_id) {
 
-                $query = Product::with('translations')
-                    ->visible()
-                    ->orderBy(\DB::raw('RAND()'))
-                    ->orderBy('price', 'DESC');
+        });*/
 
-            }
-
-            if(isset($current_id)) {
-                $query->where('id', '<>', $current_id);
-            }
-
-            return $query->paginate(12);
-
-        });
+        $products = $this->_loadProducts($category_id, $current_id);
 
         return view('widgets.relatedproducts.index', compact('products'))->render();
 
+    }
+
+    private function _loadProducts($category_id, $current_id) {
+
+        if($category_id != -1) {
+            $query = Product::whereHas('categories', function ($query) use ($category_id) {
+                return $query->where('id', $category_id);
+            })
+                ->with('translations')
+                ->visible()
+                ->orderBy(\DB::raw('RAND()'))
+                ->orderBy('price', 'DESC');
+        } else {
+
+            $query = Product::with('translations')
+                ->visible()
+                ->orderBy(\DB::raw('RAND()'))
+                ->orderBy('price', 'DESC');
+
+        }
+
+        if(isset($current_id)) {
+            $query->where('id', '<>', $current_id);
+        }
+
+        return $query->paginate(12);
     }
 }

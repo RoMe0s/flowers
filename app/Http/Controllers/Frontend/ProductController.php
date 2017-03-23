@@ -20,6 +20,8 @@ class ProductController extends FrontendController
 
         $this->data('model', $model);
 
+        $content = null;
+
         switch ($scategory) {
             case 'related-goods':
                 $category = new Collection();

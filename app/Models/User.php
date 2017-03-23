@@ -209,7 +209,11 @@ class User extends SentryUser implements FrontLink
     }
 
     public function getDiscount() {
-        return $this->discount > $this->start_discount ? $this->discount : $this->start_discount;
+        $start_discount = 0;
+        if($this->hasAccess('vip')) {
+            $start_discount = $this->start_discount;
+        }
+        return $this->discount > $start_discount ? $this->discount : $start_discount;
     }
 
     public function getTotalOrdersPrice() {

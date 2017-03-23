@@ -752,3 +752,8 @@ a.purple:hover {
 a:focus, a:hover {
     text-decoration: none;
 }
+
+.related-product-item h4 {
+    height: 18px;
+    overflow: hidden;
+}

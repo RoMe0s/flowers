@@ -140,7 +140,7 @@ $router->group(
         ]);
         $router->any('logout', [
            'as' => 'logout',
-            'uses' => 'Frontend\AuthController@logout'
+           'uses' => 'Frontend\AuthController@logout'
         ]);
 
         $router->group(['middleware' => 'guest'], function() use ($router) {

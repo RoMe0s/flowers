@@ -77,16 +77,19 @@ class SetController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Set::with(['box', 'box.category'])->joinTranslations('sets', 'set_translations')->select(
-                'sets.id',
+            $list = Set::with(['box', 'box.category'])->joinTranslations('sets', 'set_translations')
+                ->leftJoin('box_translations', 'box_translations.box_id', '=', 'sets.box_id')
+                ->select(
+                'sets.id as id',
                 'sets.image',
                 'set_translations.name',
+                'box_translations.title',
                 'sets.price',
                 'sets.count',
                 'sets.status',
                 'sets.position',
-                'sets.box_id',
-                'sets.slug'
+                'sets.slug',
+                'sets.box_id'
             );
 
             return $dataTables = Datatables::of($list)
@@ -94,6 +97,7 @@ class SetController extends BackendController
                 ->filterColumn('set_translations.name', 'where', 'set_translations.name', 'LIKE', '%$1%')
                 ->filterColumn('sets.count', 'where', 'sets.count', '=', '$1')
                 ->filterColumn('sets.price', 'where', 'sets.price', 'LIKE', '%$1%')
+                ->filterColumn('title', 'where', 'title', 'LIKE', '%$1%')
                 ->editColumn(
                     'image',
                     function ($model) {
@@ -136,10 +140,9 @@ class SetController extends BackendController
                 ->removeColumn('meta_description')
                 ->removeColumn('translations')
 
-                ->removeColumn('box')
                 ->removeColumn('box_id')
+                ->removeColumn('box')
                 ->removeColumn('slug')
-                ->removeColumn('category_id')
                 ->removeColumn('images')
                 ->make();
         }

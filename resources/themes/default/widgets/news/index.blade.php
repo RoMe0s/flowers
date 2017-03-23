@@ -37,7 +37,7 @@
                                     <p>
                                         <span class="text-muted">{!! $news[$i]->publish_at !!}</span>
                                     </p>
-                                    <p>{!! $news[$i]->getShortContent().'...' !!}</p>
+                                    <p>{!! $news[$i]->getShortContent(true).'...' !!}</p>
                                 </div>
                             </div>
                         </article>

@@ -119,7 +119,7 @@ class Product extends Model implements MetaGettable
         if($this->size) {
 
             return [
-                'Количество' => $this->size . ' шт.'
+                'Количество' => $this->size
             ];
 
         }

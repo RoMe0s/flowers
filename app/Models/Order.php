@@ -48,6 +48,7 @@ class Order extends Model
         foreach ($this->items as $item) {
 
             $total_price += $item->getPrice($this->discount) * $item->count;
+
         }
 
         $total_price += $this->delivery_price;
