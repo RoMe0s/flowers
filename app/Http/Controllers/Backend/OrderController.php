@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use App\Models\UserInfo;
+use Carbon\Carbon;
 use Datatables;
 use DB;
 use Exception;
@@ -88,6 +89,15 @@ class OrderController extends BackendController
 
             return $dataTables = Datatables::of($list)
                 ->editColumn(
+                    'date',
+                    function ($model) {
+                        if($model->date) {
+                            return Carbon::createFromFormat('d-m-Y', $model->date)->format('Y-m-d');
+                        }
+                        return trans('labels.no');
+                    }
+                )
+                ->editColumn(
                     'delivery_price',
                     function ($model) {
                         return $model->getTotal() . ' руб.';
@@ -113,7 +123,7 @@ class OrderController extends BackendController
                     function ($model) {
                         return view(
                             'partials.datatables.control_buttons',
-                            ['model' => $model, 'type' => 'order']
+                            ['model' => $model, 'type' => 'order', 'delete' => false]
                         )->render();
                     }
                 )

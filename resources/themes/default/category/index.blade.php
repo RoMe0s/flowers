@@ -11,6 +11,9 @@
                 {!! $model->name !!}
                 <hr class="box">
             </h1>
+            <br />
+            {!! $model->short_content !!}
+            <br/>
 
             @widget__text_widget(6)
 
@@ -32,7 +35,7 @@
                             @foreach($sets as $set)
                                 <div class="col-md-4 col-sm-6 col-xs-6">
                                     <a href="{{ $set->getUrl() }}" title="{!! $set->name !!}">
-                                        <div class="photo" style="background-image: url('{{ $set->image ? create_thumbnail($set->image, 250, 250) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' }}');">
+                                        <div class="photo" style="background-image: url('{{ $set->image ? create_thumbnail($set->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' }}');">
                                             <div class="layout">
                                                 <p>Состав: {{ implode(", ", $set->flowers->pluck('title')->all()) }}</p>
                                             </div>
@@ -75,13 +78,15 @@
 
     @widget__related_products($model->id)
 
-    @widget__text_widget(4)
-
     @include('partials.individual-set')
+
+    @widget__text_widget(4)
+    <br />
 
     {!! $model->content !!}
 
     @include('partials.florist')
+    <br/>
 
     {!! $model->content_two !!}
 @endsection

@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-5 col-sm-6 col-xs-12">
                                     <a href="{!! $news[$i]->image !!}" data-lightbox="news">
-                                        <div class="photo" style="background-image: url('{!! $news[$i]->image ? create_thumbnail($news[$i]->image, 190, 250) : "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=190&w=250" !!}')">
+                                        <div class="photo" style="background-image: url('{!! $news[$i]->image ? create_thumbnail($news[$i]->image, 250, 300) : "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=190&w=250" !!}')">
                                             <div class="layout">
                                                 <i class="fa fa-search"></i>
                                             </div>

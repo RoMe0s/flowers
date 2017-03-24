@@ -8,6 +8,17 @@
     </div>
 </div>
 
+<div class="form-group @if ($errors->has($locale . '[short_content]')) has-error @endif">
+    {!! Form::label($locale . '[short_content]', trans('labels.short_content'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
+
+    <div class="col-xs-8 col-sm-7 col-md-10">
+        {!! Form::textarea($locale . '[short_content]', isset($model->translate($locale)->short_content) ? $model->translate($locale)->short_content : '', ['rows' => '3', 'placeholder' => trans('labels.short_content'), 'class' => 'form-control input-sm short_content_' . $locale]) !!}
+
+        {!! $errors->first($locale . '[short_content]', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+@include('partials.tabs.ckeditor', ['id' => $locale . '[short_content]'])
+
 <div class="form-group @if ($errors->has($locale . '[content]')) has-error @endif">
     {!! Form::label($locale . '[content]', trans('labels.content'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 

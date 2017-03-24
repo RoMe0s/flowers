@@ -41,13 +41,13 @@ class RelatedProducts extends Widget
             $query = Product::whereHas('categories', function ($query) use ($category_id) {
                 return $query->where('id', $category_id);
             })
-                ->with('translations')
+                ->with(['categories', 'translations'])
                 ->visible()
                 ->orderBy(\DB::raw('RAND()'))
                 ->orderBy('price', 'DESC');
         } else {
 
-            $query = Product::with('translations')
+            $query = Product::with(['translations', 'categories'])
                 ->visible()
                 ->orderBy(\DB::raw('RAND()'))
                 ->orderBy('price', 'DESC');

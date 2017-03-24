@@ -687,15 +687,45 @@ if(! function_exists('create_thumbnail')) {
 
     function create_thumbnail($image, $width, $height = false) {
 
-        return Cache::rememberForever($image . $width . ($height ? $height : ""), function() use ($image, $width, $height) {
+        ini_set('memory_limit', '512M');
 
-            if ($height) {
-                return url(\App\Classes\Thumb::thumb($image, $width, $height)->link());
+        $height = $height ? $height : $width;
+
+        $source = public_path() . $image;
+
+        if(file_exists($source)) {
+
+            $pathinfo = pathinfo($source);
+
+            $result_link = '/uploads/thumbs/' . $pathinfo['filename'] .'_'. $width . 'x' . $height . '.' . $pathinfo['extension'];
+
+            $result_name = public_path() . $result_link;
+
+            if (file_exists( $result_name )) {
+                return $result_link;
             }
 
-            return url(\App\Classes\Thumb::square($image, $width)->link());
+            try {
 
-        });
+                if(!is_dir(public_path('uploads/thumbs'))) {
+                    \File::makeDirectory(public_path('uploads/thumbs'), 0777);
+                }
+
+                $img = \Image::make($source);
+
+                $img->fit($width, $height);
+
+                $img->save($result_name);
+
+                return $result_link;
+
+            } catch (Exception $e) {
+
+            }
+
+        }
+
+        return "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=$height&w=$width";
 
     }
 

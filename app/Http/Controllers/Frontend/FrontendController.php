@@ -55,12 +55,10 @@ class FrontendController extends BaseController
 
         Meta::title(Config::get('app.name', ''));
 
-        if (Sentry::getUser()) {
-            $this->user = User::with('info')->whereId(Sentry::getUser()->getId())->first();
-        }
+        $user = Sentry::getUser();
 
-        if ($this->user) {
-            $this->user->updateActivity();
+        if ($user) {
+            $this->user = $user;
         }
 
         $this->breadcrumbs(Config::get('app.name', ''), route('home'));

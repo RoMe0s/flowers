@@ -52,7 +52,7 @@ class PageController extends FrontendController
      */
     public function getHome()
     {
-        $model = Page::withTranslations()->whereSlug('home')->first();
+        $model = Page::with(['translations'])->whereSlug('home')->first();
 
         abort_if(!$model || is_system_page($model->slug), 404);
 
@@ -72,7 +72,7 @@ class PageController extends FrontendController
             return redirect(route('home'), 301);
         }
 
-        $model = Page::with(['translations', 'parent', 'parent.translations'])->visible()->whereSlug($slug)->first();
+        $model = Page::with(['translations'])->visible()->whereSlug($slug)->first();
 
         $model = !$model ? $this->categoryService->find($slug) : $model;
 
