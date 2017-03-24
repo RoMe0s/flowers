@@ -682,3 +682,21 @@ if(! function_exists('find_product')) {
     }
 
 }
+
+if(! function_exists('create_thumbnail')) {
+
+    function create_thumbnail($image, $width, $height = false) {
+
+        return Cache::rememberForever($image . $width . ($height ? $height : ""), function() use ($image, $width, $height) {
+
+            if ($height) {
+                return url(\App\Classes\Thumb::thumb($image, $width, $height)->link());
+            }
+
+            return url(\App\Classes\Thumb::square($image, $width)->link());
+
+        });
+
+    }
+
+}

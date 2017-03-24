@@ -15,7 +15,7 @@
             @if($counter == 0) <div class="row"> @endif
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <a href="{!! $set->getUrl() !!}" title="{!! $set->name !!}">
-                    <div class="photo" style="background-image: url('{!! $set->image ? $set->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' !!}');">
+                    <div class="photo" style="background-image: url('{!! $set->image ? create_thumbnail($set->image, 250, 250) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' !!}');">
                         <div class="layout">
                             <p>
                                 Состав: {!! implode(", ", $set->flowers->pluck('title')->all()) !!}
@@ -38,7 +38,7 @@
                             <button class="btn btn-purple-outline" onclick="Cart.addSet('{!! $set->id !!}', '{!! csrf_token() !!}')">
                                 <i class="fa fa-shopping-basket"></i> Добавить в корзину
                             </button>
-                            <a class="btn btn-purple-outline" href="/api/cart/add/set?id={!! $set->id !!}&_token={!! csrf_token() !!}">
+                            <a class="btn btn-purple-outline" href="/api/cart/add/set?id={!! $set->id !!}">
                                 <i class="fa fa-shopping-basket"></i> Купить в один клик
                             </a>
                         </span>

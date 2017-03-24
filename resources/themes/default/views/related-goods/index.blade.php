@@ -20,7 +20,7 @@
 
                     <div class="col-sm-3 col-xs-6">
                         <a href="{!! $products[$i]->getUrl() !!}" title="{!! $products[$i]->name !!}">
-                            <div class="photo" style="background-image: url('{{ $products[$i]->image ? $products[$i]->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
+                            <div class="photo" style="background-image: url('{{ $products[$i]->image ? create_thumbnail($products[$i]->image, 250, 250) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' }}');">
                                 <div class="layout">
                                     {{ $products[$i]->name }} {{ (!empty($products[$i]->size))? '('.$products[$i]->size.')': '' }}
                                 </div>

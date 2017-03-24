@@ -40,7 +40,7 @@
 
                     <div class="col-lg-3 col-sm-3 col-xs-6">
                         <a href="{!! $bouquet->getUrl() !!}" title="{!! $bouquet->name !!}">
-                            <div class="photo" style="background-image: url('{{ $bouquet->image ? $bouquet->image : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
+                            <div class="photo" style="background-image: url('{{ $bouquet->image ? create_thumbnail($bouquet->image, 250, 250) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' }}');">
                                 <div class="layout">
                                     <p>
                                         Состав: {{ implode(", ", $bouquet->flowers->pluck('title')->all()) }}

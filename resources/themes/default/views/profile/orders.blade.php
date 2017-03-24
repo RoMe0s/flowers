@@ -31,7 +31,7 @@
                     @foreach($order->images() as $image)
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <a href="{{ $image }}" data-lightbox="order{{ $order->id }}">
-                                <div class="photo photo-small" style="background-image: url('{!! $image !!}');">
+                                <div class="photo photo-small" style="background-image: url('{!! $image ? create_thumbnail($image, 150, 150) : "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150" !!}');">
                                     <div class="layout">
                                         <i class="fa fa-search"></i>
                                     </div>

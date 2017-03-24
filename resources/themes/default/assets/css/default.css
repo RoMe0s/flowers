@@ -731,6 +731,11 @@ div.product-table {
         font-size: 10px !important;
         line-height: 1 !important;
     }
+
+    .photo .layout {
+        display: none !important;
+    }
+
 }
 
 @media screen and (max-width: 540px) {
