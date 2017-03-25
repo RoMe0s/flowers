@@ -714,7 +714,21 @@ div.product-table {
     display: none !important;
 }
 
+.col-xs-6 h4 {
+    height: 39px;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 767px) {
+
+    .col-xs-6 h4 {
+        height: 48px;
+        font-size: 14px;
+        line-height: 16px;
+        max-height: 48px;
+        overflow: hidden;
+    }
+
     .header-menu ul {
         margin: 0;
     }
@@ -739,6 +753,20 @@ div.product-table {
 }
 
 @media screen and (max-width: 540px) {
+
+    .col-xs-6 h4 {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    .product-image-wrapper .photo {
+        min-height:  inherit !important;
+        height: 250px;
+    }
+
+    .product-image-wrapper .photo .layout {
+        line-height: inherit !important;
+    }
 
     .product-layout {
         padding: 0 !important;
@@ -777,11 +805,6 @@ a.purple:hover {
 
 a:focus, a:hover {
     text-decoration: none;
-}
-
-.related-product-item h4 {
-    height: 18px;
-    overflow: hidden;
 }
 
 .product-info .btn-group-vertical {

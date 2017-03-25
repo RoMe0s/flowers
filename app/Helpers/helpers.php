@@ -713,7 +713,9 @@ if(! function_exists('create_thumbnail')) {
 
                 $img = \Image::make($source);
 
-                $img->fit($width, $height);
+                $img->fit($width, $height, function ($constraint) {
+                    $constraint->upsize();
+                });
 
                 $img->save($result_name);
 

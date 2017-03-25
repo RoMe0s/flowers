@@ -1,4 +1,5 @@
 @media (min-width: 320px) and (max-width: 767px) {
+
     .container {
         width: 100%;
     }
@@ -83,7 +84,7 @@
     }
 
     .photo {
-        height: 150px;
+        height:  150px;
     }
 
     .photo .layout {

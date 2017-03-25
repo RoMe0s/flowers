@@ -42,14 +42,6 @@ class News extends Eloquent
     protected $guarded = [];
 
     /**
-     * @return mixed
-     */
-    public function getDates()
-    {
-        return array_merge(parent::getDates(), ['publish_at']);
-    }
-
-    /**
      * @param string $value
      *
      * @return string

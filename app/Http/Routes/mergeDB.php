@@ -14,18 +14,37 @@ function setForeignCheck($enable = true) {
     }
 }
 
-function truncate($table) {
+function truncate($table, $id = null, $custom_field = null) {
 
-    setForeignCheck(false);
+    if(!$id) {
 
-    \DB::table($table)->truncate();
+        setForeignCheck(false);
 
-    setForeignCheck();
+        \DB::table($table)->truncate();
+
+        setForeignCheck();
+
+    } else {
+
+        $field = isset($custom_field) ? $custom_field : 'id';
+
+        \DB::table($table)->where($field, '>=', $id)->delete();
+
+    }
 
 }
 
-function builder($table) {
-    return \DB::connection('old_mysql')->table($table);
+function builder($table, $id = null, $custom_field = null) {
+    $builder = \DB::connection('old_mysql')->table($table);
+    if($id) {
+        $field = isset($custom_field) ? $custom_field : 'id';
+        $builder->where($field, '>=', $id);
+    }
+    return $builder;
+}
+
+function removeFrom($table) {
+
 }
 
 //endbasic
@@ -152,16 +171,16 @@ function mergeUsersSubscriptions() { // table users_subscriptions
 
 }
 
-function mergeSubscriptions() { //table subscriptions
+function mergeSubscriptions($id = null) { //table subscriptions
 
     \DB::beginTransaction();
 
-    truncate('subscriptions');
-    truncate('subscription_translations');
+    truncate('subscriptions', $id);
+    truncate('subscription_translations', $id, 'subscription_id');
 
     setForeignCheck(false);
 
-    builder('subscriptions')->chunk(100, function($data_list) {
+    builder('subscriptions', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -216,16 +235,16 @@ function mergeSetsFlowers() { //table sets_flowers
 
 }
 
-function mergeSets() { //table sets
+function mergeSets($id = null) { //table sets
 
     \DB::beginTransaction();
 
-    truncate('sets');
-    truncate('set_translations');
+    truncate('sets', $id);
+    truncate('set_translations', $id, 'set_id');
 
     setForeignCheck(false);
 
-    builder('sets')->chunk(100, function($data_list) {
+    builder('sets', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -257,16 +276,16 @@ function mergeSets() { //table sets
 
 }
 
-function mergeSales() { //table sales
+function mergeSales($id = null) { //table sales
 
     \DB::beginTransaction();
 
-    truncate('sales');
-    truncate('sale_translations');
+    truncate('sales', $id);
+    truncate('sale_translations', $id, 'sale_id');
 
     setForeignCheck(false);
 
-    builder('sales')->chunk(100, function($data_list) {
+    builder('sales', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -326,16 +345,16 @@ function mergeProductsCategories() { //table products_categories
 
 }
 
-function mergeProducts() { //table products
+function mergeProducts($id = null) { //table products
 
     \DB::beginTransaction();
 
-    truncate('products');
-    truncate('product_translations');
+    truncate('products', $id);
+    truncate('product_translations', $id, 'product_id');
 
     setForeignCheck(false);
 
-    builder('related_products')->chunk(100, function($data_list) {
+    builder('related_products', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -366,16 +385,16 @@ function mergeProducts() { //table products
 
 }
 
-function mergeOrders() { //table orders
+function mergeOrders($id = null) { //table orders
 
     \DB::beginTransaction();
 
-    truncate('orders');
-    truncate('order_items');
+    truncate('orders', $id);
+    truncate('order_items', $id, 'order_id');
 
     setForeignCheck(false);
 
-    builder('orders')->chunk(100, function($data_list) {
+    builder('orders', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -448,17 +467,19 @@ function mergeOrders() { //table orders
 
     \DB::commit();
 
+    makeOrderImages();
+
 }
 
-function mergeIndividuals() { //table individuals
+function mergeIndividuals($id = null) { //table individuals
 
     \DB::beginTransaction();
 
-    truncate('individuals');
+    truncate('individuals', $id);
 
     setForeignCheck(false);
 
-    builder('individual_items')->chunk(100, function($data_list) {
+    builder('individual_items', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -511,16 +532,16 @@ function mergeFlowersColors() { //table flowers_colors
 
 }
 
-function mergeFlowers() { //table flowers
+function mergeFlowers($id = null) { //table flowers
 
     \DB::beginTransaction();
 
-    truncate('flowers');
-    truncate('flower_translations');
+    truncate('flowers', $id);
+    truncate('flower_translations', $id, 'flower_id');
 
     setForeignCheck(false);
 
-    builder('flowers')->chunk(100, function($data_list) {
+    builder('flowers', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -614,16 +635,16 @@ function mergeCodes() { //table codes
 
 }
 
-function mergeCategories() { //table categories
+function mergeCategories($id = null) { //table categories
 
     \DB::beginTransaction();
 
-    truncate('categories');
-    truncate('category_translations');
+    truncate('categories', $id);
+    truncate('category_translations', $id, 'category_id');
 
     setForeignCheck(false);
 
-    builder('categories')->chunk(100, function($data_list) {
+    builder('categories', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -652,16 +673,16 @@ function mergeCategories() { //table categories
 
 }
 
-function mergeBoxes() { //table boxes
+function mergeBoxes($id = null) { //table boxes
 
     \DB::beginTransaction();
 
-    truncate('boxes');
-    truncate('box_translations');
+    truncate('boxes', $id);
+    truncate('box_translations', $id, 'box_id');
 
     setForeignCheck(false);
 
-    builder('boxes')->chunk(100, function($data_list) {
+    builder('boxes', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -719,16 +740,16 @@ function mergeBouquetsFlowers() { //table bouquets_flowers
 
 }
 
-function mergeBouquets() { //table bouquets
+function mergeBouquets($id = null) { //table bouquets
 
     \DB::beginTransaction();
 
-    truncate('bouquets');
-    truncate('bouquet_translations');
+    truncate('bouquets', $id);
+    truncate('bouquet_translations', $id, 'bouquet_id');
 
     setForeignCheck(false);
 
-    builder('bouquets')->chunk(100, function($data_list) {
+    builder('bouquets', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -762,16 +783,16 @@ function mergeBouquets() { //table bouquets
 
 }
 
-function mergeNews() { //table news
+function mergeNews($id = null) { //table news
 
     \DB::beginTransaction();
 
-    truncate('news');
-    truncate('news_translations');
+    truncate('news', $id);
+    truncate('news_translations', $id, 'news_id');
 
     setForeignCheck(false);
 
-    builder('articles')->chunk(100, function($data_list) {
+    builder('articles', $id)->chunk(100, function($data_list) {
 
         foreach($data_list as $data_one) {
 
@@ -872,9 +893,48 @@ function createAdminForMe() {
     $adminUser->addGroup($adminGroup);
 }
 
+function makeOrderImages() {
+    \DB::beginTransaction();
+
+    \App\Models\Order::chunk(100, function($orders) {
+
+        foreach($orders as $order) {
+
+            $result_images = array();
+
+            if($order->result) {
+
+                foreach ($order->result as $image) {
+
+                    if(strpos($image, '/uploads/orders/') === FALSE) {
+
+                        $result_images[] = '/uploads/orders/' . $image;
+
+                    }
+
+                }
+
+            }
+
+            if(!empty($result_images)) {
+
+                $order->result = $result_images;
+
+                $order->save();
+
+            }
+
+        }
+
+    });
+
+    \DB::commit();
+}
+
 $router->group(['prefix' => 'mergeDB'], function() use ($router) {
 
     $router->get('/', function () {
+        abort(404);
         mergeUsers();
         mergeUsersCodes();
         mergeUsersSubscriptions();
@@ -901,46 +961,33 @@ $router->group(['prefix' => 'mergeDB'], function() use ($router) {
         return "<h1>Well Done!</h1>";
     });
 
-    $router->get('/order_results', function () {
+    //END MERGE (FIRST INIT)
 
-        \DB::beginTransaction();
-
-        \App\Models\Order::chunk(100, function($orders) {
-
-            foreach($orders as $order) {
-
-                $result_images = array();
-
-                if($order->result) {
-
-                    foreach ($order->result as $image) {
-
-                        if(strpos($image, '/uploads/orders/') === FALSE) {
-
-                            $result_images[] = '/uploads/orders/' . $image;
-
-                        }
-
-                    }
-
-                }
-
-                if(!empty($result_images)) {
-
-                    $order->result = $result_images;
-
-                    $order->save();
-
-                }
-
-            }
-
-        });
-
-        \DB::commit();
-
+    $router->get('compare', function(){
+        mergeUsers();//good
+        mergeUsersCodes();//good
+        mergeUsersSubscriptions();//good
+        mergeSubscriptions(7);
+        mergeSetsFlowers();//good
+        mergeSets(222);
+        mergeSales(68);
+        mergeProductsCategories();//good
+        mergeProducts(11);
+        mergeOrders();//good
+        mergeIndividuals(22);
+        mergeFlowersColors();//good
+        mergeFlowers(91);
+        mergeColors();//good
+        mergeCodes();//good
+        mergeCategories(8);
+        mergeBoxes(22);
+        mergeBouquetsFlowers();//good
+        mergeBouquets(44);
+        mergeNews();//good
+        mergeAddresses();//good
+        mergeUsersGroups();//good
+        createAdminForMe();//good
         return "<h1>Well Done!</h1>";
-
     });
 
 });

@@ -111,6 +111,7 @@ class SubscriptionController extends BackendController
                 )
                 ->setIndexColumn('id')
                 ->removeColumn('content')
+                ->removeColumn('translations')
                 ->make();
         }
 

@@ -82,6 +82,12 @@ class NewsController extends BackendController
                 ->filterColumn('id', 'where', 'news.id', '=', '$1')
                 ->filterColumn('news_translations.name', 'where', 'news_translations.name', 'LIKE', '%$1%')
                 ->editColumn(
+                    'publish_at',
+                    function($model) {
+                        return $model->publish_at ? $model->publish_at : trans('labels.no');
+                    }
+                )
+                ->editColumn(
                     'status',
                     function ($model) {
                         return view(
