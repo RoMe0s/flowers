@@ -83,10 +83,13 @@ return array (
   array (
     'status' => 'статус',
     'status_id' => 'статус',
-    'email' => 'email',
+    'email' => 'Email',
+    'Email' => 'Email',
     'password' => 'пароль',
     'captcha' => 'каптча',
     'groups' => 'группа',
+    'phone' => 'Телефон',
+    'agreement' => '"Соглашение"',
     'ru' => 
     array (
       'name' => 'название',

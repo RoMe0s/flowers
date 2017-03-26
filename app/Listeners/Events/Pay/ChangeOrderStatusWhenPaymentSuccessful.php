@@ -3,17 +3,17 @@
 namespace App\Listeners\Events\Pay;
 
 use App\Models\Order;
+use App\Models\Subscription;
 use App\Models\User;
+use App\Models\Group;
 use \Artem328\LaravelYandexKassa\Events\BeforePaymentAvisoResponse;
 use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class ChangeOrderStatusWhenPaymentSuccessful implements ShouldQueue
+class ChangeOrderStatusWhenPaymentSuccessful
 {
-
-    use InteractsWithQueue;
 
     /**
      * Create the event listener.
@@ -44,10 +44,11 @@ class ChangeOrderStatusWhenPaymentSuccessful implements ShouldQueue
 
                 $oi = $order->items()->first();
 
-                if($oi) {
+                if($oi->itemable instanceof Subscription) {
 
-                    $subscription = $user->subscriptions()->updateExistingPivot($oi->itemable_id, Carbon::now()->addDays(31)->toDateString())->first();
-                    $subscription->save();
+                    \DB::table('users_subscriptions')->where('user_id', $user->id)->where('subscription_id', $oi->itemable_id)->update([
+                        'paid_before' => Carbon::now()->addDays(31)->toDateString()
+                    ]);
 
                 }
 
@@ -59,7 +60,7 @@ class ChangeOrderStatusWhenPaymentSuccessful implements ShouldQueue
             $groups = Group::all();
             $used_groups = array();
             foreach ($groups as $group) {
-                if(in_array('administrator', $group->getPermissions()) || in_array('superuser', $group->getPermissions())) {
+                if(in_array('administrator', array_keys($group->getPermissions())) || in_array('superuser', array_keys($group->getPermissions())) ) {
                     $used_groups[] = $group->id;
                 }
             }

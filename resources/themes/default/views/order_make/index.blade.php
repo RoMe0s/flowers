@@ -60,7 +60,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-xs-12">
                             <p>
-                                <input class="form-control input-sm" type="date" name="date" value="{{ old('date') }}" required>
+                                <input class="form-control input-sm" name="date" value="{{ old('date') }}" required>
                             </p>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -137,4 +137,23 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    @parent
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.datetimepicker.setLocale('ru');
+            $('input[name="date"]').datetimepicker({
+                timepicker: false,
+                format: 'd-m-Y'
+            });
+        });
+    </script>
+@endsection
+
+@section('styles')
+    @parent
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css" />
 @endsection

@@ -964,6 +964,7 @@ $router->group(['prefix' => 'mergeDB'], function() use ($router) {
     //END MERGE (FIRST INIT)
 
     $router->get('compare', function(){
+        abort(404);
         mergeUsers();//good
         mergeUsersCodes();//good
         mergeUsersSubscriptions();//good

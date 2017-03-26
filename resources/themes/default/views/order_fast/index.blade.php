@@ -17,13 +17,13 @@
                     {!! csrf_field() !!}
 
                     <p>
-                        <input class="form-control" type="tel" name="phone" placeholder="Номер телефона" value="{{ old('phone') }}" required>
+                        <input class="form-control" type="tel" name="phone" placeholder="Номер телефона" value="{{ old('phone') }}">
                     </p>
                     <p>
-                        <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                        <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') }}">
                     </p>
                     <p>
-                        <input type="checkbox" name="agreement" value="1" required> Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
+                        <input type="checkbox" name="agreement" value="1"> Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
                     </p>
                     <p class="text-center">
                         <input class="btn btn-purple" type="submit" value="Оформить">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\Events\Pay;
 
 use \Artem328\LaravelYandexKassa\Events\BeforeCheckOrderResponse;
 use Illuminate\Queue\InteractsWithQueue;

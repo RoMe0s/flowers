@@ -1,6 +1,6 @@
 <?php
 
-$router->get('/test_login', function () {
+/*$router->get('/test_login', function () {
 
     return view('test_login')->render();
 
@@ -18,12 +18,12 @@ $router->post('/test_login', function (){
 
     return redirect()->back();
 
-});
+});*/
 
 $router->group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'test'],
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect'],
     ],
     function () use ($router) {
         // home

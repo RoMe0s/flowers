@@ -3,19 +3,7 @@
 
     <div class="col-xs-12 col-sm-4 col-md-3">
 
-        <select name="user_id" class="form-control select2 input-sm admin-order-user" data-id="{!! $model->id !!}">
-            <option value="-1">{!! trans('labels.client') !!}</option>
-            @foreach($users as $user)
-                <option data-name="{!! $user->name !!}"
-                        data-email="{!! $user->email !!}"
-                        data-phone="{!! $user->phone !!}"
-                        data-discount="{!! $user->getDiscount() !!}"
-                        value="{!! $user->id !!}"
-                        @if($model->user_id == $user->id || $user->id == old('user_id', -1)) selected="true" @endif>
-                    {!! $user->name !!}, {!! $user->phone !!}
-                </option>
-            @endforeach
-        </select>
+        @include('order.partials.users_list')
 
         {!! $errors->first('user', '<p class="help-block error">:message</p>') !!}
     </div>
@@ -41,7 +29,7 @@
     </div>
 </div>
 
-<div class="form-group required @if ($errors->has('password')) has-error @endif">
+<div class="form-group required @if ($errors->has('password')) has-error @endif" style="display:none;">
     {!! Form::label('password', trans('labels.password'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-4 col-md-3">

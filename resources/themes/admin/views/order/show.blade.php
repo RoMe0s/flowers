@@ -2,10 +2,10 @@
 
 @section('content')
     <div classs="row">
-        <div classs="col-md-12">
+        <div classs="col-sm-12">
             <div class="nav-tabs-custom">
-                <div class="tab-content" style="font-size: 14px">
-                    <table class="table table-responsive">
+                <div class="tab-content table-responsive">
+                    <table class="table">
                         <thead class="order-status-{!! $model->status !!}">
                         <tr>
                             <th colspan="2">
@@ -93,7 +93,7 @@
                         </tbody>
                     </table>
 
-                    <table class="table table-responsive">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th colspan="6">
@@ -135,7 +135,7 @@
                             </tr>
                         @endif
                     </table>
-                    <table class="table table-responsive">
+                    <table class="table">
                         <tbody>
                         <tr>
                             <td colspan="2">
@@ -179,7 +179,7 @@
                     <br />
                     <br />
                     <div class="col-sm-12">
-                        <a class="col-sm-12 btn btn-primary btn-flat btn-sm" href="{!! route('admin.order.edit', ['id' => $model->id]) !!}">Редактировать</a>
+                        <a style="width: 100%" class="btn btn-primary btn-flat btn-sm" href="{!! route('admin.order.edit', ['id' => $model->id]) !!}">Редактировать</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>

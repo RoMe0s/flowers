@@ -19,6 +19,8 @@ use Meta;
 use Redirect;
 use Response;
 use App\Models\Address;
+use Event;
+use App\Events\Backend\OrderStatusChanged;
 
 /**
  * Class OrderController
@@ -288,6 +290,10 @@ class OrderController extends BackendController
 
             DB::commit();
 
+            if($model->status ==  2) {
+                Event::fire(new OrderStatusChanged($model));
+            }
+
             FlashMessages::add('success', trans('messages.save_ok'));
 
             return Redirect::route('admin.order.index');
@@ -344,20 +350,6 @@ class OrderController extends BackendController
             ->lists('pn', 'id')->toArray();
         $this->data('couriers', $couriers);
 
-        $group = \Sentry::findGroupByName('Clients');
-        $users = User::select([
-            'users.id',
-            'user_info.phone',
-            'user_info.name',
-            'users.email',
-            'users.discount'
-        ])
-        ->leftJoin('user_info','users.id', '=', 'user_info.user_id')
-        ->leftJoin('users_groups', 'users.id', '=', 'users_groups.user_id')
-        ->where('users_groups.group_id', $group->id)
-        ->get();
-        $this->data('users', $users);
-
         $this->data('addresses', Address::all());
 
         $this->data('times', array(
@@ -374,6 +366,14 @@ class OrderController extends BackendController
         ));
 
         $this->data('statuses', $this->statuses);
+
+        $users = User::select([
+            'users.id',
+            'user_info.phone',
+            'user_info.name',
+            'users.email',
+            'users.discount'
+        ])->leftJoin('user_info','users.id', '=', 'user_info.user_id');
 
         if($model) {
 
@@ -393,7 +393,14 @@ class OrderController extends BackendController
 
             $this->data('baskets', $baskets);
 
+//            $users = $users->where('users.id', $model->user_id);
+
         }
+
+         $users = $users->get();
+
+        $this->data('users', $users);
+
     }
 
     private function _processUser() {
@@ -648,10 +655,13 @@ class OrderController extends BackendController
     public function changeStatus(Request $request) {
         DB::beginTransaction();
         try {
-            Order::where('id', $request->get('id'))->update([
-                'status' => $request->get('status')
-            ]);
+            $model = Order::where('id', $request->get('id'))->first();
+            $model->status = $request->get('status');
+            $model->save();
             DB::commit();
+            if($model->status ==  2) {
+                Event::fire(new OrderStatusChanged($model));
+            }
             return ['status' => 'success', 'message' => trans('messages.save_ok')];
         } catch (Exception $e) {
             DB::rollBack();
@@ -680,4 +690,25 @@ class OrderController extends BackendController
         return ['html' => $html];
 
     }
+
+    public function load_users($id) {
+
+        $model = Order::find($id);
+
+        $users = User::select([
+            'users.id',
+            'user_info.phone',
+            'user_info.name',
+            'users.email',
+            'users.discount'
+        ])
+            ->leftJoin('user_info','users.id', '=', 'user_info.user_id')
+            /*        ->leftJoin('users_groups', 'users.id', '=', 'users_groups.user_id')
+                    ->where('users_groups.group_id', $group->id)*/
+            ->get();
+
+        return ['html' =>view('order.partials.users_list')->with(['model' => $model, 'users' => $users])->render()];
+
+    }
+
 }

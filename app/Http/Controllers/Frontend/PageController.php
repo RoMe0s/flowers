@@ -7,7 +7,6 @@
  */
 
 namespace App\Http\Controllers\Frontend;
-
 use App\Models\Page;
 use App\Services\CategoryService;
 use App\Services\PageService;

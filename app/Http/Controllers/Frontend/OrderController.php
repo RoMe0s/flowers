@@ -162,9 +162,11 @@ class OrderController extends FrontendController
 
         $data = $request->all();
 
+        $selectedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
+
         try {
 
-            $selectedDate = strtotime($data['date']);
+            $selectedDate = strtotime($selectedDate);
 
             $currentDate = strtotime(date("Y-m-d"));
 
@@ -175,8 +177,6 @@ class OrderController extends FrontendController
                 return redirect()->back()->withInput($data);
 
             }
-
-            $data['date'] = Carbon::createFromFormat('Y-m-d', $data['date'])->format('d-m-Y');
 
             $user = Sentry::getUser();
 

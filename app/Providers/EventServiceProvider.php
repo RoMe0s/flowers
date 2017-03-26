@@ -38,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Artem328\LaravelYandexKassa\Events\BeforePaymentAvisoResponse' => [
             'App\Listeners\Events\Pay\ChangeOrderStatusWhenPaymentSuccessful',
+        ],
+        'App\Events\Backend\OrderStatusChanged' => [
+            'App\Listeners\Events\Backend\OrderStatusChangedListener'
         ]
     ];
 

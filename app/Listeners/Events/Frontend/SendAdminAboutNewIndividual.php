@@ -35,7 +35,7 @@ class SendAdminAboutNewIndividual implements ShouldQueue
         $groups = Group::all();
         $used_groups = array();
         foreach ($groups as $group) {
-            if(in_array('administrator', $group->getPermissions()) || in_array('superuser', $group->getPermissions())) {
+            if(in_array('administrator', array_keys($group->getPermissions())) || in_array('superuser', array_keys($group->getPermissions())) ) {
                 $used_groups[] = $group->id;
             }
         }
