@@ -76,7 +76,9 @@ hideAddress = (item)->
 
 $(document).ready ()->
   _user = $('select.admin-order-user')
-  hideUser(_user, false)
+  if(_user.val() > 0)
+   hidePassworField(true)
+#  hideUser(_user, false)
   _address = $('select.admin-order-address')
   hideAddress(_address)
 

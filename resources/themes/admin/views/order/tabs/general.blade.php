@@ -1,18 +1,18 @@
-<div class="form-group required @if ($errors->has('courier_id')) has-error @endif">
+<div class="form-group @if ($errors->has('courier_id')) has-error @endif">
     {!! Form::label('courier_id', trans('labels.courier'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-4 col-md-3">
-        {!! Form::select('courier_id', $couriers , null, ['class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'required' => true, 'placeholder' => trans('labels.courier')]) !!}
+        {!! Form::select('courier_id', $couriers , null, ['class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'placeholder' => trans('labels.courier')]) !!}
 
         {!! $errors->first('courier_id', '<p class="help-block error">:message</p>') !!}
     </div>
 </div>
 
-<div class="form-group required @if ($errors->has('discount')) has-error @endif">
+<div class="form-group @if ($errors->has('discount')) has-error @endif">
     {!! Form::label('discount', trans('labels.discount') . ' '.  trans('labels.percent'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-md-3">
-        {!! Form::text('discount', $discount , ['placeholder' => trans('labels.discount'), 'id' => 'order-discount', 'class' => 'form-control input-sm', 'required' => true]) !!}
+        {!! Form::text('discount', $discount , ['placeholder' => trans('labels.discount'), 'id' => 'order-discount', 'class' => 'form-control input-sm']) !!}
 
         {!! $errors->first('discount', '<p class="help-block error">:message</p>') !!}
     </div>

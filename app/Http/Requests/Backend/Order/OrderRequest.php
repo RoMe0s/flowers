@@ -27,9 +27,9 @@ class OrderRequest extends FormRequest
         }
 
         $rules = [
-            'courier_id' => 'required',
+            'courier_id' => 'integer',
             'delivery_price' => 'required',
-            'discount'      => 'required',
+            'discount'      => 'integer',
             'prepay'    => 'required',
             'recipient_name' => 'required',
             'recipient_phone'    => 'required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
@@ -43,8 +43,7 @@ class OrderRequest extends FormRequest
         if(!$this->request->has('address_need')) {
 
             $rules += [
-                'address' => 'required',
-                'code'    => 'required'
+                'address' => 'required'
             ];
 
         }

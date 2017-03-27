@@ -16,7 +16,9 @@ if($item->itemable instanceof \App\Models\Individual) {
 <tr class="duplication-row row-id-{!! $item->id !!}">
     <td>
         <div image="form-group required @if ($errors->has('items.' .$item->image. '.image')) has-error @endif">
-            <img src="{!! isset($item->itemable->image) && $item->itemable->image != "" ? $item->itemable->image : 'http://www.placehold.it/50x50/EFEFEF/AAAAAA&text=no+image' !!}" style="max-width: 50px; max-height: 50px;"/>
+             <a href="{!! isset($item->itemable->image) && $item->itemable->image != "" ? $item->itemable->image : 'http://www.placehold.it/50x50/EFEFEF/AAAAAA&text=no+image' !!}" data-lightbox="order">
+                 <img src="{!! isset($item->itemable->image) && $item->itemable->image != "" ? $item->itemable->image : 'http://www.placehold.it/50x50/EFEFEF/AAAAAA&text=no+image' !!}" style="max-width: 50px; max-height: 50px;"/>
+             </a>
         </div>
     </td>
     <td>

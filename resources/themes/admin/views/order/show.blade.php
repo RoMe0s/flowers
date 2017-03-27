@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.editable')
 
 @section('content')
     <div classs="row">
@@ -71,7 +71,7 @@
                                 Клинет
                             </td>
                             <td>
-                                {!! $model->recipient_name !!}
+                                {!! $model->recipient_name ? $model->recipient_name : (isset($model->user->name) ? $model->user->name : trans('labels.no') ) !!}
                             </td>
                         </tr>
                         <tr>
@@ -79,7 +79,7 @@
                                 Телефон
                             </td>
                             <td>
-                                {!! $model->recipient_phone !!}
+                                {!! $model->recipient_phone ? $model->recipient_phone : (isset($model->user->phone) ? $model->user->phone : trans('labels.no') ) !!}
                             </td>
                         </tr>
                         <tr>
@@ -176,13 +176,12 @@
                         </tr>
                         </tbody>
                     </table>
-                    <br />
-                    <br />
-                    <div class="col-sm-12">
-                        <a style="width: 100%" class="btn btn-primary btn-flat btn-sm" href="{!! route('admin.order.edit', ['id' => $model->id]) !!}">Редактировать</a>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
+                <div class="col-sm-12">
+                    <a style="width: 100%" class="btn btn-primary btn-flat btn-sm" href="{!! route('admin.order.edit', ['id' => $model->id]) !!}">Редактировать</a>
+                </div>
+                <div class="clearfix"></div>
+                <br />
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-body">
-                    <div class="orders-table">
+                    <div class="orders-table table-responsive">
                         <script>
                             var datatableСallbacks = {
                                 fnRowCallback: function(row, data, displayIndex, displayIndexFull)

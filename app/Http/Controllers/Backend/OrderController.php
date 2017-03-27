@@ -162,7 +162,7 @@ class OrderController extends BackendController
      */
     public function create()
     {
-        $this->data('model', new Order());
+        $this->data('model', new Order);
 
         $this->data('page_title', trans('labels.order_create'));
 

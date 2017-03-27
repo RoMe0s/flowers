@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-body">
-                    <div class="sets-table">
+                    <div class="sets-table table-responsive">
                         {!!
                             TablesBuilder::create(['id' => "datatable1", 'class' => "table table-bordered table-striped table-hover"], ['bStateSave' => true])
                             ->addHead([

@@ -13,7 +13,7 @@
     {!! Form::label('recipient_name', trans('labels.fio'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-xs-12 col-sm-4 col-md-3">
-        {!! Form::text('recipient_name', null, ['class' => 'form-control input-sm', 'aria-hidden' => 'true', 'required' => true, 'placeholder' => trans('labels.fio')]) !!}
+        {!! Form::text('recipient_name', null , ['class' => 'form-control input-sm', 'aria-hidden' => 'true', 'required' => true, 'placeholder' => trans('labels.fio')]) !!}
 
         {!! $errors->first('recipient_name', '<p recipient_name="help-block error">:message</p>') !!}
     </div>

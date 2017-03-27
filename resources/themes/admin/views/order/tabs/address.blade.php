@@ -27,11 +27,11 @@
     </div>
 </div>
 
-<div class="form-group required @if ($errors->has('code')) has-error @endif">
+<div class="form-group @if ($errors->has('code')) has-error @endif">
     {!! Form::label('code', trans('labels.code'), ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
 
     <div class="col-md-3">
-        {!! Form::text('code', isset($model->address) ? $model->address->code : null, ['placeholder' => trans('labels.code'), 'class' => 'form-control input-sm', 'required' => true]) !!}
+        {!! Form::text('code', isset($model->address) ? $model->address->code : null, ['placeholder' => trans('labels.code'), 'class' => 'form-control input-sm']) !!}
 
         {!! $errors->first('code', '<p class="help-block error">:message</p>') !!}
     </div>
