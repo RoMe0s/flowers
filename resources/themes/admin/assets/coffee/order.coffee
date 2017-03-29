@@ -129,8 +129,9 @@ $(document).on 'change', '.order-status-changer', (e)->
         id: _this.data('id')
       }
     }).done((response)->
-      $row.removeClass('order-status-' + _old)
-      $row.addClass('order-status-' + _this.val())
+      if response.status == 'success'
+        $row.removeClass('order-status-' + _old)
+        $row.addClass('order-status-' + _this.val())
       message.show(response.message, response.status)
       _this.data('old_status', _this.val())
     ).error(()->

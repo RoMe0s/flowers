@@ -45,8 +45,8 @@ class OrderController extends BackendController
         'store'           => 'order.create',
         'edit'            => 'order.write',
         'update'          => 'order.write',
-        'destroy'         => 'order.delete',
         'ajaxFieldChange' => 'order.write',
+        'pay_status'      => 'order.paystatus'
     ];
 
     /**
@@ -134,9 +134,13 @@ class OrderController extends BackendController
         }
 
         $this->data('page_title', trans('labels.orders'));
+
         $this->breadcrumbs(trans('labels.orders_list'));
+
         $this->data('statuses', $this->statuses);
+
         return $this->render('views.order.index');
+
     }
 
     /**
@@ -154,13 +158,7 @@ class OrderController extends BackendController
 
         $this->breadcrumbs($model->id);
 
-        $this->data('times', array(
-            '1' => 'с 10:00 до 13:00',
-            '2' => 'с 13:00 до 16:00',
-            '3' => 'с 16:00 до 19:00',
-            '4' => 'с 19:00 до 22:00',
-            '5' => 'с 22:00 до 10:00'
-        ));
+        $this->data('times', Order::getTimes());
 
         return $this->render('views.order.show');
     }
@@ -281,17 +279,26 @@ class OrderController extends BackendController
 
             $input = $request->all();
 
+            $model = Order::findOrFail($id);
+
+            $change = $this->pay_status($model, $input);
+
+            if($change !== TRUE) {
+
+                FlashMessages::add('error', $change);
+
+            }
+
             $input['user_id'] = isset($input['user_id']) && $input['user_id'] != "" ? $input['user_id'] : $this->_processUser();
 
             if(!isset($input['address_id'])) {
                 $input['address_id'] = $this->_proccessAddress($input['user_id']);
             }
 
-            $model = Order::findOrFail($id);
-
             DB::beginTransaction();
 
             $model->fill($input);
+
             $model->save();
 
             $this->_processItems($model);
@@ -360,13 +367,7 @@ class OrderController extends BackendController
 
         $this->data('addresses', Address::all());
 
-        $this->data('times', array(
-            '1' => 'с 10:00 до 13:00',
-            '2' => 'с 13:00 до 16:00',
-            '3' => 'с 16:00 до 19:00',
-            '4' => 'с 19:00 до 22:00',
-            '5' => 'с 22:00 до 10:00'
-        ));
+        $this->data('times', Order::getTimes());
 
         $this->data('prepay', array(
             '50' => '50%',
@@ -663,19 +664,35 @@ class OrderController extends BackendController
     public function changeStatus(Request $request) {
         DB::beginTransaction();
         try {
+
+            $input = $request->all();
+
             $model = Order::where('id', $request->get('id'))->first();
-            $model->status = $request->get('status');
-            $model->save();
+
+            $change = $this->pay_status($model, $input);
+
+            if($change !== TRUE) {
+
+                return ['status' => 'warning', 'message' => $change];
+
+            }
+
             DB::commit();
+
             if($model->status ==  2) {
 
                 Event::fire(new OrderStatusChanged($model));
 
             }
+
             return ['status' => 'success', 'message' => trans('messages.save_ok')];
+
         } catch (Exception $e) {
+
             DB::rollBack();
+
             return ['status' => 'success', 'message' => trans('messages.an error has occurred, try_later')];
+
         }
     }
 
@@ -718,6 +735,38 @@ class OrderController extends BackendController
             ->get();
 
         return ['html' =>view('order.partials.users_list')->with(['model' => $model, 'users' => $users])->render()];
+
+    }
+
+    private function pay_status($model, &$input) {
+
+        if(isset($input['status'])) {
+
+            $old_status = $model->status;
+
+            if(in_array($old_status, [3,6]) || in_array($input['status'], [3,6])) {
+
+                $user = \Sentry::getUser();
+
+                if($user->hasAccess('order.paystatus')) {
+
+                    $model->status = $input['status'];
+
+                    $model->save();
+
+                } else {
+
+                    unset($input['status']);
+
+                    return 'У вас нет прав на изменение статуса, статус не был изменён';
+
+                }
+
+            }
+
+        }
+
+        return true;
 
     }
 

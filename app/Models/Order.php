@@ -94,6 +94,18 @@ class Order extends Model
 
     }
 
+    public static function getTimes() {
+
+        return array(
+            '1' => 'с 10:00 до 13:00',
+            '2' => 'с 13:00 до 16:00',
+            '3' => 'с 16:00 до 19:00',
+            '4' => 'с 19:00 до 22:00',
+            '5' => 'с 22:00 до 10:00'
+        );
+
+    }
+
     /**
      * @param string $value
      *

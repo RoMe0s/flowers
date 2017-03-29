@@ -105,7 +105,7 @@ return array (
     'order.create',
     'order.read',
     'order.write',
-    'order.delete',
+    'order.paystatus',
 
     'set.create',
     'set.read',
