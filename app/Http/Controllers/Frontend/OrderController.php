@@ -131,7 +131,7 @@ class OrderController extends FrontendController
 
             Cart::destroy();
 
-            return redirect()->to(route('profile.orders'));
+            return redirect()->route('profile.orders');
 
         } catch (\Exception $e) {
             FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
@@ -222,7 +222,7 @@ class OrderController extends FrontendController
 
             Cart::destroy();
 
-            return redirect()->to(route('profile.orders'));
+            return redirect()->route('profile.orders');
         
         } catch(\Exception $e) {
             FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
@@ -250,7 +250,7 @@ class OrderController extends FrontendController
 
         }
 
-        return redirect()->to(route('profile.subscriptions'));
+        return redirect()->route('profile.subscriptions');
 
     }
 
@@ -286,7 +286,7 @@ class OrderController extends FrontendController
 
         $order->items()->save($orderItem);
 
-        return redirect()->to(route('order.pay', ['id' => $order->id]));
+        return redirect()->route('order.pay', ['id' => $order->id]);
     }
 
     public function show($id) {
@@ -327,7 +327,7 @@ class OrderController extends FrontendController
 
         FlashMessages::add('success', 'Заказ отменён');
 
-        return redirect()->to(route('profile.orders'));
+        return redirect()->route('profile.orders');
     }
 
     public function success() {

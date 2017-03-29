@@ -132,7 +132,7 @@ class AuthController extends FrontendController
                     }
                 }
 
-                return redirect()->to(route('profile'));
+                return redirect()->route('profile.orders');
             }
         }
         catch (UserNotFoundException $e) {
@@ -199,7 +199,7 @@ class AuthController extends FrontendController
 
             Event::fire(new UserRegister($user, $input));
 
-            return redirect()->to(route('login'));
+            return redirect()->route('login');
 
         } catch (UserExistsException $e) {
             $message = 'Пользователь с таким Email уже существует';
@@ -274,8 +274,6 @@ class AuthController extends FrontendController
     public function getRestore($email = '', $token = '')
     {
 
-
-
         $error = null;
 
         try {
@@ -307,6 +305,7 @@ class AuthController extends FrontendController
         }
 
         abort(404);
+        
     }
 
     public function postRestore($email = '', $token = '', PasswordChange $request) {
@@ -398,12 +397,12 @@ class AuthController extends FrontendController
                 }
             }
 
-            return redirect()->to(route('profile'));
+            return redirect()->route('profile.orders');
         }
 
         FlashMessages::add('error', 'Ошибка авторизации');
 
-        return redirect()->to(route('reg'));
+        return redirect()->route('reg');
     }
 
     /**

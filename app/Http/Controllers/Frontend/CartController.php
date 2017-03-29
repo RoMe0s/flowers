@@ -358,7 +358,7 @@ class CartController extends FrontendController
     public function clear() {
        $this->_cartDestroy();
 
-        return redirect()->to(route('cart'));
+        return redirect()->route('cart');
     }
 
     /**

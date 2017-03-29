@@ -4,10 +4,11 @@
     <style>
         .order-show {
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .order-show h4 {
             padding: 10px 0;
+            margin: 0;
         }
         .order-show textarea {
             resize: vertical;
@@ -15,7 +16,8 @@
         @media screen and (max-width: 540px) {
 
             .order-show .m-marg {
-                margin-bottom: 15px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #eaeaea;
             }
 
         }
@@ -89,21 +91,21 @@
                                 Клинет
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! isset($model->user->name) ? $model->user->name : trans('labels.no') !!}
+                                {!! $model->user->name ?: trans('labels.no') !!}
                             </div>
 
                             <div class="col-sm-12 col-md-6">
                                 Телефон
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! isset($model->user->phone) ? $model->user->phone : trans('labels.no') !!}
+                                {!! $model->user->phone ?: trans('labels.no') !!}
                             </div>
 
                             <div class="col-sm-12 col-md-6">
                                 Email
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! isset($model->user) ? $model->user->email : trans('labels.no') !!}
+                                {!! $model->user->email ?: trans('labels.no') !!}
                             </div>
 
                         <div class="clearfix"></div>

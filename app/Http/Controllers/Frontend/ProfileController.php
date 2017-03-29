@@ -67,7 +67,7 @@ class ProfileController extends FrontendController
         try {
             $selected = explode('/', request()->path());
             $selected = $titles[array_pop($selected)];
-            $model->name = $model->name . ' | ' . $selected;
+            $model->name = $selected . ' | ' . $model->name;
             $model->meta_title = $model->name;
         } catch (Exception $e) {
             $selected = null;
@@ -106,7 +106,6 @@ class ProfileController extends FrontendController
 
             FlashMessages::add('success', 'Изменения успешно сохранены');
 
-            return redirect()->route('profile');
         } catch (Exception $e) {
             FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
         }
