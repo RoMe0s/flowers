@@ -26,7 +26,7 @@
                         <input type="checkbox" name="agreement" value="1"> Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
                     </p>
                     <p class="text-center">
-                        <input class="btn btn-purple" type="submit" value="Оформить">
+                        <input class="btn btn-purple" type="submit" value="Оформить" onclick="yaCounter29938144.reachGoal('addOrder'); return true;">
                     </p>
                 </form>
             </div>
