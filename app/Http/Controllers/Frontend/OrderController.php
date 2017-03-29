@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Subscription;
+use App\Models\User;
 use App\Services\AuthService;
 use App\Services\PageService;
 use App\Services\UserService;
@@ -70,9 +71,17 @@ class OrderController extends FrontendController
 
         $data = $request->all();
 
+        if(!Cart::count()) {
+
+            FlashMessages::add('error', 'У вас пустая корзина');
+
+            return redirect()->back()->withInput($data);
+
+        }
+
         try {
 
-            $user = Sentry::findUserByLogin($data['email']);
+            $user = User::where('email', $data['email'])->first();
 
             if (is_null($user)) {
 
@@ -118,9 +127,9 @@ class OrderController extends FrontendController
                 'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора.
             Вам перезвонят для уточнения через несколько минут.');
 
-            Cart::destroy();
-
             session()->forget('cart_discount_code');
+
+            Cart::destroy();
 
             return redirect()->to(route('profile.orders'));
 
@@ -162,6 +171,14 @@ class OrderController extends FrontendController
 
         $data = $request->all();
 
+        if(!Cart::count()) {
+
+            FlashMessages::add('error', 'У вас пустая корзина');
+
+            return redirect()->back()->withInput($data);
+
+        }
+
         $selectedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
 
         try {
@@ -195,15 +212,15 @@ class OrderController extends FrontendController
 
             if (session()->has('cart_discount_code')) $user->addCode(session('cart_discount_code'));
 
-            Cart::destroy();
-
-            session()->forget('cart_discount_code');
-
             Event::fire(new FastOrderStored($order));
 
             FlashMessages::add('success',
                 'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора.
                 Вам перезвонят для уточнения через несколько минут.');
+
+            session()->forget('cart_discount_code');
+
+            Cart::destroy();
 
             return redirect()->to(route('profile.orders'));
         

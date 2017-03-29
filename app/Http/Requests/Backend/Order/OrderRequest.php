@@ -33,7 +33,7 @@ class OrderRequest extends FormRequest
             'prepay'    => 'required',
             'recipient_name' => 'required',
             'recipient_phone'    => 'required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
-            'email' => 'required|email',
+            'email' => 'email|required_with:email_required',
             'date' => 'date',
             'status' => 'required',
             'password' => 'required_without:user_id',

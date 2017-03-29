@@ -115,6 +115,7 @@ class Order extends Model
             '3' => 'Оплачен',
             '4' => 'Выполняется',
             '5' => 'Доставлен',
+            '6' => 'Оплачен другим способом',
             '0' => 'Отменён'
         ];
 
@@ -159,8 +160,8 @@ class Order extends Model
                 'user_id' => $user->id,
                 'address_id' => $data['address_id'],
                 'prepay' => $data['prepay'] ?: 50,
-                'recipient_name' => isset($data['recipient_name']) ? $data['recipient_name'] : $user->getFullName(),
-                'recipient_phone' => isset($data['recipient_phone']) ? $data['recipient_phone'] : $user->phone,
+                'recipient_name' => isset($data['recipient_name']) ? $data['recipient_name'] : "",
+                'recipient_phone' => isset($data['recipient_phone']) ? $data['recipient_phone'] : "",
                 'status' => 1,
                 'date' => $data['date'],
                 'time' => $data['time'],

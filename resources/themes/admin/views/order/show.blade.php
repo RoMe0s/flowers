@@ -1,188 +1,194 @@
 @extends('layouts.editable')
 
 @section('content')
-    <div classs="row">
-        <div classs="col-sm-12">
+    <style>
+        .order-show {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .order-show h4 {
+            padding: 10px 0;
+        }
+        .order-show textarea {
+            resize: vertical;
+        }
+        @media screen and (max-width: 540px) {
+
+            .order-show .m-marg {
+                margin-bottom: 15px;
+            }
+
+        }
+    </style>
+    <div class="row">
+        <div class="col-sm-12">
             <div class="nav-tabs-custom">
-                <div class="tab-content table-responsive">
-                    <table class="table">
-                        <thead class="order-status-{!! $model->status !!}">
-                        <tr>
-                            <th colspan="2">
-                               <h4 class="text-center">{!! \App\Models\Order::getStatuses($model->status) !!}</h4>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="2">
-                                <h4 class="text-center">Информация о заказе</h4>
-                            </td>
-                        </tr>
-                            <tr>
-                                <td>
+                <div class="tab-content col-sm-12 order-show">
+                        <h4 class="order-status-{!! $model->status !!} text-center">
+                            {!! \App\Models\Order::getStatuses($model->status) !!}
+                        </h4>
+                        <h4 class="text-center col-sm-12">Информация о заказе</h4>
+                                <div class="col-sm-12 col-md-6">
                                     <strong class="pay-link">{!! route('order.pay', ['id' => $model->id]) !!}</strong>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-flat btn-sm col-sm-12 copy-button">
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    <a href="#" class="btn btn-default btn-flat btn-sm col-sm-12 copy-button" style="width: 100%; margin-bottom: 15px">
                                         <i class="fa fa-files-o" aria-hidden="true"></i>
                                     </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Адрес доставки
-                                </td>
-                                <td>
-                                    {!! $model->getAddress() ? $model->getAddress() . (isset($model->address->code) ? ', код: ' . $model->address->code : "") : trans('labels.no') !!}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Дата и время доставки
-                                </td>
-                                <td>
-                                    {!! $model->date ?: trans('labels.no') !!}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Текст открытки
-                                </td>
-                                <td>
-                                    {!! $model->card_text ?: trans('labels.no') !!}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
                                     Доп. информация
-                                </td>
-                                <td>
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
                                     {!! $model->desc ?: trans('labels.no') !!}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h4 class="text-center">Контакты</h4>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    Адрес доставки
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->getAddress() ? $model->getAddress() . (isset($model->address->code) ? ', код: ' . $model->address->code : "") : trans('labels.no') !!}
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    Дата доставки
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->date ?: trans('labels.no') !!}
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    Время доставки
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! isset($times[$model->time]) ? $times[$model->time] : trans('labels.no') !!}
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    Текст открытки
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    @if($model->cart_text)
+                                        <textarea readonly class="col-sm-12">{!! $model->card_text !!}</textarea>
+                                    @else
+                                        @lang('labels.no')
+                                    @endif
+                                </div>
+                            <h4 class="text-center col-sm-12">Контакты</h4>
+                            @if($model->recipient_name || $model->recipient_phone)
+                                <div class="col-sm-12 col-md-6">
+                                    <b>Получатель</b>
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->recipient_name ?: trans('labels.no' ) !!}
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <b>Телефон получателя</b>
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->recipient_phone ?: trans('labels.no' ) !!}
+                                </div>
+                            @endif
+                            <div class="col-sm-12 col-md-6">
                                 Клинет
-                            </td>
-                            <td>
-                                {!! $model->recipient_name ? $model->recipient_name : (isset($model->user->name) ? $model->user->name : trans('labels.no') ) !!}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! isset($model->user->name) ? $model->user->name : trans('labels.no') !!}
+                            </div>
+
+                            <div class="col-sm-12 col-md-6">
                                 Телефон
-                            </td>
-                            <td>
-                                {!! $model->recipient_phone ? $model->recipient_phone : (isset($model->user->phone) ? $model->user->phone : trans('labels.no') ) !!}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! isset($model->user->phone) ? $model->user->phone : trans('labels.no') !!}
+                            </div>
+
+                            <div class="col-sm-12 col-md-6">
                                 Email
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
                                 {!! isset($model->user) ? $model->user->email : trans('labels.no') !!}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </div>
 
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th colspan="6">
-                                <h4 class="text-center">Заказанные товары</h4>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
+                        <div class="clearfix"></div>
 
-                            </th>
-                            <th>
-                                Название
-                            </th>
-                            <th>
-                                Цена(руб.)
-                            </th>
-                            <th>
-                                Скидка(руб.)
-                            </th>
-                            <th>
-                                Кол-во
-                            </th>
-                            <th>
-                                Стоимость(руб.)
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(sizeof($model->items))
-                            @foreach($model->items as $item)
-                                @include('order.partials.item', ['discount' => $model->discount, 'editable' => false])
-                            @endforeach
-                        </tbody>
-                        @else
-                            <tr>
-                                <td colspan="6" class="text-center">
-                                    @lang('labels.no')
-                                </td>
-                            </tr>
-                        @endif
-                    </table>
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <td colspan="2">
-                                <h4 class="text-center">Сумма заказа</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                        <div class="table-responsive col-sm-12">
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th colspan="6">
+                                        <h4 class="text-center">Заказанные товары</h4>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        Название
+                                    </th>
+                                    <th>
+                                        Цена(руб.)
+                                    </th>
+                                    <th>
+                                        Скидка(руб.)
+                                    </th>
+                                    <th>
+                                        Кол-во
+                                    </th>
+                                    <th>
+                                        Стоимость(руб.)
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if(sizeof($model->items))
+                                    @foreach($model->items as $item)
+                                        @include('order.partials.item', ['discount' => $model->discount, 'editable' => false])
+                                    @endforeach
+                                </tbody>
+                                @else
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            @lang('labels.no')
+                                        </td>
+                                    </tr>
+                                @endif
+                            </table>
+
+                        </div>
+
+                    <div class="clearfix"></div>
+
+                    <h4 class="text-center">Сумма заказа</h4>
+                            <div class="col-sm-12 col-md-6">
                                 Скидка
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
                                 {!! $model->discount !!} %
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
                                 Цена доставки
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
                                 {!! $model->delivery_price !!} руб.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
                                 Итого
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
                                 {!! $model->getTotal() !!} руб.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
                                 Предоплата
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
                                 {!! $model->totalPrepay() !!} руб. ({!! $model->prepay !!}%)
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            </div>
+                    <div class="clearfix"></div>
+                    <br/>
                 <div class="col-sm-12">
                     <a style="width: 100%" class="btn btn-primary btn-flat btn-sm" href="{!! route('admin.order.edit', ['id' => $model->id]) !!}">Редактировать</a>
                 </div>
                 <div class="clearfix"></div>
-                <br />
-            </div>
         </div>
     </div>
+</div>
 @endsection

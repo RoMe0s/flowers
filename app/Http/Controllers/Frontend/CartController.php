@@ -57,7 +57,7 @@ class CartController extends FrontendController
 
         $this->_init();
 
-        if (sizeof(Cart::count())) {
+        if (Cart::count()) {
             foreach (Cart::content() as $row) {
                 if ($row->options['category'] != 'sales')
                     Cart::update($row->rowid, ['discount' => CartController::_itemDiscount($row->price)]);

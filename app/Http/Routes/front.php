@@ -189,7 +189,8 @@ $router->group(
                 'uses' => 'Frontend\CartController@index'
             ]);
 
-            $router->group(['middleware' => 'auth'], function () use ($router) {
+            $router->group(['middleware' => ['auth', 'cart']], function () use ($router) {
+
                 $router->get('/make/order', [
                     'as' => 'get.order',
                     'uses' => 'Frontend\OrderController@create'
@@ -198,6 +199,7 @@ $router->group(
                     'as' => 'post.order',
                     'uses' => 'Frontend\OrderController@store'
                 ]);
+
             });
 
             $router->group(['middleware' => 'cart'], function() use ($router) {
