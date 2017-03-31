@@ -146,7 +146,42 @@ var Alert = {
 };
 
 $(document).ready(function () {
-    $(document).ready(function () {
-        $('select[multiple]').select2();
+    $('select[multiple]').select2();
+
+    $('.slick').slick({
+        autoplay: true,
+        autoplaySpeed: 3000,
+        nextArrow: '<button><i class="fa fa-arrow-right"></i></button>',
+        prevArrow: '<button><i class="fa fa-arrow-left"></i></button>',
+        arrows: false,
+        dots: true,
+        customPaging : function() {
+            // return '<i class="fa fa-circle-o" aria-hidden="true">' +
+            //         '<span class="check-mark">&#10003;</span>' +
+            //     '</i>';
+            return '<i class="fa fa-circle-o" aria-hidden="true"></i>';
+        },
+        infinite: true,
+        speed: 300,
+        cssEase: 'linear',
+        slidesToShow: 4,
+        slidesToScroll:4,
+        rows: 1,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 1072,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            }
+        ]
     });
 });

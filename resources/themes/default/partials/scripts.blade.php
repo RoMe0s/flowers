@@ -4,6 +4,7 @@
 <script type="text/javascript" src="{!! asset('assets/components/jquery.countdown/dist/jquery.countdown.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/select2/dist/js/select2.full.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/components/slick-carousel/slick/slick.min.js') !!}"></script>
 <script type="text/javascript" src="{!! Theme::asset('js/app.js') !!}"></script>
 
 

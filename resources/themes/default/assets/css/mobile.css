@@ -1,5 +1,17 @@
 @media (min-width: 320px) and (max-width: 767px) {
 
+    .slick .slick-slide {
+
+        padding: 0 5px !important;
+
+    }
+
+    .slick ul.slick-dots li[aria-hidden="true"]:hover span.check-mark {
+
+        display: none;
+
+    }
+
     .container {
         width: 100%;
     }
@@ -107,6 +119,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1071px) {
+
     #notifications {
         width: 100%;
         bottom: 0;
@@ -137,4 +150,5 @@
     nav ul.float-right li:last-child {
         padding-right: 10px;
     }
+
 }

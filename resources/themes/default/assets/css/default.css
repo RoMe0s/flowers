@@ -832,3 +832,64 @@ a:focus, a:hover {
     max-height: 100px;
     width: auto;
 }
+
+.body {
+
+    overflow-x: hidden;
+
+}
+
+.slick .slick-slide:focus {
+    outline: none;
+}
+
+
+.slick ul.slick-dots {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    line-height: 35px;
+
+}
+
+.slick ul.slick-dots li {
+
+    display: inline-block;
+
+    margin: 5px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    position: relative;
+
+}
+
+.slick ul.slick-dots li[aria-hidden="false"] i::before {
+
+    content: "\f05d" !important;
+
+}
+
+.slick ul.slick-dots li[aria-hidden="true"]:hover i::before {
+
+    content: "\f05d" !important;
+
+}
+
+.slick ul.slick-dots li[aria-hidden="false"] {
+
+    color: #9370db;
+
+}

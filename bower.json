@@ -29,6 +29,7 @@
     "lightbox2": "lightbox#^2.9.0",
     "jquery.countdown": "^2.2.0",
     "elastislide": "*",
-    "modernizr": "^3.3.1"
+    "modernizr": "^3.3.1",
+    "slick-carousel": "^1.6.0"
   }
 }

@@ -70,12 +70,11 @@
     </section>
     <div class="clearfix"></div>
 
-    @widget__related_products($model->getCategoryId(), $model,  4)
+    @widget__related_products($model->getCategoryId(), $model,  20)
 
     <section>
-        @widget__set(4, $model)
+        @widget__set(20, $model)
     </section>
-    <br />
 
 @endsection
 

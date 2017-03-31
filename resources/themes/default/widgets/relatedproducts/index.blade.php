@@ -1,12 +1,12 @@
 @if(sizeof($products))
-    <br />
     <section>
 
         @widget__text_widget(7)
 
-            @php($counter = 0)
+            <div class="slick row">
+            {{--@php($counter = 0)--}}
             @foreach($products as $product)
-                @if($counter == 0) <div class="row"> @endif
+                {{--@if($counter == 0) <div class="row"> @endif--}}
                 <div class="col-sm-3 col-xs-6 related-product-item">
                     <a href="{!! $product->getUrl() !!}" title="{{ $product->name }} {{ (!empty($product->size))? '('.$product->size.')': '' }}">
                         <div class="photo" style="background-image: url('{{ $product->image ? create_thumbnail($product->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' }}');">
@@ -34,9 +34,9 @@
                         </span>
                     </p>
                 </div>
-                @php($counter++)
-                @if($counter == 4) </div> @php($counter = 0) @endif
+                {{--@php($counter++)--}}
+                {{--@if($counter == 4) </div> @php($counter = 0) @endif--}}
             @endforeach
+            </div>
     </section>
-    <br />
 @endif

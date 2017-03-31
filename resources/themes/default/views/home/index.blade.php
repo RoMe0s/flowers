@@ -5,10 +5,9 @@
 
         @widget__category()
 
-        @widget__set()
+        @widget__set(20)
 
     </section>
-    <br />
 
     <div class="bg">
         <section>
@@ -32,4 +31,5 @@
     <br>
 
     {!! $model->content !!}
+
 @endsection
