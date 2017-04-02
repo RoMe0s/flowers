@@ -33,7 +33,7 @@
                                 </div>
 
                                 <p class="filters-count col-md-4 col-sm-12 text-muted">
-                                    По вашему запросу найдено {{ count($sets) }} наборов
+                                    По вашему запросу найдено {{$sets->total()}} наборов
                                 </p>
                             </div>
                         </div>
