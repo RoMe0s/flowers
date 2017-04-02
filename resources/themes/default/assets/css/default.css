@@ -843,6 +843,57 @@ a:focus, a:hover {
     outline: none;
 }
 
+.slick .slick-arrow[data-direction="next"] {
+
+    right: -40px;
+
+    left: auto;
+
+}
+
+.slick .slick-arrow {
+
+    border-radius: 100%;
+
+    border: none;
+
+    font-size: 18px;
+
+    line-height: 36px;
+
+    text-align: center;
+
+    width: 36px;
+
+    height: 36px;
+
+    position: absolute;
+
+    z-index: 10;
+
+    top: calc(50% - 18px);
+
+    left: -40px;
+
+    right: auto;
+
+    background-color: #9370db;
+
+    color: white;
+
+}
+
+.slick .slick-arrow:focus {
+
+    outline: none;
+
+}
+
+.slick button.slick-arrow:hover {
+
+    color: #4b3970;
+
+}
 
 .slick ul.slick-dots {
 
@@ -891,5 +942,81 @@ a:focus, a:hover {
 .slick ul.slick-dots li[aria-hidden="false"] {
 
     color: #9370db;
+
+}
+
+.filters {
+
+    font-size: 14px;
+
+    float: right;
+
+    padding: 0;
+
+    height: 30px;
+
+}
+
+.filters form, .filters ul {
+
+    height: inherit;
+
+}
+
+.filters span {
+
+    font-size: 16px;
+
+}
+
+.filters ul li span.title {
+
+    font-weight: bold;
+
+}
+
+.filters ul {
+
+    padding: 0;
+
+    list-style: none;
+
+    margin: 0;
+
+    font-size: 18px;
+
+}
+
+.filters ul li {
+
+    display: inline-block;
+
+}
+
+.filters ul li:nth-child(2) {
+
+    margin: 0 10px;
+
+}
+
+.filters ul li a {
+
+    color: #9370db;
+
+    cursor: pointer;
+
+}
+
+.filters ul li a[data-active="false"] {
+
+    color: black;
+
+}
+
+.filters-count {
+
+    float: left;
+
+    padding: 0;
 
 }

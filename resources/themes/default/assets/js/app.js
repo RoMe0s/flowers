@@ -146,14 +146,20 @@ var Alert = {
 };
 
 $(document).ready(function () {
-    $('select[multiple]').select2();
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    $('select[multiple], .select2').select2({
+        minimumResultsForSearch: 10
+    });
 
     $('.slick').slick({
         autoplay: true,
         autoplaySpeed: 3000,
-        nextArrow: '<button><i class="fa fa-arrow-right"></i></button>',
-        prevArrow: '<button><i class="fa fa-arrow-left"></i></button>',
-        arrows: false,
+        nextArrow: '<button data-direction="next"><i class="fa fa-arrow-right"></i></button>',
+        prevArrow: '<button data-direction="previous"><i class="fa fa-arrow-left"></i></button>',
+        arrows: true,
         dots: true,
         customPaging : function() {
             // return '<i class="fa fa-circle-o" aria-hidden="true">' +
@@ -172,16 +178,58 @@ $(document).ready(function () {
                 breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 2
+                    slidesToScroll: 2,
+                    arrows: false
                 }
             },
             {
                 breakpoint: 1072,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3
+                    slidesToScroll: 3,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 1150,
+                settings: {
+                    arrows: false
                 }
             }
         ]
     });
+
+
+    $('.filters').on("click", "a", function(e) {
+
+        e.preventDefault();
+
+        var $this = $(this),
+            old_state = $this.attr('data-active'),
+            value = $this.data('value'),
+            $list_item = $this.closest('li'),
+            type = $list_item.data('name'),
+            $input = $list_item.find('input'),
+            $form = $list_item.closest('form');
+
+        $list_item.find('a').attr('data-active', 'false');
+
+        console.log(old_state);
+
+        if(old_state !== undefined) {
+
+            $input.val(value);
+            $input.attr('name', type);
+
+        } else {
+
+            $input.val('');
+            $input.removeAttr('name');
+
+        }
+
+        $form.submit();
+
+    });
+
 });

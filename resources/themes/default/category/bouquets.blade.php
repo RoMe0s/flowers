@@ -17,7 +17,6 @@
             <div class="row">
                 <div class="col-sm-4 col-xs-12 col-sm-offset-8">
                     <form action="{!! url()->current() !!}" method="get">
-                        {!! Form::hidden('is_request', '1') !!}
                         <div class="input-group">
                             <select class="form-control" name="price">
                                 <option value="2500" @if(isset($_GET['price']) && $_GET['price'] == '2500') selected="selected" @endif>до 2500 руб.</option>

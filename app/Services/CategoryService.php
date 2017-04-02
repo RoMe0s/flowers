@@ -56,10 +56,11 @@ class CategoryService
     }
 
     private function _addFilters($queryBuilder) {
-        if(request()->has('is_request')) {
+        $used = false;
+        if(request()->has('price') || request()->has('date')) {
             $filters = array_filter(request()->all());
 
-            if(isset($filters['sort'])) {
+/*            if(isset($filters['sort'])) {
                 switch ($filters['sort']) {
                     case 'asc':
                         $queryBuilder->orderBy('price', 'ASC');
@@ -85,6 +86,22 @@ class CategoryService
                 $queryBuilder->whereHas('flowers', function($query) use ($filters) {
                     return $query->whereIn('id', $filters['flowers']);
                 });
+            }*/
+            if(isset($filters['date'])) {
+
+                switch ($filters['date']) {
+
+                    case 'asc':
+                        $queryBuilder->orderBy('id', 'ASC');
+                        $used = true;
+                        break;
+
+                    case 'desc':
+                        $queryBuilder->orderBy('id', 'DESC');
+                        $used = true;
+                        break;
+                }
+
             }
             if(isset($filters['price'])) {
 
@@ -94,13 +111,37 @@ class CategoryService
 
                 } else {
 
-                    $queryBuilder->where('price', '>', 5000);
+//                    $queryBuilder->where('price', '>', 5000);
+
+                    switch ($filters['price']) {
+
+                        case 'greater':
+                            $queryBuilder->where('price', '>', 5000);
+                            $used = true;
+                            break;
+
+                        case 'asc':
+                            $queryBuilder->orderBy('price', 'ASC');
+                            $used = true;
+                            break;
+
+                        case 'desc':
+                            $queryBuilder->orderBy('price', 'DESC');
+                            $used = true;
+                            break;
+                    }
 
                 }
 
             }
-        } else {
+        } /*else {
             $queryBuilder->positionSorted();
+        }*/
+
+        if(!$used) {
+
+            $queryBuilder->positionSorted();
+
         }
     }
 
