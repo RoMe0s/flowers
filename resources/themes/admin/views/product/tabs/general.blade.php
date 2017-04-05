@@ -30,6 +30,16 @@
     </div>
 </div>
 
+<div class="form-group required @if ($errors->has('category_id')) has-error @endif">
+    {!! Form::label('category_id', 'Основная категория (тестовое поле, пока ни на что не влияет)', array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
+
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+        {!! Form::select('category_id', $categories, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'placeholder' => 'Основная категория', 'required' => true)) !!}
+
+        {!! $errors->first('category_id', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group required @if ($errors->has('category')) has-error @endif">
     {!! Form::label('category', trans('labels.category'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 

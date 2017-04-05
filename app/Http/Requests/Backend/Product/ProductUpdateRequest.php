@@ -23,6 +23,7 @@ class ProductUpdateRequest extends FormRequest
             'position'  => 'required',
             'status'   => 'required|boolean',
             'slug'     => 'unique:products,slug,'.$id.',id',
+            'category_id' => 'required|integer',
             'price' => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
             'categories' => 'required'

@@ -66,8 +66,8 @@
                                     Текст открытки
                                 </div>
                                 <div class="col-sm-12 col-md-6 m-marg">
-                                    @if($model->cart_text)
-                                        <textarea readonly class="col-sm-12">{!! $model->card_text !!}</textarea>
+                                    @if($model->card_text)
+                                        <textarea readonly class="col-sm-12" style="width: 100%;">{!! $model->card_text !!}</textarea>
                                     @else
                                         @lang('labels.no')
                                     @endif

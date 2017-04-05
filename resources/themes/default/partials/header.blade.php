@@ -21,12 +21,32 @@
                     </div>
                 </div>
             </div>
+{{--            <style>
+                h1.logo-text {
+
+                    position: absolute;
+
+                    font-size: 18px;
+
+                    bottom: -32px;
+
+                    left: 0;
+
+                    width: 100%;
+
+                    text-align: center;
+
+                }
+            </style>--}}
             <div class="col-lg-4 col-md-4 col-sm-2 col-xs-6">
                 <p class="text-center" style="margin: 0;">
                     <a @if(request()->path() != '/') href="/" @endif>
                         <img src="{{ Theme::asset('images/logo.png') }}" alt="{!! config('app.name') !!}">
                     </a>
                 </p>
+{{--                <h1 class="logo-text">
+                    Доставка цветов по <span>Москве</span>
+                </h1>--}}
             </div>
             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
                 <p class="text-right">Мы в социальных сетях</p>

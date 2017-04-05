@@ -1,5 +1,19 @@
 @media (min-width: 320px) and (max-width: 767px) {
 
+    .main-section h1.main-h1 {
+
+        top: -46px;
+
+        text-align: center;
+
+    }
+
+    .main-section {
+
+        margin-top: 20px;
+
+    }
+
     .filters {
 
         float: none;
@@ -8,7 +22,7 @@
 
     .filters span {
 
-        font-size: 13px;
+        font-size: 14px;
 
     }
 
@@ -27,12 +41,6 @@
         text-align: right;
 
         width: 100%;
-
-    }
-
-    .filters ul li:nth-child(2) {
-
-        margin: 0 8px;
 
     }
 
@@ -152,9 +160,50 @@
         width: 100%;
         text-align: center;
     }
+
+    .gifts div.selector-list ul li {
+
+        width: calc(50% - 10px);
+
+        height: 40px;
+
+        line-height: 40px;
+
+    }
+
+    .gifts div.selector-list ul li a {
+
+        line-height: 1.25;
+
+        font-size: 12px;
+
+    }
+
+    .gifts .filters-block .filter-item  {
+
+        padding: 0 !important;
+
+        margin: 0 5px;
+
+        width: calc(50% - 10px);
+
+    }
+
+    .gifts .filters-block {
+
+        margin-bottom: 10px;
+
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 1071px) {
+
+    .main-section h1.main-h1 {
+
+        padding: 0 20px;
+
+    }
 
     .filters {
 
@@ -201,6 +250,24 @@
 
     nav ul.float-right li:last-child {
         padding-right: 10px;
+    }
+
+}
+
+@media (min-width: 1072px) {
+
+    .gifts div.selector-list ul li:hover {
+
+        border-color: #4b3970;
+
+    }
+
+    .gifts div.selector-list ul li:hover::after, .gifts div.selector-list ul li:hover a {
+
+        color: #4b3970;
+
+        display: block;
+
     }
 
 }

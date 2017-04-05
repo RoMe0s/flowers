@@ -23,7 +23,6 @@ class TextWidgetWidget extends Widget
      */
     function index($position)
     {
-
         $widget = Cache::remember('text_widget_' . $position, 10, function() use($position) {
 
             return TextWidget::with(['translations'])->where('layout_position', $position)->visible()->first();

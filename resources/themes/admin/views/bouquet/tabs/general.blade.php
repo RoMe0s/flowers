@@ -36,7 +36,7 @@
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
         {!! Form::select('category_id', $categories, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true')) !!}
 
-        {!! $errors->first('category', '<p class="help-block error">:message</p>') !!}
+        {!! $errors->first('category_id', '<p class="help-block error">:message</p>') !!}
     </div>
 </div>
 

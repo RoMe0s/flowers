@@ -21,6 +21,7 @@ class ProductCreateRequest extends FormRequest
             'position'  => 'required',
             'status'   => 'required|boolean',
             'slug'     => 'unique:products',
+            'category_id' => 'required|integer',
             'price' => ['required', 'regex:'.$pregex],
             'image'    => ['regex:'.$regex],
             'categories'    => 'required'

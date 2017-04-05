@@ -46,6 +46,7 @@ class Product extends Model implements MetaGettable
         'price',
         'image',
         'slug',
+        'category_id',
 
         'name',
         'short_content',
@@ -112,6 +113,12 @@ class Product extends Model implements MetaGettable
 
     public function getCategoryId() {
         return -1;
+    }
+
+    public function category() {
+
+        return $this->belongsTo(Category::class,'category_id')->with(['translations']);
+
     }
 
     public function getDataForTable() {

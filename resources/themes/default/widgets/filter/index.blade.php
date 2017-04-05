@@ -1,10 +1,5 @@
     <form method="GET" action="{!! url()->current() !!}">
         <ul>
-            <li>
-                <span class="title">
-                    Фильтровать:
-                </span>
-            </li>
             <li data-name="price">
                 <span class="text-muted">
                     По цене

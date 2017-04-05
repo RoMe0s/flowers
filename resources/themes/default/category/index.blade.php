@@ -17,6 +17,11 @@
 
             @widget__text_widget(6)
 
+            @if($model->id == 1)
+                @widget__text_widget(9)
+            @elseif($model->id == 3)
+                @widget__text_widget(10)
+            @endif
 
             <div class="row">
                 <div class="col-xs-12">

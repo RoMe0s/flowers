@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-    <section>
+    <section class="main-section">
+
+        <h1 class="text-right main-h1">Доставка цветов по Москве</h1>
 
         @widget__category()
 
