@@ -52,7 +52,11 @@ class PresentsController extends FrontendController
 
                         $category->products = $category->products->merge($child->visible_directProducts);
 
+                        session()->forget('category_' . $child->id);
+
                     }
+
+                    session()->forget('category_' . $category->id);
 
                     $category->products = $category->products->sortBy('position');
 
@@ -72,6 +76,8 @@ class PresentsController extends FrontendController
 
         $filters = $request->get('filters', []);
 
+        $page = $request->get('page');
+
         $category = null;
 
         Category::visible()
@@ -80,7 +86,7 @@ class PresentsController extends FrontendController
             ->has('visible_directProducts')
             ->whereNull('parent_id')
             ->where('type', (string)Product::class)
-            ->chunk(100, function($categories_data) use (&$category, $filters) {
+            ->chunk(100, function($categories_data) use (&$category, $filters, $page) {
 
                     foreach($categories_data as $category_data) {
 
@@ -122,9 +128,19 @@ class PresentsController extends FrontendController
 
             });
 
-        $page = $request->get('page');
+        $old_page = session('category_' . $request->get('category'), null);
 
-        return ['html' => view('presents.partials.category')->with(['page' => $page, 'category' => $category])->render()];
+        $type = "less";
+
+        if($page ==1 || (($page > $old_page || !$old_page) && count($category->products) > ($page * 9)) ) {
+
+            $type= "more";
+
+        }
+
+        session()->put('category_' . $request->get('category'), $page);
+
+        return ['html' => view('presents.partials.category')->with(['page' => $page, 'category' => $category, 'type' => $type])->render()];
 
     }
 

@@ -1191,7 +1191,7 @@ a:focus, a:hover {
 
     display: table;
 
-    width: 100%;
+    width: calc(100% + 2px);
 
     background-color: #9370db;
 

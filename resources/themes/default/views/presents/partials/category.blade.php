@@ -48,7 +48,7 @@
                data-active="false"
                @endif
                data-page="{{$page}}"
-               @if($counter >= count($category->products)) data-type="less"> Скрыть @else data-type="more" > Показать еще @endif
+               @if(isset($type) && $type == "less") data-type="less"> Скрыть @else data-type="more" > Показать еще @endif
             </a>
         </div>
 </div>
