@@ -68,21 +68,24 @@ class Category extends Model implements MetaGettable
 
         $category = $this;
 
-        while($category->parent) {
+        if($visible) {
 
-            if($visible) {
+            while($category->visible_parent) {
 
-                if(!$category->parent->status) {
+                $parents[] = $category->visible_parent;
 
-                    break;
-
-                }
-
+                $category = $category->visible_parent;
             }
 
-            $parents[] = $category->parent;
+        } else {
 
-            $category = $category->parent;
+            while($category->parent) {
+
+                $parents[] = $category->parent;
+
+                $category = $category->parent;
+            }
+
         }
 
         return $parents;
@@ -108,23 +111,29 @@ class Category extends Model implements MetaGettable
 
         $category = $this;
 
-        while ($category->children) {
+        if($visible) {
 
-            if($visible) {
+            while ($category->visible_children) {
 
-                if(!$category->children->status) {
+                $children[] = $category->visible_children;
 
-                    break;
+                $category = $category->visible_children;
 
-                }
+            }
 
-                $children[] = $category->children;
+        } else {
 
-                $category = $category->children;
+            while ($category->children) {
+
+                    $children[] = $category->children;
+
+                    $category = $category->children;
 
             }
 
         }
+
+        return $children;
 
 
     }
