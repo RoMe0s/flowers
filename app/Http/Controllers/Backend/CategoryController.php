@@ -217,7 +217,7 @@ class CategoryController extends BackendController
             return Redirect::route('admin.category.index');
         }
 
-        $this->_fillAdditionalTemplateData();
+        $this->_fillAdditionalTemplateData($model);
 
         $this->data('page_title', '"'.$model->name.'"');
 
@@ -293,7 +293,20 @@ class CategoryController extends BackendController
         return Redirect::route('admin.category.index');
     }
 
-    private function _fillAdditionalTemplateData() {
+    private function _fillAdditionalTemplateData($model = null) {
         $this->data('types', Category::getTypes());
+
+        if($model) {
+
+            $parents = Category::joinTranslations('categories')->where('type', $model->type)->lists('name', 'category_id')->toArray();
+
+        } else {
+
+            $parents = Category::joinTranslations('categories')->lists('name', 'category_id')->toArray();
+
+        }
+
+        $this->data('parents', $parents);
+
     }
 }

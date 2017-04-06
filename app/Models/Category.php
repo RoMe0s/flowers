@@ -37,6 +37,7 @@ class Category extends Model implements MetaGettable
         'position',
         'status',
         'type',
+        'parent_id',
 
 
         'name',
@@ -47,6 +48,86 @@ class Category extends Model implements MetaGettable
         'short_content',
         'content_two'
     ];
+
+    public function parent() {
+
+        return $this->belongsTo(Category::class, 'parent_id')->with(['parent', 'parent.translations']);
+
+    }
+
+    public function visible_parent() {
+
+        return $this->parent()->visible();
+
+    }
+
+
+    public function getParents($visible = false) {
+
+        $parents = array();
+
+        $category = $this;
+
+        while($category->parent) {
+
+            if($visible) {
+
+                if(!$category->parent->status) {
+
+                    break;
+
+                }
+
+            }
+
+            $parents[] = $category->parent;
+
+            $category = $category->parent;
+        }
+
+        return $parents;
+
+    }
+
+    public function children() {
+
+        return $this->hasOne(Category::class, 'parent_id')->with(['children', 'children.translations']);
+
+    }
+
+    public function visible_children() {
+
+        return $this->children()->visible();
+
+    }
+
+
+    public function getChildren($visible = false) {
+
+        $children = array();
+
+        $category = $this;
+
+        while ($category->children) {
+
+            if($visible) {
+
+                if(!$category->children->status) {
+
+                    break;
+
+                }
+
+                $children[] = $category->children;
+
+                $category = $category->children;
+
+            }
+
+        }
+
+
+    }
 
     public static function getTypes($type = null) {
         $types = array(

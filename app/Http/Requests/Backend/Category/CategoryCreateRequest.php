@@ -20,7 +20,8 @@ class CategoryCreateRequest extends FormRequest
             'slug'     => 'required|unique:categories',
             'status'   => 'required|boolean',
             'position' => 'required|integer',
-            'type'     => 'required'
+            'type'     => 'required',
+            'parent_id' => 'integer'
         ];
 
         $languageRules = [

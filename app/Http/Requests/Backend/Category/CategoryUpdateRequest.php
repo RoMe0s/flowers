@@ -22,7 +22,8 @@ class CategoryUpdateRequest extends FormRequest
             'slug'     => 'required|unique:categories,slug,'.$id.',id',
             'status'   => 'required|boolean',
             'position' => 'required|integer',
-            'type'     => 'required'
+            'type'     => 'required',
+            'parent_id' => 'integer'
         ];
 
         $languageRules = [

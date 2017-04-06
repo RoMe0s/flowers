@@ -14,9 +14,19 @@
     {!! Form::label('type', trans('labels.type'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
 
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
-        {!! Form::select('type', $types, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'placeholder' => trans('labels.type'))) !!}
+        {!! Form::select('type', $types, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'placeholder' => trans('labels.type'), 'required' => 'true')) !!}
 
         {!! $errors->first('type', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group @if ($errors->has('parent_id_id')) has-error @endif">
+    {!! Form::label('parent_id', trans('labels.parent'), array('class' => 'control-label col-xs-4 col-sm-3 col-md-2')) !!}
+
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+        {!! Form::select('parent_id', $parents, null, array('class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'placeholder' => trans('labels.parent'))) !!}
+
+        {!! $errors->first('parent_id', '<p class="help-block error">:message</p>') !!}
     </div>
 </div>
 
