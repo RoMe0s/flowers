@@ -1,6 +1,56 @@
 var presents = {};
 
-presents.not_found = function() {
+presents.real_reload = function(category) {
+
+
+    var $gifts = $(document).find('.gifts'),
+
+    $wrapper = $gifts.find('.gifts-wrapper'),
+    $filters_block = $gifts.find('.filters-block'),
+    $selected_category = $gifts.find('.gifts-list[data-active="true"]'),
+    page = $selected_category.find('a.show-more').attr('data-page');
+
+    var filterData = {};
+
+    $filters_block.find('select').each(function(){
+
+        var name = $(this).attr('name');
+        var value = $(this).val();
+
+        if(value !== "") {
+
+            filterData[name] = value;
+
+        }
+
+    });
+
+    $.ajax({
+        url: '/presents-reload',
+        type: 'GET',
+        data: {
+            category: category,
+            page: page,
+            filters: filterData
+        },
+        beforeSend: function(){
+            $wrapper.attr('data-loaded', 'true');
+        }
+    }).done(function(response) {
+
+        $selected_category.replaceWith(response.html);
+
+        $wrapper.attr('data-loaded', 'false');
+
+    }).error(function(){
+
+        $wrapper.attr('data-loaded', 'false');
+
+    });
+
+};
+
+/*presents.not_found = function() {
 
     var $list = $('.gifts').find('div.gifts-list');
 
@@ -59,123 +109,6 @@ presents.more_button = function(category) {
 
 };
 
-presents.show = function(category, more) {
-
-    var $list = $('.gifts').find('div.gifts-list');
-
-    $list.attr('data-loaded', 'true');
-
-    var timer = setTimeout(function(){
-
-        var anti_selector = category === null ? null : '[data-category!="' + category + '"][data-active="true"]' ;
-
-        if(anti_selector !== null) {
-
-            $list.find(anti_selector).attr('data-active', 'false');
-
-        }
-
-        var selector = category === null ? '[data-category][data-active="false"]' : '[data-category="' + category + '"][data-active="false"]';
-
-        if(more === undefined || more === null || !more) {
-
-            $list.find(selector).attr('data-active', 'true');
-
-        } else {
-
-            var visible_counter = 0;
-
-            $list.find(selector).each(function(){
-
-                if(visible_counter > 8) {
-
-                    return;
-
-                }
-
-                $(this).attr('data-active', 'true');
-
-                visible_counter++;
-
-            });
-
-        }
-
-        presents.not_found();
-
-        presents.more_button(category);
-
-        $list.attr('data-loaded', 'false');
-
-        clearTimeout(timer);
-
-    }, 300);
-
-};
-
-presents.filter = function() {
-
-    var $gifts_wrapper = $('.gifts'),
-        $filters = $gifts_wrapper.find('.filters-block'),
-        $list_div = $gifts_wrapper.find('.gifts-list'),
-        $list = $list_div.find('[data-category]'),
-        $show_more_button = $gifts_wrapper.find('a.show-more').closest('div');
-
-    $filters.find('select').on('change', function(e) {
-
-        var sort_by = $(this).attr('name');
-
-        $filters.find('select[name!="' + sort_by + '"]').find(':selected').removeAttr('selected');
-
-        var by = $(this).val();
-
-        if(by !== "") {
-
-            window.location.hash = sort_by + "=" + by;
-
-            $list_div.attr('data-loaded', 'true');
-
-            var timer = setTimeout(function() {
-
-                $list.sort(function (a, b) {
-
-                    var an = $(a).data(sort_by),
-                        bn = $(b).data(sort_by);
-
-                    if (by === 'asc') {
-
-                        return +an - +bn;
-
-                    }
-
-                    if (by === 'desc') {
-
-                        return +bn - +an;
-
-                    }
-
-                });
-
-                $list.detach().insertBefore($show_more_button);
-
-                $list_div.attr('data-loaded', 'false');
-
-                clearTimeout(timer);
-
-            }, 300);
-
-        } else {
-
-            window.location.hash = "no";
-
-        }
-
-        return e.preventDefault();
-
-    });
-
-};
-
 presents.show_more = function() {
 
     var category = $('.gifts').find('.selector-list li[data-active="true"]').data("category");
@@ -211,6 +144,73 @@ presents.check_filters_on_load = function() {
 
     }
 
+};*/
+
+presents.filter = function() {
+
+    var $gifts_wrapper = $('.gifts'),
+        $filters = $gifts_wrapper.find('.filters-block');
+
+    $filters.find('select').on('change', function(e) {
+
+        var category = $gifts_wrapper.find('.selector-list').find('li[data-active="true"]').data("category");
+
+        var sort_by = $(this).attr('name');
+
+        $filters.find('select[name!="' + sort_by + '"]').find(':selected').removeAttr('selected');
+
+        var by = $(this).val();
+
+        if(by !== "") {
+
+            window.location.hash = sort_by + "=" + by;
+
+        } else {
+
+            window.location.hash = "no";
+
+        }
+
+        presents.real_reload(category);
+
+        return e.preventDefault();
+
+    });
+
+};
+
+presents.show = function(category) {
+    var $gifts = $('.gifts'),
+    $wrapper = $gifts.find('.gifts-wrapper');
+
+    var anti_selector = category === null ? null : 'div.gifts-list[data-category!="' + category + '"][data-active="true"]' ;
+
+    if(anti_selector !== null) {
+
+        $wrapper.find(anti_selector).attr('data-active', 'false');
+
+    }
+
+    var selector = category === null ? null : 'div.gifts-list[data-category="' + category + '"][data-active="false"]';
+
+    if(selector !== null) {
+
+        $wrapper.find(selector).attr('data-active', 'true');
+
+    }
+
+};
+
+presents.show_more = function() {
+
+    var category = $('.gifts').find('.selector-list li[data-active="true"]').data("category");
+
+    if(category !== undefined && category !== null) {
+
+        presents.real_reload(category);
+
+    }
+
 };
 
 $(document).ready(function(){
@@ -224,6 +224,7 @@ $(document).ready(function(){
             var $this = $(this),
                 state = $(this).attr("data-active"),
                 category = $(this).attr("data-category"),
+                $wrapper = $('.gifts').find('.gifts-wrapper'),
                 $list = $('.gifts').find('.selector-list li[data-active="true"]');
 
             if (state === "false") {
@@ -237,19 +238,41 @@ $(document).ready(function(){
                 $this.attr('data-active', 'true');
 
 
-            } else {
-
-                $this.attr('data-active', 'false');
-
-                category = null;
-
             }
 
-            presents.show(category);
+            $wrapper.attr('data-loaded', 'true');
+
+            var timer = setTimeout(function() {
+
+                presents.show(category);
+
+                $wrapper.attr('data-loaded', 'false');
+
+                clearTimeout(timer);
+
+            }, 300);
 
         });
 
-        presents.check_filters_on_load();
+        $(document).find('.gifts').on("click", '.gifts-list[data-active="true"] .show-more[data-page]', function () {
+
+            var type = $(this).data('type');
+
+            if(type === "less") {
+
+                $(this).attr('data-page', parseInt($(this).data('page'), 10) - 1);
+
+            }
+
+            if(type === "more") {
+
+                $(this).attr('data-page', parseInt($(this).data('page'), 10) + 1);
+
+            }
+
+            presents.show_more();
+
+        });
 
     }
 

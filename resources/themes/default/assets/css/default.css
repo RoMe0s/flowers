@@ -1050,6 +1050,10 @@ a:focus, a:hover {
 
     list-style: none;
 
+    padding-left: 8px;
+
+    padding-right: 8px;
+
 }
 
 .gifts div.selector-list ul li {
@@ -1102,6 +1106,21 @@ a:focus, a:hover {
 
 }
 
+.gifts .gifts-wrapper {
+
+    position: relative;
+
+    padding: 0;
+
+}
+
+.gifts-wrapper .text-muted {
+
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
 .gifts-wrapper [data-active="false"] {
 
     display: none;
@@ -1127,6 +1146,14 @@ a:focus, a:hover {
     overflow: hidden;
 
     color: #9370db;
+
+}
+
+.gifts .filters-block {
+
+    padding-left: 12px;
+
+    padding-right: 12px;
 
 }
 
@@ -1169,13 +1196,13 @@ a:focus, a:hover {
     display: block !important;
 }
 
-.gifts div.gifts-list[data-loaded="true"] div[data-category] {
+.gifts div.gifts-wrapper[data-loaded="true"] div[data-category] {
 
     opacity: 0.4;
 
 }
 
-.gifts div.gifts-list::after {
+.gifts div.gifts-wrapper::after {
 
     display: none;
 
@@ -1195,7 +1222,7 @@ a:focus, a:hover {
 
 }
 
-.gifts div.gifts-list[data-loaded="true"]::after {
+.gifts div.gifts-wrapper[data-loaded="true"]::after {
 
     display: block;
     -webkit-animation: fa-spin 2s infinite linear;

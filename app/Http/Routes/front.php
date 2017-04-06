@@ -87,6 +87,16 @@ $router->group(
             $router->any('/subscription/{id}/pay', 'Frontend\OrderController@makeSubscription');
         });
 
+        //presents
+        $router->get('/presents', [
+            'as' => 'presents',
+            'uses' => 'Frontend\PresentsController@index'
+        ]);
+        $router->get('/presents-reload', [
+            'as' => 'presents_reload',
+            'uses' => 'Frontend\PresentsController@reload'
+        ]);
+
         //products
         $router->get('/related-goods', [
             'as' => 'products',

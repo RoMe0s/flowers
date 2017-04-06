@@ -161,6 +161,18 @@
         text-align: center;
     }
 
+    .gifts div.selector-list ul {
+
+        padding: 0 !important;
+
+    }
+
+    .gifts .filters-block {
+
+        padding: 0 !important;
+
+    }
+
     .gifts div.selector-list ul li {
 
         width: calc(50% - 10px);
@@ -168,6 +180,8 @@
         height: 40px;
 
         line-height: 40px;
+
+        padding: 0 5px !important;
 
     }
 
@@ -192,6 +206,19 @@
     .gifts .filters-block {
 
         margin-bottom: 10px;
+
+    }
+
+    .gifts-list .col-md-4.col-sm-6.col-xs-6 {
+
+        padding: 0 5px !important;
+
+    }
+
+    .gifts-wrapper .text-muted {
+
+        margin-left: 5px;
+        margin-right: 5px;
 
     }
 

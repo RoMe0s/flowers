@@ -51,7 +51,8 @@ class Category extends Model implements MetaGettable
     public static function getTypes($type = null) {
         $types = array(
             (string)Bouquet::class => 'Букеты',
-            (string)Set::class => 'Наборы'
+            (string)Set::class => 'Наборы',
+            (string)Product::class => 'Подарки'
         );
 
         return $type !== null ? $types[$type] : $types;
@@ -60,6 +61,18 @@ class Category extends Model implements MetaGettable
 
     public function products() {
         return $this->belongsToMany(Product::class, 'products_categories');
+    }
+
+    public function directProducts() {
+
+        return $this->hasMany(Product::class, 'category_id')->with(['translations'])->positionSorted();
+
+    }
+
+    public function visible_directProducts() {
+
+        return $this->directProducts()->visible();
+
     }
 
     public function sets() {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests\Backend\Product\ProductUpdateRequest;
 use App\Http\Requests\Backend\Product\ProductCreateRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\CategoryTranslation;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
@@ -304,6 +305,8 @@ class ProductController extends BackendController
     private function _fillAdditionalTemplateData() {
 
         $this->data('categories', CategoryTranslation::lists('name', 'category_id')->toArray());
+
+        $this->data('direct_categories', Category::where('type', (string)Product::class)->joinTranslations('categories')->lists('name', 'category_id')->toArray());
 
     }
 

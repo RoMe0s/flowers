@@ -3,6 +3,7 @@
 namespace App\Widgets\Category;
 
 use App\Models\Category;
+use App\Models\Product;
 use Pingpong\Widget\Widget;
 use Illuminate\Support\Facades\Cache;
 
@@ -16,9 +17,8 @@ class CategoryWidget extends Widget
      */
     public function index()
     {
-
         $categories = Cache::remember('categories', 5, function() {
-            return Category::visible()->positionSorted()->with('translations')->get();
+            return Category::where('type', '<>', (string)Product::class)->visible()->positionSorted()->with('translations')->get();
         });
 
         if($categories) {
