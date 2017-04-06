@@ -165,6 +165,26 @@ class CategoryController extends BackendController
     {
         $input = $request->all();
 
+        if(isset($input['parent_id']) && $input['parent_id'] == "") {
+
+            $input['parent_id'] = null;
+
+        }
+
+        if($input['parent_id']) {
+
+            $parent = Category::find($input['parent_id']);
+
+            if($parent->type != $input['type']) {
+
+                FlashMessages::add('error', 'Несовпадение типов категорий');
+
+                return redirect()->back()->withInput($input);
+
+            }
+
+        }
+
         DB::beginTransaction();
 
         try {
@@ -247,6 +267,26 @@ class CategoryController extends BackendController
 
         $input = $request->all();
 
+        if(isset($input['parent_id']) && $input['parent_id'] == "") {
+
+            $input['parent_id'] = null;
+
+        }
+
+        if($input['parent_id']) {
+
+            $parent = Category::find($input['parent_id']);
+
+            if($parent->type != $input['type']) {
+
+                FlashMessages::add('error', 'Несовпадение типов категорий');
+
+                return redirect()->back()->withInput($input);
+
+            }
+
+        }
+
         DB::beginTransaction();
 
         try {
@@ -298,7 +338,7 @@ class CategoryController extends BackendController
 
         if($model) {
 
-            $parents = Category::joinTranslations('categories')->where('type', $model->type)->lists('name', 'category_id')->toArray();
+            $parents = Category::joinTranslations('categories')->where('type', $model->type)->where('categories.id', '<>', $model->id)->lists('name', 'category_id')->toArray();
 
         } else {
 
