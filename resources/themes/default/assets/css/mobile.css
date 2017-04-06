@@ -175,19 +175,33 @@
 
     .gifts div.selector-list ul li {
 
+        background-size: contain;
+
         width: calc(50% - 10px);
 
-        height: 40px;
-
-        line-height: 40px;
-
-        padding: 0 5px !important;
+        height: 145px;
 
     }
 
-    .gifts div.selector-list ul li a {
+    .gifts div.selector-list ul li a:first-child {
 
-        line-height: 1.25;
+        height: 97px;
+
+        line-height: 1;
+
+        font-size: 14px;
+
+    }
+
+    .gifts div.selector-list ul li a:first-child p {
+
+        display: table-cell;
+
+    }
+
+    .gifts div.selector-list ul li a:last-child {
+
+        height: 42px;
 
         font-size: 12px;
 
@@ -293,7 +307,21 @@
 
         color: #4b3970;
 
-        display: block;
+        display: table;
+
+    }
+
+    .gifts div.selector-list ul li a:first-child:hover p {
+
+        display: table-cell;
+
+    }
+
+    .gifts div.selector-list ul li:hover a:last-child {
+
+        background-color: #4b3970;
+
+        color: white;
 
     }
 

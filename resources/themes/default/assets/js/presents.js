@@ -124,7 +124,7 @@ $(document).find(".gifts a.show-more").on("click", function () {
     presents.show_more();
 
 });
-
+*/
 
 presents.check_filters_on_load = function() {
 
@@ -144,7 +144,7 @@ presents.check_filters_on_load = function() {
 
     }
 
-};*/
+};
 
 presents.filter = function() {
 
@@ -273,6 +273,8 @@ $(document).ready(function(){
             presents.show_more();
 
         });
+
+        presents.check_filters_on_load();
 
     }
 

@@ -35,12 +35,34 @@ class PresentsController extends FrontendController
 
         $this->data('page', 1);
 
-        $categories = Category::visible()
-            ->with(['translations', 'visible_directProducts'])
-            ->has('visible_directProducts')
-            ->where('type', (string)Product::class)->get();
+        $categories_data = array();
 
-        $this->data('categories', $categories);
+        Category::visible()
+            ->with(['translations', 'visible_directProducts', 'visible_children', 'visible_children.visible_directProducts'])
+            ->has('visible_directProducts')
+            ->whereNull('parent_id')
+            ->where('type', (string)Product::class)
+            ->chunk(100, function($categories) use (&$categories_data) {
+
+                foreach ($categories as $category) {
+
+                    $category->products = $category->visible_directProducts;
+
+                    foreach($category->getChildren(true) as $child) {
+
+                        $category->products = $category->products->merge($child->visible_directProducts);
+
+                    }
+
+                    $category->products = $category->products->sortBy('position');
+
+                    $categories_data[] = $category;
+
+                }
+
+            });
+
+        $this->data('categories', $categories_data);
 
         return $this->render($this->pageService->getPageTemplate($model));
 
@@ -50,21 +72,55 @@ class PresentsController extends FrontendController
 
         $filters = $request->get('filters', []);
 
-        $category = Category::where('id', $request->get('category'))
-            ->visible()
-            ->with(['translations'])
+        $category = null;
+
+        Category::visible()
+            ->where('id', $request->get('category'))
+            ->with(['translations', 'visible_directProducts', 'visible_children', 'visible_children.visible_directProducts'])
+            ->has('visible_directProducts')
+            ->whereNull('parent_id')
             ->where('type', (string)Product::class)
-            ->first();
+            ->chunk(100, function($categories_data) use (&$category, $filters) {
 
-        foreach($filters as $key => $value) {
+                    foreach($categories_data as $category_data) {
 
-            $key = $key == "date" ? "created_at" : $key;
+                        $category_data->products = $category_data->visible_directProducts;
 
-            $products = $category->visible_directProducts()->orderBy($key, $value)->get();
+                        foreach ($category_data->getChildren(true) as $child) {
 
-            $category->visible_directProducts = $products;
+                            $category_data->products = $category_data->products->merge($child->visible_directProducts);
 
-        }
+                        }
+
+                        if (sizeof($filters)) {
+                            foreach ($filters as $key => $value) {
+
+                                $key = $key == "date" ? "created_at" : $key;
+
+                                if ($value == 'asc') {
+
+                                    $category_data->products = $category_data->products->sortBy($key);
+
+
+                                } else {
+
+                                    $category_data->products = $category_data->products->sortByDesc($key);
+
+                                }
+
+
+                            }
+                        } else {
+
+                            $category_data->products = $category_data->products->sortBy('position');
+
+                        }
+
+                        $category = $category_data;
+
+                    }
+
+            });
 
         $page = $request->get('page');
 
