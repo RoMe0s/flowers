@@ -155,7 +155,7 @@ class Category extends Model implements MetaGettable
 
     public function directProducts() {
 
-        return $this->hasMany(Product::class, 'category_id')->with(['translations'])->positionSorted();
+        return $this->hasMany(Product::class, 'category_id')->with(['translations']);
 
     }
 

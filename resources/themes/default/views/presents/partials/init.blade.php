@@ -3,7 +3,7 @@
         <i>По вашему запросу ничего не найдено</i>
     </p>
     <p class="text-muted" @if(sizeof($init_collection)) data-active="true" @else data-active="false" @endif>
-        Показано {!! $page * 9 <= count($init_collection) ? $page * 9 : count($init_collection)!!} из {{count($init_collection)}} подарков
+        Показано <span>9</span> из {{count($init_collection)}} подарков
     </p>
     @php($counter = 1)
     @foreach($init_collection as $key => $present)

@@ -285,6 +285,11 @@ presents.show_more_initial = function() {
 
         }
 
+
+        $visibles = $initial_wrapper.find('div.item[data-active="true"]');
+
+        $this.find('span').html($visibles.length);
+
         $wrapper.attr("data-loaded", "false");
 
         return e.preventDefault();
