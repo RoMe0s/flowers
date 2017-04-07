@@ -37,12 +37,14 @@ class PresentsController extends FrontendController
 
         $categories_data = array();
 
+        $init_collection = collect();
+
         Category::visible()
             ->with(['translations', 'visible_directProducts', 'visible_children', 'visible_children.visible_directProducts'])
             ->has('visible_directProducts')
             ->whereNull('parent_id')
             ->where('type', (string)Product::class)
-            ->chunk(100, function($categories) use (&$categories_data) {
+            ->chunk(100, function($categories) use (&$categories_data, &$init_collection) {
 
                 foreach ($categories as $category) {
 
@@ -58,6 +60,10 @@ class PresentsController extends FrontendController
 
                     session()->forget('category_' . $category->id);
 
+                    $randomize = count($category->products) > 54 ? 54 : count($category->products);
+
+                    $init_collection = $init_collection->merge($category->products->random($randomize));
+
                     $category->products = $category->products->sortBy('position');
 
                     $categories_data[] = $category;
@@ -67,6 +73,8 @@ class PresentsController extends FrontendController
             });
 
         $this->data('categories', $categories_data);
+
+        $this->data('init_collection', $init_collection);
 
         return $this->render($this->pageService->getPageTemplate($model));
 
@@ -132,7 +140,7 @@ class PresentsController extends FrontendController
 
         $type = "less";
 
-        if($page ==1 || (($page > $old_page || !$old_page) && count($category->products) > ($page * 9)) ) {
+        if($page == 1 || (($page > $old_page || !$old_page) && count($category->products) > ($page * 9)) ) {
 
             $type= "more";
 
@@ -140,7 +148,9 @@ class PresentsController extends FrontendController
 
         session()->put('category_' . $request->get('category'), $page);
 
-        return ['html' => view('presents.partials.category')->with(['page' => $page, 'category' => $category, 'type' => $type])->render()];
+        $html = view('presents.partials.category')->with(['page' => $page, 'category' => $category, 'type' => $type, 'show' => true])->render();
+
+        return ['html' => $html];
 
     }
 

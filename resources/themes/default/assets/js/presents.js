@@ -1,5 +1,7 @@
 var presents = {};
 
+presents.init_autoloader = "more";
+
 presents.real_reload = function(category) {
 
 
@@ -79,6 +81,18 @@ presents.filter = function() {
 
         var category = $gifts_wrapper.find('.selector-list').find('li[data-active="true"]').data("category");
 
+        if(category === undefined) {
+
+            category = $gifts_wrapper.find('.gifts-list[data-active="true"]').data('category');
+
+            if(category === undefined || category === null) {
+
+                return false;
+
+            }
+
+        }
+
         var sort_by = $(this).attr('name');
 
         $filters.find('select[name!="' + sort_by + '"]').find(':selected').removeAttr('selected');
@@ -95,7 +109,15 @@ presents.filter = function() {
 
         }
 
-        presents.real_reload(category);
+        if(category !== "init") {
+
+            presents.real_reload(category);
+
+        } else {
+
+            presents.sort_initial(sort_by, by);
+
+        }
 
         return e.preventDefault();
 
@@ -134,6 +156,140 @@ presents.show_more = function() {
         presents.real_reload(category);
 
     }
+
+};
+
+presents.sort_initial = function(sort_by, by) {
+
+    var $gifts = $(document).find('.gifts'),
+    $wrapper = $gifts.find('.gifts-wrapper'),
+    $items_wrapper = $wrapper.find('.gifts-list[data-category="init"]'),
+    $list = $items_wrapper.find('div.item'),
+    $show_more_button = $items_wrapper.find('a.show-more').closest('div');
+
+    if(by === "" || sort_by === "") {
+
+        by = "asc";
+
+        sort_by = "position";
+
+    }
+
+    if(by !== "") {
+
+        var timer = setTimeout(function() {
+
+            $list.sort(function (a, b) {
+
+                var an = $(a).data(sort_by),
+                    bn = $(b).data(sort_by);
+
+                if (by === 'asc') {
+
+                    return +an - +bn;
+
+                }
+
+                if (by === 'desc') {
+
+                    return +bn - +an;
+
+                }
+
+            });
+
+            $list.detach().insertBefore($show_more_button);
+
+            $wrapper.attr('data-loaded', 'false');
+
+            clearTimeout(timer);
+
+        }, 300);
+
+    }
+
+};
+
+presents.show_more_initial = function() {
+
+    var $gifts = $(document).find('.gifts'),
+        $wrapper = $gifts.find('.gifts-wrapper'),
+        $initial_wrapper = $gifts.find('.gifts-list[data-category="init"]');
+
+    $initial_wrapper.on("click", "a.show-more", function (e) {
+
+        $this = $(this);
+
+        $wrapper.attr("data-loaded", "true");
+
+        var $visibles = $initial_wrapper.find('div.item[data-active="false"]');
+
+        if($visibles.length > 0 && presents.init_autoloader === "more") {
+
+            var counter = 1;
+
+            $visibles.each(function(){
+
+                if(counter > 9) return;
+
+                $(this).attr("data-active", "true");
+
+                counter++;
+
+            });
+
+            $visibles = $initial_wrapper.find('div.item[data-active="false"]');
+
+            if($visibles.length <= 0) {
+
+                presents.init_autoloader = "less";
+
+                $this.html("Скрыть");
+
+            }
+
+        } else {
+
+            $visibles = $($initial_wrapper.find('div.item[data-active="true"]').get().reverse());
+
+            var counter = 1;
+
+            var max_counter = 9;
+
+            if($visibles.length - max_counter < 9) {
+
+                max_counter = $visibles.length - 9;
+
+            }
+
+            $visibles.each(function(){
+
+                if(counter > max_counter) return;
+
+                $(this).attr("data-active", "false");
+
+                counter++;
+
+            });
+
+            $visibles = $initial_wrapper.find('div.item[data-active="true"]');
+
+            if($visibles.length <= 9) {
+
+                presents.init_autoloader = "more";
+
+                $this.html("Показать еще");
+
+            }
+
+
+        }
+
+        $wrapper.attr("data-loaded", "false");
+
+        return e.preventDefault();
+
+    });
 
 };
 
@@ -199,6 +355,8 @@ $(document).ready(function(){
         });
 
         presents.check_filters_on_load();
+
+        presents.show_more_initial();
 
     }
 

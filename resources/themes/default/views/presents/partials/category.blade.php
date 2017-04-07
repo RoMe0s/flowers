@@ -1,4 +1,4 @@
-<div class="row gifts-list" data-category="{{$category->id}}" @if(!isset($category_number) ||$category_number == 0) data-active="true" @else data-active="false" @endif>
+<div class="row gifts-list" data-category="{{$category->id}}" @if(isset($show) && $show === true) data-active="true" @else data-active="false" @endif>
     <p class="text-center text-danger" @if(!sizeof($category->products)) data-active="true" @else data-active="false" @endif>
         <i>По вашему запросу ничего не найдено</i>
     </p>
@@ -23,16 +23,7 @@
             <p class="text-center">
                 <span class="price">{{ $present->price }} руб.</span>
             </p>
-            <p class="text-center">
-                                        <span class="btn-group-vertical">
-                                            <button class="btn btn-purple-outline" onclick="Cart.addProduct('{{ $present->id }}', '{{ csrf_token() }}')">
-                                                <i class="fa fa-shopping-basket"></i> Добавить в корзину
-                                            </button>
-                                            <a class="btn btn-purple-outline" href="/api/cart/add/product?id={{ $present->id }}">
-                                                <i class="fa fa-shopping-basket"></i> Купить в один клик
-                                            </a>
-                                        </span>
-            </p>
+            @include('presents.partials.buy_buttons')
             <br>
         </div>
         @if($counter >= $page * 9)
