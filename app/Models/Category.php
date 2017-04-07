@@ -165,12 +165,20 @@ class Category extends Model implements MetaGettable
 
     }
 
-    public function sets() {
-        return $this->hasMany(Set::class);
-    }
-
     public function boxes() {
         return $this->hasMany(Box::class);
+    }
+
+    public function bouquets() {
+
+        return $this->hasMany(Bouquet::class)->with(['translations']);
+
+    }
+
+    public function visible_bouquets() {
+
+        return $this->bouquets()->visible();
+
     }
 
     /**

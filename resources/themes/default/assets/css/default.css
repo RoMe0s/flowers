@@ -1080,6 +1080,8 @@ a:focus, a:hover {
 
     padding: 0;
 
+    width: calc(25% - 10px);
+
 }
 
 /*.gifts div.selector-list ul li::after {*/
@@ -1173,6 +1175,8 @@ a:focus, a:hover {
 
     width: 100%;
 
+    color: #4b3970;
+
 }
 
 .gifts div.selector-list ul li a:first-child p {
@@ -1180,6 +1184,10 @@ a:focus, a:hover {
     display: none;
 
     vertical-align: middle;
+
+    padding: 0 5px;
+
+    background-color: rgba(234, 234, 234, 0.5);
 
 }
 

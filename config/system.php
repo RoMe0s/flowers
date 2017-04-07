@@ -18,7 +18,9 @@ return [
       'cart',
       'login',
       'reg',
-      'password-reset'
+      'password-reset',
+      'presents',
+      'flowers'
 
   ]
 ];

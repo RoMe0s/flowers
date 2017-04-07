@@ -55,10 +55,10 @@
         </div>
 
         <div class="col-sm-12 gifts-wrapper" data-loaded="false">
-            @include('presents.partials.init')
+            @include('single_page.partials.init')
             @if(sizeof($categories))
                 @foreach($categories as $category_number => $category)
-                   @include('presents.partials.category')
+                   @include('single_page.partials.category')
                 @endforeach
             @else
                 <p class="text-center text-danger">

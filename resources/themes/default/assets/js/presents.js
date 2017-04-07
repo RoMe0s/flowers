@@ -2,6 +2,8 @@ var presents = {};
 
 presents.init_autoloader = "more";
 
+presents.reload_url = window.location.pathname + '-reload';
+
 presents.real_reload = function(category) {
 
 
@@ -28,7 +30,7 @@ presents.real_reload = function(category) {
     });
 
     $.ajax({
-        url: '/presents-reload',
+        url: presents.reload_url,
         type: 'GET',
         data: {
             category: category,
@@ -304,11 +306,11 @@ $(document).ready(function(){
 
         presents.filter();
 
-        $('.gifts').find('.selector-list li[data-category]').on('click', function (e) {
+        $('.gifts').find('.selector-list li[data-category] .show-category').on('click', function (e) {
 
-            var $this = $(this),
-                state = $(this).attr("data-active"),
-                category = $(this).attr("data-category"),
+            var $this = $(this).closest('li'),
+                state = $this.attr("data-active"),
+                category = $this.attr("data-category"),
                 $wrapper = $('.gifts').find('.gifts-wrapper'),
                 $list = $('.gifts').find('.selector-list li[data-active="true"]');
 
@@ -321,7 +323,6 @@ $(document).ready(function(){
                 });
 
                 $this.attr('data-active', 'true');
-
 
             }
 

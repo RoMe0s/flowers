@@ -53,7 +53,13 @@ class Box extends Model
     }
 
     public function sets() {
-        return $this->hasMany(Set::class);
+        return $this->hasMany(Set::class)->with(['translations']);
+    }
+
+    public function visible_sets() {
+
+        return $this->sets()->visible();
+
     }
 
     public function size($separator = 'x') {

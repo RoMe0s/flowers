@@ -99,7 +99,7 @@ class Set extends Model implements MetaGettable
     }
 
     public function flowers() {
-        return $this->belongsToMany(Flower::class, 'sets_flowers')->with('translations');
+        return $this->belongsToMany(Flower::class, 'sets_flowers')->with(['translations']);
     }
 
     public function visible_flowers() {
@@ -107,7 +107,7 @@ class Set extends Model implements MetaGettable
     }
 
     public function box() {
-        return $this->belongsTo(Box::class)->with('translations');
+        return $this->belongsTo(Box::class)->with(['translations']);
     }
 
     public function category() {
@@ -142,4 +142,13 @@ class Set extends Model implements MetaGettable
         ];
 
     }
+
+
+    public function getShowName() {
+
+        return 'Состав: ' . implode(", ", $this->flowers->pluck('title')->all());
+
+    }
+
+
 }

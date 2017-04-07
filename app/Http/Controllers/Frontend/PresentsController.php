@@ -148,7 +148,7 @@ class PresentsController extends FrontendController
 
         session()->put('category_' . $request->get('category'), $page);
 
-        $html = view('presents.partials.category')->with(['page' => $page, 'category' => $category, 'type' => $type, 'show' => true])->render();
+        $html = view('single_page.partials.category')->with(['page' => $page, 'category' => $category, 'type' => $type, 'show' => true])->render();
 
         return ['html' => $html];
 

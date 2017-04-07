@@ -87,6 +87,16 @@ $router->group(
             $router->any('/subscription/{id}/pay', 'Frontend\OrderController@makeSubscription');
         });
 
+        //flowers
+        $router->get('/flowers', [
+            'as' => 'flowers',
+            'uses' => 'Frontend\FlowerController@index'
+        ]);
+        $router->get('/flowers-reload', [
+            'as' => 'flowers_reload',
+            'uses' => 'Frontend\FlowerController@reload'
+        ]);
+
         //presents
         $router->get('/presents', [
             'as' => 'presents',

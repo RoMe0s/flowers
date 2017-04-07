@@ -135,4 +135,10 @@ class Product extends Model implements MetaGettable
 
     }
 
+    public function getShowName() {
+
+        return $this->name . ' ' . ( !empty($this->size) )? '(' . $this->size . ')': '';
+
+    }
+
 }
