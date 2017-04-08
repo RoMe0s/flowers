@@ -1,7 +1,4 @@
 <div class="row gifts-list" data-category="init" data-active="true">
-    <p class="text-center text-danger" @if(!sizeof($init_collection)) data-active="true" @else data-active="false" @endif>
-        <i>По вашему запросу ничего не найдено</i>
-    </p>
     <p class="text-muted" @if(sizeof($init_collection)) data-active="true" @else data-active="false" @endif>
         Показано <span>9</span> из {{count($init_collection)}} подарков
     </p>

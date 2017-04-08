@@ -1306,3 +1306,15 @@ a:focus, a:hover {
     animation: fa-spin 2s infinite linear;
 
 }
+
+.breadcrumbs {
+
+    margin-bottom: 10px;
+
+}
+
+.breadcrumbs a:not([href]) {
+
+    color: #9370db;
+
+}

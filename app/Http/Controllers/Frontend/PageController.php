@@ -84,6 +84,9 @@ class PageController extends FrontendController
         if($model instanceof Page) {
             $view = $this->pageService->getPageTemplate($model);
         } else {
+
+            $this->categoryService->setBreadcrumbs($model, $this->breadcrumbs);
+
             $view = $this->categoryService->getView();
         }
 

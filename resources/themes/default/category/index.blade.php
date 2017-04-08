@@ -2,18 +2,33 @@
 
 @section('content')
 
+    <h1 class="text-center">
+        {!! $model->name !!}
+        <hr class="box">
+    </h1>
+    <br />
+    {!! $model->short_content !!}
+    <br/>
 
+    <section>
+        @if(sizeof($model->visible_children))
+            <div class="row">
+             @foreach($model->visible_children as $key => $visible_child)
+                     <div class="col-sm-4 col-xs-6">
+                         <a href="{!! $visible_child->getUrl() !!}">
+                             <div class="photo" style="background-image: url('{!! $visible_child->image ? create_thumbnail($visible_child->image, 350,  250) : "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=350&w=250" !!}');">
+                                 <div class="title">{!! $visible_child->name !!}</div>
+                             </div>
+                         </a>
+                     </div>
+                @endforeach
+            </div>
+        @endif
+        @include('partials.breadcrumbs')
+    </section>
     @section('category-content')
 
         <section>
-
-            <h1 class="text-center">
-                {!! $model->name !!}
-                <hr class="box">
-            </h1>
-            <br />
-            {!! $model->short_content !!}
-            <br/>
 
             @widget__text_widget(6)
 

@@ -70,20 +70,26 @@ class Category extends Model implements MetaGettable
 
         if($visible) {
 
-            while($category->visible_parent) {
+            while ($category->visible_parent) {
 
-                $parents[] = $category->visible_parent;
+                $parent = $category->visible_parent;
 
-                $category = $category->visible_parent;
+                $parents[] = $parent;
+
+                $category = $parent;
+
             }
 
         } else {
 
-            while($category->parent) {
+            while ($category->parent) {
 
-                $parents[] = $category->parent;
+                $parent = $category->parent;
 
-                $category = $category->parent;
+                $parents[] = $parent;
+
+                $category = $parent;
+
             }
 
         }
@@ -94,13 +100,25 @@ class Category extends Model implements MetaGettable
 
     public function children() {
 
-        return $this->hasOne(Category::class, 'parent_id')->with(['children', 'children.translations']);
+        return $this->hasMany(Category::class, 'parent_id')->with(['children', 'children.translations']);
 
     }
 
     public function visible_children() {
 
         return $this->children()->visible();
+
+    }
+
+    private function _recursiveWalk($category, &$result, $method) {
+
+        $result[] = $category;
+
+        foreach ($category->{$method} as $child) {
+
+            $this->_recursiveWalk($child, $result, $method);
+
+        }
 
     }
 
@@ -113,23 +131,11 @@ class Category extends Model implements MetaGettable
 
         if($visible) {
 
-            while ($category->visible_children) {
-
-                $children[] = $category->visible_children;
-
-                $category = $category->visible_children;
-
-            }
+            $this->_recursiveWalk($category, $children, 'visible_children');
 
         } else {
 
-            while ($category->children) {
-
-                    $children[] = $category->children;
-
-                    $category = $category->children;
-
-            }
+            $this->_recursiveWalk($category, $children, 'children');
 
         }
 

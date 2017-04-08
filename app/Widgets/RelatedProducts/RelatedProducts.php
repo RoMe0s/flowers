@@ -16,7 +16,7 @@ class RelatedProducts extends Widget
      *
      * @return $this
      */
-    public function index($category_id, $model = null, $count = null)
+    public function index($category_id, $model = null, $count = 12)
     {
         $current_id = null;
 
@@ -34,7 +34,7 @@ class RelatedProducts extends Widget
 
     }
 
-    private function _loadProducts($category_id, $current_id, $count = null) {
+    private function _loadProducts($category_id, $current_id, $count = 12) {
 
         if($category_id != -1) {
             $query = Product::whereHas('categories', function ($query) use ($category_id) {
@@ -57,10 +57,12 @@ class RelatedProducts extends Widget
             $query->where('id', '<>', $current_id);
         }
 
-        if(isset($count)) {
-            return $query->paginate($count);
-        }
+        return $query->limit($count)->get();
 
-        return $query->paginate(12);
+//        if(isset($count)) {
+//            return $query->paginate($count);
+//        }
+//
+//        return $query->paginate(12);
     }
 }

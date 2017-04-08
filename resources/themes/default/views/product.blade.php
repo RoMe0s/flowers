@@ -2,10 +2,7 @@
 
 @section('content')
     <section>
-    <div class="col-sm-12 breadcrumbs">
-        <a title="{{config('app.name')}}" href="{!! route('home') !!}">Главная</a>&nbsp;/&nbsp;
-        <a title="{{$category->name}}" href="{!! route('pages.show' ,['slug' => $category->slug]) !!}">{{$category->name}}</a>
-    </div>
+        @include('partials.breadcrumbs')
         <div class="product-layout">
             <div class="col-md-7 col-sm-12 text-center product-image-wrapper">
                 @if(isset($model->image) && $model->image != "")

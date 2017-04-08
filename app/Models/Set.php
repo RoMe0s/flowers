@@ -12,7 +12,7 @@ class Set extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
-    protected $with = ['images', 'translations'];
+    protected $with = ['images', 'translations', 'box', 'box.category'];
 
     public function images() {
         return $this->morphOne(Image::class, 'imagable');

@@ -12,7 +12,7 @@ class Bouquet extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
-    protected $with = ['images', 'translations'];
+    protected $with = ['images', 'translations', 'category'];
 
     public function images() {
         return $this->morphOne(Image::class, 'imagable');

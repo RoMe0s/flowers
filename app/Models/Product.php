@@ -12,7 +12,7 @@ class Product extends Model implements MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
-    protected $with = ['images', 'translations'];
+    protected $with = ['images', 'translations', 'category'];
 
     public function images() {
         return $this->morphOne(Image::class, 'imagable');
@@ -96,7 +96,7 @@ class Product extends Model implements MetaGettable
 
     public function getUrl()
     {
-        return route('product.show', ['category' => 'related-goods', 'slug' => $this->slug]);
+        return route('product.show', ['category' => $this->category->slug, 'slug' => $this->slug]);
     }
 
     public function categories() {
@@ -137,7 +137,7 @@ class Product extends Model implements MetaGettable
 
     public function getShowName() {
 
-        return $this->name . ' ' . ( !empty($this->size) )? '(' . $this->size . ')': '';
+        return $this->name . ' ' . ( !empty($this->size) ? '(' . $this->size . ')': '');
 
     }
 

@@ -2,13 +2,6 @@
 
 @section('category-content')
     <section>
-        <h1 class="text-center">
-            {!! $model->name !!}
-            <hr class="flower">
-        </h1>
-        <br />
-            {!! $model->short_content !!}
-        <br/>
         @if(!isset($bouquets) || !sizeof($bouquets))
             <p class="text-center">
                 <i>Букетов в продаже нет</i>

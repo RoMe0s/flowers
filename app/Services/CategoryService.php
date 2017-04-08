@@ -9,6 +9,7 @@
 namespace App\Services;
 use App\Models\Bouquet;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Set;
 
 
@@ -21,27 +22,43 @@ class CategoryService
 
     public function find($slug) {
 
-        $model =  Category::with(['translations'])->visible()->where('slug', $slug)->first();
+        $model =  Category::with(['translations', 'visible_children', 'visible_parent'])->visible()->where('slug', $slug)->first();
+
+        $category_ids = [$model->id];
+
+        foreach ($model->getChildren(true) as $child) {
+
+            $category_ids[] = $child->id;
+
+        }
 
         if($model) {
 
             switch ($model->type) {
                 case (string)Bouquet::class:
-                    $bouquets = Bouquet::with(['translations', 'flowers', 'visible_flowers'])
-                        ->where('category_id', $model->id)
+                    $bouquets = Bouquet::with(['translations', 'flowers', 'flowers'])
+                        ->whereIn('category_id', $category_ids)
                         ->visible();
                     $this->_addFilters($bouquets);
                     view()->share('bouquets', $bouquets->paginate(12));
                     $this->_view = 'bouquets';
                     break;
                 case (string)Set::class:
-                    $sets = Set::with(['translations', 'flowers', 'box', 'visible_flowers'])
+                    $sets = Set::with(['translations', 'flowers', 'box', 'flowers'])
                         ->visible()
-                        ->whereHas('box', function ($query) use ($model) {
-                        return $query->where('category_id', $model->id);
+                        ->whereHas('box', function ($query) use ($category_ids) {
+                        return $query->whereIn('category_id', $category_ids);
                     });
                     $this->_addFilters($sets);
                     view()->share('sets', $sets->paginate(12));
+                    break;
+                case (string)Product::class:
+                    $products = Product::with(['translations'])
+                        ->visible()
+                        ->whereIn('category_id', $category_ids);
+                        $this->_addFilters($products);
+                        view()->share('products', $products->paginate(12));
+                        $this->_view = "presents";
                     break;
                 default:
                     abort(404);
@@ -147,6 +164,23 @@ class CategoryService
 
     public function getView() {
         return $this->module . '.' . $this->_view;
+    }
+
+    public function setBreadcrumbs(Category $model, &$breadcrumbs) {
+
+        foreach($model->getParents(true) as $parent) {
+
+            $breadcrumbs[] = [
+                'name' => $parent->name,
+                'url' => $parent->getUrl()
+            ];
+
+        }
+
+        $breadcrumbs[] = [
+          'name' => $model->name
+        ];
+
     }
 
 }

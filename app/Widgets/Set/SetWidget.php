@@ -18,7 +18,7 @@ class SetWidget extends Widget
     {
 
 //        $sets = Cache::remember('random_sets', 5, function() use ($count) {
-            $sets = Set::visible()->with(['translations', 'visible_flowers', 'box', 'box.category'])->inRandomOrder();
+            $sets = Set::visible()->with(['translations', 'flowers', 'box', 'box.category'])->inRandomOrder();
 
                 if(isset($model) && $model instanceof Set) {
                     $sets = $sets->where('id', '<>', $model->id);

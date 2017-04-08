@@ -40,7 +40,12 @@ class PresentsController extends FrontendController
         $init_collection = collect();
 
         Category::visible()
-            ->with(['translations', 'visible_directProducts', 'visible_children', 'visible_children.visible_directProducts'])
+            ->with([
+                'translations',
+                'visible_directProducts',
+                'visible_children',
+                'visible_children.visible_directProducts'
+            ])
             ->has('visible_directProducts')
             ->whereNull('parent_id')
             ->where('type', (string)Product::class)
@@ -75,6 +80,8 @@ class PresentsController extends FrontendController
         $this->data('categories', $categories_data);
 
         $this->data('init_collection', $init_collection);
+
+        $this->data('page_type', 'presents');
 
         return $this->render($this->pageService->getPageTemplate($model));
 

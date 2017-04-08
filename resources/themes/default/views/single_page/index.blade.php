@@ -68,7 +68,11 @@
             <br />
         </div>
 
-        @widget__set(20)
+        @if(isset($page_type) && $page_type === 'presents')
+            @widget__set(20)
+        @else
+            @widget__related_products(-1, null, 20)
+        @endif
 
     </section>
 @endsection

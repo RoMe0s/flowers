@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Bouquet;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Set;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,12 +24,6 @@ class ProductController extends FrontendController
         $content = null;
 
         switch ($scategory) {
-            case 'related-goods':
-                $category = new Collection();
-                $category->name = 'Сопутсвующие товары';
-                $category->slug = $scategory;
-                $content = view('partials.content.product', compact('model'))->render();
-                break;
             case 'shares':
                 $category = new Collection();
                 $category->name = 'Акции';
@@ -36,11 +31,13 @@ class ProductController extends FrontendController
                 $content = view('partials.content.sale', compact('model'))->render();
                 break;
             default:
-                $category = Category::with('translations')->where('slug', $scategory)->first();
+                $category = Category::with(['translations', 'visible_parent'])->where('slug', $scategory)->first();
                 if($category->type == (string)Set::class) {
                     $content = view('partials.content.set', compact('model'))->render();
                 } elseif($category->type == (string)Bouquet::class) {
                     $content = view('partials.content.bouquet', compact('model'))->render();
+                } elseif($category->type == (string)Product::class) {
+                    $content = view('partials.content.product', compact('model'))->render();
                 }
                 break;
         }
@@ -49,11 +46,34 @@ class ProductController extends FrontendController
 
         $this->data('content', $content);
 
-        $this->data('category', $category);
-
         $this->fillMeta($model, $this->module);
+
+        $this->setBreadcrumbs($model, $category);
 
         return $this->render('product');
 
     }
+
+
+    public function setBreadcrumbs($model, $category) {
+
+        try {
+
+            foreach($category->getParents(true) as $parent) {
+
+                $this->breadcrumbs(
+                    $parent->name,
+                    $parent->getUrl()
+                );
+
+            }
+
+        } catch (\Exception $e) {}
+
+        $this->breadcrumbs($category->name, $category->getUrl());
+
+        $this->breadcrumbs($model->name);
+
+    }
+
 }
