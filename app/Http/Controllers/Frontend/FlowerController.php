@@ -99,9 +99,13 @@ class FlowerController extends FrontendController
 
                             session()->forget('category_' . $child->id);
 
+                            session()->forget('category_type_' . $child->id);
+
                         }
 
                         session()->forget('category_' . $category->id);
+
+                        session()->forget('category_type_' . $category->id);
 
                         $randomize = count($category->products) > 12 ? 12 : count($category->products);
 
@@ -235,13 +239,25 @@ class FlowerController extends FrontendController
 
         $old_page = session('category_' . $request->get('category'), null);
 
-        $type = "less";
+        $old_type = session('category_type_' . $request->get('category'), null);
 
-        if($page == 1 || (($page > $old_page || !$old_page) && count($category->products) > ($page * 9)) ) {
+        if(sizeof($filters) && $old_type && $old_page == $page) {
 
-            $type= "more";
+            $type = $old_type;
+
+        } else {
+
+            $type = "less";
+
+            if ($page == 1 || (($page >= $old_page || !$old_page) && count($category->products) > ($page * 9))) {
+
+                $type = "more";
+
+            }
 
         }
+
+        session()->put('category_type_' . $request->get('category'), $type);
 
         session()->put('category_' . $request->get('category'), $page);
 

@@ -101,9 +101,10 @@
             </div>
         </section>
 
-    @show
+        @widget__related_products($model->id)
+        <br/>
 
-    @widget__related_products($model->id)
+    @show
 
     @include('partials.individual-set')
 

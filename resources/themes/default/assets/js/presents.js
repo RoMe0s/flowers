@@ -288,13 +288,11 @@ presents.show_more_initial = function() {
         }
 
 
-        $visibles = $initial_wrapper.find('div.item[data-active="true"]');
+        $visibles = $initial_wrapper.find('div.item[data-active="true"]').length;
 
-        $this.find('span').html($visibles.length);
+        $initial_wrapper.find('p.text-muted span').html($visibles);
 
         $wrapper.attr("data-loaded", "false");
-
-        return e.preventDefault();
 
     });
 
@@ -323,6 +321,8 @@ $(document).ready(function(){
                 });
 
                 $this.attr('data-active', 'true');
+
+                $(document).find('.gifts .filters-block').find('select').find(':selected').removeAttr("selected");
 
             }
 

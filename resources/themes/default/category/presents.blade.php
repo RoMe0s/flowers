@@ -58,5 +58,10 @@
             <br>
             <div class="text-center">{{ $products->appends(request()->except('page'))->links() }}</div>
         @endif
+
+
+            @widget__set(20)
+            <br />
     </section>
+
 @endsection

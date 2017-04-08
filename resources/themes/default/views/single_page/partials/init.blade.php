@@ -1,6 +1,6 @@
 <div class="row gifts-list" data-category="init" data-active="true">
     <p class="text-muted" @if(sizeof($init_collection)) data-active="true" @else data-active="false" @endif>
-        Показано <span>9</span> из {{count($init_collection)}} подарков
+        Показано <span>{{count($init_collection) > 9 ? 9 : count($init_collection)}}</span> из {{count($init_collection)}} подарков
     </p>
     @php($counter = 1)
     @foreach($init_collection as $key => $present)

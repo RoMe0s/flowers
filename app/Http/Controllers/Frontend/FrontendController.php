@@ -61,7 +61,7 @@ class FrontendController extends BaseController
             $this->user = $user;
         }
 
-        $this->breadcrumbs(Config::get('app.name', ''), route('home'));
+        $this->breadcrumbs('Главная', route('home'));
 
         $this->fillThemeData();
     }

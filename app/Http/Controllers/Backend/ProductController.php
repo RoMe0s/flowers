@@ -75,13 +75,14 @@ class ProductController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Product::withTranslations()->joinTranslations('products', 'product_translations')->select(
+            $list = Product::with(['translations' ,'category'])->joinTranslations('products', 'product_translations')->select(
                 'products.id',
                 'product_translations.name',
                 'products.price',
                 'products.status',
                 'products.position',
-                'products.slug'
+                'products.slug',
+                'products.category_id'
             );
 
             return $dataTables = Datatables::of($list)
@@ -127,6 +128,8 @@ class ProductController extends BackendController
                 ->removeColumn('size')
                 ->removeColumn('translations')
                 ->removeColumn('images')
+                ->removeColumn('category')
+                ->removeColumn('category_id')
                 ->make();
         }
 

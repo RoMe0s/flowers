@@ -74,4 +74,7 @@
             <div class="text-center">{{ $bouquets->appends(request()->except('page'))->links() }}</div>
         @endif
     </section>
+
+    @widget__related_products($model->id)
+    <br />
 @endsection
