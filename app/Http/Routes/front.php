@@ -98,19 +98,13 @@ $router->group(
         ]);
 
         //presents
-        $router->get('/presents', [
+        $router->get('/related-goods', [
             'as' => 'presents',
             'uses' => 'Frontend\PresentsController@index'
         ]);
-        $router->get('/presents-reload', [
+        $router->get('/related-goods-reload', [
             'as' => 'presents_reload',
             'uses' => 'Frontend\PresentsController@reload'
-        ]);
-
-        //products
-        $router->get('/related-goods', [
-            'as' => 'products',
-            'uses' => 'Frontend\GoodsController@related'
         ]);
 
         //individual
@@ -182,7 +176,7 @@ $router->group(
             $router->get('password-reset', [
                 'as' => 'password.reset',
                 'uses' => 'Frontend\AuthController@getReset'
-            ]); //TODO: todo it
+            ]);
 //
             $router->post('password-reset', [
                 'as' => 'post.password.reset',

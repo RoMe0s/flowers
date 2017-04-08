@@ -13,7 +13,7 @@ class PresentsController extends FrontendController
 
     protected $pageService = null;
 
-    public $module = 'presents';
+    public $module = 'related-goods';
 
     function __construct(PageService $pageService)
     {

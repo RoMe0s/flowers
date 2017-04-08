@@ -19,7 +19,7 @@ return [
       'login',
       'reg',
       'password-reset',
-      'presents',
+      'related-goods',
       'flowers'
 
   ]
