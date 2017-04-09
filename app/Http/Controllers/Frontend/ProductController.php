@@ -63,14 +63,14 @@ class ProductController extends FrontendController
 
                 $this->breadcrumbs(
                     $parent->name,
-                    $parent->getUrl()
+                    $parent->slug
                 );
 
             }
 
         } catch (\Exception $e) {}
 
-        $this->breadcrumbs($category->name, $category->getUrl());
+        $this->breadcrumbs($category->name, $category->slug);
 
         $this->breadcrumbs($model->name);
 
