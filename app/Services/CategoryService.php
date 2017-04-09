@@ -172,7 +172,7 @@ class CategoryService
 
             $breadcrumbs[] = [
                 'name' => $parent->name,
-                'url' => $parent->getUrl()
+                'url' => route('pages.show', ['slug' => $parent->slug])
             ];
 
         }
