@@ -1,2 +1,24 @@
+User-agent: Yandex
+Disallow: /assets/*
+Disallow: /files/*
+Disallow: /graphics/*
+Disallow: /packages/*
+Disallow: /reports/*
+Host: flowersmoscow24.ru
+
+User-agent: Googlebot
+Disallow: /assets/*
+Disallow: /files/*
+Disallow: /graphics/*
+Disallow: /packages/*
+Disallow: /reports/*
+
 User-agent: *
-Disallow:
+Disallow: /assets/*
+Disallow: /files/*
+Disallow: /graphics/*
+Disallow: /packages/*
+Disallow: /reports/*
+
+
+Sitemap: https://flowersmoscow24.ru/sitemap.xml

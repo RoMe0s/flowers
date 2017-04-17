@@ -5,6 +5,8 @@ namespace App\Console;
 use App\Console\Commands\UpdateSearchIndex;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+/**commands**/
+use App\Console\Commands\SitemapGenerator;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,8 +15,9 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-    ];
+	protected $commands = [
+		SitemapGenerator::class
+	];
 
     /**
      * Define the application's command schedule.
@@ -25,5 +28,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+	    $schedule->command(SitemapGenerator::class)->daily();
     }
 }

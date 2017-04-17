@@ -24,6 +24,8 @@ class CategoryService
 
         $model =  Category::with(['translations', 'visible_children', 'visible_parent'])->visible()->where('slug', $slug)->first();
 
+        abort_if(!$model, 404);
+
         $category_ids = [$model->id];
 
         foreach ($model->getChildren(true) as $child) {
@@ -167,6 +169,23 @@ class CategoryService
     }
 
     public function setBreadcrumbs(Category $model, &$breadcrumbs) {
+
+        if($model->type === (string)Product::class) {
+
+            $breadcrumbs[] = [
+              'name' => 'Подарки',
+                'url' => route('presents')
+            ];
+
+        } else {
+
+
+            $breadcrumbs[] = [
+                'name' => 'Все цветы',
+                'url' => route('flowers')
+            ];
+
+        }
 
         foreach($model->getParents(true) as $parent) {
 

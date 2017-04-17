@@ -15,6 +15,9 @@ use Response;
 use App\Models\Set;
 use App\Models\Bouquet;
 use App\Models\Category;
+use File;
+use App\Classes\Sitemap;
+
 
 class ApiController extends Controller
 {
@@ -24,17 +27,10 @@ class ApiController extends Controller
     }
 
     public function marketYML() {
-        $sets = Set::with('category', 'translations')->visible()->get();
-        $bouquets = Bouquet::with('translations', 'category')->visible()->get();
-        $categories = Category::with('translations')->visible()->get();
 
-        $xml = view('yml', [
-            'sets' => $sets,
-            'bouquets' => $bouquets,
-            'categories' => $categories
-        ]);
-
-        return Response::make($xml, 200)->header('Content-Type', 'text/xml');
+	$sitemap = new Sitemap();
+	
+        return Response::make($sitemap->getMarketView(), 200)->header('Content-Type', 'text/xml');
     }
 
     public function feedbackStore(FeedbackRequest $request) {

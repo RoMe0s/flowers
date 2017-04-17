@@ -8,9 +8,6 @@
                     {!! $model->name !!}
                     <hr class="gift"/>
                 </h1>
-                <br />
-                {!! $model->getContent() !!}
-                <br />
             </div>
         </div>
                 <div class="selector-list row">
@@ -73,6 +70,10 @@
         @else
             @widget__related_products(-1, null, 20)
         @endif
+
+        <br />
+        {!! $model->getContent() !!}
+        <br />
 
     </section>
 @endsection

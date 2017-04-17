@@ -107,9 +107,9 @@ class FlowerController extends FrontendController
 
                         session()->forget('category_type_' . $category->id);
 
-                        $randomize = count($category->products) > 12 ? 12 : count($category->products);
+                        if(!sizeof($category->products)) continue;
 
-                        $init_collection = $init_collection->merge($category->products->random($randomize));
+                        $init_collection = $init_collection->merge($category->products);
 
                         $category->products = $category->products->sortBy('position');
 
@@ -124,6 +124,16 @@ class FlowerController extends FrontendController
                 }
 
             });
+
+        $randomize = count($init_collection) > 54 ? 54 : count($init_collection);
+
+        $init_collection = $init_collection->shuffle();
+
+        if(count($init_collection) > 1) {
+
+            $init_collection = $init_collection->slice(0, $randomize);
+
+        }
 
         $this->data('categories', $categories_data);
 

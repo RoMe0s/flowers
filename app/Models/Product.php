@@ -57,7 +57,9 @@ class Product extends Model implements MetaGettable
     ];
 
     public function scopeVisible($query) {
-        return $query->where('status', true);
+        return $query
+            ->has('category')
+            ->where('status', true);
     }
 
     public function scopePositionSorted($query, $type = 'ASC') {
@@ -96,7 +98,7 @@ class Product extends Model implements MetaGettable
 
     public function getUrl()
     {
-        return route('product.show', ['category' => $this->category->slug, 'slug' => $this->slug]);
+        return route('product.show', ['category' => isset($this->category->slug) ? $this->category->slug : '', 'slug' => $this->slug]);
     }
 
     public function categories() {

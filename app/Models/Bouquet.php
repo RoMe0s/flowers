@@ -57,7 +57,9 @@ class Bouquet extends Model implements MetaGettable
     ];
 
     public function scopeVisible($query) {
-        return $query->where('status', true);
+        return $query
+            ->has('category')
+            ->where('status', true);
     }
 
     public function scopePositionSorted($query, $type = 'ASC') {

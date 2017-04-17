@@ -123,14 +123,7 @@ class Page extends Eloquent implements FrontLink, MetaGettable
             return localize_url('/');
         }
 
-        $page = $this;
-
-        while ($page->parent) {
-            $page = $page->parent;
-            $url[] = $page->slug;
-        }
-
-        return localize_url(route('pages.show', array_reverse($url)));
+        return localize_url(route('pages.show', ['slug' => $this->slug]));
     }
 
     /**

@@ -18,9 +18,9 @@
         </delivery-options>
         <offers>
             @foreach($sets as $set)
-                <offer id="{{ $set->id }}" available="true">
+                <offer id="{{ $set->id }}" available="{!! $set->status ? 'true' : 'false' !!}">
                     <url>
-                        {!! url('/' . $set->category->slug . '?box=' . $set->box->id) !!}
+                        {!! $set->getUrl() !!}
                     </url>
                     <price>{{ $set->price }}</price>
                     <currencyId>RUR</currencyId>
@@ -36,8 +36,10 @@
             @endforeach
 
             @foreach($bouquets as $bouquet)
-                <offer id="{{ $bouquet->id }}" available="true">
-                    <url>{{ url($bouquet->category->slug) }}</url>
+                <offer id="{{ $bouquet->id }}" available="{!! $bouquet->status ? 'true' : 'false' !!}">
+		    <url>
+			{!! $bouquet->getUrl() !!}
+		    </url>
                     <price>{{ $bouquet->price }}</price>
                     <currencyId>RUR</currencyId>
                     <categoryId>{{ $bouquet->category->id }}</categoryId>
@@ -48,7 +50,21 @@
                     <sales_notes>Необходима предоплата 50%</sales_notes>
                     <age>0</age>
                 </offer>
-            @endforeach
+	    @endforeach
+
+	    @foreach($presents as $present)
+		<offer id="{{ $present->id }}" available="{!! $present->status ? 'true' : 'false' !!}">
+	            <price>{{ $present->price }}</price>
+                    <currencyId>RUR</currencyId>
+                    <categoryId>{{ $present->category->id }}</categoryId>
+                    <market_category>2061</market_category>
+                    <market_category>2124</market_category>
+                    <picture>{{ url('') . $present->image }}</picture>
+                    <name>{{ $present->name }}</name>
+                    <sales_notes>Необходима предоплата 50%</sales_notes>
+		    <age>0</age>
+		</offer>	    
+	    @endforeach
         </offers>
     </shop>
 </yml_catalog>

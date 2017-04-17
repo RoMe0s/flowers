@@ -46,7 +46,6 @@ class PresentsController extends FrontendController
                 'visible_children',
                 'visible_children.visible_directProducts'
             ])
-            ->has('visible_directProducts')
             ->whereNull('parent_id')
             ->where('type', (string)Product::class)
             ->chunk(100, function($categories) use (&$categories_data, &$init_collection) {
@@ -69,9 +68,9 @@ class PresentsController extends FrontendController
 
                     session()->forget('category_type_' . $category->id);
 
-                    $randomize = count($category->products) > 54 ? 54 : count($category->products);
+                    if(!sizeof($category->products)) continue;
 
-                    $init_collection = $init_collection->merge($category->products->random($randomize));
+                    $init_collection = $init_collection->merge($category->products);
 
                     $category->products = $category->products->sortBy('position');
 
@@ -80,6 +79,16 @@ class PresentsController extends FrontendController
                 }
 
             });
+
+        $randomize = count($init_collection) > 54 ? 54 : count($init_collection);
+
+        $init_collection = $init_collection->shuffle();
+
+        if(count($init_collection) > 1) {
+
+            $init_collection = $init_collection->slice(0, $randomize);
+
+        }
 
         $this->data('categories', $categories_data);
 
@@ -102,7 +111,6 @@ class PresentsController extends FrontendController
         Category::visible()
             ->where('id', $request->get('category'))
             ->with(['translations', 'visible_directProducts', 'visible_children', 'visible_children.visible_directProducts'])
-            ->has('visible_directProducts')
             ->whereNull('parent_id')
             ->where('type', (string)Product::class)
             ->chunk(100, function($categories_data) use (&$category, $filters, $page) {
