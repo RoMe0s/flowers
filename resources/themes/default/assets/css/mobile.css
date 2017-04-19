@@ -144,19 +144,25 @@
     }
 
     .photo .layout {
+        visibility: visible;
         line-height: 150px;
     }
 
     .photo .layout p {
         font-size: 12px;
-        margin: 0 5px;
     }
 
-    .photo .title {
+    .photo .layout p i {
+
+        font-size: 14px;
+
+    }
+
+    .photo .title, .photo .title span {
         position: absolute;
         bottom: 0;
         left: 0;
-        font-size: 12px;
+        font-size: 11px;
         width: 100%;
         text-align: center;
     }
@@ -183,7 +189,7 @@
 
     }
 
-    .gifts div.selector-list ul li a:first-child {
+    .gifts div.selector-list ul li a:not(.show-category) {
 
         height: 97px;
 
@@ -193,13 +199,13 @@
 
     }
 
-    .gifts div.selector-list ul li a:first-child p {
+    .gifts div.selector-list ul li a:not(.show-category) p {
 
         display: table-cell;
 
     }
 
-    .gifts div.selector-list ul li a:last-child {
+    .gifts div.selector-list ul li a.show-category {
 
         height: 42px;
 
@@ -229,6 +235,12 @@
 
     }
 
+    .items-list .item {
+
+        padding: 0 5px !important;
+
+    }
+
     .gifts-wrapper .text-muted {
 
         margin-left: 5px;
@@ -239,6 +251,24 @@
 }
 
 @media (min-width: 768px) and (max-width: 1071px) {
+
+    .photo .layout {
+
+        visibility: visible;
+
+    }
+
+    .photo .layout p {
+
+        font-size: 13px;
+
+    }
+
+    .photo .layout p i {
+
+        font-size: 16px;
+
+    }
 
     .main-section h1.main-h1 {
 
@@ -311,13 +341,13 @@
 
     }
 
-    .gifts div.selector-list ul li a:first-child:hover p {
+    .gifts div.selector-list ul li a:not(.show-category):hover p {
 
         display: table-cell;
 
     }
 
-    .gifts div.selector-list ul li:hover a:last-child {
+    .gifts div.selector-list ul li:hover a.show-category {
 
         background-color: #4b3970;
 

@@ -455,7 +455,7 @@ main .bullets h4 {
 
 .photo .layout {
     visibility: hidden;
-    background: rgba(0, 0, 0, 0.3);
+   /*background: rgba(0, 0, 0, 0.3);*/
     width: 100%;
     height: 100%;
     line-height: 250px;
@@ -499,18 +499,58 @@ main .bullets h4 {
 }
 
 .photo .layout p {
+    background: rgba(0, 0, 0, 0.5);
     display: inline-block;
     vertical-align: middle;
     line-height: 1.25;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 10px;
+    position: relative;
+    font-size: 15px;
+}
+
+.photo .layout p span {
+
+    padding-left: 5px;
+
+}
+
+.photo .layout p i {
+
+    font-size: 18px;
+
 }
 
 .photo .title {
-    display: inline-block;
+    /*display: inline-block;*/
+    /*background: rgba(255, 255, 255, 0.8);*/
+    /*text-transform: uppercase;*/
+    /*font-weight: bold;*/
+    /*margin-top: 210px;*/
+    /*padding: 10px;*/
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+}
+
+.photo .title span {
+
     background: rgba(255, 255, 255, 0.8);
     text-transform: uppercase;
     font-weight: bold;
-    margin-top: 200px;
     padding: 10px;
+
+}
+
+.photo img {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
 }
 
 .price {
@@ -778,10 +818,6 @@ div.product-table {
         line-height: 1 !important;
     }
 
-    .photo .layout {
-        display: none !important;
-    }
-
 }
 
 @media screen and (max-width: 540px) {
@@ -789,6 +825,7 @@ div.product-table {
     .product-image-wrapper .photo {
         min-height:  inherit !important;
         height: 250px;
+        line-height: 250px;
     }
 
     .product-image-wrapper .photo .layout {
@@ -1084,6 +1121,9 @@ a:focus, a:hover {
 
 }
 
+.gifts div.selector-list ul li img {
+    vertical-align: inherit;
+}
 /*.gifts div.selector-list ul li::after {*/
 
     /*display: none;*/
@@ -1141,6 +1181,8 @@ a:focus, a:hover {
 
 .gifts div.selector-list ul li a {
 
+    position: absolute;
+
     display: block;
 
     /*padding: 3px 0;*/
@@ -1153,6 +1195,8 @@ a:focus, a:hover {
 
     color: #9370db;
 
+    left: 0;
+
 }
 
 .gifts div.selector-list ul li a p {
@@ -1161,7 +1205,9 @@ a:focus, a:hover {
 
 }
 
-.gifts div.selector-list ul li a:first-child {
+.gifts div.selector-list ul li a:not(.show-category) {
+
+    top: 0;
 
     line-height: 1;
 
@@ -1179,7 +1225,7 @@ a:focus, a:hover {
 
 }
 
-.gifts div.selector-list ul li a:first-child p {
+.gifts div.selector-list ul li a:not(.show-category) p {
 
     display: none;
 
@@ -1191,7 +1237,7 @@ a:focus, a:hover {
 
 }
 
-.gifts div.selector-list ul li a:last-child {
+.gifts div.selector-list ul li a.show-category {
 
     height: 47px;
 
@@ -1207,9 +1253,11 @@ a:focus, a:hover {
 
     color: white;
 
+    bottom: 0;
+
 }
 
-.gifts div.selector-list ul li a:last-child p {
+.gifts div.selector-list ul li a.show-category p {
 
     display: table-cell;
 
@@ -1255,7 +1303,7 @@ a:focus, a:hover {
     border-color: #4b3970;
 }
 
-.gifts .selector-list ul li[data-active="true"] a:last-child {
+.gifts .selector-list ul li[data-active="true"] a.show-category {
 
     background-color: #4b3970;
 

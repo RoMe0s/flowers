@@ -26,18 +26,20 @@
 
             <br>
 
-            <div class="row">
-                <?php $i = 0; ?>
+            <div class="row items-list">
+                {{--@php($i = 0)--}}
 
                 @foreach($bouquets as $bouquet)
-                    @if($i % 4 == 0 && $i != 0) {!! '</div><br><div class="row">' !!} @endif
+                    {{--@if($i % 4 == 0 && $i != 0) {!! '</div><br><div class="row">' !!} @endif--}}
 
-                    <div class="col-lg-3 col-sm-3 col-xs-6">
+                    <div class="col-lg-4 col-sm-4 col-xs-6 item">
                         <a href="{!! $bouquet->getUrl() !!}" title="{!! $bouquet->name !!}">
-                            <div class="photo" style="background-image: url('{{ $bouquet->image ? create_thumbnail($bouquet->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' }}');">
+                            <div class="photo">
+                                <img src="{!! $bouquet->image ? create_thumbnail($bouquet->image, 350, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=350&w=250' !!}" alt="{!! $bouquet->name !!}" />
                                 <div class="layout">
                                     <p>
-                                        Состав: {{ implode(", ", $bouquet->flowers->pluck('title')->all()) }}
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                        <span>Подробнее</span>
                                     </p>
                                 </div>
                             </div>
@@ -65,7 +67,7 @@
                         </p>
                     </div>
 
-                    <?php $i++; ?>
+                   {{--@php($i++)--}}
                 @endforeach
             </div>
 

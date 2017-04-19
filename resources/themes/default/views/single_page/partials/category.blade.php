@@ -9,9 +9,13 @@
     @foreach($category->products as $present)
         <div class="col-md-4 col-sm-6 col-xs-6">
             <a href="{{ $present->getUrl() }}" title="{{$present->getShowName()}}">
-                <div class="photo" style="background-image: url('{{ $present->image ? create_thumbnail($present->image, 350, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=350&w=250' }}');">
+                <div class="photo">
+                    <img src="{!! $present->image ? create_thumbnail($present->image, 350, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=350&w=250' !!}" alt="{!! $present->getShowName() !!}" />
                     <div class="layout">
-                        <p>{{$present->getShowName()}}</p>
+                        <p>
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <span>Подробнее</span>
+                        </p>
                     </div>
                 </div>
             </a>

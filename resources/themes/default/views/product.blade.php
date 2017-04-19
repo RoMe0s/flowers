@@ -8,10 +8,12 @@
                 @if(isset($model->image) && $model->image != "")
                     <div class="product-image">
                         <a href="{!! $model->image !!}" title="{{$model->name}}" data-lightbox="product">
-                            <div class="photo" style="background-image: url('{{ $model->image ? create_thumbnail($model->image, 650, 600) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=550&w=500' }}');">
+                            <div class="photo">
+                                <img src="{!! $model->image ? create_thumbnail($model->image, 650, 600) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=550&w=500' !!}" alt="{!! $model->name !!}" />
                                 <div class="layout">
                                     <p>
-                                        {{$model->name}}
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <span>посмотреть</span>
                                     </p>
                                 </div>
                             </div>

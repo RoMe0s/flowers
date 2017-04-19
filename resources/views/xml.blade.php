@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 @foreach($priority_groups as $priority => $priority_group)
 	@foreach($priority_group as $item)
 		@if(is_array($item))
-			<?php
+			<?php try {
 				$exploded_slug = explode('/', str_replace(url(''), '', $item['url']));
 				$slug = array_pop($exploded_slug);
 				$slug = empty($slug) ? 'home' : $slug;
@@ -14,7 +14,7 @@
 					{{ $item['url'] }}
 				</loc>
 				<lastmod>
-					{!! isset($page->date) ? $page->date : \Carbon\Carbon::now()->startOfDay() !!}
+					{!! isset($page->date) ? \Carbon\Carbon::parse($page->date)->toW3cString() : \Carbon\Carbon::now()->startOfDay()->toW3cString() !!}
 				</lastmod>
 				<priority>
 					{{ $priority }}
@@ -25,17 +25,19 @@
 			</url>
 			<?php
 				unset($pages[$slug]);
+				} catch (Exception $e) { continue; }
 			?>
 		@endif
 	@endforeach
 @endforeach
 @foreach($pages as $page)
+            <?php try { ?>
 		<url>
 			<loc>
 				{{ $page->getUrl() }}
 			</loc>
 			<lastmod>
-				{!! isset($page->date) ? $page->date: \Carbon\Carbon::now()->startOfDay() !!}
+				{!! isset($page->date) ? \Carbon\Carbon::parse($page->date)->toW3cString(): \Carbon\Carbon::now()->startOfDay()->toW3cString() !!}
 			</lastmod>
 			<priority>
 				{!! $priority_groups['page']['priority'] !!}				
@@ -44,14 +46,18 @@
 				{!! $priority_groups['page']['freq']  !!}
 			</changefreq>
 		</url>
+        <?php
+        } catch (Exception $e) { continue; }
+        ?>
 @endforeach
 @foreach($categories as $category)
+        <?php try { ?>
 	<url>
 		<loc>
 			{!! $category->getUrl() !!}
 		</loc>
 		<lastmod>
-			{!! \Carbon\Carbon::now()->startOfDay() !!}
+			{!! \Carbon\Carbon::now()->startOfDay()->toW3cString() !!}
 		</lastmod>
 		<priority>
 			{!! $priority_groups['category']['priority'] !!}
@@ -60,14 +66,18 @@
 			{!! $priority_groups['category']['freq']  !!}
 		</changefreq>
 	</url>
+            <?php
+            } catch (Exception $e) { continue; }
+            ?>
 @endforeach
 	@foreach($sets as $product)
+        <?php try { ?>
 		<url>
 			<loc>
 				{!! $product->getUrl() !!}
 			</loc>
 			<lastmod>
-				{!! isset($product->updated_at) ? $product->updated_at : (isset($product->created_at) ? $product->created_at : \Carbon\Carbon::now()->startOfDay()) !!}
+				{!! isset($product->updated_at) ? \Carbon\Carbon::parse($product->updated_at)->toW3cString() : (isset($product->created_at) ? \Carbon\Carbon::parse($product->created_at)->toW3cString() : \Carbon\Carbon::now()->startOfDay()->toW3cString()) !!}
 			</lastmod>
 			<priority>
 				{!! $priority_groups['product']['priority'] !!}
@@ -76,14 +86,18 @@
 				{!! $priority_groups['product']['freq']  !!}
 			</changefreq>
 		</url>
+        <?php
+        } catch (Exception $e) { continue; }
+        ?>
 	@endforeach
 	@foreach($bouquets as $product)
+        <?php try { ?>
 		<url>
 			<loc>
 				{!! $product->getUrl() !!}
 			</loc>
 			<lastmod>
-				{!! isset($product->updated_at) ? $product->updated_at : (isset($product->created_at) ? $product->created_at : \Carbon\Carbon::now()->startOfDay()) !!}
+				{!! isset($product->updated_at) ? \Carbon\Carbon::parse($product->updated_at)->toW3cString() : (isset($product->created_at) ? \Carbon\Carbon::parse($product->created_at)->toW3cString() : \Carbon\Carbon::now()->startOfDay()->toW3cString()) !!}
 			</lastmod>
 			<priority>
 				{!! $priority_groups['product']['priority'] !!}
@@ -92,14 +106,18 @@
 				{!! $priority_groups['product']['freq']  !!}
 			</changefreq>
 		</url>
+            <?php
+            } catch (Exception $e) { continue; }
+            ?>
 	@endforeach
 	@foreach($presents as $product)
+        <?php try { ?>
 		<url>
 			<loc>
 				{!! $product->getUrl() !!}
 			</loc>
 			<lastmod>
-				{!! isset($product->updated_at) ? $product->updated_at : (isset($product->created_at) ? $product->created_at : \Carbon\Carbon::now()->startOfDay()) !!}
+				{!! isset($product->updated_at) ? \Carbon\Carbon::parse($product->updated_at)->toW3cString() : (isset($product->created_at) ? \Carbon\Carbon::parse($product->created_at)->toW3cString() : \Carbon\Carbon::now()->startOfDay()->toW3cString()) !!}
 			</lastmod>
 			<priority>
 				{!! $priority_groups['product']['priority'] !!}
@@ -108,5 +126,8 @@
 				{!! $priority_groups['product']['freq']  !!}
 			</changefreq>
 		</url>
+        <?php
+        } catch (Exception $e) { continue; }
+        ?>
 	@endforeach
 </urlset>

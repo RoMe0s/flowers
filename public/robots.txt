@@ -4,7 +4,7 @@ Disallow: /files/*
 Disallow: /graphics/*
 Disallow: /packages/*
 Disallow: /reports/*
-Host: flowersmoscow24.ru
+Host: https://flowersmoscow24.ru
 
 User-agent: Googlebot
 Disallow: /assets/*
@@ -12,6 +12,12 @@ Disallow: /files/*
 Disallow: /graphics/*
 Disallow: /packages/*
 Disallow: /reports/*
+
+User-agent: AdsBot-Google
+Disallow:
+
+User-agent: Googlebot-Image
+Disallow:
 
 User-agent: *
 Disallow: /assets/*
