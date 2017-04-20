@@ -146,10 +146,15 @@
     .photo .layout {
         visibility: visible;
         line-height: 150px;
+        padding: 0;
     }
 
     .photo .layout p {
+        padding: 10px 20px;
         font-size: 12px;
+        vertical-align: bottom;
+        width: 100%;
+        border-radius: 0;
     }
 
     .photo .layout p i {
@@ -255,12 +260,17 @@
     .photo .layout {
 
         visibility: visible;
+        padding: 0;
 
     }
 
     .photo .layout p {
 
+        padding: 10px 20px;
         font-size: 13px;
+        vertical-align: bottom;
+        width: 100%;
+        border-radius: 0;
 
     }
 

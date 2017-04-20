@@ -38,16 +38,14 @@ class CategoryService
 
             switch ($model->type) {
                 case (string)Bouquet::class:
-                    $bouquets = Bouquet::with(['translations', 'flowers', 'flowers'])
-                        ->whereIn('category_id', $category_ids)
+                    $bouquets = Bouquet::with(['visible_flowers'])->whereIn('category_id', $category_ids)
                         ->visible();
                     $this->_addFilters($bouquets);
                     view()->share('bouquets', $bouquets->paginate(12));
                     $this->_view = 'bouquets';
                     break;
                 case (string)Set::class:
-                    $sets = Set::with(['translations', 'flowers', 'box', 'flowers'])
-                        ->visible()
+                    $sets = Set::with(['visible_flowers'])->visible()
                         ->whereHas('box', function ($query) use ($category_ids) {
                         return $query->whereIn('category_id', $category_ids);
                     });

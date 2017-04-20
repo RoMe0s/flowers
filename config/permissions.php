@@ -56,6 +56,11 @@ return array (
     'textwidget.write',
     'textwidget.delete',
 
+    'productable.create',
+    'productable.read',
+    'productable.write',
+    'productable.delete',
+
     'variable.value.read',
     'variable.value.write',
     'variable.read',

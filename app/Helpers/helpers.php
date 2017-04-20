@@ -653,7 +653,7 @@ if(! function_exists('find_product')) {
 
             default:
 
-                $model = \App\Models\Set::with(['translations', 'box', 'box.category', 'flowers'])->whereHas('box', function ($query) use ($category) {
+                $model = \App\Models\Set::with(['translations', 'box', 'box.category', 'flowers', 'flowers.translations'])->whereHas('box', function ($query) use ($category) {
                     return $query->whereHas('category', function($query) use ($category) {
                        return $query->where('slug', $category);
                     });
@@ -661,7 +661,7 @@ if(! function_exists('find_product')) {
 
                 if($model) return $model;
 
-                $model = \App\Models\Bouquet::with(['translations', 'flowers', 'category'])->whereHas('category', function ($query) use ($category) {
+                $model = \App\Models\Bouquet::with(['translations', 'flowers', 'flowers.translations', 'category'])->whereHas('category', function ($query) use ($category) {
                     return $query->where('slug', $category);
                 })->visible()->whereSlug($slug)->first();
 

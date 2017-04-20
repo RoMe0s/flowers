@@ -11,7 +11,7 @@
     </p>
 @else
         {{--@php($counter = 0)--}}
-        <div class="slick row">
+        <div class="@if(!isset($static) || !$static) slick @endif row">
             @foreach($sets as $set)
                 {{--@if($counter == 0) <div class="row"> @endif--}}
                 <div class="col-md-3 col-sm-6">
@@ -36,7 +36,7 @@
                         <span class="price">{!! $set->price !!} руб.</span>
                     </p>
                     <p class="text-center">
-                        @if($set->hasInStock())
+                        @if($set instanceof \App\Models\Product || $set->hasInStock())
                             <span class="btn-group-vertical">
                                 <button class="btn btn-purple-outline" onclick="Cart.addSet('{!! $set->id !!}', '{!! csrf_token() !!}')">
                                     <i class="fa fa-shopping-basket"></i> Добавить в корзину

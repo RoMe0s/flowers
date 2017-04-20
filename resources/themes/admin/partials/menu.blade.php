@@ -65,7 +65,26 @@
                         @endif
                     </a>
                 </li>
-            @endif
+	    @endif
+
+	     @if ($user->hasAccess('productable.read'))
+                <li class="{!! active_class('admin.productable*') !!}">
+                    <a href="{!! route('admin.productable.index') !!}">
+                        <i class="fa fa-bookmark-o"></i>
+                        <span>@lang('labels.productables')</span>
+
+                        @if ($user->hasAccess('productable.create'))
+                            <small class="label create-label pull-right bg-green"
+                                   title="@lang('labels.add_productable')"
+                                   data-href="{!! route('admin.productable.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+	    @endif
+
+
 
             @if ($user->hasAccess('variablevalue.read'))
                 <li class="{!! active_class('admin.variable*') !!}">
@@ -194,7 +213,7 @@
             @endif
 
             @if ($user->hasAccess('product.read'))
-                <li class="{!! active_class('admin.product*') !!}">
+                <li class="{!! active_class('admin.product.*') !!}">
                     <a href="{!! route('admin.product.index') !!}">
                         <i class="fa fa-product-hunt"></i>
                         <span>@lang('labels.products')</span>

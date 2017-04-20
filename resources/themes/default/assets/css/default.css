@@ -503,12 +503,13 @@ main .bullets h4 {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.25;
-    padding: 10px 20px;
+    padding: 15px 20px;
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 10px;
     position: relative;
-    font-size: 15px;
+    font-size: 20px;
+    margin: 0;
 }
 
 .photo .layout p span {
@@ -519,7 +520,7 @@ main .bullets h4 {
 
 .photo .layout p i {
 
-    font-size: 18px;
+    font-size: 24px;
 
 }
 

@@ -471,6 +471,14 @@ return array (
     'vip' => 'VIP',
     'client' => 'Клиент',
 
-    'content_two' => 'Вторая часть контента'
+    'content_two' => 'Вторая часть контента',
+
+
+    'productable' => 'Виджет "Хиты продаж"',
+    'productables' => 'Элем. "Хитов продаж"',
+    'add_productable' => 'Добавить элем. к виджету "Хиты продаж"',
+    'productable_list' => 'Список элем. виджета "Хиты продаж"',
+    'productable_create' => 'Добавление элемента',
+    'productable_editing' => 'Редактирование элемента'
 
 );

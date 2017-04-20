@@ -24,7 +24,7 @@
                                     <div class="layout">
                                         <p>
                                             <i class="fa fa-search"></i>
-                                            <span>посмотреть</span>
+                                            <span>смотреть</span>
                                         </p>
                                     </div>
                                 </div>

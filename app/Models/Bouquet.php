@@ -102,7 +102,7 @@ class Bouquet extends Model implements MetaGettable
     }
 
     public function flowers() {
-        return $this->belongsToMany(Flower::class, 'bouquets_flowers')->with('translations');
+        return $this->belongsToMany(Flower::class, 'bouquets_flowers');
     }
 
     public function visible_flowers() {

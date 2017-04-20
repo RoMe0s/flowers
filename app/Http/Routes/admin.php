@@ -144,6 +144,17 @@ $router->group(
                 );
                 $router->resource('set', 'Backend\SetController');
 
+                 $router->post(
+                        'productable/{id}/ajax_field',
+                        [
+                            'middleware' => ['ajax'],
+                            'as'         => 'admin.productable.ajax_field',
+                            'uses'       => 'Backend\ProductableController@ajaxFieldChange',
+                        ]
+                 );
+                $router->get('productable/load', 'Backend\ProductableController@ajaxLoad');
+                $router->resource('productable', 'Backend\ProductableController');
+
                 //orders
                 $router->post(
                     'order/{id}/ajax_field',
