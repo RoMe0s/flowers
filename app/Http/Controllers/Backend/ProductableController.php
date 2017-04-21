@@ -75,16 +75,24 @@ class ProductableController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Productable::select(
+            $list = Productable::with(['productable'])->select(
                 'id',
-		'productable_type',
-		'status',
-		'position'
+                'productable_id',
+                'productable_type',
+                'status',
+                'position'
             );
 
             return $dataTables = Datatables::of($list)
                 ->filterColumn('productables.id', 'where', 'productables.id', '=', '$1')
                 ->filterColumn('productable_type', 'where', 'productable_type', 'LIKE', '%$1%')
+                ->editColumn('productable_id',
+                    function($model) {
+
+                        return '<img style="max-width: 75px; max-height: 75px;" src="' . $model->productable->image . '"/>';
+
+                    }
+                )
                 ->editColumn(
                     'productable_type',
                     function ($model) {
@@ -123,6 +131,7 @@ class ProductableController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
+                ->removeColumn('productable')
                 ->make();
         }
 
