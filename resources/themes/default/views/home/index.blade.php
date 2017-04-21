@@ -7,7 +7,8 @@
 
         @widget__category()
 
-        @widget__set(20)
+        @widget__hits()
+        <br />
 
     </section>
 
