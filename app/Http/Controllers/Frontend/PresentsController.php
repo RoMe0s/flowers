@@ -52,7 +52,7 @@ class PresentsController extends FrontendController
 
                 foreach ($categories as $category) {
 
-                    $category->products = $category->visible_directProducts;
+                    $category->products = collect();
 
                     foreach($category->getChildren(true) as $child) {
 
@@ -117,7 +117,7 @@ class PresentsController extends FrontendController
 
                     foreach($categories_data as $category_data) {
 
-                        $category_data->products = $category_data->visible_directProducts;
+                        $category_data->products = collect();
 
                         foreach ($category_data->getChildren(true) as $child) {
 

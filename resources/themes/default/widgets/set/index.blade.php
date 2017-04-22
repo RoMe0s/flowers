@@ -17,7 +17,7 @@
                 <div @if(!isset($static) || !$static) class="col-md-3 col-sm-6" @else class="col-md-4 col-sm-6 col-xs-6 item" @endif>
                     <a href="{!! $set->getUrl() !!}" title="{!! $set->name !!}">
                         <div class="photo">
-                            <img src="{!! $set->image ? create_thumbnail($set->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=150&w=150' !!}" alt="{{ $set->name }}" />
+                            <img src="{!! $set->image ? create_thumbnail($set->image, 320, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=320&w=250' !!}" alt="{{ $set->name }}" />
                             <div class="layout">
                                 <p>
                                     <i class="fa fa-eye" aria-hidden="true"></i>
@@ -35,20 +35,13 @@
                     <p class="text-center">
                         <span class="price">{!! $set->price !!} руб.</span>
                     </p>
-                    <p class="text-center">
-                        @if($set instanceof \App\Models\Product || $set->hasInStock())
-                            <span class="btn-group-vertical">
-                                <button class="btn btn-purple-outline" onclick="Cart.addSet('{!! $set->id !!}', '{!! csrf_token() !!}')">
-                                    <i class="fa fa-shopping-basket"></i> Добавить в корзину
-                                </button>
-                                <a class="btn btn-purple-outline" href="/api/cart/add/set?id={!! $set->id !!}">
-                                    <i class="fa fa-shopping-basket"></i> Купить в один клик
-                                </a>
-                            </span>
-                        @else
-                            <span class="label label-danger">Нет в наличии</span>
-                        @endif
-                    </p>
+                    @if($set instanceof \App\Models\Product)
+                        @include('partials.content.product', ['model' => $set])
+                    @elseif($set instanceof \App\Models\Set)
+                        @include('partials.content.set', ['model' => $set])
+                    @elseif($set instanceof \App\Models\Bouquet)
+                        @include('partials.content.bouquet', ['model' => $set])
+                    @endif
                 </div>
                 {{--@php($counter++)--}}
                 {{--@if($counter == 4) </div> @php($counter = 0) @endif--}}

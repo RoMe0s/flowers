@@ -5,7 +5,9 @@
 
         <h1 class="text-right main-h1">Доставка цветов по Москве</h1>
 
-        @widget__category()
+        {{--@widget__category()--}}
+
+        @widget__mainpage_menu()
 
         @widget__hits()
         <br />
@@ -34,5 +36,40 @@
     <br>
 
     {!! $model->content !!}
+
+@endsection
+
+@section('scripts')
+    @parent
+    <script src="{!! asset('assets/components/sticky-kit/jquery.sticky-kit.min.js') !!}"></script>
+    <script src="{!! Theme::asset('js/sticky.js') !!}"></script>
+
+    <script>
+/*        function openNav() {
+            document.getElementById("mobile-categories").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mobile-categories").style.width = "0";
+        }
+
+        $('.mobile-button').stick_in_parent({offset_top: 57});*/
+
+        function collapseCategoriesList() {
+
+            var $categories_list = $('.mainpage_menu').find('.sidebar');
+
+            if(!$categories_list.is(':visible')) {
+
+                $categories_list.show("slow");
+
+            } else {
+
+                $categories_list.hide("slow");
+
+            }
+
+        }
+    </script>
 
 @endsection

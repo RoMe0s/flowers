@@ -253,6 +253,63 @@
 
     }
 
+    .mainpage_menu .categories .category h2 {
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+    }
+
+    .mainpage_menu .categories .category h2 hr::after {
+
+        font-size: 20px;
+
+        top: -10px;
+
+    }
+
+    .mainpage_menu .sidebar {
+
+        display: none;
+
+    }
+
+    .mainpage_menu .mobile-button {
+
+        display: block;
+
+    }
+
+/*    #mobile-categories {
+
+        display: block;
+
+    }*/
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .mainpage_menu .sidebar {
+
+        display: none;
+
+    }
+
+    .mainpage_menu .mobile-button {
+
+        display: block;
+
+    }
+
+/*    #mobile-categories {
+
+        display: block;
+
+    }*/
+
+
 }
 
 @media (min-width: 768px) and (max-width: 1071px) {

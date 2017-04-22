@@ -41,17 +41,18 @@ class FlowerController extends FrontendController
         $init_collection = collect();
 
         Category::visible()
-            ->with(['translations',
+            ->with([
+                'translations',
                 'boxes.visible_sets',
-                'boxes.visible_sets.flowers',
+                'boxes.visible_sets.visible_flowers',
                 'visible_bouquets',
-                'visible_bouquets.flowers',
+                'visible_bouquets.visible_flowers',
                 'visible_children',
                 'visible_children.visible_bouquets',
-                'visible_children.visible_bouquets.flowers',
+                'visible_children.visible_bouquets.visible_flowers',
                 'visible_children.boxes',
                 'visible_children.boxes.visible_sets',
-                'visible_children.boxes.visible_sets.flowers'
+                'visible_children.boxes.visible_sets.visible_flowers'
             ])
             ->whereNull('parent_id')
             ->whereIn('type', [(string)Set::class, (string)Bouquet::class])
@@ -59,43 +60,25 @@ class FlowerController extends FrontendController
 
                 foreach ($categories as $category) {
 
+                    $category->products = collect();
+
                     try {
-
-                        if ($category->type == (string)Set::class) {
-
-                            $category->products = collect();
-
-                            foreach ($category->boxes as $box) {
-
-                                $category->products = $category->products->merge($box->visible_sets);
-
-                            }
-
-                        } else {
-
-                            $category->products = $category->visible_bouquets;
-
-                        }
 
                         foreach ($category->getChildren(true) as $child) {
 
                             if ($child->type == (string)Set::class) {
 
-                                $child->products = collect();
-
                                 foreach ($child->boxes as $box) {
 
-                                    $child->products = $child->products->merge($box->visible_sets);
+                                    $category->products = $category->products->merge($box->visible_sets);
 
                                 }
 
                             } else {
 
-                                $child->products = $child->visible_bouquets;
+                                $category->products = $category->visible_bouquets;
 
                             }
-
-                            $category->products = $category->products->merge($child->products);
 
                             session()->forget('category_' . $child->id);
 
@@ -154,16 +137,17 @@ class FlowerController extends FrontendController
         Category::visible()
             ->where('id', $request->get('category'))
             ->with(['translations',
+                'translations',
                 'boxes.visible_sets',
-                'boxes.visible_sets.flowers',
+                'boxes.visible_sets.visible_flowers',
                 'visible_bouquets',
-                'visible_bouquets.flowers',
+                'visible_bouquets.visible_flowers',
                 'visible_children',
                 'visible_children.visible_bouquets',
-                'visible_children.visible_bouquets.flowers',
+                'visible_children.visible_bouquets.visible_flowers',
                 'visible_children.boxes',
                 'visible_children.boxes.visible_sets',
-                'visible_children.boxes.visible_sets.flowers'
+                'visible_children.boxes.visible_sets.visible_flowers'
             ])
             ->whereNull('parent_id')
             ->whereIn('type', [(string)Set::class, (string)Bouquet::class])
@@ -171,43 +155,25 @@ class FlowerController extends FrontendController
 
                 foreach($categories_data as $category_data) {
 
+                    $category_data->products = collect();
+
                     try {
-
-                        if ($category_data->type == (string)Set::class) {
-
-                            $category_data->products = collect();
-
-                            foreach ($category_data->boxes as $box) {
-
-                                $category_data->products = $category_data->products->merge($box->visible_sets);
-
-                            }
-
-                        } else {
-
-                            $category_data->products = $category_data->visible_bouquets;
-
-                        }
 
                         foreach ($category_data->getChildren(true) as $child) {
 
                             if ($child->type == (string)Set::class) {
 
-                                $child->products = collect();
-
                                 foreach ($child->boxes as $box) {
 
-                                    $child->products = $child->products->merge($box->visible_sets);
+                                    $category_data->products = $category_data->products->merge($box->visible_sets);
 
                                 }
 
                             } else {
 
-                                $child->products = $child->visible_bouquets;
+                                $category_data->products = $category_data->visible_bouquets;
 
                             }
-
-                            $category_data->products = $category_data->products->merge($child->products);
 
                         }
 

@@ -1367,3 +1367,166 @@ a:focus, a:hover {
     color: #9370db;
 
 }
+
+
+.mainpage_menu .sidebar {
+
+    padding: 0;
+
+}
+
+.mainpage_menu .sidebar ul.categories-list {
+
+    list-style: none;
+
+    margin: 10px 0;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    padding: 0 2.5px;
+
+    text-align: center;
+
+}
+
+.mainpage_menu .sidebar ul.categories-list li:hover a
+{
+
+    color: #9370db;
+
+}
+
+.mainpage_menu .sidebar ul.categories-list li {
+
+    border-top: 1px solid rgba(147, 112, 219, 0.5);
+
+    padding: 10px 0;
+
+    position: relative;
+
+}
+
+.mainpage_menu .sidebar ul.categories-list li:last-child {
+
+    border-bottom: 1px solid rgba(147, 112, 219, 0.5);
+
+}
+
+.mainpage_menu .sidebar ul.categories-list button {
+
+    border-radius: 0;
+
+}
+
+.mainpage_menu .categories .category h2 {
+
+    margin: 10px 0;
+
+}
+
+.mainpage_menu .sticky-wrapper {
+
+    padding-top: 10px;
+
+}
+
+/*#mobile-categories {
+    display: none;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 57px;
+    left: 0;
+    background-color: #9370db;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+#mobile-categories a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+#mobile-categories .closebtn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 46px;
+    margin: 0;
+    padding: 0;
+}
+
+#mobile-categories ul {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 14px;
+
+}
+
+#mobile-categories ul li {
+
+    margin: 5px 10px;
+
+    padding: 10px 0;
+
+    border-top: 1px solid white;
+
+    text-align: center;
+
+}
+
+#mobile-categories ul li:last-child {
+
+    border-bottom: 1px solid white;
+
+}
+
+#mobile-categories ul li a {
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 14px;
+
+}*/
+
+.mainpage_menu .mobile-button {
+
+    display: none;
+
+}
+
+.mainpage_menu .mobile-button button:focus,
+.mainpage_menu .mobile-button button:active,
+.mainpage_menu .mobile-button button:hover
+{
+
+    outline: none;
+
+    background-color: white;
+
+    border-color: #9370db !important;
+
+    color: #9370db !important;
+
+}
+
+.mainpage_menu .mobile-button button {
+
+    border-radius: 0;
+
+}

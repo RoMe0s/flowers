@@ -143,7 +143,7 @@ class Bouquet extends Model implements MetaGettable
 
     public function getShowName() {
 
-        return 'Состав: ' . implode(", ", $this->flowers->pluck('title')->all());
+        return $this->name;
 
     }
 
