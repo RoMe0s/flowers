@@ -48,14 +48,6 @@ class MainpageMenuWidget extends Widget
 
                         $real_category->products = $this->{$method}($real_category);
 
-                        if (sizeof($real_category->products)) {
-
-                            $count = $real_category->products->count() > 4 ? 4 : $real_category->products->count();
-
-                            $real_category->products = $real_category->products->shuffle()->take($count);
-
-                        }
-
                     }
 
                     $category = $real_category;
@@ -66,27 +58,55 @@ class MainpageMenuWidget extends Widget
 
     }
 
+    private function _randomize($category) {
+
+        if (sizeof($category->products)) {
+
+            $count = $category->products->count() > 4 ? 4 : $category->products->count();
+
+            $category->products = $category->products->shuffle()->take($count);
+
+        }
+
+        return $category;
+
+    }
+
     public function index() {
 
-        $list = MainPageMenu::with(['menuable'])->visible()->positionSorted()->get();
+        $list = Cache::remember('mainpage_menu', 10, function() {
 
-        $list->map(function ($item) {
+            $list = MainPageMenu::with(['menuable'])->visible()->positionSorted()->get();
 
-            if($item->menuable_type == (string)Category::class) {
+            $list->map(function ($item) {
 
-                $item->data = $this->_processCategory($item);
+                if($item->menuable_type == (string)Category::class) {
 
-            } else {
+                    $item->data = $this->_processCategory($item);
 
-                $item->data = $item->menuable;
+                } else {
 
-            }
+                    $item->data = $item->menuable;
+
+                }
+
+                return $item;
+
+            });
+
+            $list = $list->sortBy('position');
+
+            return $list;
+
+        });
+
+        $list->where('menuable_type', (string)Category::class)->map(function($item) {
+
+            $item->data = $this->_randomize($item->data);
 
             return $item;
 
         });
-
-        $list = $list->sortBy('position');
 
         return view('widgets.mainpage_menu.index')->with(['list' => $list])->render();
 
