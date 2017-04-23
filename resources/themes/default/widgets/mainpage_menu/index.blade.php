@@ -21,10 +21,10 @@
         </div>
         <div class="sidebar">
             <ul class="categories-list">
-                @foreach($categories as $key => $category)
+                @foreach($list as $key => $item)
                     <li>
-                        <a href="{!! $category->getUrl() !!}" title="{!! $category->name !!}">
-                            {{$category->name}}
+                        <a href="{!! $item->data->getUrl() !!}" title="{!! $item->data->name !!}">
+                            {{$item->data->name}}
                         </a>
                     </li>
                 @endforeach

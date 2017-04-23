@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests\Backend\Productable\ProductableRequest;
-use App\Models\Bouquet;
-use App\Models\Product;
-use App\Models\Productable;
-use App\Models\Set;
-use App\Models\SetTranslation;
+use App\Http\Requests\Backend\MainPageMenu\MainPageMenuRequest;
+use App\Models\MainPageMenu;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
 use Datatables;
 use DB;
@@ -21,33 +17,31 @@ use Redirect;
 use Response;
 
 /**
- * Class ProductableController
+ * Class MainPageMenuController
  * @package App\Http\Controllers\Backend
  */
-class ProductableController extends BackendController
+class MainPageMenuController extends BackendController
 {
 
     use AjaxFieldsChangerTrait;
 
- 
-
     /**
      * @var string
      */
-    public $module = "productable";
+    public $module = "mainpagemenu";
 
     /**
      * @var array
      */
     public $accessMap = [
-        'index'           => 'productable.read',
-        'create'          => 'productable.create',
-        'store'           => 'productable.create',
-        'show'            => 'productable.read',
-        'edit'            => 'productable.read',
-        'update'          => 'productable.write',
-        'destroy'         => 'productable.delete',
-        'ajaxFieldChange' => 'productable.write',
+        'index'           => 'mainpagemenu.read',
+        'create'          => 'mainpagemenu.create',
+        'store'           => 'mainpagemenu.create',
+        'show'            => 'mainpagemenu.read',
+        'edit'            => 'mainpagemenu.read',
+        'update'          => 'mainpagemenu.write',
+        'destroy'         => 'mainpagemenu.delete',
+        'ajaxFieldChange' => 'mainpagemenu.write',
     ];
 
     /**
@@ -57,16 +51,16 @@ class ProductableController extends BackendController
     {
         parent::__construct($response);
 
-        Meta::title(trans('labels.productable'));
+        Meta::title(trans('labels.mainpagemenu'));
 
-        $this->breadcrumbs(trans('labels.productable'), route('admin.productable.index'));
+        $this->breadcrumbs(trans('labels.mainpagemenu'), route('admin.mainpagemenu.index'));
 
         $this->middleware('slug.set', ['only' => ['store', 'update']]);
     }
 
     /**
      * Display a listing of the resource.
-     * GET /productable
+     * GET /mainpagemenu
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -75,31 +69,32 @@ class ProductableController extends BackendController
     public function index(Request $request)
     {
         if ($request->get('draw')) {
-            $list = Productable::with(['productable'])->select(
+            $list = MainPageMenu::select(
                 'id',
-                'productable_id',
-                'productable_type',
+                'menuable_id',
+                'menuable_type',
                 'status',
                 'position'
             );
 
             return $dataTables = Datatables::of($list)
-                ->filterColumn('productables.id', 'where', 'productables.id', '=', '$1')
-                ->filterColumn('productable_type', 'where', 'productable_type', 'LIKE', '%$1%')
-                ->editColumn('productable_id',
-                    function($model) {
+                ->filterColumn('id', 'where', 'id', '=', '$1')
+                ->filterColumn('menuable_type', 'where', 'menuable_type', 'LIKE', '%$1%')
+                ->editColumn(
+                    'menuable_id',
+                    function ($model) {
 
-                        return '<img style="max-width: 75px; max-height: 75px;" src="' . $model->productable->image . '"/>';
+                        return isset($model->menuable->name) ? $model->menuable->name : null;
 
                     }
                 )
                 ->editColumn(
-                    'productable_type',
+                    'menuable_type',
                     function ($model) {
 
-                        $types = Productable::getTypes();
+                        $types = MainPageMenu::getTypes();
 
-                        return $types[$model->productable_type];
+                        return $types[$model->menuable_type];
 
                     }
                 )
@@ -131,44 +126,43 @@ class ProductableController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
-                ->removeColumn('productable')
                 ->make();
         }
 
-        $this->data('page_title', trans('labels.productable'));
-        $this->breadcrumbs(trans('labels.productable_list'));
+        $this->data('page_title', trans('labels.mainpagemenu'));
+        $this->breadcrumbs(trans('labels.mainpagemenu_list'));
 
-        return $this->render('views.productable.index');
+        return $this->render('views.mainpagemenu.index');
     }
 
     /**
      * Show the form for creating a new resource.
-     * GET /productable/create
+     * GET /mainpagemenu/create
      *
      * @return Response
      */
     public function create()
     {
-        $this->data('model', new Productable);
+        $this->data('model', new MainPageMenu);
 
-        $this->data('page_title', trans('labels.productable_create'));
+        $this->data('page_title', trans('labels.mainpagemenu_create'));
 
-        $this->breadcrumbs(trans('labels.productable_create'));
+        $this->breadcrumbs(trans('labels.mainpagemenu_create'));
 
         $this->_fillAdditionalTemplateData();
 
-        return $this->render('views.productable.create');
+        return $this->render('views.mainpagemenu.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     * POST /productable
+     * POST /mainpagemenu
      *
-     * @param ProductableRequest $request
+     * @param MainPageMenuRequest $request
      *
      * @return \Response
      */
-    public function store(ProductableRequest $request)
+    public function store(MainPageMenuRequest $request)
     {
         $input = $request->all();
 
@@ -176,7 +170,7 @@ class ProductableController extends BackendController
 
         try {
 
-            $model = new Productable($input);
+            $model = new MainPageMenu($input);
 
             $model->save();
 
@@ -184,7 +178,7 @@ class ProductableController extends BackendController
 
             FlashMessages::add('success', trans('messages.save_ok'));
 
-            return Redirect::route('admin.productable.index');
+            return Redirect::route('admin.mainpagemenu.index');
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -196,7 +190,7 @@ class ProductableController extends BackendController
 
     /**
      * Display the specified resource.
-     * GET /productable/{id}
+     * GET /mainpagemenu/{id}
      *
      * @param  int $id
      *
@@ -209,7 +203,7 @@ class ProductableController extends BackendController
 
     /**
      * Show the form for editing the specified resource.
-     * GET /productable/{id}/edit
+     * GET /mainpagemenu/{id}/edit
      *
      * @param  int $id
      *
@@ -218,35 +212,35 @@ class ProductableController extends BackendController
     public function edit($id)
     {
         try {
-            $model = Productable::whereId($id)->firstOrFail();
+            $model = MainPageMenu::whereId($id)->firstOrFail();
 
-            $this->data('page_title', trans('labels.productable_editing'));
+            $this->data('page_title', trans('labels.mainpagemenu_editing'));
 
-            $this->breadcrumbs(trans('labels.productable_editing'));
+            $this->breadcrumbs(trans('labels.mainpagemenu_editing'));
 
             $this->_fillAdditionalTemplateData($model);
 
-            return $this->render('views.productable.edit', compact('model'));
+            return $this->render('views.mainpagemenu.edit', compact('model'));
         } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
 
-            return Redirect::route('admin.productable.index');
+            return Redirect::route('admin.mainpagemenu.index');
         }
     }
 
     /**
      * Update the specified resource in storage.
-     * PUT /productable/{id}
+     * PUT /mainpagemenu/{id}
      *
      * @param  int              $id
-     * @param ProductableRequest $request
+     * @param MainPageMenuRequest $request
      *
      * @return \Response
      */
-    public function update($id, ProductableRequest $request)
+    public function update($id, MainPageMenuRequest $request)
     {
         try {
-            $model = Productable::findOrFail($id);
+            $model = MainPageMenu::findOrFail($id);
 
             $input = $request->all();
 
@@ -260,7 +254,7 @@ class ProductableController extends BackendController
 
             FlashMessages::add('success', trans('messages.save_ok'));
 
-            return Redirect::route('admin.productable.index');
+            return Redirect::route('admin.mainpagemenu.index');
         } catch (ModelNotFoundException $e) {
             FlashMessages::add('error', trans('messages.record_not_found'));
         } catch (Exception $e) {
@@ -274,7 +268,7 @@ class ProductableController extends BackendController
 
     /**
      * Remove the specified resource from storage.
-     * DELETE /productable/{id}
+     * DELETE /mainpagemenu/{id}
      *
      * @param  int $id
      *
@@ -283,7 +277,7 @@ class ProductableController extends BackendController
     public function destroy($id)
     {
         try {
-            $model = Productable::findOrFail($id);
+            $model = MainPageMenu::findOrFail($id);
 
             if (!$model->delete()) {
                 FlashMessages::add("error", trans("messages.destroy_error"));
@@ -296,21 +290,21 @@ class ProductableController extends BackendController
             FlashMessages::add("error", trans('messages.delete_error').': '.$e->getMessage());
         }
 
-        return Redirect::route('admin.productable.index');
+        return Redirect::route('admin.mainpagemenu.index');
     }
 
     private function _fillAdditionalTemplateData($model = null) {
 
-        $types = Productable::getTypes();
+        $types = MainPageMenu::getTypes();
 
         $this->data('types', $types);
 
-        $productables = array();
+        $mainpagemenus = array();
 
         if($model) {
 
 
-            $class = $model->productable_type;
+            $class = $model->menuable_type;
 
             $key = explode("\\", $class);
 
@@ -320,11 +314,11 @@ class ProductableController extends BackendController
 
             $class .= 'Translation';
 
-            $productables = $class::lists('name', $key)->toArray();
+            $mainpagemenus = $class::lists('name', $key)->toArray();
 
         }
 
-        $this->data('productables', $productables);
+        $this->data('mainpagemenus', $mainpagemenus);
 
     }
 
@@ -334,7 +328,7 @@ class ProductableController extends BackendController
 
         if($class) {
 
-            $used_ids = Productable::where('productable_type', $class)->lists('productable_id')->toArray();
+            $used_ids = MainPageMenu::where('menuable_type', $class)->lists('menuable_id')->toArray();
 
             $key = explode("\\", $class);
 
@@ -344,9 +338,9 @@ class ProductableController extends BackendController
 
             $class .= 'Translation';
 
-            $productables = $class::whereNotIn($key, $used_ids)->lists('name', $key)->toArray();
+            $mainpagemenus = $class::whereNotIn($key, $used_ids)->lists('name', $key)->toArray();
 
-            $html = view('productable.partials.productable_id')->with(['productables' => $productables])->render();
+            $html = view('mainpagemenu.partials.menuable_id')->with(['mainpagemenus' => $mainpagemenus])->render();
 
             return ['html' => $html];
 

@@ -144,6 +144,7 @@ $router->group(
                 );
                 $router->resource('set', 'Backend\SetController');
 
+                //productables
                  $router->post(
                         'productable/{id}/ajax_field',
                         [
@@ -154,6 +155,17 @@ $router->group(
                  );
                 $router->get('productable/load', 'Backend\ProductableController@ajaxLoad');
                 $router->resource('productable', 'Backend\ProductableController');
+
+                $router->post(
+                    'mainpagemenu/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.mainpagemenu.ajax_field',
+                        'uses'       => 'Backend\MainPageMenuController@ajaxFieldChange',
+                    ]
+                );
+                $router->get('mainpagemenu/load', 'Backend\MainPageMenuController@ajaxLoad');
+                $router->resource('mainpagemenu', 'Backend\MainPageMenuController');
 
                 //orders
                 $router->post(

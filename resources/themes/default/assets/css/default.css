@@ -1420,6 +1420,24 @@ a:focus, a:hover {
 
 }
 
+.mainpage_menu .categories .category {
+
+    border-bottom: 1px solid rgba(147, 112, 219, 0.5);
+
+    padding-bottom: 20px;
+
+    margin-bottom: 15px;
+
+}
+
+.mainpage_menu .categories .category:last-child {
+
+    border: none;
+
+    padding-bottom: 0;
+
+}
+
 .mainpage_menu .categories .category h2 {
 
     margin: 10px 0;

@@ -232,4 +232,20 @@ $(document).ready(function () {
 
     });
 
+    if ( !Modernizr.objectfit ) {
+        $('.photo').each(function(){
+
+            var $img = $(this).find('img');
+
+            if($img) {
+
+                var src = $img.attr('src');
+
+                $(this).css('background-image', "url('" + src +"')");
+
+            }
+
+        });
+    }
+
 });

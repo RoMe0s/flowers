@@ -1,10 +1,11 @@
-@if(!sizeof($categories))
+@if(!sizeof($list->where('menuable_type', (string)\App\Models\Category::class)))
     <p class="text-center">
         <i>Товаров нет</i>
     </p>
 @else
     <div class="mainpage_menu categories">
-        @foreach($categories as $category)
+        @foreach($list->where('menuable_type', (string)\App\Models\Category::class) as $category)
+            @php($category = $category->data)
             <div class="category">
                 <h2 class="text-center">
                     {{$category->name}}
@@ -43,6 +44,7 @@
                             @endif
                         </div>
                     @endforeach
+                    <div class="clearfix"></div>
                     <div class="col-sm-12 text-center">
                         <br />
                         <a class="btn btn-purple form-control" href="{!! $category->getUrl() !!}" title="{!! $category->name !!}">Перейти в категорию</a>

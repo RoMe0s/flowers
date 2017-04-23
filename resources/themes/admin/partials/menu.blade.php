@@ -84,6 +84,23 @@
                 </li>
 	    @endif
 
+            @if ($user->hasAccess('mainpagemenu.read'))
+                <li class="{!! active_class('admin.mainpagemenu*') !!}">
+                    <a href="{!! route('admin.mainpagemenu.index') !!}">
+                        <i class="fa fa-building-o"></i>
+                        <span>@lang('labels.mainpagemenus')</span>
+
+                        @if ($user->hasAccess('mainpagemenu.create'))
+                            <small class="label create-label pull-right bg-green"
+                                   title="@lang('labels.add_mainpagemenu')"
+                                   data-href="{!! route('admin.mainpagemenu.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
+
 
 
             @if ($user->hasAccess('variablevalue.read'))

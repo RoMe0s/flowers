@@ -61,6 +61,11 @@ return array (
     'productable.write',
     'productable.delete',
 
+    'mainpagemenu.create',
+    'mainpagemenu.read',
+    'mainpagemenu.write',
+    'mainpagemenu.delete',
+
     'variable.value.read',
     'variable.value.write',
     'variable.read',

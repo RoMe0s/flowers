@@ -9,21 +9,20 @@
 
 namespace App\Widgets\MainpageMenu;
 
-use App\Models\Bouquet;
 use App\Models\Category;
-use App\Models\Flower;
-use App\Models\Set;
+use App\Models\MainPageMenu;
 use Pingpong\Widget\Widget;
+use Illuminate\Support\Facades\Cache;
 
 class MainpageMenuWidget extends Widget
 {
 
-    public function index() {
+    private function _processCategory($item) {
 
-        $categories = collect();
+        $category = null;
 
         Category::visible()
-            ->whereNull('parent_id')
+            ->where('id', $item->menuable_id)
             ->with([
                 'translations',
                 'visible_directProducts',
@@ -39,61 +38,57 @@ class MainpageMenuWidget extends Widget
                 'visible_children.boxes.visible_sets',
                 'visible_children.boxes.visible_sets.visible_flowers'
             ])
-            ->positionSorted()->chunk(100, function($real_categories) use (&$categories) {
+            ->chunk(100, function($categories) use (&$category) {
 
-                foreach($real_categories as $real_category) {
+                    foreach($categories as $real_category) {
 
-                    $type = explode("\\", $real_category->type);
+                        $type = explode("\\", $real_category->type);
 
-                    $method = '_load' . array_pop($type);
+                        $method = '_load' . array_pop($type);
 
-                    $real_category->products = $this->{$method}($real_category);
+                        $real_category->products = $this->{$method}($real_category);
 
-                    if(sizeof($real_category->products)) {
+                        if (sizeof($real_category->products)) {
 
-                        $count = $real_category->products->count() > 4 ? 4 : $real_category->products->count();
+                            $count = $real_category->products->count() > 4 ? 4 : $real_category->products->count();
 
-                        $real_category->products = $real_category->products->shuffle()->take($count);
-
-                        $priority = null;
-
-                        switch ($real_category->type) {
-
-                            case (string)Set::class:
-
-                                $priority = 2;
-
-                                break;
-
-                            case (string)Bouquet::class:
-
-                                $priority = 1;
-
-                                break;
-
-                            default:
-
-                                $priority = 0;
-
-                                break;
+                            $real_category->products = $real_category->products->shuffle()->take($count);
 
                         }
 
-                        $real_category->priority = $priority;
-
-                        $categories->push($real_category);
-
                     }
 
-                }
+                    $category = $real_category;
 
             });
 
-        $categories = $categories->sortByDesc('priority');
+        return $category;
 
-//        $flowers = Flower::joinTranslations('flowers')->visible()->lists('title', 'flower_id')->toArray();
+    }
 
-        return view('widgets.mainpage_menu.index')->with(['categories' => $categories])->render();
+    public function index() {
+
+        $list = MainPageMenu::with(['menuable'])->visible()->positionSorted()->get();
+
+        $list->map(function ($item) {
+
+            if($item->menuable_type == (string)Category::class) {
+
+                $item->data = $this->_processCategory($item);
+
+            } else {
+
+                $item->data = $item->menuable;
+
+            }
+
+            return $item;
+
+        });
+
+        $list = $list->sortBy('position');
+
+        return view('widgets.mainpage_menu.index')->with(['list' => $list])->render();
 
     }
 

@@ -479,6 +479,14 @@ return array (
     'add_productable' => 'Добавить элем. к виджету "Хиты продаж"',
     'productable_list' => 'Список элем. виджета "Хиты продаж"',
     'productable_create' => 'Добавление элемента',
-    'productable_editing' => 'Редактирование элемента'
+    'productable_editing' => 'Редактирование элемента',
+
+
+    'mainpagemenu' => 'Виджет "Меню на главной"',
+    'mainpagemenus' => 'Элем. "Меню на главной"',
+    'add_mainpagemenu' => 'Добавить элем. к виджету "Меню на главной"',
+    'mainpagemenu_list' => 'Список элем. виджета "Меню на главной"',
+    'mainpagemenu_create' => 'Добавление элемента',
+    'mainpagemenu_editing' => 'Редактирование элемента'
 
 );

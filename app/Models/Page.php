@@ -18,6 +18,8 @@ class Page extends Eloquent implements FrontLink, MetaGettable
     use Translatable;
     use WithTranslationsTrait;
 
+    protected $with = ['translations'];
+
     /**
      * @var array
      */

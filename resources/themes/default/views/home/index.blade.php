@@ -45,15 +45,6 @@
     <script src="{!! Theme::asset('js/sticky.js') !!}"></script>
 
     <script>
-/*        function openNav() {
-            document.getElementById("mobile-categories").style.width = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mobile-categories").style.width = "0";
-        }
-
-        $('.mobile-button').stick_in_parent({offset_top: 57});*/
 
         function collapseCategoriesList() {
 
@@ -61,15 +52,16 @@
 
             if(!$categories_list.is(':visible')) {
 
-                $categories_list.show("slow");
+                $categories_list.fadeIn("slow");
 
             } else {
 
-                $categories_list.hide("slow");
+                $categories_list.fadeOut("slow");
 
             }
 
         }
+
     </script>
 
 @endsection
