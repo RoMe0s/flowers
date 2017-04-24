@@ -16,7 +16,7 @@
         <div class="mobile-button">
             <button class="btn btn-purple-outline form-control" onclick="collapseCategoriesList()">
                 <i class="fa fa-bars"></i>
-                Категории
+                Выбрать
             </button>
         </div>
         <div class="sidebar">

@@ -360,12 +360,12 @@ main section img {
     width: 100%;
 }
 
-main h2 hr, main h1 hr {
+main hr{
     max-width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-main h2 hr::after, main h1 hr::after {
+main hr::after {
     background: #fff;
     display: inline-block;
     top: -17px;
@@ -376,47 +376,47 @@ main h2 hr::after, main h1 hr::after {
     position: relative;
 }
 
-main h2 hr.flower::after, main h1 hr.flower::after {
+main hr.flower::after {
     content: '\f299';
 }
 
-main h2 hr.news::after, main h1 hr.news::after {
+main hr.news::after {
     content: '\f1ea';
 }
 
-main h2 hr.box::after, main h1 hr.box::after {
+main hr.box::after {
     content: '\f01c';
 }
 
-main h2 hr.money::after, main h1 hr.money::after {
+main hr.money::after {
     content: '\f0d6';
 }
 
-main h2 hr.percent::after, main h1 hr.percent::after {
+main hr.percent::after {
     content: '\f295';
 }
 
-main h2 hr.login::after, main h1 hr.login::after {
+main hr.login::after {
     content: '\f007';
 }
 
-main h2 hr.sub::after, main h1 hr.sub::after {
+main hr.sub::after {
     content: '\f09e';
 }
 
-main h2 hr.ask::after, main h1 hr.ask::after {
+main hr.ask::after {
     content: '\f128';
 }
 
-main h2 hr.doc::after, main h1 hr.doc::after {
+main hr.doc::after {
     content: '\f15c';
 }
 
-main h2 hr.bag::after, main h1 hr.bag::after {
+main hr.bag::after {
     content: '\f290';
 }
 
-main h2 hr.gift::after, main h1 hr.gift::after {
+main hr.gift::after {
     content: "\f06b";
 }
 

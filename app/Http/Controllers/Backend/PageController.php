@@ -116,6 +116,7 @@ class PageController extends BackendController
                 ->removeColumn('meta_description')
                 ->removeColumn('parent_id')
                 ->removeColumn('slug')
+                ->removeColumn('translations')
                 ->make();
         }
 

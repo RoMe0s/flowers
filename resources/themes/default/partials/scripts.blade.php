@@ -80,3 +80,94 @@
     /></noscript>
 <!-- DO NOT MODIFY -->
 <!-- End Facebook Pixel Code -->
+{{--
+<script>
+    init_a_floating = function() {
+
+        $('.mainpage_menu .categories .category').each(function() {
+
+            var $h2 = $(this).find('h2'),
+                $hr = $h2.find('hr'),
+                $span = $h2.find('span'),
+                $a_floating = $(this).find('a.a__floating'),
+                category_height = $(this).height(),
+                bottom = category_height - Math.abs(($h2.height() - $span.height()) - 3);
+
+            var window_width = document.body.clientWidth,
+                free_space = ($h2.width() - $span.width()) / 2;
+
+            $a_floating.hide();
+
+            if(window_width > 976) {
+
+                $a_floating.css({'width' : '', 'top': ''});
+
+                if(free_space > $a_floating.width()) {
+
+                    $hr.css('margin-top', '20px');
+
+                    init_for_desktop($a_floating, $h2, $span, $hr, bottom);
+
+                } else {
+
+                    $hr.css('margin-top', '30px');
+
+                    init_for_mobile($a_floating, $span, $hr);
+
+                }
+
+            } else {
+
+                $hr.css('margin-top', '30px');
+
+                init_for_mobile($a_floating, $span, $hr);
+
+            }
+
+
+        });
+
+    };
+
+    init_for_mobile = function($a_floating, $span, $hr) {
+
+        var top = $span.height();
+
+        if($(window).width() <= 748) {
+
+            $hr.css('margin-top', '35px');
+
+        } else {
+
+            top = top + 7;
+
+        }
+
+        $a_floating.css({
+            'top' : top + 'px',
+            'width' : '100%',
+            'text-align': 'center',
+            'right' : '0'
+        }).show();
+
+    };
+
+    init_for_desktop = function($a_floating, $h2, $span, $hr, bottom) {
+
+        var right = (($h2.width() - $span.width()) / 2) - ($a_floating.width() - 10);
+
+        $a_floating.css({
+            'right': right + 'px',
+            'bottom': bottom + 'px'
+        }).show();
+
+    };
+
+    init_a_floating();
+
+    $(window).resize(function() {
+
+        init_a_floating();
+
+    });
+</script>--}}

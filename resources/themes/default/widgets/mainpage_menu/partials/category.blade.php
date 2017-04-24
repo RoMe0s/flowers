@@ -1,16 +1,15 @@
-@if(!sizeof($list->where('menuable_type', (string)\App\Models\Category::class)))
-    <p class="text-center">
-        <i>Товаров нет</i>
-    </p>
-@else
+@if(sizeof($list->where('menuable_type', (string)\App\Models\Category::class)))
     <div class="mainpage_menu categories">
         @foreach($list->where('menuable_type', (string)\App\Models\Category::class) as $category)
             @php($category = $category->data)
             <div class="category">
                 <h2 class="text-center">
                     {{$category->name}}
-                    <hr class="box" />
                 </h2>
+                <div class="text-center">
+                    <a class="purple" href="{!! $category->getUrl() !!}">Показать все</a>
+                    <hr class="box" />
+                </div>
                 <div class="row items-list">
                     @foreach($category->products as $set)
                         {{--@if($counter == 0) <div class="row"> @endif--}}
@@ -47,7 +46,7 @@
                     <div class="clearfix"></div>
                     <div class="col-sm-12 text-center">
                         <br />
-                        <a class="btn btn-purple form-control" href="{!! $category->getUrl() !!}" title="{!! $category->name !!}">Перейти в категорию</a>
+                        <a class="btn btn-purple form-control" href="{!! $category->getUrl() !!}" title="{!! $category->name !!}">Смотреть еще</a>
                     </div>
                 </div>
             </div>
