@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 @php($total_by_user = 0)
-                @foreach($user->orders as $key => $order)
+                @foreach($model->orders as $key => $order)
                     <tr class="order-status-{!! $order->status !!}">
                         <td class="text-center">
                             <a target="_blank" href="{!! route('admin.order.edit', ['id' => $order->id]) !!}"> Заказ #{!! $order->id !!} </a>
@@ -30,6 +30,15 @@
                     </tr>
                     @php($total_by_user += $order->getTotal())
                 @endforeach
+                @if(!sizeof($model->order))
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            <h3>
+                                Заказов нет
+                            </h3>
+                        </td>
+                    </tr>
+                @endif
                 <tfoot>
                     <tr>
                         <td colspan="2" class="text-right">

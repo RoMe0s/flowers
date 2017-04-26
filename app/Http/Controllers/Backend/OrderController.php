@@ -744,7 +744,7 @@ class OrderController extends BackendController
 
             $old_status = $model->status;
 
-            if(in_array($old_status, [3,6]) || in_array($input['status'], [3,6])) {
+            if(in_array($input['status'], [3,6]) || (in_array($old_status, [3,6]) && !in_array($input['status'], [4,5]))) {
 
                 $user = \Sentry::getUser();
 
@@ -762,6 +762,11 @@ class OrderController extends BackendController
 
                 }
 
+            } else {
+
+                $model->status = $input['status'];
+
+                $model->save();
             }
 
         }

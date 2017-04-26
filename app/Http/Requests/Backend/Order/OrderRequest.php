@@ -18,6 +18,7 @@ class OrderRequest extends FormRequest
 
         $user_id = $this->input('user_id');
         $address_id = $this->input('address_id');
+        $prepay = $this->input('prepay');
 
         if($user_id < 0) {
             $this->request->remove('user_id');
@@ -25,14 +26,35 @@ class OrderRequest extends FormRequest
         if($address_id < 0) {
             $this->request->remove('address_id');
         }
+        if($prepay == 100) {
+            $this->merge(['user_data_required' => true]);
+        } else {
+
+            $recipient_name = $this->input('recipient_name', null);
+
+            $recipient_phone = $this->input('recipient_phone', null);
+
+            if(empty($recipient_name)) {
+
+                $this->replace(['recipient_name' => $recipient_name]);
+
+            }
+
+            if(empty($recipient_phone)) {
+
+                $this->replace(['recipient_phone' => $recipient_phone]);
+
+            }
+
+        }
 
         $rules = [
             'courier_id' => 'integer',
             'delivery_price' => 'required',
             'discount'      => 'integer',
             'prepay'    => 'required',
-            'recipient_name' => 'required',
-            'recipient_phone'    => 'required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'recipient_name' => 'required_with:user_data_required',
+            'recipient_phone'    => 'required_with:user_data_required|string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'email' => 'email|required_with:email_required',
             'date' => 'date',
             'status' => 'required',

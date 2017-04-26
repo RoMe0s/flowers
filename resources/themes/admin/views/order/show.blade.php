@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 m-marg">
                                     @if($model->card_text)
-                                        <textarea readonly class="col-sm-12" style="width: 100%;">{!! $model->card_text !!}</textarea>
+                                        <textarea class="col-sm-12" style="width: 100%;" onkeydown="return false;">{!! $model->card_text !!}</textarea>
                                     @else
                                         @lang('labels.no')
                                     @endif
@@ -91,21 +91,21 @@
                                 Клинет
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! $model->user->name ?: trans('labels.no') !!}
+                                {!! isset($model->user) ? $model->user->name: trans('labels.no') !!}
                             </div>
 
                             <div class="col-sm-12 col-md-6">
                                 Телефон
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! $model->user->phone ?: trans('labels.no') !!}
+                                {!! isset($model->user) ? $model->user->phone : trans('labels.no') !!}
                             </div>
 
                             <div class="col-sm-12 col-md-6">
                                 Email
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! $model->user->email ?: trans('labels.no') !!}
+                                {!! isset($model->user) ? $model->user->email : trans('labels.no') !!}
                             </div>
 
                         <div class="clearfix"></div>

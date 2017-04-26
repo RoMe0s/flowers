@@ -16,7 +16,7 @@
                 </tr>
                 </thead>
                 @php($total_by_user = 0)
-                @foreach($user->subscriptions as $key => $subscription)
+                @foreach($model->subscriptions as $key => $subscription)
                     <tr class="order-status-{!! $subscription->isPaid() ? 5 : 0  !!}">
                         <td class="text-center">
                             <a target="_blank" href="{!! route('admin.subscription.edit', ['id' => $subscription->id]) !!}"> Подписка #{!! $subscription->id !!} </a>
@@ -30,6 +30,15 @@
                     </tr>
                     @php($total_by_user += $subscription->price)
                 @endforeach
+                @if(!sizeof($model->subscriptions))
+                    <tr>
+                        <td class="text-center" colspan="3">
+                            <h3>
+                                Подписок нет
+                            </h3>
+                        </td>
+                    </tr>
+                @endif
                 <tfoot>
                 <tr>
                     <td colspan="2" class="text-right">
