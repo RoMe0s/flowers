@@ -167,6 +167,18 @@ $router->group(
                 $router->get('mainpagemenu/load', 'Backend\MainPageMenuController@ajaxLoad');
                 $router->resource('mainpagemenu', 'Backend\MainPageMenuController');
 
+                //filter items
+                $router->post(
+                    'filteritem/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.filteritem.ajax_field',
+                        'uses'       => 'Backend\FilterItemController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('filteritem', 'Backend\FilterItemController');
+
+
                 //orders
                 $router->post(
                     'order/{id}/ajax_field',

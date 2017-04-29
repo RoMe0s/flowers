@@ -102,6 +102,22 @@
             @endif
 
 
+            @if ($user->hasAccess('filteritem.read'))
+                <li class="{!! active_class('admin.filteritem*') !!}">
+                    <a href="{!! route('admin.filteritem.index') !!}">
+                        <i class="fa fa-gavel"></i>
+                        <span>@lang('labels.filteritems')</span>
+
+                        @if ($user->hasAccess('filteritem.create'))
+                            <small class="label create-label pull-right bg-green"
+                                   title="@lang('labels.add_filteritem')"
+                                   data-href="{!! route('admin.filteritem.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
 
             @if ($user->hasAccess('variablevalue.read'))
                 <li class="{!! active_class('admin.variable*') !!}">

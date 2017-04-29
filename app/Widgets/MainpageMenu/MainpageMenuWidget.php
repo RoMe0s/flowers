@@ -10,6 +10,7 @@
 namespace App\Widgets\MainpageMenu;
 
 use App\Models\Category;
+use App\Models\FilterItem;
 use App\Models\MainPageMenu;
 use Pingpong\Widget\Widget;
 use Illuminate\Support\Facades\Cache;
@@ -108,7 +109,13 @@ class MainpageMenuWidget extends Widget
 
         });
 
-        return view('widgets.mainpage_menu.index')->with(['list' => $list])->render();
+        $filters = Cache::remember('filter_items', 10, function() {
+
+            return FilterItem::visible()->positionSorted()->get();
+
+        });
+
+        return view('widgets.mainpage_menu.index')->with(['list' => $list, 'filters' => $filters])->render();
 
     }
 

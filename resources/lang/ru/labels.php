@@ -328,6 +328,7 @@ return array (
   'variable_type_image' => 'Изображение',
   'variable_type_text' => 'Строка',
   'variable_type_textarea' => 'Текст',
+  'variable_type_array' => 'Набор',
   'variables' => 'Переменные',
   'variables_list' => 'Список переменных',
   'view' => 'Просмотр',
@@ -487,6 +488,16 @@ return array (
     'add_mainpagemenu' => 'Добавить элем. к виджету "Меню на главной"',
     'mainpagemenu_list' => 'Список элем. виджета "Меню на главной"',
     'mainpagemenu_create' => 'Добавление элемента',
-    'mainpagemenu_editing' => 'Редактирование элемента'
+    'mainpagemenu_editing' => 'Редактирование элемента',
+
+
+
+
+    'filteritem' => 'Элемент фильтра',
+    'filteritems' => 'Элеменеты фильтра',
+    'add_filteritem' => 'Добавить элемент фильта',
+    'filteritem_list' => 'Список элементов фильтра',
+    'filteritem_create' => 'Добавление элемента фильтра',
+    'filteritem_editing' => 'Редактирование элемента фильтра'
 
 );

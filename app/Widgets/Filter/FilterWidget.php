@@ -7,6 +7,7 @@ use App\Models\Box;
 use App\Models\Flower;
 use Pingpong\Widget\Widget;
 use Illuminate\Support\Facades\Cache;
+use App\Models\FilterItem;
 
 /**
  * Class MenuWidget
@@ -17,14 +18,24 @@ class FilterWidget extends Widget
     public function index()
     {
 
-        $boxes = Cache::remember('filter_boxes', 5, function() {
-            return Box::all();
+        return view('widgets.filter.index')->render();
+
+    }
+
+    public function price($slug) {
+    
+        $filters = Cache::remember('filter_items', 10, function() {
+
+            return FilterItem::visible()->positionSorted()->get();
+        
         });
 
-        $flowers = Cache::remember('filter_flowers', 5, function() {
-            return Flower::all();
-        });
+    
+        if(sizeof($filters)) {
 
-        return view('widgets.filter.index', compact('boxes', 'flowers'))->render();
+            return view('widgets.filter.price', compact('filters', 'slug'))->render();
+        
+        }
+
     }
 }

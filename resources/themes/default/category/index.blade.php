@@ -45,14 +45,10 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    @if(!isset($sets) || !sizeof($sets))
-                        <p class="text-center text-danger">
-                            <i>По вашему запросу ничего не найдено</i>
-                        </p>
-                    @else
-
+                    @if(isset($sets))
                         <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 mobile-padding">
+                                    @widget__global_price_filter($model->slug)
                                 <div class="filters col-sm-12 col-md-8 text-right">
                                     @widget__category_filter()
                                 </div>
@@ -62,7 +58,13 @@
                                 </p>
                             </div>
                         </div>
-
+                    @endif
+                    @if(!isset($sets) || !sizeof($sets))
+                        <br />
+                        <p class="text-center text-danger">
+                            <i>По вашему запросу ничего не найдено</i>
+                        </p>
+                    @else
                         <div class="row items-list">
                             @foreach($sets as $set)
                                 <div class="col-md-4 col-sm-6 col-xs-6 item">

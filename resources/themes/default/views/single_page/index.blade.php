@@ -34,6 +34,11 @@
                     </ul>
                 </div>
         <div class="row">
+
+            <div class="col-xs-12 mobile-padding">
+                @widget__global_price_filter($model->slug)
+            </div>
+
             <div class="col-sm-12 col-xs-12 col-md-12 filters-block">
 
                     <div class="col-md-6 col-sm-6 col-xs-6 filter-item">

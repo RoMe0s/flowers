@@ -92,9 +92,18 @@ $router->group(
             'as' => 'flowers',
             'uses' => 'Frontend\FlowerController@index'
         ]);
+        $router->get('/flowers/sort/{sort}', [
+            'as' => 'flowers_sort',
+            'uses' => 'Frontend\FlowerController@index'
+        ]);
         $router->get('/flowers-reload', [
             'as' => 'flowers_reload',
-            'uses' => 'Frontend\FlowerController@reload'
+            'uses' => 'Frontend\FlowerController@reload',
+            'middleware' => 'ajax'
+        ]);
+        $router->get('/flowers-reload/sort/{sort}', [
+           'uses' => 'Frontend\FlowerController@reload',
+           'middleware' => 'ajax'
         ]);
 
         //presents
@@ -102,9 +111,18 @@ $router->group(
             'as' => 'presents',
             'uses' => 'Frontend\PresentsController@index'
         ]);
+        $router->get('/related-goods/sort/{sort}', [
+            'as' => 'presents_sort',
+            'uses' => 'Frontend\PresentsController@index'
+        ]);
         $router->get('/related-goods-reload', [
             'as' => 'presents_reload',
-            'uses' => 'Frontend\PresentsController@reload'
+            'uses' => 'Frontend\PresentsController@reload',
+            'middleware' => 'ajax'
+        ]);
+        $router->get('/related-goods-reload/sort/{sort}', [
+            'uses' => 'Frontend\PresentsController@reload',
+            'middleware' => 'ajax'
         ]);
 
         //individual
@@ -252,9 +270,13 @@ $router->group(
 
         // pages + categories
         $router->get(
-            '/{slug}',
-            ['as' => 'pages.show', 'uses' => 'Frontend\PageController@getPage']
+             '/{slug}',
+             ['as' => 'pages.show', 'uses' => 'Frontend\PageController@getPage']
         );
+        $router->get('/{slug}/sort/{sort}', [
+            'as' => 'pages.sort',
+            'uses' => 'Frontend\PageController@getPage'
+        ]);
 
     }
 );

@@ -363,6 +363,7 @@ main section img {
 main hr{
     max-width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 main hr::after {
@@ -1007,6 +1008,62 @@ a:focus, a:hover {
 .slick ul.slick-dots li[aria-hidden="false"] {
 
     color: #9370db;
+
+}
+
+ul.global-price-filter {
+
+    display: block;
+
+    list-style: none;
+
+    font-size: 18px;
+
+    padding: 0;
+
+    margin: 5px 0 0 0;
+
+    text-align: right;
+
+}
+
+ul.global-price-filter:after {
+
+    content: '';
+
+    display: block;
+
+    clear: both;
+
+}
+
+ul.global-price-filter li.global-search {
+
+    border: 1px solid #9370db;
+
+    padding: 5px;
+
+    border-radius: 5px;
+
+    float: right;
+
+    margin-left: 5px;
+
+    margin-bottom: 5px;
+
+    text-align: center;
+
+}
+
+ul.global-price-filter li.global-search[data-active="true"] {
+
+    background-color: #9370db;
+
+}
+
+ul.global-price-filter li.global-search[data-active="true"] * {
+
+    color: white;
 
 }
 

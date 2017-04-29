@@ -52,7 +52,7 @@ class Variable extends Eloquent
     public static $types = [
         1 => 'text',
         2 => 'textarea',
-        3 => 'image',
+        3 => 'image'
     ];
 
     /**

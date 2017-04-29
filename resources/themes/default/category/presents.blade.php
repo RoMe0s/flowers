@@ -2,14 +2,10 @@
 
 @section('category-content')
     <section>
-        @if(!isset($products) || !sizeof($products))
-            <p class="text-center">
-                <i>Подарков в продаже нет</i>
-            </p>
-        @else
-
+        @if(isset($products))
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 mobile-padding">
+                        @widget__global_price_filter($model->slug)
                     <div class="filters col-sm-12 col-md-8 text-right">
                         @widget__category_filter()
                     </div>
@@ -19,7 +15,12 @@
                     </p>
                 </div>
             </div>
-
+        @endif
+        @if(!isset($products) || !sizeof($products))
+            <p class="text-center">
+                <i>Подарков в продаже нет</i>
+            </p>
+        @else
             <div class="row items-list">
                 {{--@php($i = 0)--}}
                 @foreach($products as $product)

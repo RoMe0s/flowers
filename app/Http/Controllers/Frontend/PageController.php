@@ -65,15 +65,19 @@ class PageController extends FrontendController
     /**
      * @return $this|\App\Http\Controllers\Frontend\PageController
      */
-    public function getPage($slug)
+    public function getPage($slug, $sort = null)
     {
-        if ($slug == 'home') {
+        if ($slug == 'home' && !$sort) {
             return redirect(route('home'), 301);
+        } elseif($slug == 'home' && $sort) {
+            abort(404); //we can't get sort type on main page
         }
 
         $model = Page::with(['translations'])->visible()->whereSlug($slug)->first();
 
-        $model = !$model ? $this->categoryService->find($slug) : $model;
+        abort_if(isset($model) && isset($sort), 404); //we can't get sort type on page(except single_page)
+
+        $model = !$model ? $this->categoryService->find($slug, $sort) : $model;
 
         abort_if(!$model || is_system_page($model->slug), 404);
 
@@ -82,7 +86,9 @@ class PageController extends FrontendController
         $this->fillMeta($model, $this->module);
 
         if($model instanceof Page) {
+        
             $view = $this->pageService->getPageTemplate($model);
+        
         } else {
 
             $this->categoryService->setBreadcrumbs($model, $this->breadcrumbs);

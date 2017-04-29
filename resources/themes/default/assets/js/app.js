@@ -200,7 +200,7 @@ $(document).ready(function () {
     });
 
 
-    $('.filters').on("click", "a", function(e) {
+    $('.filters').on("click", "a[data-value]", function(e) {
 
         e.preventDefault();
 
@@ -213,8 +213,6 @@ $(document).ready(function () {
             $form = $list_item.closest('form');
 
         $list_item.find('a').attr('data-active', 'false');
-
-        console.log(old_state);
 
         if(old_state !== undefined) {
 
@@ -233,15 +231,11 @@ $(document).ready(function () {
     });
 
     if ( !Modernizr.objectfit ) {
-        $('.photo').each(function(){
+        $('.photo img').each(function(){
 
-            var $img = $(this).find('img');
+            if($(this).attr('src') !== undefined && $(this).attr('src') !== null && $(this).attr('src').length)             {
 
-            if($img) {
-
-                var src = $img.attr('src');
-
-                $(this).css('background-image', "url('" + src +"')");
+                $(this).closest('div.photo').css('background-image', "url('" + $(this).attr('src') +"')");
 
             }
 

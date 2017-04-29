@@ -11,16 +11,23 @@ use App\Models\Bouquet;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Set;
-
+use App\Services\FilterService;
 
 class CategoryService
 {
+
+    protected $filterService;
 
     public $module = 'category';
 
     public $_view = 'index';
 
-    public function find($slug) {
+    function __construct(FilterService $filterService)
+    {
+        $this->filterService = $filterService;
+    }
+
+    public function find($slug, $sort = null) {
 
         $model =  Category::with(['translations', 'visible_children', 'visible_parent'])->visible()->where('slug', $slug)->first();
 
@@ -38,25 +45,27 @@ class CategoryService
 
             switch ($model->type) {
                 case (string)Bouquet::class:
-                    $bouquets = Bouquet::with(['visible_flowers'])->whereIn('category_id', $category_ids)
+                    $bouquets = Bouquet::with(['visible_flowers'])
+                        ->whereIn('category_id', $category_ids)
                         ->visible();
-                    $this->_addFilters($bouquets);
+                    $this->_addFilters($bouquets, $sort);
                     view()->share('bouquets', $bouquets->paginate(12));
                     $this->_view = 'bouquets';
                     break;
                 case (string)Set::class:
-                    $sets = Set::with(['visible_flowers'])->visible()
+                    $sets = Set::with(['visible_flowers'])
+                        ->visible()
                         ->whereHas('box', function ($query) use ($category_ids) {
-                        return $query->whereIn('category_id', $category_ids);
-                    });
-                    $this->_addFilters($sets);
+                            return $query->whereIn('category_id', $category_ids);
+                        });
+                    $this->_addFilters($sets, $sort);
                     view()->share('sets', $sets->paginate(12));
                     break;
                 case (string)Product::class:
                     $products = Product::with(['translations'])
                         ->visible()
                         ->whereIn('category_id', $category_ids);
-                        $this->_addFilters($products);
+                        $this->_addFilters($products, $sort);
                         view()->share('products', $products->paginate(12));
                         $this->_view = "presents";
                     break;
@@ -67,13 +76,26 @@ class CategoryService
 
         }
 
+        if(isset($sort)) {
+
+            $this->filterService->addMeta($sort, $model);
+
+        }
 
         return $model;
 
     }
 
-    private function _addFilters($queryBuilder) {
+    private function _addFilters($queryBuilder, $sort = null) {
+
+        if(isset($sort)) {
+
+            $this->filterService->addFilter($queryBuilder, $sort);
+        
+        }
+
         $used = false;
+
         if(request()->has('price') || request()->has('date')) {
             $filters = array_filter(request()->all());
 

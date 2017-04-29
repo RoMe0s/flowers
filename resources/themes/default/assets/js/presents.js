@@ -2,7 +2,11 @@ var presents = {};
 
 presents.init_autoloader = "more";
 
-presents.reload_url = window.location.pathname + '-reload';
+presents.reload_url = window.location.pathname;
+
+presents.reload_url = presents.reload_url.split('/');
+
+presents.reload_url = window.location.pathname.replace(presents.reload_url[1], presents.reload_url[1] + '-reload');
 
 presents.real_reload = function(category) {
 
