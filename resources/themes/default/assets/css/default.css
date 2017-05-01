@@ -765,6 +765,25 @@ div.product-table {
 .breadcrumbs {
     padding: 0;
     border-bottom: 1px solid #ddd;
+    list-style: none;
+}
+
+.breadcrumbs li {
+
+    display: inline-block;
+
+}
+
+.breadcrumbs li:after {
+
+    content: '/';
+
+}
+
+.breadcrumbs li:last-child:after {
+
+    content: '';
+
 }
 
 .elastislide-wrapper  {

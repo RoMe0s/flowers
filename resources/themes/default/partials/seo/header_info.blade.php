@@ -1,5 +1,5 @@
     <div>
-        <span class="invisible" itemprop="url" content="{!! route('home') !!}"></span>
+        <meta itemprop="url" content="{!! route('home') !!}">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                 <div class="row">

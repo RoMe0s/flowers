@@ -731,3 +731,23 @@ if(! function_exists('create_thumbnail')) {
     }
 
 }
+
+if(! function_exists('has_in_stock_for_seo')) {
+
+    function has_in_stock_for_seo($model) {
+    
+        if($model instanceOf \App\Models\Product || $model instanceOf \App\Models\Sale) {
+
+            return 'Есть в наличии';
+
+        } elseif($model->hasInStock()) {
+        
+            return 'Есть в наличии';
+            
+        }
+
+        return 'Нет в наличии';
+
+    }
+
+}

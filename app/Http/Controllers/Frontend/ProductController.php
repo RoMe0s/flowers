@@ -50,6 +50,8 @@ class ProductController extends FrontendController
 
         $this->setBreadcrumbs($model, $category);
 
+        $this->data('category', $category);
+
         return $this->render('product');
 
     }
