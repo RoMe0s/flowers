@@ -15,6 +15,11 @@
                         </a>
                     </li>
                 @endforeach
+                @if(sizeof($filters))
+                    <li class="title">
+                            Цены
+                    </li>
+                @endif
                 @foreach($filters as $filter)
                     <li>
                         <a href="{!! route('flowers_sort', ['sort' => $filter->slug]) !!}" title="{!! $filter->title !!}">

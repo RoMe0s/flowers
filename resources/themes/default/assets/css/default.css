@@ -1455,6 +1455,14 @@ ul.global-price-filter li.global-search[data-active="true"] * {
 
 }
 
+.mainpage_menu .sidebar ul.categories-list li.title {
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+}
+
 .mainpage_menu .sidebar ul.categories-list li {
 
     border-top: 1px solid rgba(147, 112, 219, 0.5);

@@ -19,7 +19,26 @@ class FilterService {
         
         abort_if(!$filter, 404);
 
-        return $filter;
+        $sort_type = $filter->type === '>' ? 'sortBy' : 'sortByDesc';
+
+        $closest_filter = $filters
+            ->{$sort_type}('value')
+            ->where('type', $filter->type)
+            ->filter(function($item) use ($filter) {
+
+                if($filter->type === '>') {
+
+                     return $item->value > $filter->value;
+
+                } else {
+
+                    return $item->value < $filter->value;
+
+                }
+
+            })->first();
+
+        return ['current' => $filter, 'closest' => $closest_filter];
     
     }
 
@@ -29,7 +48,11 @@ class FilterService {
         
             if(!isset($slug)) return;
 
-            $filter = $this->_getFilters($slug);
+            $filters = $this->_getFilters($slug);
+
+            $filter = $filters['current'];
+
+            $closest = $filters['closest'];
 
             if($filter->type === ">") {
 
@@ -37,11 +60,29 @@ class FilterService {
 
                     $query = $query->where($field, '>=', $filter->value);
 
+                    if(isset($closest)) {
+
+                        $query = $query->where($field, '<', $closest->value);
+
+                    }
+
                 } else {
 
-                    $query = $query->filter(function($value) use($filter, $field) {
-                        return $value->{$field} >= $filter->value;
+                    $query = $query->filter(function($value) use($filter, $field, $closest) {
+
+                        if(isset($closest)) {
+
+                            return $value->{$field} >= $filter->value && $value->{$field} < $closest->value;
+
+                        } else {
+
+                            return $value->{$field} >= $filter->value;
+
+                        }
+
                     });
+
+
 
                 }
 
@@ -51,10 +92,26 @@ class FilterService {
 
                     $query = $query->where($field, '<=', $filter->value);
 
+                    if(isset($closest)) {
+
+                        $query = $query->where($field, '>', $closest->value);
+
+                    }
+
                 } else {
 
-                    $query = $query->filter(function($value) use($filter, $field) {
-                       return $value->{$field} <= $filter->value;
+                    $query = $query->filter(function($value) use($filter, $field, $closest) {
+
+                        if(isset($closest)) {
+
+                            return $value->{$field} <= $filter->value && $value->{$field} > $closest->value;
+
+                        } else {
+
+                            return $value->{$field} <= $filter->value;
+
+                        }
+
                     });
 
                 }

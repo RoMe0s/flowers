@@ -26,7 +26,7 @@ class FilterWidget extends Widget
     
         $filters = Cache::remember('filter_items', 10, function() {
 
-            return FilterItem::visible()->positionSorted()->get();
+            return FilterItem::visible()->positionSorted('DESC')->get();
         
         });
 
