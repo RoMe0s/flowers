@@ -20,7 +20,7 @@
     @show
 
 </head>
-<body>
+<body @if(request()->url() == route('home')) itemscope itemtype="http://schema.org/Florist" @endif>
 <div id="notifications"></div>
 
     @section('header')
