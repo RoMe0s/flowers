@@ -20,8 +20,6 @@ $router->post('/test_login', function (){
 
 });*/
 
-\DB::commit();
-
 $router->group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
