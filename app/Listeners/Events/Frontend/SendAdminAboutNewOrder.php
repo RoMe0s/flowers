@@ -48,10 +48,12 @@ class SendAdminAboutNewOrder implements ShouldQueue
             ->get();
 
         foreach ($users as $user) {
-            Mail::queue('emails.order', ['item' => $item], function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject('Новый заказ на сайте');
-            });
+            if(!empty($user->email)) {
+                Mail::queue('emails.order', ['item' => $item], function ($message) use ($user) {
+                    $message->to($user->email);
+                    $message->subject('Новый заказ на сайте');
+                });
+            }
         }
     }
 }

@@ -45,7 +45,7 @@
                             </p>
                             <p>
                                 Квартира <span class="text-danger">*</span>
-                                <input class="form-control input-sm" type="number" name="flat" value="{{ old('flat') }}">
+                                <input class="form-control input-sm" type="text" name="flat" value="{{ old('flat') }}">
                             </p>
                             <p>
                                 Код домофона

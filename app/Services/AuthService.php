@@ -57,11 +57,8 @@ class AuthService
      */
     public function register($input)
     {
-        $user = Sentry::getUserProvider()->create($input);
 
-        $user->activated = true;
-
-        $user->save();
+        $user = Sentry::register($input, true);
 
         return $user;
 
@@ -74,9 +71,10 @@ class AuthService
      */
     public function prepareRegisterInput(UserRegisterRequest $request)
     {
-        $input = $request->only(['name', 'email', 'phone', 'password']);
+        $input = $request->only(['name', 'email', 'phone', 'login']);
 
-        $input['activated'] = true;
+        $input['password'] = str_random(6);
+
         $input['ip_address'] = !empty($input['ip_address']) ? $input['ip_address'] : Request::getClientIp();
 
         return $input;

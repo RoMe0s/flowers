@@ -39,6 +39,12 @@
 
 @endsection
 
+@section('popups')
+    @if(session()->has('register_status') && session('register_status') === "success")
+        @include('popups.register')
+    @endif
+@endsection
+
 @section('scripts')
     @parent
     <script src="{!! asset('assets/components/sticky-kit/jquery.sticky-kit.min.js') !!}"></script>
@@ -63,5 +69,7 @@
         }
 
     </script>
-
+    @if(session()->has('register_status') && session('register_status') === "success")
+        <script src="{!! Theme::asset('js/auth.js') !!}"></script>
+    @endif
 @endsection

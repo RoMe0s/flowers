@@ -18,15 +18,15 @@
 
                             <p>
                                 ФИО
-                                <input class="form-control input-sm" type="text" name="name" value="{{ $user->name }}" required>
+                                <input class="form-control input-sm" type="text" name="name" value="{{ $user->name }}" @if(!empty($user->name)) required @endif>
                             </p>
                             <p>
                                 Email
-                                <input class="form-control input-sm" type="email" name="email" value="{{ $user->email }}" disabled required>
+                                <input class="form-control input-sm" type="email" name="email" value="{{ $user->email }}" @if(!empty($user->email)) disabled @endif>
                             </p>
                             <p>
                                 Телефон
-                                <input class="form-control input-sm" type="tel" name="phone" value="{{ $user->phone }}" required>
+                                <input class="form-control input-sm" type="tel" value="{{ $user->phone }}" disabled>
                             </p>
                             <p class="text-right">
                                 <input class="btn btn-default" type="submit" value="Изменить">

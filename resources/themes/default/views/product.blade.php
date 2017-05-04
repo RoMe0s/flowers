@@ -35,7 +35,7 @@
                 <p class="price text-center" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                     <span itemprop="price">{!! $model->price !!}</span>
                     <meta itemprop="priceCurrency" content="RUR">руб.
-                    <link itemprop="availability" href="http://schema.org/InStock" content="{!! has_in_stock_for_seo($model) !!}">
+                    <link itemprop="availability" href="{!! has_in_stock_for_seo($model) !!}">
                     <meta itemprop="category" content="{!! $category->name !!}">
                 </p>
                 {!! $content !!}

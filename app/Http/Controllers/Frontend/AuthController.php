@@ -6,6 +6,7 @@ use App\Models\Discount;
 use App\Services\AuthService;
 use App\Http\Requests\Frontend\Auth\UserRegisterRequest;
 use App\Models\User;
+use App\Services\MessageService;
 use App\Services\PageService;
 use App\Services\UserService;
 use Cartalyst\Sentry\Users\UserExistsException;
@@ -106,7 +107,7 @@ class AuthController extends FrontendController
     public function postLogin($credentials = [])
     {
         $credentials = !empty($credentials) ? $credentials : [
-            'email'    => request('email'),
+            'login'    => request('login'),
             'password' => request('password'),
         ];
         
@@ -199,10 +200,14 @@ class AuthController extends FrontendController
 
             Event::fire(new UserRegister($user, $input));
 
-            return redirect()->route('login');
+            $this->authService->login(['login' => $user->login, 'password' => $input['password']]);
+
+            session()->flash('register_status', 'success');
+
+            return redirect()->route('home');
 
         } catch (UserExistsException $e) {
-            $message = 'Пользователь с таким Email уже существует';
+            $message = 'Пользователь с таким логином уже существует';
         }
         catch (Exception $e) {
             $message = 'Произошла ошибка, попробуйте пожалуйста позже';
@@ -234,26 +239,49 @@ class AuthController extends FrontendController
      */
     public function postReset(Request $request)
     {
-        $email = $request->get('email');
+        $login = $request->get('login');
         
         try {
-            $user = Sentry::findUserByLogin($email);
 
-            Mail::queue(
-                'emails.password',
-                ['email' => $email, 'token' => $user->getResetPasswordCode()],
-                function ($message) use ($user) {
-                    $message->to($user->email, $user->getFullName())
-                        ->subject('Восстановление пароля');
-                }
-            );
+            $user = Sentry::findUserByLogin($login);
 
-            FlashMessages::add('success', 'Инструкции по восстановлению отправлены Вам на Email');
+            if($user->login == $user->email) {
+
+                Mail::queue(
+                    'emails.password',
+                    ['login' => $login, 'token' => $user->getResetPasswordCode()],
+                    function ($message) use ($user) {
+                        $message->to($user->login, $user->getFullName())
+                            ->subject('Восстановление пароля');
+                    }
+                );
+
+                FlashMessages::add('success', 'Инструкции по восстановлению отправлены Вам на Email');
+
+            } elseif($user->login == $user->phone) {
+
+                $code = random_int(1000, 9999);
+
+                $user->reset_password_code = $code;
+
+                $user->save();
+
+                $messageService = new MessageService();
+
+                $messageService->passwordResetSMS($user, $code);
+
+                session()->flash('password_reset_status', 'success');
+                session()->flash('reset_password_code', $code);
+                session()->flash('reset_password_login', $login);
+
+                return redirect()->back();
+
+            }
 
         }
         catch (UserNotFoundException $e) {
 
-            FlashMessages::add('error', 'Пользователя с таким Email не существует');
+            FlashMessages::add('error', 'Пользователя с таким логином не существует');
 
         }
         catch (Exception $e) {
@@ -264,20 +292,42 @@ class AuthController extends FrontendController
 
         return redirect()->back();
     }
+
+    public function postResetPhone(Request $request) {
+
+        $digits = $request->get('code', []);
+
+        $token = implode("", $digits);
+
+        $login = $request->get('login');
+
+        try {
+            $user = Sentry::findUserByLogin($login);
+
+            if ($user->checkResetPasswordCode($token)) {
+
+                return ['status' => 'success', 'redirect' => route('password.token', ['login' => $login, 'token' => $token])];
+
+            }
+        }  catch (Exception $e) {}
+
+        return ['status' => 'error'];
+
+    }
     
     /**
-     * @param string $email
+     * @param string $login
      * @param string $token
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getRestore($email = '', $token = '')
+    public function getRestore($login = '', $token = '')
     {
 
         $error = null;
 
         try {
-            $user = Sentry::findUserByLogin($email);
+            $user = Sentry::findUserByLogin($login);
 
             if ($user->checkResetPasswordCode($token)) {
 
@@ -285,13 +335,13 @@ class AuthController extends FrontendController
 
                 $this->data('token', $token);
 
-                $this->data('email', $email);
+                $this->data('login', $login);
 
                 return $this->render($this->pageService->getPageTemplate($this->page));
 
             }
         } catch (UserNotFoundException $e) {
-            $error = 'Пользователя с таким Email не существует';
+            $error = 'Пользователя с таким логином не существует';
         } catch (Exception $e) {
             $error = 'Произошла ошибка, попробуйте еще раз';
         }
@@ -308,12 +358,12 @@ class AuthController extends FrontendController
         
     }
 
-    public function postRestore($email = '', $token = '', PasswordChange $request) {
+    public function postRestore($login = '', $token = '', PasswordChange $request) {
 
         $error = null;
 
         try {
-            $user = Sentry::findUserByLogin($email);
+            $user = Sentry::findUserByLogin($login);
 
             if ($user->checkResetPasswordCode($token)) {
 
@@ -326,7 +376,7 @@ class AuthController extends FrontendController
             }
         } catch (UserNotFoundException $e) {
 
-            $error = 'Пользователя с таким Email не существует';
+            $error = 'Пользователя с таким логином не существует';
 
         } catch (Exception $e) {
 

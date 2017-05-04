@@ -81,35 +81,35 @@ class OrderController extends FrontendController
 
         try {
 
-            $user = User::where('email', $data['email'])->first();
+            if($request->has('password')) {
 
-            if (is_null($user)) {
-
-                $password = str_random(8);
-
-                $input = [
-                    'name' => '',
-                    'email' => $data['email'],
-                    'password' => $password,
-                    'phone' => $data['phone']
+                $credentials = [
+                    'login' => $request->get('phone', null),
+                    'password' => $request->get('password', null)
                 ];
 
-                $user = $this->authService->register($input);
+                $user = $this->authService->login($credentials);
 
-                $user->addGroup(Sentry::findGroupByName('Clients'));
+                if(!$user) {
 
-                $this->userService->processUserInfo($user, $input);
+                    FlashMessages::add('error', 'Введён неверный логин или пароль');
 
-                $this->userService->processFields($user);
+                    return redirect()->back()->withInput($data);
 
-                Event::fire(new UserRegister($user, $input));
+                }
 
-            }
+            } else {
 
-            $cuser = Sentry::getUser();
+                $user = Sentry::getUser();
 
-            if($user != $cuser) {
-                Sentry::login($user, false);
+                if(!$user) {
+
+                    FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста еще раз');
+
+                    return redirect()->back()->withInput($data);
+
+                }
+
             }
 
             $order = Order::make([
@@ -118,14 +118,14 @@ class OrderController extends FrontendController
                 'time' => null,
                 'prepay' => 50,
                 'card_text' => '',
-                'desc' => 'Быстрый заказ'
+                'desc' => 'Быстрый заказ',
+                'user_id' => $user->id
             ], $user);
 
             Event::fire(new FastOrderStored($order));
 
             FlashMessages::add('success',
-                'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора.
-            Вам перезвонят для уточнения через несколько минут.');
+                'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора. Вам перезвонят для уточнения через несколько минут.');
 
             session()->forget('cart_discount_code');
 
@@ -305,21 +305,6 @@ class OrderController extends FrontendController
         $order = Order::with('items')->find($id);
 
         abort_if(!$order, 404);
-
-/*        try {
-
-            $itemable = $order->items()->first();
-
-            if(isset($itemable) && $itemable->itemable_type == (string)Subscription::class) {
-
-                $user = Sentry::getUser();
-
-                $user->subscriptions()->detach($itemable->itemable_id);
-
-            }
-
-
-        } catch (\Exception $e) {}*/
 
         $order->status = 0;
 

@@ -77,6 +77,7 @@ class FrontendController extends BaseController
         Meta::keywords($model->getMetaKeywords());
         Meta::image($model->getMetaImage());
         Meta::canonical($model->getUrl());
+        Meta::url($model->getUrl());
     }
 
     /**

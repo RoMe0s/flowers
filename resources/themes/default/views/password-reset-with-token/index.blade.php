@@ -9,7 +9,7 @@
     </section>
 
 
-    <form style="width: 250px; margin: 20px auto 0;" class="form" action="{!! route('post.password.token', ['email' => $email, 'token' => $token]) !!}" method="post">
+    <form style="width: 250px; margin: 20px auto 0;" class="form" action="{!! route('post.password.token', ['login' => $login, 'token' => $token]) !!}" method="post">
         {!! csrf_field() !!}
         <p>
             Новый пароль

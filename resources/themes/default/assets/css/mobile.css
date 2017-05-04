@@ -274,6 +274,12 @@
         display: none;
 
     }
+    .mainpage_menu .sidebar ul.categories-list {
+
+        padding: 0 2.5px;
+
+    }
+
 
     .mainpage_menu .mobile-button {
 
@@ -312,6 +318,16 @@
         padding-left: 5px;
 
         padding-right: 5px;
+
+    }
+
+    .after-register-popup div.close-btn {
+
+        position: absolute;
+
+        right: 15px;
+
+        top: 0;
 
     }
 

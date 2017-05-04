@@ -1,3 +1,18 @@
+div.additional-inputs a:hover {
+
+    color: #9370db;
+
+}
+div.additional-inputs a span {
+
+    border-bottom: 1px dotted black;
+
+}
+div.additional-inputs[data-active="false"] p:not(.button) {
+
+    display: none;
+
+}
 .main-section {
 
     position: relative;
@@ -1461,7 +1476,7 @@ ul.global-price-filter li.global-search[data-active="true"] * {
 
     text-transform: uppercase;
 
-    padding: 0 2.5px;
+    padding: 0 2.5px 20px 2.5px;
 
     text-align: center;
 
@@ -1630,5 +1645,77 @@ ul.global-price-filter li.global-search[data-active="true"] * {
 .mainpage_menu .mobile-button button {
 
     border-radius: 0;
+
+}
+
+.after-register-popup {
+
+    padding: 0 15px;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background-color: white;
+
+    z-index: 1000;
+
+}
+
+.after-register-popup .title {
+
+    text-align: center;
+
+    margin: 20px 0 0;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    display: block;
+
+}
+
+.after-register-popup i.title small {
+
+    font-size: 14px;
+
+    color: grey;
+
+    font-weight: normal;
+
+}
+
+.after-register-popup div.close-btn a {
+
+    margin: 5px 0 0 0;
+
+    line-height: 1;
+
+    font-size: 52px;
+
+}
+
+.after-register-popup div.footer {
+
+    position: absolute;
+
+    bottom: 0;
+
+    top: auto;
+
+    left: 0;
+
+    width: 100%;
+
+    background-color: rgb(232, 234, 237);
+
+    padding: 10px 0;
 
 }

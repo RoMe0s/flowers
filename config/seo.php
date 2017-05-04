@@ -7,6 +7,7 @@
  */
 return [
     'share' => [
-        'meta_description_length' => 100
+        'meta_description_length' => 100,
+        'default_image' => 'assets/themes/default/images/logo.png'
     ]
 ];

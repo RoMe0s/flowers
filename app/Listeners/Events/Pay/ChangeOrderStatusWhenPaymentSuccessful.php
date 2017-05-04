@@ -11,18 +11,21 @@ use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
+use App\Services\MessageService;
 
 class ChangeOrderStatusWhenPaymentSuccessful
 {
+
+    protected $messageService;
 
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(MessageService $messageService)
     {
-        //
+        $this->messageService = $messageService;
     }
 
     /**
@@ -65,16 +68,24 @@ class ChangeOrderStatusWhenPaymentSuccessful
                 }
             }
 
+            //send sms
+
+            $this->messageService->orderPaySuccessfulSMS($order);
+
+            //end send sms
+
             $users = User::select('users.email')
                 ->leftJoin('users_groups', 'users.id', '=', 'users_groups.user_id')
                 ->whereIn('users_groups.group_id', $used_groups)
                 ->get();
 
             foreach ($users as $user) {
-                Mail::queue('emails.payment', ['order' => $order], function ($message) use ($user, $order) {
-                    $message->to($user->email);
-                    $message->subject('Заказ #'.$order->id.' оплачен');
-                });
+                if(!empty($user->email)) {
+                    Mail::queue('emails.payment', ['order' => $order], function ($message) use ($user, $order) {
+                        $message->to($user->email);
+                        $message->subject('Заказ #' . $order->id . ' оплачен');
+                    });
+                }
             }
 
         }

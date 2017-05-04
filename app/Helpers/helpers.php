@@ -738,15 +738,15 @@ if(! function_exists('has_in_stock_for_seo')) {
     
         if($model instanceOf \App\Models\Product || $model instanceOf \App\Models\Sale) {
 
-            return 'Есть в наличии';
+            return 'http://schema.org/InStock';
 
         } elseif($model->hasInStock()) {
-        
-            return 'Есть в наличии';
+
+            return 'http://schema.org/InStock';
             
         }
 
-        return 'Нет в наличии';
+        return 'http://schema.org/OutOfStock';
 
     }
 

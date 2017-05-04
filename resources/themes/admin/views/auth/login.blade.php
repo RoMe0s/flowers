@@ -12,10 +12,10 @@
                {!! Form::open(array("id" => "login_form", "role" => "form", 'class' => 'form-horizontal', "route" => 'admin.login.post')) !!}
                    <div class="box-body">
                        <div class="form-group">
-                           <label for="email" class="col-sm-2 control-label">@lang('labels.email')</label>
+                           <label for="login" class="col-sm-2 control-label">Логин</label>
 
                            <div class="col-sm-10">
-                               {!! Form::text('email', '', array("placeholder"=> trans('labels.email'), 'class' => 'form-control input-sm', 'type' => "email" )) !!}
+                               {!! Form::text('login', '', array("placeholder"=> 'Логин', 'class' => 'form-control input-sm', 'type' => "email" )) !!}
                            </div>
                        </div>
                        <div class="form-group">

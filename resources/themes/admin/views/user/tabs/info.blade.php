@@ -1,3 +1,5 @@
+@php($disabled = isset($model->id) ? "disabled" : "")
+
 <div class="tab-pane active" id="settings">
     <div class="form-group required @if ($errors->has('name')) has-error @endif">
         {!! Form::label('name', trans('labels.fio'), ['class' => 'col-md-3 control-label']) !!}
@@ -13,7 +15,7 @@
         {!! Form::label('email', trans('labels.email'), ['class' => 'col-md-3 control-label']) !!}
 
         <div class="col-md-3">
-            {!! Form::text('email', null, ['placeholder' => trans('labels.email'), 'required' => true, 'class' => 'form-control input-sm']) !!}
+            {!! Form::text('email', null, ['placeholder' => trans('labels.email'), 'required' => true, 'class' => 'form-control input-sm', $disabled]) !!}
 
             {!! $errors->first('email', '<p class="help-block error">:message</p>') !!}
         </div>
@@ -23,7 +25,7 @@
         {!! Form::label('phone', trans('labels.phone'), ['class' => 'col-md-3 control-label']) !!}
 
         <div class="col-md-3">
-            {!! Form::text('phone', null, ['placeholder' => trans('labels.phone'), 'class' => 'form-control input-sm inputmask-2']) !!}
+            {!! Form::text('phone', null, ['placeholder' => trans('labels.phone'), 'class' => 'form-control input-sm inputmask-2', $disabled]) !!}
 
             {!! $errors->first('phone', '<p class="help-block error">:message</p>') !!}
         </div>

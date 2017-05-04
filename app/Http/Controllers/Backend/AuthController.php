@@ -49,7 +49,7 @@ class AuthController extends BackendController
     {
 
         $credentials = [
-            'email'    => $request->get('email'),
+            'login'    => $request->get('login'),
             'password' => $request->get('password'),
         ];
 

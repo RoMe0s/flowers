@@ -46,10 +46,12 @@ class SendAdminAboutNewIndividual implements ShouldQueue
             ->get();
 
         foreach ($users as $user) {
+            if(!empty($user->email)) {
                 Mail::queue('emails.individual-item', ['item' => $item], function ($message) use ($user) {
                     $message->to($user->email);
                     $message->subject('Заказан индивидуальный товар');
                 });
+            }
         }
     }
 }

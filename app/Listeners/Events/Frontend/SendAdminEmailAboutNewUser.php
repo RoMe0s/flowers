@@ -38,12 +38,12 @@ class SendAdminEmailAboutNewUser implements ShouldQueue
      */
     public function handle(UserRegister $event)
     {
-        Mail::queue(
+/*        Mail::queue(
             'emails.admin.new_user',
             ['user' => $event->user],
             function ($message) {
                 $message->to(config('app.email'), config('app.name'))->subject(trans('subjects.new_user'));
             }
-        );
+        );*/
     }
 }

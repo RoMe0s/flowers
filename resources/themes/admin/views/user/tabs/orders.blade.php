@@ -30,7 +30,7 @@
                     </tr>
                     @php($total_by_user += $order->getTotal())
                 @endforeach
-                @if(!sizeof($model->order))
+                @if(!sizeof($model->orders))
                     <tr>
                         <td colspan="3" class="text-center">
                             <h3>

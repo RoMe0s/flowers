@@ -10,10 +10,12 @@
             <h4>Заказ #{{ $order->id }} - <span class="{{ ($order->status == 0) ? 'text-danger': 'text-success' }}">{!! $order->getStringStatus() !!}</span></h4>
 
             <table class="table">
-                <tr>
-                    <td>Адрес доставки</td>
-                    <td>{{ $order->getAddress() }}</td>
-                </tr>
+                @if(isset($order->address))
+                    <tr>
+                        <td>Адрес доставки</td>
+                        <td>{{ $order->getAddress() }}</td>
+                    </tr>
+                @endif
                 <tr>
                     <td>Стоимость заказа</td>
                     <td>{{ $order->getTotal() }} руб.</td>

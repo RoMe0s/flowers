@@ -10,7 +10,7 @@
         <br>
 
         <p class="text-center">
-            Ещё не зарегистрировались? <a class="purple" href="{!! route('reg') !!}"><b>Зарегистрируйтесь!</b></a>
+            Ещё нет аккаунта? <a class="purple" href="{!! route('reg') !!}"><b>Создать учетную запись!</b></a>
         </p>
 
         <br>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <p class="text-center">
-                    Войдите в свой личный кабинет используя свой аккаунт Вконтакте, Facebook, Google+ и Instagram
+                    Войдите в свой личный кабинет используя свой аккаунт Вконтакте, Facebook, Google+ или Instagram
                 </p>
 
                 <div class="row">
@@ -51,8 +51,8 @@
                     @include('errors.form')
 
                     <p>
-                        Email
-                        <input class="form-control input-sm" type="email" name="email" value="{{ old('email') }}" required>
+                        Телефон или Email
+                        <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required>
                     </p>
                     <p>
                         Пароль

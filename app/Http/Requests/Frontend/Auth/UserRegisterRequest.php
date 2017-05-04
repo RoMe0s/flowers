@@ -25,15 +25,14 @@ class UserRegisterRequest extends FormRequest
      */
     public function rules()
     {
+
         $rules = [
-            'name'                  => 'required',
-            'email'                 => 'required|email|unique:users',
-            'phone'                 => 'string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
-            'password'              => 'required|confirmed:password_confirmation|min:' .
-                config('auth.passwords.min_length'),
-            'password_confirmation' => 'required',
+            'email'                 => 'email|unique:users',
+            'phone'                 => 'unique:user_info|required|string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'agreement'             => 'required'
         ];
+
+        $this->merge(['login' => $this->request->get('phone')]);
         
         return $rules;
     }

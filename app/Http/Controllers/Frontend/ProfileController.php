@@ -99,8 +99,17 @@ class ProfileController extends FrontendController
     {
         $model = $this->currentUser;
 
+        $fields = ['name', 'email'];
+
+        if(!empty($model->email)) {
+
+            $fields = ['name'];
+
+        }
+
         try {
-            $input = $this->userService->prepareInput($request);
+
+            $input = $request->only($fields, []);
 
             $this->userService->update($model, $input);
 

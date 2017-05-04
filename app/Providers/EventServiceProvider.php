@@ -31,7 +31,8 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Instagram\InstagramExtendSocialite@handle',
         ],
         'App\Events\Frontend\FastOrderStored' => [
-            'App\Listeners\Events\Frontend\SendAdminAboutNewOrder'
+            'App\Listeners\Events\Frontend\SendAdminAboutNewOrder',
+            'App\Listeners\Events\Frontend\SendUserOrderStoredSMS',
         ],
         'Artem328\LaravelYandexKassa\Events\BeforeCheckOrderResponse' => [
             'App\Listeners\Events\Pay\CheckOrderRequisites',

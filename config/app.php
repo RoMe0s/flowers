@@ -211,6 +211,7 @@ return [
         Kingpabel\Shoppingcart\ShoppingcartServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
         Artem328\LaravelYandexKassa\YandexKassaServiceProvider::class,
+        Rhinodontypicus\LetsAds\LetsAdsServiceProvider::class,
     ],
 
     /*
@@ -281,6 +282,7 @@ return [
         'Cart'                => Kingpabel\Shoppingcart\Facades\Cart::class,
         'Socialite'           => Laravel\Socialite\Facades\Socialite::class,
         'Kassa'     => Artem328\LaravelYandexKassa\Facades\YandexKassa::class,
+        'LetsAds' => Rhinodontypicus\LetsAds\LetsAdsFacade::class,
 
     ],
 

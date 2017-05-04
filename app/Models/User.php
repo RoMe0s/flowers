@@ -32,7 +32,8 @@ class User extends SentryUser implements FrontLink
         'password',
         'start_discount',
         'notifications',
-        'discount'
+        'discount',
+        'login'
     ];
 
     /**
