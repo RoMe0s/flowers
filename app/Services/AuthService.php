@@ -73,7 +73,7 @@ class AuthService
     {
         $input = $request->only(['name', 'email', 'phone', 'login']);
 
-        $input['password'] = str_random(6);
+        $input['password'] = random_int(10000, 99999);
 
         $input['ip_address'] = !empty($input['ip_address']) ? $input['ip_address'] : Request::getClientIp();
 

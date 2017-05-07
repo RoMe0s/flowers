@@ -137,7 +137,7 @@ class AuthController extends FrontendController
             }
         }
         catch (UserNotFoundException $e) {
-            FlashMessages::add('error', 'Пользователя с таким Email не существует');
+            FlashMessages::add('error', 'Пользователя с таким логином не существует');
         }
         catch (WrongPasswordException $e) {
             FlashMessages::add('error', 'Неверный логин или пароль');

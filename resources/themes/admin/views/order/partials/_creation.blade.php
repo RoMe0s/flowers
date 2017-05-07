@@ -531,7 +531,7 @@
 
         });
 
-        total += individual_price;
+        total += parseFloat(individual_price);
 
         total = parseFloat(total);
 
