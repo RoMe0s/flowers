@@ -466,4 +466,21 @@ class UserController extends BackendController
             $info->update($user_info);
         }
     }
+
+    public function find(Request $request) {
+
+        $query = $request->get('query', null);
+
+        $users = User::joinInfo()
+            ->where('name', 'LIKE', "%$query%")
+//            ->orWhere('users.id', $query)
+            ->orWhere('email', 'LIKE', "%$query%")
+            ->orWhere('phone', 'LIKE', "%$query%")
+            ->get();
+
+        $html = view('order.modals.user')->with(['users' => $users])->render();
+
+        return ['status' => 'success', 'html' => $html];
+
+    }
 }

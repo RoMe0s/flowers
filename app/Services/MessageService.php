@@ -8,6 +8,16 @@ use LetsAds;
 
 class MessageService {
 
+    private function _getPhone($phone) {
+
+        preg_match('/\d+/', $phone);
+
+        $phone[0] = '7';
+
+        return $phone;
+
+    }
+
     public function getBalance() {
     
         return LetsAds::balance(); 
@@ -17,8 +27,10 @@ class MessageService {
     public function registerSMS(User $user, $password) {
 
         $message = sprintf(variable("register_sms"), $password);
+
+        $phone = $this->_getPhone($user->phone);
     
-        $sending = LetsAds::send($message, config('letsads.name'), $user->phone);
+        $sending = LetsAds::send($message, config('letsads.name'), $phone);
 
         return $sending ? true: false;
     
@@ -28,7 +40,9 @@ class MessageService {
 
         $message = sprintf(variable("reset_sms"), $code);
 
-        $sending = LetsAds::send($message, config('letsads.name'), $user->phone);
+        $phone = $this->_getPhone($user->phone);
+
+        $sending = LetsAds::send($message, config('letsads.name'), $phone);
 
         return $sending ? true: false;
         
@@ -39,6 +53,8 @@ class MessageService {
         $message = sprintf(variable("order_confirmed_sms"), route('order.pay', ['id' => $order->id]));
 
         $phone = $order->prepay == 100 ? $user->phone : (!empty($order->recipient_phone) ? $order->recipient_phone : $user->phone);
+
+        $phone = $this->_getPhone($phone);
 
         $sending = LetsAds::send($message, config('letsads.name'), $phone);
 
@@ -55,6 +71,8 @@ class MessageService {
         $phone = $order->prepay == 100 ? $user->phone : (!empty($order->recipient_phone) ? $order->recipient_phone : $user->phone);
 
         if($phone) {
+
+            $phone = $this->_getPhone($phone);
 
             $sending = LetsAds::send($message, config('letsads.name'), $phone);
 
@@ -75,6 +93,8 @@ class MessageService {
         $phone = $order->prepay == 100 ? $user->phone : (!empty($order->recipient_phone) ? $order->recipient_phone : $user->phone);
 
         if($phone) {
+
+            $phone = $this->_getPhone($phone);
 
             $sending = LetsAds::send($message, config('letsads.name'), $phone);
 

@@ -5,7 +5,7 @@ window.initInputMask = () ->
   #mobile phone
   $(".inputmask-2").each () ->
     $(this).inputmask
-      mask: "+9999999999999999"
+      mask: "8999999999999999"
       greedy: false
       placeholder: ""
 

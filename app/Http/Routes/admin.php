@@ -26,6 +26,8 @@ $router->group(
                     ['as' => 'admin.user.new_password.post', 'uses' => 'Backend\UserController@postNewPassword']
                 );
                 $router->resource('user', 'Backend\UserController');
+                $router->get('users/find', 'Backend\UserController@find');
+                $router->get('products/find', 'Backend\ProductController@find');
 
                 // groups
                 $router->resource('group', 'Backend\GroupController');

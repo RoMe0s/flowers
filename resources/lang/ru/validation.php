@@ -9,6 +9,7 @@ return array (
   'alpha_num' => 'Поле :attribute может содержать только буквы и цифры.',
   'array' => 'Поле :attribute должно быть массивом.',
   'before' => 'В поле :attribute должна быть дата до :date.',
+  'price' => 'цена',
   'between' => 
   array (
     'numeric' => 'Поле :attribute должно быть между :min и :max.',
@@ -81,6 +82,7 @@ return array (
   ),
   'attributes' => 
   array (
+      'price' => 'цена',
     'status' => 'статус',
     'status_id' => 'статус',
     'email' => 'Email',

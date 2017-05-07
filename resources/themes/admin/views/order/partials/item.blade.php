@@ -28,7 +28,7 @@ if($item->itemable instanceof \App\Models\Individual) {
     </td>
     <td>
         <div class="form-group @if ($errors->has('items.old.' .$item->id. '.price')) has-error @endif">
-            {!! Form::text('items[old][' . $item->id .'][price]', $item->getPrice($discount), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
+            {!! Form::text('items[old][' . $item->id .'][price]', $item->getPrice(0), ['class' => 'form-control input-sm', 'disabled' => true]) !!}
         </div>
     </td>
     <td>

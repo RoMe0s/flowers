@@ -75,7 +75,7 @@
             @endforeach
         @else
         <tr>
-            <h4 class="text-center">@lang('labels.no items in the basket')</h4>
+            <h5 class="text-center text-warning">@lang('labels.no items in the basket')</h5>
         </tr>
         @endif
         </tbody>

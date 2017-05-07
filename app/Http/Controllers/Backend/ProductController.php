@@ -324,4 +324,46 @@ class ProductController extends BackendController
 
         $model->categories()->attach(array_diff($new, $old));
     }
+
+    public function find(Request $request) {
+
+        $query = $request->get('query', null);
+
+        $classes = [
+            "App\\Models\\Product" => 'products',
+            "App\\Models\\Set" => 'sets',
+            "App\\Models\\Bouquet" => 'bouquets',
+            "App\\Models\\Sale" => 'sales',
+            "App\\Models\\Subscription" => 'subscriptions'
+        ];
+
+        $names = [
+            'Product' => 'Подарок',
+            'Set' => 'Набор',
+            'Bouquet' => 'Букет',
+            'Sale' => 'Акция',
+            'Subscription' => 'Подписка'
+        ];
+
+        $products = collect();
+
+        foreach($classes as $class => $table) {
+
+            $field = 'name';
+
+            $field = $class == "App\\Models\\Subscription" ? 'title' : $field;
+
+            $result = $class::joinTranslations($table)
+                ->where($field, 'LIKE', "%$query%")
+                ->get();
+
+            $products = $products->merge($result);
+
+        }
+
+        $html = view('order.modals.product')->with(['products' => $products, 'names' => $names])->render();
+
+        return ['status' => 'success', 'html' => $html];
+
+    }
 }

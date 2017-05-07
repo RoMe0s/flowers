@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\Backend\Order\OrderCreateRequest;
 use App\Http\Requests\Backend\Order\OrderRequest;
+use App\Models\Individual;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Services\MessageService;
 use Carbon\Carbon;
 use Datatables;
 use DB;
@@ -189,36 +192,87 @@ class OrderController extends BackendController
      * Store a newly created resource in storage.
      * POST /order
      *
-     * @param \App\Http\Requests\Backend\Order\OrderRequest $request
+     * @param \App\Http\Requests\Backend\Order\OrderCreateRequest $request
      *
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function store(OrderRequest $request)
+    public function store(OrderCreateRequest $request)
     {
+
         DB::beginTransaction();
+
+        $messageService = new MessageService();
 
         try {
             $input = $request->all();
 
-            $input['user_id'] = isset($input['user_id']) && $input['user_id'] != "" ? $input['user_id'] : $this->_processUser();
+            $user_id = $request->get('user_id', null);
+
+            $user_info = $request->get('user', []);
+
+            if(!$user_id || sizeof($user_info)) {
+
+                $user = new User();
+
+                $user_info['login'] = $user_info['phone'];
+
+                $user_info['password'] = str_random(6);
+
+                $user_info['activated'] = true;
+
+                $user->fill($user_info);
+
+                $user->save();
+
+                $user_id = $user->id;
+
+                $messageService->registerSMS($user, $user_info['password']);
+
+            } else {
+
+                $user = User::find($user_id);
+
+            }
 
             if(!isset($input['address_id'])) {
-                $input['address_id'] = $this->_proccessAddress($input['user_id']);
-            }
 
+                $input['address_id'] = $this->_proccessAddress($user_id);
+
+            }
 
             $model = new Order($input);
+
             $model->save();
 
-            if($model->discount == 0) {
+            $items = $request->get('items', []);
 
-                $model->discount = $model->user->getDiscount();
+            if(isset($input['individual']) && sizeof($input['individual'])) {
 
-                $model->save();
+                $individual = new Individual();
+
+                $input['individual']['email'] = $user->email;
+
+                $individual->fill($input['individual']);
+
+                $individual->save();
+
+                $item = [
+                    'itemable_type' => "App\\Models\\" . class_basename($individual),
+                    'itemable_id' => $individual->id,
+                    'price' => $individual->price,
+                    'count' => 1
+                ];
+
+                $items[] = $item;
 
             }
 
-            $this->_processItems($model);
+            foreach ($items as $item) {
+
+                $item = new OrderItem($item);
+
+                $model->items()->save($item);
+            }
 
             DB::commit();
 
@@ -226,13 +280,18 @@ class OrderController extends BackendController
 
             session()->forget('basket_items');
 
+            $messageService->orderStoredSMS($model);
+
             return Redirect::route('admin.order.index');
+
         } catch (Exception $e) {
+
             DB::rollBack();
 
             FlashMessages::add('error', trans('messages.save_failed'));
 
             return Redirect::back()->withInput();
+
         }
     }
 

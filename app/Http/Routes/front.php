@@ -20,6 +20,39 @@ $router->post('/test_login', function (){
 
 });*/
 
+$router->get('copy-login', [
+    'middleware' => 'auth',
+    'uses' => function() {
+
+        \DB::beginTransaction();
+
+        foreach(\App\Models\User::all() as $user) {
+
+            try {
+
+                $user->login = $user->email;
+
+                if (!empty($user->email)) {
+
+                    $user->save();
+
+                }
+
+            } catch (Exception $e) {
+
+                continue;
+
+            }
+
+        }
+
+        \DB::commit();
+
+        echo 'success';
+
+    }
+]);
+
 $router->group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
