@@ -6,7 +6,7 @@
 <script type="text/javascript" src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/slick-carousel/slick/slick.min.js') !!}"></script>
 <script type="text/javascript" src="{!! Theme::asset('js/app.js') !!}"></script>
-
+<script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
 
 <script type="text/javascript">
     lightbox.option({

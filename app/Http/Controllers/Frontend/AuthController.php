@@ -245,7 +245,7 @@ class AuthController extends FrontendController
 
             $user = Sentry::findUserByLogin($login);
 
-            if($user->login == $user->email) {
+            if($user->email) {
 
                 Mail::queue(
                     'emails.password',
@@ -258,7 +258,8 @@ class AuthController extends FrontendController
 
                 FlashMessages::add('success', 'Инструкции по восстановлению отправлены Вам на Email');
 
-            } elseif($user->login == $user->phone) {
+            }
+            if($user->phone) {
 
                 $code = random_int(1000, 9999);
 
@@ -288,7 +289,7 @@ class AuthController extends FrontendController
 
             FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
 
-        };
+        }
 
         return redirect()->back();
     }

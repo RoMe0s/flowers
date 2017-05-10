@@ -70,6 +70,5 @@
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
     <script src="{!! Theme::asset('js/auth.js') !!}"></script>
 @endsection
