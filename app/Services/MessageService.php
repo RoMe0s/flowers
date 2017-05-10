@@ -26,7 +26,11 @@ class MessageService {
 
     public function registerSMS(User $user, $password) {
 
-        $message = sprintf(variable("register_sms"), $password);
+        $message = variable("register_sms");
+
+        if(!$message) return false;
+
+        $message = sprintf($message, $password);
 
         $phone = $this->_getPhone($user->phone);
     
@@ -38,7 +42,11 @@ class MessageService {
     
     public function passwordResetSMS(User $user, $code) {
 
-        $message = sprintf(variable("reset_sms"), $code);
+        $message = variable("reset_sms");
+
+        if(!$message) return false;
+
+        $message = sprintf($message, $code);
 
         $phone = $this->_getPhone($user->phone);
 
@@ -50,7 +58,11 @@ class MessageService {
 
     public function orderConfirmedSMS(User $user, Order $order) {
 
-        $message = sprintf(variable("order_confirmed_sms"), route('order.pay', ['id' => $order->id]));
+        $message = variable("order_confirmed_sms");
+
+        if(!$message) return false;
+
+        $message = sprintf($message, route('order.pay', ['id' => $order->id]));
 
         $phone = $order->prepay == 100 ? $user->phone : (!empty($order->recipient_phone) ? $order->recipient_phone : $user->phone);
 
@@ -65,6 +77,8 @@ class MessageService {
     public function orderPaySuccessfulSMS(Order $order) {
 
         $message = variable("order_pay_successful_sms");
+
+        if(!$message) return false;
 
         $user = User::with(['info'])->where('id', $order->user_id)->first();
 
@@ -86,7 +100,11 @@ class MessageService {
 
     public function orderStoredSMS(Order $order) {
 
-        $message = sprintf(variable("order_stored_sms"), $order->id . '(' . $order->getTotal() . 'руб.)');
+        $message = variable("order_stored_sms");
+
+        if(!$message) return false;
+
+        $message = sprintf($message, $order->id . '(' . $order->getTotal() . 'руб.)');
 
         $user = User::with(['info'])->where('id', $order->user_id)->first();
 

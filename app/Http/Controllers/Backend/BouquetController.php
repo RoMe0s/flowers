@@ -95,7 +95,7 @@ class BouquetController extends BackendController
                 ->editColumn(
                     'image',
                     function ($model) {
-                        return $model->image ? "<div class='text-center'><img src='{$model->image}' style='max-width: 75px; max-height: 75px;' /></div>" : trans('labels.no');
+                        return $model->image ? "<a href='{$model->image}' data-lightbox='{$model->id}' class='text-center col-xs-12'><img src='{$model->image}' style='max-width: 75px; max-height: 75px;' /></a>" : trans('labels.no');
                     }
                 )
                 ->editColumn(
