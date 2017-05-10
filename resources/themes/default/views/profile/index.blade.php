@@ -26,7 +26,7 @@
                             </p>
                             <p>
                                 Телефон
-                                <input class="form-control input-sm" type="tel" value="{{ $user->phone }}" disabled>
+                                <input name="phone" class="form-control input-sm" type="tel" value="{{ $user->phone }}" @if(!empty($user->phone)) disabled @endif>
                             </p>
                             <p class="text-right">
                                 <input class="btn btn-default" type="submit" value="Изменить">

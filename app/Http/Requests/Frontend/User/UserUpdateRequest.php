@@ -27,7 +27,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'email' => 'email|unique:users'
+            'email' => 'email|unique:users',
+            'phone' => 'string'
         ];
 
         return $rules;

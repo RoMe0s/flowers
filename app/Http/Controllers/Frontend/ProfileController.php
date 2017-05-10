@@ -99,11 +99,21 @@ class ProfileController extends FrontendController
     {
         $model = $this->currentUser;
 
-        $fields = ['name', 'email'];
+        $fields = ['name', 'email', 'phone'];
 
         if(!empty($model->email)) {
 
-            $fields = ['name'];
+            if(($key = array_search('email', $fields)) !== false) {
+                unset($fields[$key]);
+            }
+
+        }
+
+        if(!empty($model->phone)) {
+
+            if(($key = array_search('phone', $fields)) !== false) {
+                unset($fields[$key]);
+            }
 
         }
 
