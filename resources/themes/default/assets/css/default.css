@@ -1,4 +1,3 @@
-div.additional-inputs a:hover {
 
     color: #9370db;
 
@@ -1689,6 +1688,12 @@ ul.global-price-filter li.global-search[data-active="true"] * {
     color: grey;
 
     font-weight: normal;
+
+}
+
+.after-register-popup div.close-btn {
+
+    z-index: 10000;
 
 }
 

@@ -46,15 +46,3 @@
         </div>
     </section>
 @endsection
-
-@section('scripts')
-    @parent
-    <script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('input[name=phone]').inputmask({
-                mask: "89999999999"
-            });
-        });
-    </script>
-@endsection

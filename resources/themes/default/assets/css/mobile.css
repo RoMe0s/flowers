@@ -321,6 +321,35 @@
 
     }
 
+    .after-register-popup {
+    
+        overflow-y: auto;
+
+        overflow-x: hidden;
+
+        padding-top: 20px;
+    
+    }
+
+    .after-register-popup div.footer {
+    
+        position: relative;
+
+        margin: 20px -20px 0 -20px;
+
+        width: calc(100% + 40px);
+    
+    }
+
+    .after-register-popup p.title {
+
+        font-size: 16px;
+
+        margin: 10px 0 0;
+
+    }
+
+
     .after-register-popup div.close-btn {
 
         position: absolute;
