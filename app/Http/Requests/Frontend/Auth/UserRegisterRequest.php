@@ -8,8 +8,10 @@
 
 namespace App\Http\Requests\Frontend\Auth;
 
+use App\Decorators\Phone;
 use App\Http\Requests\FormRequest;
 use App\Models\UserInfo;
+
 
 /**
  * Class UserRegisterRequest
@@ -28,11 +30,15 @@ class UserRegisterRequest extends FormRequest
 
         $rules = [
             'email'                 => 'email|unique:users',
-            'phone'                 => 'unique:user_info|required|string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'phone'                 => 'unique:user_info|required|string|regex:' . config('user.phone_regex'),
             'agreement'             => 'required'
         ];
 
-        $this->merge(['login' => $this->request->get('phone')]);
+        $phone = new Phone($this->request->get('phone'));
+
+        $phone = $phone->getDecorated();
+
+        $this->merge(['login' => $phone]);
         
         return $rules;
     }

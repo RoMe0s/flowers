@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Decorators\Phone;
 use App\Http\Requests\Frontend\User\UserPasswordUpdateRequest;
 use App\Http\Requests\Frontend\User\UserUpdateRequest;
 use App\Models\Discount;
@@ -101,6 +102,16 @@ class ProfileController extends FrontendController
 
         $fields = ['name', 'email', 'phone'];
 
+        if($request->has('phone')) {
+
+            $phone = $request->get('phone');
+
+            $phone = new Phone($phone);
+
+            $request->replace(['phone' => $phone->getDecorated()]);
+
+        }
+
         if(!empty($model->email)) {
 
             if(($key = array_search('email', $fields)) !== false) {
@@ -108,6 +119,7 @@ class ProfileController extends FrontendController
             }
 
         }
+
 
         if(!empty($model->phone)) {
 

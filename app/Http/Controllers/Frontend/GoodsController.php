@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers\Frontend;
+use App\Decorators\Phone;
 use App\Http\Requests\Frontend\Individual\IndividualCreateRequest;
 use App\Models\Individual;
 use App\Models\Page;
@@ -83,6 +84,10 @@ class GoodsController extends FrontendController
     public function storeIndividual(IndividualCreateRequest $request) {
 
         $input = $request->all();
+
+        $phone = new Phone($input['phone']);
+
+        $input['phone'] = $phone;
 
         try {
 

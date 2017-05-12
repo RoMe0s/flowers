@@ -1,4 +1,5 @@
 @if(request()->url() == route('home'))
+
     <div>
         <link itemprop="url" href="{!! route('home') !!}">
         <div class="row">

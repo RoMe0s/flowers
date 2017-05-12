@@ -1,7 +1,6 @@
 @extends('layouts.auth')
 
 @section('content')
-
    <div class="row login-block">
        <div class="col-md-4 col-md-offset-4">
            <div class="box box-primary">

@@ -1,4 +1,5 @@
 <div class="form-group @if ($errors->has('address')) has-error @endif">
+
     {!! Form::label('address', 'Выберите адрес', ['class' => 'control-label col-xs-12 col-sm-2']) !!}
 
     <div class="col-xs-12 col-sm-9">

@@ -218,6 +218,7 @@ class OrderController extends BackendController
 
                 $user_info['password'] = random_int(10000, 99999);
 
+
                 $user_info['activated'] = true;
 
                 $user->fill($user_info);

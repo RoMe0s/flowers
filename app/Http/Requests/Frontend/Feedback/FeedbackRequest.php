@@ -20,7 +20,7 @@ class FeedbackRequest extends FormRequest
         return [
             'name'     => 'required',
             'email'   => 'required|email',
-            'phone'    => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'phone'    => 'string|regex:' . config('user.phone_regex'),
             'text' => 'required',
         ];
     }

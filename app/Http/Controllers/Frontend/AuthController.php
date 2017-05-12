@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Frontend;
 
+use App\Decorators\Phone;
 use App\Events\Frontend\UserRegister;
 use App\Http\Requests\Frontend\User\PasswordChange;
 use App\Models\Discount;
@@ -106,8 +107,23 @@ class AuthController extends FrontendController
      */
     public function postLogin($credentials = [])
     {
+
+        $login = request()->get('login');
+
+        $phone = new Phone($login);
+
+        $phone = $phone->getDecorated();
+
+        $user = User::where('login', $login)->first();
+
+        if(!isset($user)) {
+
+            $login = $phone;
+
+        }
+
         $credentials = !empty($credentials) ? $credentials : [
-            'login'    => request('login'),
+            'login'    => $login,
             'password' => request('password'),
         ];
         
@@ -187,6 +203,8 @@ class AuthController extends FrontendController
         try {
 
             $input = $this->authService->prepareRegisterInput($request);
+
+            $input['phone'] = $input['login'];
             
             $user = $authService->register($input);
 
@@ -240,26 +258,30 @@ class AuthController extends FrontendController
     public function postReset(Request $request)
     {
         $login = $request->get('login');
+
+        $phone = new Phone($login);
+
+        $phone = $phone->getDecorated();
         
         try {
 
-            $user = Sentry::findUserByLogin($login);
+            $user = User::where('login', $login)->first();
 
-            if($user->email) {
+            if(!isset($user)) {
 
-                Mail::queue(
-                    'emails.password',
-                    ['login' => $login, 'token' => $user->getResetPasswordCode()],
-                    function ($message) use ($user) {
-                        $message->to($user->login, $user->getFullName())
-                            ->subject('Восстановление пароля');
-                    }
-                );
+                $user = User::where('login', $phone)->first();
 
-                FlashMessages::add('success', 'Инструкции по восстановлению отправлены Вам на Email');
+                $login = $phone;
 
             }
-            if($user->phone) {
+
+            if(!isset($user)) {
+
+                throw new UserNotFoundException();
+
+            }
+
+            if($user->phone == $user->login) {
 
                 $code = random_int(1000, 9999);
 
@@ -275,7 +297,18 @@ class AuthController extends FrontendController
                 session()->flash('reset_password_code', $code);
                 session()->flash('reset_password_login', $login);
 
-                return redirect()->back();
+            } elseif($user->email) {
+
+                Mail::queue(
+                    'emails.password',
+                    ['login' => $login, 'token' => $user->getResetPasswordCode()],
+                    function ($message) use ($user) {
+                        $message->to($user->login, $user->getFullName())
+                            ->subject('Восстановление пароля');
+                    }
+                );
+
+                FlashMessages::add('success', 'Инструкции по восстановлению отправлены Вам на Email');
 
             }
 
@@ -322,7 +355,7 @@ class AuthController extends FrontendController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getRestore($login = '', $token = '')
+    public function getRestore($token = '', $login = '')
     {
 
         $error = null;
@@ -359,7 +392,7 @@ class AuthController extends FrontendController
         
     }
 
-    public function postRestore($login = '', $token = '', PasswordChange $request) {
+    public function postRestore($token = '', $login = '', PasswordChange $request) {
 
         $error = null;
 

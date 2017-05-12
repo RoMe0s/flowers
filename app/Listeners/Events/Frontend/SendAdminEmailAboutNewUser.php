@@ -19,7 +19,6 @@ use Mail;
  */
 class SendAdminEmailAboutNewUser implements ShouldQueue
 {
-
     use InteractsWithQueue;
 
     /**

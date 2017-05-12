@@ -24,6 +24,7 @@
                                 Email
                                 <input class="form-control input-sm" type="email" name="email" value="{{ $user->email }}" @if(!empty($user->email)) disabled @endif>
                             </p>
+
                             <p>
                                 Телефон
                                 <input name="phone" class="form-control input-sm" type="tel" value="{{ $user->phone }}" @if(!empty($user->phone)) disabled @endif>

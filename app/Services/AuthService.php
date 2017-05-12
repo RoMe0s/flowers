@@ -78,5 +78,6 @@ class AuthService
         $input['ip_address'] = !empty($input['ip_address']) ? $input['ip_address'] : Request::getClientIp();
 
         return $input;
+
     }
 }

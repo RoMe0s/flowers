@@ -29,6 +29,7 @@ use Response;
 class SetController extends BackendController
 {
 
+
     use AjaxFieldsChangerTrait;
 
     use SaveImagesTrait;

@@ -7,4 +7,5 @@ return [
     'login' => env('LETSADS_LOGIN'),
     'password' => env('LETSADS_PASSWORD'),
     'name' => env('LETSADS_NAME')
+
 ];

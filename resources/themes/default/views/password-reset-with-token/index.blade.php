@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <h3 class="text-center">{!! $model->name !!}</h3>
 
     <section>

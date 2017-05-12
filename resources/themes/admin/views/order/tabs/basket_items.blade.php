@@ -1,4 +1,5 @@
 <div class="box-body table-responsive no-padding">
+
     <table class="table table-hover duplication">
         <tbody>
         @if (count($items))

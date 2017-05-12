@@ -12,4 +12,6 @@ return [
 
     'min_phone_length' => 5,
 
+    'phone_regex' => '/\+\d \(\d{3}\) \d{3}-\d{2}-\d{2}/'
+
 ];

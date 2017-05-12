@@ -26,9 +26,10 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
+
         $rules = [
             'email' => 'email|unique:users',
-            'phone' => 'string'
+            'phone' => 'string|regex:' . config('user.phone_regex')
         ];
 
         return $rules;

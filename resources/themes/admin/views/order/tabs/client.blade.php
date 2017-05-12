@@ -1,6 +1,7 @@
 <div class="form-group @if ($errors->has('user')) has-error @endif">
     {!! Form::label('user', trans('labels.user'), ['class' => 'control-label col-xs-12 col-sm-2']) !!}
 
+
     <div class="col-xs-12 col-sm-9">
 
         @include('order.partials.users_list')

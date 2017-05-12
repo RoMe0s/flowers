@@ -28,6 +28,7 @@ use Response;
 class BouquetController extends BackendController
 {
 
+
     use AjaxFieldsChangerTrait;
 
     use SaveImagesTrait;

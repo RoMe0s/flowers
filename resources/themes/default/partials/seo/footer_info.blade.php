@@ -1,4 +1,5 @@
 @if(request()->url() == route('home'))
+
 <div class="col-lg-4 col-xs-4">
     <strong itemprop="name">
         {!! config('app.name') !!}

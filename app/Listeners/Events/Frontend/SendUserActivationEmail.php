@@ -20,7 +20,6 @@ use Mail;
  */
 class SendUserActivationEmail implements ShouldQueue
 {
-
     use InteractsWithQueue;
 
     protected $messageService;

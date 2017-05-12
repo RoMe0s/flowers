@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
     <section>
         @include('partials.breadcrumbs')
         <div class="product-layout" itemscope itemtype="http://schema.org/Product">

@@ -36,6 +36,7 @@ class ChangeOrderStatusWhenPaymentSuccessful
      */
     public function handle(BeforePaymentAvisoResponse $event)
     {
+
         if ($event->request->isValidHash()) {
             $order = Order::with('items')->find($event->request->get('orderNumber'));
 

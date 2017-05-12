@@ -6,6 +6,7 @@ use App\Http\Requests\FormRequest;
 
 class OrderCreateRequest extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -65,7 +66,7 @@ class OrderCreateRequest extends FormRequest
             'discount'      => 'integer|required',
             'prepay'    => 'required',
             'recipient_name' => 'required_with:user_data_required',
-            'recipient_phone'    => 'required_with:user_data_required|string',
+            'recipient_phone'    => 'required_with:user_data_required|string|regex:' . config('user.phone_regex'),
             'email' => 'email',
             'date' => 'date',
             'status' => 'required',

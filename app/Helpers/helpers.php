@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Translate the given message.
  * Wrapper for default trans (Lang::get) method

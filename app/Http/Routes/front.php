@@ -20,6 +20,7 @@ $router->post('/test_login', function (){
 
 });*/
 
+
 $router->group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
@@ -203,12 +204,12 @@ $router->group(
 
             $router->post('password-reset-phone', 'Frontend\AuthController@postResetPhone');
 
-            $router->get('password-reset/{login}/{token}', [
+            $router->get('password-reset/{token}/{login}', [
                 'as' => 'password.token',
                 'uses' => 'Frontend\AuthController@getRestore'
             ]);
 
-            $router->post('password-reset/{login}/{token}', [
+            $router->post('password-reset/{token}/{login}', [
                 'as' => 'post.password.token',
                 'uses' => 'Frontend\AuthController@postRestore'
             ]);

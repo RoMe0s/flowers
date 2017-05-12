@@ -20,7 +20,6 @@ use Mail;
  */
 class SendUserOrderStoredSMS implements ShouldQueue
 {
-
     use InteractsWithQueue;
 
     protected $messageService;

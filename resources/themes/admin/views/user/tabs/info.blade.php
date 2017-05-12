@@ -1,5 +1,4 @@
 @php($disabled = isset($model->id) ? "disabled" : "")
-
 <div class="tab-pane active" id="settings">
     <div class="form-group required @if ($errors->has('name')) has-error @endif">
         {!! Form::label('name', trans('labels.fio'), ['class' => 'col-md-3 control-label']) !!}

@@ -24,7 +24,7 @@ class OrderStore extends FormRequest
             'time'  => 'required',
             'prepay' => 'required|integer',
             'recipient_name' => 'required_if:prepay,100',
-            'recipient_phone' => 'required_if:prepay,100',
+            'recipient_phone' => 'required_if:prepay,100|regex:' . config('user.phone_regex'),
             'agreement'     => 'required'
         ];
     }

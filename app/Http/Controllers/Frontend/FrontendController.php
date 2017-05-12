@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use Agent;
+use App\Decorators\Phone;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
 use Config;
@@ -49,6 +50,7 @@ class FrontendController extends BaseController
      */
     function __construct()
     {
+
         $this->_theme = config('app.theme');
 
         parent::__construct();

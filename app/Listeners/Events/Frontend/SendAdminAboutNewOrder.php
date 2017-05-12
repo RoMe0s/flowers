@@ -11,7 +11,6 @@ use Mail;
 
 class SendAdminAboutNewOrder implements ShouldQueue
 {
-
     use InteractsWithQueue;
 
     /**

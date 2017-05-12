@@ -17,6 +17,7 @@ use View;
 class AuthController extends BackendController
 {
 
+
     /**
      * AuthController constructor.
      *

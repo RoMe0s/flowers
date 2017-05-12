@@ -1,5 +1,6 @@
 <?php
 
+
 return array (
   'accepted' => 'Вы должны принять :attribute.',
   'active_url' => 'Поле :attribute недействительный URL.',

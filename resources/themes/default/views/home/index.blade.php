@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
     <section class="main-section">
 
         <h1 class="text-right main-h1">Доставка цветов по Москве</h1>

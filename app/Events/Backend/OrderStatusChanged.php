@@ -9,6 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class OrderStatusChanged extends Event
 {
+
     use SerializesModels;
 
     public  $order;

@@ -27,6 +27,7 @@ use Response;
 class ProductController extends BackendController
 {
 
+
     use AjaxFieldsChangerTrait;
 
     use SaveImagesTrait;

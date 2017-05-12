@@ -37,6 +37,7 @@ use Sentry;
 class UserController extends BackendController
 {
 
+
     use ProcessFieldsTrait;
     use SaveImageTrait;
     use AjaxFieldsChangerTrait;

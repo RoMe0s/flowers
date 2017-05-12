@@ -1,5 +1,6 @@
 <?php
 $router->group(
+
     ['prefix' => 'admin'],
     function ($router) {
         $router->group(

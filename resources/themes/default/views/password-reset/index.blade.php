@@ -1,24 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
+
     <h3 class="text-center">
         {!! $model->name !!}
     </h3>
 
-    <section>
+    <section class="clearfix">
         @include('errors.form')
+        <form class="form col-md-8 col-md-offset-2" action="{!! route('post.password.reset') !!}" method="post">
+            {!! csrf_field() !!}
+            <p>
+            <div class="input-group">
+                <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="true">
+                <span class="input-group-addon btn-purple" id="use-email">
+                                С помощью Email
+                            </span>
+            </div>
+            </p>
+            <p class="text-center">
+                <input class="btn btn-default" type="submit" value="Востановить">
+            </p>
+        </form>
     </section>
 
-    <form style="width: 250px; margin: 20px auto 0;" class="form" action="{!! route('post.password.reset') !!}" method="post">
-        {!! csrf_field() !!}
-
-        <p>
-            <input class="form-control" type="text" name="login" placeholder="Телефон или Email" required>
-        </p>
-        <p class="text-center">
-            <input class="btn btn-default" type="submit" value="Востановить">
-        </p>
-    </form>
 @endsection
 
 

@@ -1,3 +1,4 @@
+
 $(document).find('div.additional-inputs').find('a.collapse-button').on("click", function(e) {
 
     var $additional = $(this).closest('div.additional-inputs'),

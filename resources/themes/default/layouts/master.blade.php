@@ -35,6 +35,7 @@
         @include('partials.footer')
     @show
 
+
     @section('popups')
 
     @show

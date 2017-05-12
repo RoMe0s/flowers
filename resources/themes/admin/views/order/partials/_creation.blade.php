@@ -518,6 +518,7 @@
 
         }
 
+
         $table.find('tr').not('.duplicate').each(function() {
 
             var price = $(this).find('td[data-name="price"]').find('input').val(),

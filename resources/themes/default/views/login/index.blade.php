@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
     <section>
         <h2 class="text-center">
             {!! $model->name !!}
@@ -52,7 +53,12 @@
 
                     <p>
                         Телефон или Email
-                        <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required>
+                        <div class="input-group">
+                            <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="true">
+                            <span class="input-group-addon btn-purple" id="use-email">
+                                С помощью Email
+                            </span>
+                        </div>
                     </p>
                     <p>
                         Пароль

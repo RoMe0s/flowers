@@ -212,6 +212,7 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
         Artem328\LaravelYandexKassa\YandexKassaServiceProvider::class,
         Rhinodontypicus\LetsAds\LetsAdsServiceProvider::class,
+
     ],
 
     /*

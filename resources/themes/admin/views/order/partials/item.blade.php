@@ -1,3 +1,4 @@
+
 <?php
 if($item->itemable instanceof \App\Models\Individual) {
     $name = 'Инд. товар #' . $item->id;

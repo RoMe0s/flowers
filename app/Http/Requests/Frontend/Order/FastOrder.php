@@ -7,6 +7,7 @@ use Sentry;
 
 class FastOrder extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,7 +16,7 @@ class FastOrder extends FormRequest
     public function rules()
     {
         $rules = [
-            'phone'                 => 'required|string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'phone'                 => 'required|string|regex:' . config('user.phone_regex'),
             'agreement'             => 'required'
         ];
 

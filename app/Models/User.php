@@ -14,7 +14,6 @@ use Request;
  */
 class User extends SentryUser implements FrontLink
 {
-
     use FieldableTrait;
 
     /**

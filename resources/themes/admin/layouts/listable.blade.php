@@ -3,6 +3,7 @@
 @section('assets.top')
     @parent
 
+
     <link rel="stylesheet" href="{!! asset('assets/components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') !!}"/>
 
     <link rel="stylesheet" href="{!! asset('assets/components/lightbox2/dist/css/lightbox.min.css') !!}"/>

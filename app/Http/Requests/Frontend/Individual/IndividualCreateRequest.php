@@ -18,7 +18,7 @@ class IndividualCreateRequest extends FormRequest
         $pregex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
 
         return [
-            'phone' => 'required',
+            'phone' => 'required|regex:' . config('user.phone_regex'),
             'email' => 'required|email',
             'image' => ['required'/*, 'regex:'.$regex*/],
             'price' => ['required','regex:' . $pregex]

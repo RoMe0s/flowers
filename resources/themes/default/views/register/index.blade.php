@@ -58,6 +58,7 @@
     </section>
 @endsection
 
+
 @section('styles')
     @parent
     <style>

@@ -1,6 +1,7 @@
 @extends('profile.index')
 
 @section('profile-content')
+
     @if(!sizeof($orders))
         <p class="text-center">
             <i>Заказов нет</i>

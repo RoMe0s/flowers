@@ -27,7 +27,8 @@
                 <form action="{!! route('post.fast.order') !!}" method="post">
                     {!! csrf_field() !!}
                     <p>
-                        {!! Form::input("tel", "phone", isset($user) ? $user->phone : null, array('class' => 'form-control', 'placeholder' => 'Номер телефона')) !!}
+                        @php($phone = isset($user) && isset($user->phone) ? substr_replace($user->phone,'7',0,1) : null)
+                        {!! Form::input("tel", "phone", $phone, array('class' => 'form-control', 'placeholder' => 'Номер телефона')) !!}
 
                     </p>
                     @if(!isset($user))
@@ -45,4 +46,5 @@
             </div>
         </div>
     </section>
+
 @endsection

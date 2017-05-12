@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+
+use App\Decorators\Phone;
 use App\Events\Frontend\UserRegister;
 use App\Http\Requests\Frontend\Order\FastOrder;
 use App\Http\Requests\Frontend\Order\OrderStore;
@@ -83,8 +85,14 @@ class OrderController extends FrontendController
 
             if($request->has('password')) {
 
+                $login = $request->get('phone');
+
+                $phone = new Phone($login);
+
+                $login = $phone->getDecorated();
+
                 $credentials = [
-                    'login' => $request->get('phone', null),
+                    'login' => $login,
                     'password' => $request->get('password', null)
                 ];
 
@@ -171,6 +179,14 @@ class OrderController extends FrontendController
 
         $data = $request->all();
 
+        if(isset($data['recipient_phone'])) {
+
+            $phone = new Phone($data['recipient_phone']);
+
+            $data['recipient_phone'] = $phone->getDecorated();
+
+        }
+
         if(!Cart::count()) {
 
             FlashMessages::add('error', 'У вас пустая корзина');
@@ -255,6 +271,7 @@ class OrderController extends FrontendController
     }
 
     public function makeSubscription($id) {
+
         $user = Sentry::getUser();
 
         $subscription = $user->subscriptions()->find($id);
@@ -287,6 +304,7 @@ class OrderController extends FrontendController
         $order->items()->save($orderItem);
 
         return redirect()->route('order.pay', ['id' => $order->id]);
+
     }
 
     public function show($id) {

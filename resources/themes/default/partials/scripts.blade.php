@@ -6,6 +6,7 @@
 <script type="text/javascript" src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/slick-carousel/slick/slick.min.js') !!}"></script>
 <script type="text/javascript" src="{!! Theme::asset('js/app.js') !!}"></script>
+
 <script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
 
 <script type="text/javascript">
@@ -16,8 +17,35 @@
         'fadeDuration' : 100,
         'wrapAround' : true
     });
-    $('input[name=phone]').inputmask({
-        mask: "89999999999"
+    $('input[name=phone], input[name=recipient_phone], input[data-phone_input]').inputmask({
+        mask: "+7 (999) 999-99-99"
+    });
+    $('#use-email').on("click", function() {
+
+        var $group = $(this).closest('div.input-group'),
+            $input = $group.find('input'),
+            active_phone_mask = $input.attr('data-phone_input');
+
+        $input.val('');
+
+        if(active_phone_mask == 'true') {
+
+            $input.inputmask('remove');
+
+            $input.attr('data-phone_input', 'false');
+
+            $(this).html('По номеру');
+
+        } else {
+
+            $input.inputmask({mask: "+7 (999) 999-99-99"});
+
+            $input.attr('data-phone_input', 'true');
+
+            $(this).html('С помощью Email');
+
+        }
+
     });
 </script>
 

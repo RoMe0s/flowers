@@ -1,3 +1,4 @@
+
 <div class="after-register-popup password-reset-popup">
     <div class="close-btn text-right">
         <a href="#">

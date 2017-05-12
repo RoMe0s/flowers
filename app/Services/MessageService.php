@@ -2,15 +2,19 @@
 
 namespace App\Services;
 
+use App\Decorators\Phone;
 use App\Models\Order;
 use App\Models\User;
 use LetsAds;
 
 class MessageService {
 
+
     private function _getPhone($phone) {
 
-        preg_match('/\d+/', $phone);
+        $phone = new Phone($phone);
+
+        $phone = $phone->getDecorated();
 
         $phone[0] = '7';
 
