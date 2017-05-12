@@ -82,7 +82,7 @@ class OrderCreateRequest extends FormRequest
         ];
 
         $user_rules = [
-            'user.phone' => 'required|string'
+            'user.phone' => 'required|string|regex:' . config('user.phone_regex')
         ];
 
         $individual_rules = [

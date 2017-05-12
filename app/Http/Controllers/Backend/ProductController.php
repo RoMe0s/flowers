@@ -349,14 +349,24 @@ class ProductController extends BackendController
         $products = collect();
 
         foreach($classes as $class => $table) {
+            
+            $real_class = $class . 'Translation';
 
             $field = 'name';
 
+            $id_field = explode("\\", $class);
+
+            $id_field = array_pop($id_field);
+
+            $id_field = strtolower($id_field) . "_id";
+
             $field = $class == "App\\Models\\Subscription" ? 'title' : $field;
 
-            $result = $class::joinTranslations($table)
-                ->where($field, 'LIKE', "%$query%")
-                ->get();
+            $result_ids = $real_class::where($field, 'LIKE', "%$query%")
+                ->lists($id_field)
+                ->toArray();
+
+            $result = $class::whereIn('id', $result_ids)->with(['translations'])->get();
 
             $products = $products->merge($result);
 

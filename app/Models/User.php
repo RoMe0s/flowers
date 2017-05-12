@@ -217,15 +217,23 @@ class User extends SentryUser implements FrontLink
     }
 
     public function getTotalOrdersPrice() {
+
         $total = 0;
 
-        foreach($this->orders as $order) {
+        $orders = $this->orders->filter(function($order) {
+        
+            return in_array($order->status, [3,6]);
+
+        });
+
+        foreach($orders as $order) {
 
             $total += $order->getTotal();
 
         }
 
         return $total;
+
     }
 
     public function addCode(Code $code) {
@@ -240,6 +248,5 @@ class User extends SentryUser implements FrontLink
 
 
     }
-
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Decorators\Phone;
 use App\Http\Requests\Backend\Individual\IndividualRequest;
 use App\Models\Individual;
 use Datatables;

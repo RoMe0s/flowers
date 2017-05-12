@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Decorators\Phone;
 use App\Http\Requests\Backend\Order\OrderCreateRequest;
 use App\Http\Requests\Backend\Order\OrderRequest;
 use App\Models\Individual;
@@ -206,11 +207,27 @@ class OrderController extends BackendController
         try {
             $input = $request->all();
 
+            if(isset($input['recipient_phone'])) {
+
+                $phone = new Phone($input['recipient_phone']);
+
+                $input['recipient_phone'] = $phone->getDecorated();
+
+            }
+
             $user_id = $request->get('user_id', null);
 
             $user_info = $request->get('user', []);
 
             if(!$user_id || sizeof($user_info)) {
+
+                if(isset($input['user']['phone'])) {
+
+                    $phone = new Phone($input['user']['phone']);
+
+                    $input['user']['phone'] = $phone->getDecorated();
+
+                }
 
                 $user = new User();
 
@@ -338,6 +355,14 @@ class OrderController extends BackendController
         try {
 
             $input = $request->all();
+
+            if(isset($input['recipient_phone'])) {
+
+                $phone = new Phone($input['recipient_phone']);
+
+                $input['recipient_phone'] = $phone->getDecorated();
+
+            }
 
             $model = Order::findOrFail($id);
 

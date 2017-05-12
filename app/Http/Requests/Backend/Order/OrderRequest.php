@@ -54,7 +54,7 @@ class OrderRequest extends FormRequest
             'discount'      => 'integer',
             'prepay'    => 'required',
             'recipient_name' => 'required_with:user_data_required',
-            'recipient_phone'    => 'required_with:user_data_required|string|regex:/^[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
+            'recipient_phone'    => 'required_with:user_data_required|string|regex:' . config('user.phone_regex'),
             'email' => 'email|required_with:email_required',
             'date' => 'date',
             'status' => 'required',

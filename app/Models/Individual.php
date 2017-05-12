@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Decorators\Phone;
 use Illuminate\Database\Eloquent\Model;
 
 class Individual extends Model
@@ -13,4 +14,13 @@ class Individual extends Model
         'price',
         'text'
     ];
+
+    public function setPhoneAttribute($value) {
+
+        $phone = new Phone($value);
+
+        $this->attributes['phone'] = $phone->getDecorated();
+
+    }
+
 }

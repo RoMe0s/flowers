@@ -262,6 +262,37 @@ class OrderController extends FrontendController
                 $id => ['paid_before' => Carbon::now()->subDay()->toDateString()]
             ]);
 
+            $subscription = Subscription::find($id);
+
+            $order = new Order();
+
+            $order->fill([
+                'user_id' => $user->id,
+                'address_id' => null,
+                'courier_id' => null,
+                'delivery_price' => 0,
+                'prepay' => 100,
+                'date' => Carbon::now()->format('d-m-Y'),
+                'time' => null,
+                'desc' => 'Оплата подписки',
+                'card_text' => '',
+                'status' => 2,
+                'discount' => 0,
+                'recipient_name' => $user->name,
+                'recipient_phone' => $user->phone
+            ]);
+
+            $order->save();
+
+            $orderItem = new OrderItem([
+                'itemable_id' => $subscription->id,
+                'price' => $subscription->price,
+                'count' => 1,
+                'itemable_type' => (string)Subscription::class
+            ]);
+
+            $order->items()->save($orderItem);
+
             FlashMessages::add('success', 'Спасибо за подписку. Теперь Вы можете оплатить подписку в разделе "Подписки" личного кабинета.');
 
         }
@@ -276,32 +307,15 @@ class OrderController extends FrontendController
 
         $subscription = $user->subscriptions()->find($id);
 
-        $order = new Order();
-
-        $order->fill([
-            'user_id' => $user->id,
-            'address_id' => null,
-            'courier_id' => null,
-            'delivery_price' => 0,
-            'prepay' => 100,
-            'date' => Carbon::now()->format('d-m-Y'),
-            'time' => null,
-            'desc' => 'Оплата подписки',
-            'card_text' => '',
-            'status' => 2,
-            'discount' => 0
-        ]);
-
-        $order->save();
-
-        $orderItem = new OrderItem([
-            'itemable_id' => $subscription->id,
-            'price' => $subscription->price,
-            'count' => 1,
-            'itemable_type' => (string)Subscription::class
-        ]);
-
-        $order->items()->save($orderItem);
+        $order = Order::where('user_id', $user->id)
+            ->whereHas('items', function($query) use($subscription) {
+        
+            return $query->where('itemable_id', $subscription->id)
+                ->where('itemable_type', "App\\Models\\" . class_basename($subscription));
+        
+        })->first();
+        
+        abort_if(!$order, 404);
 
         return redirect()->route('order.pay', ['id' => $order->id]);
 

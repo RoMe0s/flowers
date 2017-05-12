@@ -472,12 +472,14 @@ class UserController extends BackendController
 
         $query = $request->get('query', null);
 
-        $users = User::joinInfo()
-            ->where('name', 'LIKE', "%$query%")
-//            ->orWhere('users.id', $query)
-            ->orWhere('email', 'LIKE', "%$query%")
+        $user_info_ids = UserInfo::where('name', 'LIKE', "%$query%")
             ->orWhere('phone', 'LIKE', "%$query%")
-            ->get();
+            ->lists('user_id')
+            ->toArray();
+
+        $user_ids = User::where('email', 'LIKE', "%$query%")->lists('id')->toArray();
+
+        $users = User::with(['info'])->whereIn('id', array_merge($user_info_ids, $user_ids))->get();
 
         $html = view('order.modals.user')->with(['users' => $users])->render();
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Decorators\Phone;
 use App\Http\Controllers\Frontend\CartController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -220,6 +221,14 @@ class Order extends Model
         }
 
         return false;
+
+    }
+
+    public function setRecipientPhoneAttribute($value) {
+
+        $phone = new Phone($value);
+
+        $this->attributes['recipient_phone'] = $phone->getDecorated();
 
     }
 

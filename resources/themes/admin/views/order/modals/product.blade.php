@@ -16,7 +16,7 @@
             {!! $product->id . '(' . $names[class_basename($product)] . ')' !!}
         </td>
         <td>
-            {!! isset($product->title) ? $product->title : $product->name !!}
+            {{ isset($product->title) ? $product->title : $product->name }}
         </td>
         <td>
             {!! $product->price !!}
@@ -26,7 +26,7 @@
         </td>
         <td>
             <a class="btn btn-success btn-sm btn-flat add-product"
-               data-name="{!! isset($product->title) ? $product->title : $product->name !!}"
+               data-name="{{ isset($product->title) ? $product->title : $product->name }}"
                data-price="{!! $product->price !!}"
                data-id="{!! $product->id !!}"
                data-type="{!! "App\\Models\\" . class_basename($product) !!}"

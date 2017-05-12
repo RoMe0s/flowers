@@ -435,29 +435,46 @@
 
         count = count === "" || count === 0 ? 1 : count;
 
-        $row.removeClass('duplicate');
+        $isset_row = $(document).find('tr[data-item_id="' + product_id  + '"]');
 
-        $row[0].innerHTML = $row[0].innerHTML.replace(/replaceme/g, replaceWith);
+        if($isset_row.length) {
 
-        $row.find('input').each(function() {
+            var $input = $isset_row.find('td[data-name="count"]').find('input'),
+                isset_count = parseInt($input.val());
 
-            $(this).attr('name', $(this).attr('data-name'));
+            isset_count++;
 
-        });
+            $input.val(isset_count);
 
-        $row.find('td[data-name="name"]').find('input').val(name);
+        } else {
 
-        $row.find('td[data-name="id"]').find('input').val(show_id);
+            $row.removeClass('duplicate');
 
-        $row.find('td[data-name="price"]').find('input').val(price);
+            $row[0].innerHTML = $row[0].innerHTML.replace(/replaceme/g, replaceWith);
 
-        $row.find('td[data-name="count"]').find('input').val(count);
+            $row.attr('data-item_id', product_id);
 
-        $row.find('input.id').val(product_id);
+            $row.find('input').each(function() {
 
-        $row.find('input.type').val(type);
+                $(this).attr('name', $(this).attr('data-name'));
 
-        $table.find('tbody').append($row);
+            });
+
+            $row.find('td[data-name="name"]').find('input').val(name);
+
+            $row.find('td[data-name="id"]').find('input').val(show_id);
+
+            $row.find('td[data-name="price"]').find('input').val(price);
+
+            $row.find('td[data-name="count"]').find('input').val(count);
+
+            $row.find('input.id').val(product_id);
+
+            $row.find('input.type').val(type);
+
+            $table.find('tbody').append($row);
+
+        }
 
         var length = $table.find('tr').not('.duplicate').length;
 
