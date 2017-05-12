@@ -17,7 +17,7 @@
         'fadeDuration' : 100,
         'wrapAround' : true
     });
-    $('input[name=phone], input[name=recipient_phone], input[data-phone_input]').inputmask({
+    $('input[name=phone], input[name=recipient_phone], input[data-phone_input="true"]').inputmask({
         mask: "+7 (999) 999-99-99"
     });
     $('#use-email').on("click", function() {

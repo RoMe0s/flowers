@@ -53,12 +53,17 @@
 
                     <p>
                         Телефон или Email
-                        <div class="input-group">
-                            <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="true">
-                            <span class="input-group-addon btn-purple" id="use-email">
+                    <div class="input-group">
+                        @php($mask = preg_match('/@/',old('login', '')) ? 'false' : 'true')
+                        <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="{!! $mask !!}" />
+                        <span class="input-group-addon btn-purple" id="use-email">
+                                @if($mask == 'true')
                                 С помощью Email
-                            </span>
-                        </div>
+                            @else
+                                По номеру
+                            @endif
+                        </span>
+                    </div>
                     </p>
                     <p>
                         Пароль

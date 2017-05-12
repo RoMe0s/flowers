@@ -151,17 +151,10 @@ class AuthController extends FrontendController
 
                 return redirect()->route('profile.orders');
             }
-        }
-        catch (UserNotFoundException $e) {
-            FlashMessages::add('error', 'Пользователя с таким логином не существует');
-        }
-        catch (WrongPasswordException $e) {
+        } catch (Exception $e) {
             FlashMessages::add('error', 'Неверный логин или пароль');
         }
-        catch (Exception $e) {
-            FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
-        }
-        return redirect()->back()->withInput($credentials);
+        return redirect()->back()->withInput(request()->all());
 
     }
     
@@ -249,10 +242,9 @@ class AuthController extends FrontendController
 
         return $this->render($this->pageService->getPageTemplate($this->page));
     }
-    
+
     /**
      * @param Request $request
-     *
      * @return $this
      */
     public function postReset(Request $request)
@@ -324,7 +316,7 @@ class AuthController extends FrontendController
 
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput($request->all());
     }
 
     public function postResetPhone(Request $request) {

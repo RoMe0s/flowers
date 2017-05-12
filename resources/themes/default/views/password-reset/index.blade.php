@@ -12,10 +12,15 @@
             {!! csrf_field() !!}
             <p>
             <div class="input-group">
-                <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="true">
+                @php($mask = preg_match('/@/',old('login', '')) ? 'false' : 'true')
+                <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="{!! $mask !!}" />
                 <span class="input-group-addon btn-purple" id="use-email">
-                                С помощью Email
-                            </span>
+                                @if($mask == 'true')
+                        С помощью Email
+                    @else
+                        По номеру
+                    @endif
+                </span>
             </div>
             </p>
             <p class="text-center">
