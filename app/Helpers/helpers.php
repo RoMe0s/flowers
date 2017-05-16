@@ -649,12 +649,12 @@ if(! function_exists('find_product')) {
 
         switch ($category) {
             case 'shares':
-                return \App\Models\Sale::with(['translations'])->visible()->whereSlug($slug)->where('publish_at', \Carbon\Carbon::now()->format('Y-m-d'))->first();
+                return \App\Models\Sale::with(['translations', 'images'])->visible()->whereSlug($slug)->where('publish_at', \Carbon\Carbon::now()->format('Y-m-d'))->first();
                 break;
 
             default:
 
-                $model = \App\Models\Set::with(['translations', 'box', 'box.category', 'flowers', 'flowers.translations'])->whereHas('box', function ($query) use ($category) {
+                $model = \App\Models\Set::with(['translations', 'box', 'box.category', 'flowers', 'flowers.translations', 'images'])->whereHas('box', function ($query) use ($category) {
                     return $query->whereHas('category', function($query) use ($category) {
                        return $query->where('slug', $category);
                     });
@@ -662,13 +662,13 @@ if(! function_exists('find_product')) {
 
                 if($model) return $model;
 
-                $model = \App\Models\Bouquet::with(['translations', 'flowers', 'flowers.translations', 'category'])->whereHas('category', function ($query) use ($category) {
+                $model = \App\Models\Bouquet::with(['translations', 'flowers', 'flowers.translations', 'category', 'images'])->whereHas('category', function ($query) use ($category) {
                     return $query->where('slug', $category);
                 })->visible()->whereSlug($slug)->first();
 
                 if($model) return $model;
 
-                $model = \App\Models\Product::with(['translations'])->visible()->whereSlug($slug)->first();
+                $model = \App\Models\Product::with(['translations', 'images'])->visible()->whereSlug($slug)->first();
 
                 return $model;
 

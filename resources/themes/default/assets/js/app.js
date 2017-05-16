@@ -230,7 +230,7 @@ $(document).ready(function () {
 
     });
 
-    if ( !Modernizr.objectfit ) {
+/*    if ( !Modernizr.objectfit ) {
         $('.photo img').each(function(){
 
             if($(this).attr('src') !== undefined && $(this).attr('src') !== null && $(this).attr('src').length)             {
@@ -240,6 +240,6 @@ $(document).ready(function () {
             }
 
         });
-    }
+    }*/
 
 });

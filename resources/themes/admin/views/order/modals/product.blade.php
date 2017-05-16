@@ -3,8 +3,9 @@
     <thead>
     <tr>
         <th class="col-xs-2">ID</th>
-        <th class="col-xs-4">Название</th>
-        <th class="col-xs-4">Цена</th>
+        <th class="col-xs-2">Изображение</th>
+        <th class="col-xs-3">Название</th>
+        <th class="col-xs-2">Цена</th>
         <th class="col-xs-2">Количество</th>
         <th class="col-xs-1"></th>
     </tr>
@@ -14,6 +15,11 @@
     <tr>
         <td>
             {!! $product->id . '(' . $names[class_basename($product)] . ')' !!}
+        </td>
+        <td>
+            <a href="{!! $product->image !!}" data-lightbox="{!! $product->id !!}" class="text-center col-xs-12">
+                <img src="{!! create_thumbnail($product->image, 75) !!}">
+            </a>
         </td>
         <td>
             {{ isset($product->title) ? $product->title : $product->name }}

@@ -106,7 +106,7 @@ class Category extends Model implements MetaGettable
 
     public function visible_children() {
 
-        return $this->children()->visible();
+        return $this->hasMany(Category::class, 'parent_id')->visible()->with(['visible_children', 'visible_children.translations']);
 
     }
 

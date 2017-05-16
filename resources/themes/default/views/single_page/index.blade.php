@@ -16,7 +16,6 @@
                             <li class="col-md-3 col-sm-6 col-xs-6"
                                 data-category="{{$category->id}}"
                                 data-active="false"
-                                {{--style="background-image: url('{!! $category->image ? create_thumbnail($category->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' !!}')"--}}
                             >
                                 <img src="{!! $category->image ? create_thumbnail($category->image, 300, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=250&w=250' !!}" alt="{!! $category->name !!}" />
                                 <a href="{!! $category->getUrl() !!}" title="{{$category->name}}">

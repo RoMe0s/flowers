@@ -11,7 +11,7 @@
                  @if($counter > 9) data-active="false" @else data-active="true" @endif
             >
                 <a href="{{ $present->getUrl() }}" title="{{$present->getShowName()}}">
-                    <div class="photo">
+                    <div class="photo" style="background-image: url('{!! create_thumbnail($present->image, 350, 300) !!}')">
                         <img src="{!! $present->image ? create_thumbnail($present->image, 350, 300) : 'https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=350&w=250' !!}" alt="{!! $present->getShowName() !!}" />
                         <div class="layout">
                             <p>

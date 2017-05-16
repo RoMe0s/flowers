@@ -109,7 +109,7 @@ class MainpageMenuWidget extends Widget
 
         });
 
-        $filters = Cache::remember('filter_items', 10, function() {
+        $filters = Cache::remember('filter_items_menu', 10, function() {
 
             return FilterItem::visible()->positionSorted()->get();
 

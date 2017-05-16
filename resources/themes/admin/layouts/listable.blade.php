@@ -15,15 +15,5 @@
 
     <script src="{!! asset('assets/components/bootstrap-switch/dist/js/bootstrap-switch.min.js') !!}"></script>
 
-    <script src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
-
-    <script>
-        lightbox.option({
-            'resizeDuration' : 100,
-            'disableScrolling' : true,
-            'fadeDuration' : 100,
-            'wrapAround' : true
-        });
-    </script>
 
 @endsection

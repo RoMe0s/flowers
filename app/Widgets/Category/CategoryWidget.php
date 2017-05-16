@@ -17,7 +17,7 @@ class CategoryWidget extends Widget
      */
     public function index()
     {
-        $categories = Cache::remember('categories', 5, function() {
+        $categories = Cache::remember('categories', 10, function() {
             return Category::where('type', '<>', (string)Product::class)->visible()->positionSorted()->with('translations')->get();
         });
 

@@ -18,7 +18,7 @@
                 <div class="subscription">
                     <div class="row">
                         <div class="col-md-3 col-sm-4 col-xs-12">
-                            <div class="photo photo-small">
+                            <div class="photo photo-small" style="background-image: url('{!! create_thumbnail($subscription->image, 270, 150) !!}')">
                                 <img src="{!! $subscription->image ? create_thumbnail($subscription->image, 270, 150) : "https://placeholdit.imgix.net/~text?txtsize=14&bg=efefef&txtclr=aaaaaa%26text%3Dno%2Bimage&txt=%D0%BD%D0%B5%D1%82+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&h=223&w=125" !!}" alt="{!! $subscription->title !!}" />
                             </div>
                         </div>

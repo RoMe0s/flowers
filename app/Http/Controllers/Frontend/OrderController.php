@@ -293,6 +293,8 @@ class OrderController extends FrontendController
 
             $order->items()->save($orderItem);
 
+            Event::fire(new FastOrderStored($order));
+
             FlashMessages::add('success', 'Спасибо за подписку. Теперь Вы можете оплатить подписку в разделе "Подписки" личного кабинета.');
 
         }

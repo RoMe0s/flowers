@@ -96,6 +96,19 @@
             <script src="{!! asset('assets/themes/admin/vendor/adminlte/dist/js/app.min.js') !!}"></script>
 
             <script src="{!! Theme::asset('js/main.js', null, true) !!}"></script>
+
+
+            <script src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
+
+            <script>
+                lightbox.option({
+                    'resizeDuration' : 100,
+                    'disableScrolling' : true,
+                    'fadeDuration' : 100,
+                    'wrapAround' : true
+                });
+            </script>
+
         @show
 
 
