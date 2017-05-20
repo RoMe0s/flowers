@@ -1,3 +1,7 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/components/lightbox2/dist/css/lightbox.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/components/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/components/slick-carousel/slick/slick.css') }}">
+
 <script type="text/javascript" src="{!! asset('assets/components/elastislide/js/modernizr.custom.17475.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/jquery/dist/jquery.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/bootstrap/dist/js/bootstrap.min.js') !!}"></script>
