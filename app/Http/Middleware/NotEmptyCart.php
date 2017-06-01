@@ -22,7 +22,7 @@ class NotEmptyCart
      */
     public function handle($request, Closure $next)
     {
-        if (Cart::count() == 0) return redirect()->route('cart');
+        if (Cart::count() == 0) return redirect()->route('home');
 
         return $next($request);
     }

@@ -8,6 +8,7 @@
 
 namespace App\Http\Requests\Backend\User;
 
+use App\Decorators\Phone;
 use App\Http\Requests\FormRequest;
 
 /**
@@ -24,18 +25,25 @@ class UserCreateRequest extends FormRequest
      */
     public function rules()
     {
+
         $rules = [
-            'email'                 => 'required|email|unique:users',
-            'password'              => 'required|confirmed:password_confirmation|min:'.config(
-                    'auth.passwords.min_length'
-                ),
-            'password_confirmation' => 'required',
+            'email'                 => 'email',
+            'phone'                 => 'required|unique:users,login',
+            'password'              => 'required',
             'groups'                => 'array',
             'activated'             => 'required|boolean',
             'notifications'         => 'required|boolean',
             'start_discount'        => 'integer',
             'discount'              => 'integer'
         ];
+
+        $phone = new Phone($this->request->get('phone'));
+
+        $phone = $phone->getDecorated();
+
+        $this->merge(['login' => $phone]);
+
+        $this->merge(['phone' => $phone]);
 
         return array_merge($rules, app('App\Http\Requests\Backend\User\UserInfoRequest')->rules());
     }

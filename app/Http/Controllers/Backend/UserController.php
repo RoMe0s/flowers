@@ -14,6 +14,7 @@ use App\Http\Requests\Backend\User\UserUpdateRequest;
 use App\Models\Field;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Services\MessageService;
 use App\Traits\Controllers\AjaxFieldsChangerTrait;
 use App\Traits\Controllers\ProcessFieldsTrait;
 use App\Traits\Controllers\SaveImageTrait;
@@ -173,14 +174,17 @@ class UserController extends BackendController
      */
     public function store(UserCreateRequest $request)
     {
-        $input = $request->only('email', 'activated', 'password', 'notifications', 'start_discount', 'discount');
+        $input = $request->only('email', 'activated', 'password', 'notifications', 'start_discount', 'discount', 'login');
+
         $user_info = $request->all();
 
         DB::beginTransaction();
 
         try {
             $user = Sentry::createUser($input);
-            $user->activated = $input['activated'];
+
+            $user->activated = 1;
+
             $user->save();
 
             $this->_processGroups($user, $request->get('groups', []));
@@ -191,15 +195,22 @@ class UserController extends BackendController
 
             DB::commit();
 
+            $ms = new MessageService();
+
+            $ms->registerSMS($user, $request->get('password', random_int(10000, 99999)));
+
             FlashMessages::add('success', trans('messages.save_ok'));
 
             return Redirect::route('admin.user.index');
+
         } catch (Exception $e) {
+
             DB::rollBack();
 
             FlashMessages::add("error", trans('messages.update_error').': '.$e->getMessage());
 
             return Redirect::back()->withInput(array_merge($input, $user_info));
+
         }
     }
 

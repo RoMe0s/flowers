@@ -19,6 +19,7 @@ class OrderRequest extends FormRequest
         $user_id = $this->input('user_id');
         $address_id = $this->input('address_id');
         $prepay = $this->input('prepay');
+        $address_string = $this->input('address_string', "");
 
         if($user_id < 0) {
             $this->request->remove('user_id');
@@ -62,11 +63,15 @@ class OrderRequest extends FormRequest
             'card_text' => 'max:150'
         ];
 
-        if(!$this->request->has('address_need')) {
+        if(empty($address_string)) {
 
-            $rules += [
-                'address' => 'required'
-            ];
+            if (!$this->request->has('address_need')) {
+
+                $rules += [
+                    'address' => 'required'
+                ];
+
+            }
 
         }
 

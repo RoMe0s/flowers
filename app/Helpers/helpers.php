@@ -752,3 +752,31 @@ if(! function_exists('has_in_stock_for_seo')) {
     }
 
 }
+
+if(! function_exists('get_delivery_price')) {
+
+    function get_delivery_price() {
+
+        foreach(\Kingpabel\Shoppingcart\Facades\Cart::content() as $item) {
+
+            try {
+
+                if($item->options['type'] != \App\Models\Product::class) {
+
+                    return 0;
+
+                }
+
+            } catch (\Exception $e) {
+
+                continue;
+
+            }
+
+        }
+
+        return variable("default-delivery-price", 450);
+
+    }
+
+}

@@ -62,12 +62,14 @@ hideAddress = (item)->
   _form = _this.closest('form')
   _address = _form.find("textarea[name='address']")
   _code = _form.find("input[name='code']")
+  _distance = _form.find("input[name='distance']")
   _address.val('')
   _code.val('')
   if _this.val() > 0
     _selected = _this.find(':selected')
     _address.val(_selected.data('address'))
     _code.val(_selected.data('code'))
+    _distance.val(_selected.data('distance'))
 #    _address.closest('.form-group').hide()
 #    _code.closest('.form-group').hide()
 #  else
@@ -75,6 +77,7 @@ hideAddress = (item)->
 #    _code.closest('.form-group').show()
 
 $(document).ready ()->
+  $("#delivery_another_way").change()
   _user = $('select.admin-order-user')
   if(_user.val() > 0)
    hidePassworField(true)
@@ -137,4 +140,17 @@ $(document).on 'change', '.order-status-changer', (e)->
     ).error(()->
       message.show(window.lang_error, 'error')
     )
+
+$(document).on "change", "#delivery_another_way", (e) ->
+  $items = $(document).find(".delivery_another_way")
+  if $(this).val().length
+    $items.each ()->
+      $(this).removeClass("required")
+      $(this).find("[name]").removeAttr("required")
+  else
+    $items.each ()->
+      $(this).addClass("required")
+      $(this).find("[name]").attr("required", "required")
+  return
+
 

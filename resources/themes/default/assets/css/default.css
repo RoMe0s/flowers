@@ -1,3 +1,9 @@
+.has-error {
+
+    border-color: red !important;
+
+}
+
 div.additional-inputs a:hover {
 
 
@@ -1724,5 +1730,388 @@ ul.global-price-filter li.global-search[data-active="true"] * {
     background-color: rgb(232, 234, 237);
 
     padding: 10px 0;
+
+}
+
+/*order make*/
+.arrowtest-east {
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border: 50px dashed #eee;
+    border-bottom-color: #eee;
+    left: 0px;
+    top: -4px;
+    height: 100px;
+    border-left-style: solid;
+    border-right: none;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.arrowtest-east:after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 90px;
+    border: 44px dashed white;
+    right: 0px;
+    top: -45px;
+    border-left-style: solid;
+    border-right: none;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+div#order-make ul.nav {
+
+    border-top: 4px solid #eee;
+
+    border-bottom: 4px solid #eee;
+
+    height: 100px;
+
+    background-color: white;
+
+}
+
+div#order-make span.custom-popover {
+
+    font-size: 18px;
+
+}
+
+div#order-make ul.nav li {
+
+    height: 92px;
+
+    padding: 0;
+
+}
+
+div#order-make div.tab-content button {
+
+    font-weight: bold;
+
+}
+
+div#order-make div.tab-content button:focus, div#order-make div.tab-content button:active {
+
+    outline: none !important;
+
+}
+
+div#order-make div.tab-content button.selected {
+
+    background-color: #9370db;
+
+    color: white;
+
+}
+
+div#order-make #is-present, div#order-make #new-address, div#order-make #is-courier-delivery {
+
+    display: none;
+
+}
+
+div#order-make ul.nav li.active a {
+
+    color: black !important;
+
+    opacity: 1 !important;
+
+}
+
+div#order-make ul.nav li.done a {
+
+    color: #5cb85c;
+
+    opacity: 0.6;
+
+}
+
+div#order-make ul.nav li a {
+
+    padding: 5px 15px;
+
+    height: 92px;
+
+    text-align: center;
+
+    color: #eaeaea;
+
+    background-color: transparent;
+
+}
+
+div#order-make h4 {
+
+    margin: 5px 0;
+
+    height: auto;
+
+}
+
+div#order-make ul.nav li a i {
+
+    font-size: 36px;
+
+    padding: 5px;
+
+}
+
+div#order-make ul.nav li a p {
+
+    font-size: 24px;
+
+    text-transform: uppercase;
+
+}
+
+div#order-make div.cells {
+
+    font-size: 18px;
+
+}
+
+button.like-href, button.like-href:focus, button.like-href:active, button.like-href:hover {
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    outline: none !important;
+
+    background-color: transparent !important;
+
+}
+
+div#order-make p.our-address {
+
+    margin-top: 10px;
+
+}
+
+div#order-make div#order-collapse div.order-result-info {
+
+    padding: 10px;
+
+    font-size: 18px;
+
+}
+
+div#order-make div#order-collapse ul {
+
+    margin-bottom: 0; border-top: 1px solid #ddd;
+
+}
+
+div#order-make div#order-collapse ul li {
+
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
+
+}
+
+div#order-make div#order-collapse ul li img {
+
+    width: 75px;
+    margin-right: 10px;
+
+}
+
+div#order-make div#order-collapse ul li a, div#order-make div#order-collapse ul li span {
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+}
+
+
+div#basket {
+
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 400px;
+    right: 0;
+    left: auto;
+    border-radius: 0;
+    padding-right: 0 !important;
+
+}
+
+div#basket div.modal-dialog {
+
+    margin: 0;
+
+}
+
+div#basket div.modal-dialog div.modal-content {
+
+    border-radius: 0;
+
+    height: 100%;
+
+    border: none !important;
+
+    width: 400px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-header {
+
+    height: 60px;
+
+    width: 400px;
+
+    text-align: center;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-header i {
+
+    font-size: 24px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-header span {
+
+    text-transform: uppercase;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-footer {
+
+    bottom: 0;
+
+    width: 100%;
+
+    position: absolute;
+
+    padding: 10px;
+
+    height: 96px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-footer p {
+
+    font-size: 18px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-footer p a {
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    padding: 0;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-footer a {
+
+    font-size: 20px;
+
+    padding: 5px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body {
+
+    width: 400px;
+
+    padding: 0 !important;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list {
+
+    list-style: none;
+
+    padding: 5px 0;
+
+    overflow: hidden;
+
+    overflow-y: auto;
+
+    margin: 0;
+
+    margin-right: 11px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li {
+
+    margin-bottom: 25px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li:last-child {
+
+    margin-bottom: 0;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li a.basket-item-title {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    padding: 0;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div.basket-item-image {
+
+    margin-right: 10px;
+
+    width: 90px;
+
+    float: left;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div.basket-item-info {
+
+    width: calc(100% - 100px);
+
+    float: right;
+
+    height: 90px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div {
+
+    padding: 0;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div.basket-item-count {
+
+    position: absolute;
+
+    bottom: 0;
+
+    top: auto;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div.basket-item-count span.basket-item-price {
+
+    line-height: 34px;
+
+    font-size: 18px;
+
+    padding: 0 !important;
 
 }

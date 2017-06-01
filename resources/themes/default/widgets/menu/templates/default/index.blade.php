@@ -1,5 +1,5 @@
 <nav class="nav navbar-pills header-menu">
-    <a @if(request()->url() != route('cart')) href="{!! route('cart') !!}" @endif class="navbar-toggle float-left mobile-cart">
+    <a href="#" data-show-basket class="navbar-toggle float-left mobile-cart">
         <i class="fa fa-shopping-bag"></i>
         <span class="cart-count">
             {!! Cart::count() !!}
@@ -15,7 +15,7 @@
         <div class="container">
             <ul class="float-right">
                 <li class="mobile-hidden">
-                    <a @if(request()->url() != route('cart')) href="{!! route('cart') !!}" @endif>
+                    <a href="#" data-show-basket>
                         <i class="fa fa-shopping-bag">
                         </i> <span class="cart-count">
                         {!! Cart::count() !!}

@@ -219,9 +219,10 @@ $router->group(
         //cart
         $router->group(['prefix' => 'cart'], function () use ($router) {
 
-            $router->get('/', [
-                'as' => 'cart',
-                'uses' => 'Frontend\CartController@index'
+            $router->post('/', [
+                'as' => 'cart.popupLoad',
+                'uses' => 'Frontend\CartController@popupLoad',
+                'middleware' => 'ajax'
             ]);
 
             $router->group(['middleware' => ['auth', 'cart']], function () use ($router) {
@@ -229,6 +230,10 @@ $router->group(
                 $router->get('/make/order', [
                     'as' => 'get.order',
                     'uses' => 'Frontend\OrderController@create'
+                ]);
+                $router->get('/order/preview', [
+                    'middleware' => 'ajax',
+                    'uses' => 'Frontend\OrderController@preview'
                 ]);
                 $router->post('/make/order', [
                     'as' => 'post.order',
@@ -246,7 +251,14 @@ $router->group(
                     'as'   => 'post.fast.order',
                     'uses' => 'Frontend\OrderController@makeFast'
                 ]);
+
+                $router->post('/changeItem', [
+                    'as' => 'basket.item.change',
+                    'uses' => 'Frontend\CartController@changeItem'
+                ]);
+
                 $router->any('/clear', 'Frontend\CartController@clear');
+
                 $router->any('/{id}/qty/plus', 'Frontend\CartController@qtyPlus');
                 $router->any('/{id}/qty/minus', 'Frontend\CartController@qtyMinus');
                 $router->any('/{item}/{id}/remove', 'Frontend\CartController@removeItem');

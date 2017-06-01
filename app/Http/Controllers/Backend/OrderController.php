@@ -252,9 +252,15 @@ class OrderController extends BackendController
 
             }
 
-            if(!isset($input['address_id'])) {
+            $address_string = isset($input['address_string']) ? $input['address_string'] : "";
 
-                $input['address_id'] = $this->_proccessAddress($user_id);
+            if(!empty($address_string)) {
+
+                if (!isset($input['address_id'])) {
+
+                    $input['address_id'] = $this->_proccessAddress($user_id);
+
+                }
 
             }
 
@@ -376,8 +382,16 @@ class OrderController extends BackendController
 
             $input['user_id'] = isset($input['user_id']) && $input['user_id'] != "" ? $input['user_id'] : $this->_processUser();
 
-            if(!isset($input['address_id'])) {
-                $input['address_id'] = $this->_proccessAddress($input['user_id']);
+            $address_string = isset($input['address_string']) ? $input['address_string'] : "";
+
+            if(!empty($address_string)) {
+
+                if (!isset($input['address_id'])) {
+
+                    $input['address_id'] = $this->_proccessAddress($input['user_id']);
+
+                }
+
             }
 
             DB::beginTransaction();
@@ -572,6 +586,7 @@ class OrderController extends BackendController
     private function _proccessAddress($user_id) {
         $input['address'] = request('address');
         $input['code'] = request('code');
+        $input['distance'] = request('distance', 0);
         $input['user_id'] = $user_id;
         $address = new Address();
         $address->fill($input);

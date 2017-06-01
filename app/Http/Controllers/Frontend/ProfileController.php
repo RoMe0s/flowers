@@ -165,7 +165,7 @@ class ProfileController extends FrontendController
 
     public function orders() {
 
-        $orders = $this->currentUser->orders()->with(['items'])->whereHas('items', function($query) {
+        $orders = $this->currentUser->orders()->with(['items', 'address'])->whereHas('items', function($query) {
             return $query->where('itemable_type', '<>', (string)Subscription::class);
         })->orderBy('id', 'DESC')->get();
 

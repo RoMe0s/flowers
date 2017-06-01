@@ -40,6 +40,10 @@
 
     @show
 
+    {!! Form::open(['method' => 'POST', 'route' => 'cart.popupLoad', 'ajax', 'postAjax' => 'basket-popup-loaded', 'id' => 'cart-popup-load']) !!}
+    {!! Form::close() !!}
+    @include('popups.basket')
+
     @section('scripts')
         @include('partials.scripts')
     @show

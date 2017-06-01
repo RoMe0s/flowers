@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-
 use App\Decorators\Phone;
 use App\Events\Frontend\UserRegister;
 use App\Http\Requests\Frontend\Order\FastOrder;
@@ -22,6 +21,7 @@ use App\Events\Frontend\FastOrderStored;
 use FlashMessages;
 use Carbon\Carbon;
 use App\Models\Page;
+use Illuminate\Http\Request;
 
 class OrderController extends FrontendController
 {
@@ -175,11 +175,12 @@ class OrderController extends FrontendController
 
     }
 
-    public function store(OrderStore $request) {
+    public function store(OrderStore $request)
+    {
 
         $data = $request->all();
 
-        if(isset($data['recipient_phone'])) {
+        if (isset($data['recipient_phone'])) {
 
             $phone = new Phone($data['recipient_phone']);
 
@@ -187,9 +188,15 @@ class OrderController extends FrontendController
 
         }
 
-        if(!Cart::count()) {
+        if (!Cart::count()) {
 
             FlashMessages::add('error', 'У вас пустая корзина');
+
+            if ($request->ajax()) {
+
+                return ['status' => 'error', 'refresh'];
+
+            }
 
             return redirect()->back()->withInput($data);
 
@@ -207,21 +214,74 @@ class OrderController extends FrontendController
 
                 FlashMessages::add('error', 'Выбрана некорректная дата доставки');
 
+                if (!$request->ajax()) {
+
+                    return ['status' => 'error', 'refresh'];
+
+                }
+
                 return redirect()->back()->withInput($data);
 
             }
 
             $user = Sentry::getUser();
 
-            if ($data['address_id'] == 0) {
-                $address = new Address();
-                $address_string = trim(implode(', ', $request->only(['city', 'street', 'house', 'flat'])), ',');
-                $address->fill([
-                'address' => $address_string,
-                    'code' => $data['code']
-                ]);
-                $user->addresses()->save($address);
-                $data['address_id'] = $address->id;
+            if (isset($data['address'])) {
+
+                if (is_array($data['address'])) {
+
+                    $address = new Address();
+
+                    $address_string = trim(implode(', ', $request->only(['address.city', 'address.street', 'address.house', 'address.flat'])['address']), ',');
+
+                    $address->fill([
+                        'address' => $address_string,
+                        'code' => $address['code'],
+                        'distance' => $data['address']['distance']
+                    ]);
+
+                    $user->addresses()->save($address);
+
+                    $data['address_id'] = $address->id;
+
+                } else {
+
+                    if (isset($data['specify'])) {
+
+                        $data['address_string'] = 'Самовывоз';
+
+                    }
+
+                }
+
+            }
+
+            if (isset($data['specify'])) {
+
+                $data['address_string'] = 'Уточнить у покупателя';
+
+            }
+
+            $data['delivery_price'] = get_delivery_price();
+
+            if (isset($data['night']) && $data['night']) {
+
+                $data['delivery_price'] += variable('night-delivery', 800);
+
+            }
+
+            if (isset($data['accuracy']) && $data['accuracy']) {
+
+                $data['delivery_price'] += variable('accuracy-delivery', 300);
+
+            }
+
+            if (isset($data['address']['distance']) && $data['address']['distance'] > 0) {
+
+                $price = $data['address']['distance'] <= 5 ? variable('mkad-delivery-5', 250) : ($data['address']['distance'] <= 10 ? variable('mkad-delivery-10', 500) : $data['address']['distance'] * 50);
+
+                $data['delivery_price'] += $price;
+
             }
 
             $order = Order::make($data, $user);
@@ -230,21 +290,34 @@ class OrderController extends FrontendController
 
             Event::fire(new FastOrderStored($order));
 
-            FlashMessages::add('success',
-                'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора.
-                Вам перезвонят для уточнения через несколько минут.');
+            FlashMessages::add('success', 'Ваш заказ #' . $order->id . ' ожидает подтверждения оператора. Вам перезвонят для уточнения через несколько минут.');
 
             session()->forget('cart_discount_code');
 
             Cart::destroy();
 
+            if ($request->ajax()) {
+
+                return ['status' => 'success', 'redirect' => route('profile.orders')];
+
+            }
+
             return redirect()->route('profile.orders');
-        
-        } catch(\Exception $e) {
+
+        } catch (\Exception $e) {
+
             FlashMessages::add('error', 'Произошла ошибка, попробуйте пожалуйста позже');
 
+            if ($request->ajax()) {
+
+                return ['status' => 'error', 'message' => $e->getMessage()];
+
+            }
+
             return redirect()->back()->withInput($data);
+
         }
+
     }
 
     public function subscribe($id) {
@@ -360,6 +433,75 @@ class OrderController extends FrontendController
         $this->_init('order-fail');
 
         return $this->render($this->pageService->getPageTemplate($this->page));
+    }
+
+    public function preview(Request $request) {
+
+        $data = $request->all();
+
+        $user = $this->user;
+
+        $address_id = $request->get('address_id', null);
+
+        $distance = false;
+
+        if($address_id) {
+        
+            $address = $user->addresses->where('id', (int)$address_id)->first();
+
+            $address = isset($address) ? $address->address : null;
+
+        } elseif(isset($data['specify']) && $data['specify']) {
+
+            $address = "Уточнить у получателя";
+
+        } else {
+        
+            $address = isset($data['address']) ? $data['address'] : null;
+
+            if(isset($address['distance'])) {
+
+                $distance = $address['distance'];
+
+                unset($address['distance']);
+
+            }
+
+            if(is_array($address)) {
+            
+                $address = array_filter($address);
+
+                $address = sizeof($address) ? implode(", ", $address) : null;
+            
+            }        
+
+        }
+
+        $data['address'] = $address;
+
+        $times = array(
+            '1' => 'с 10:00 до 13:00',
+            '2' => 'с 13:00 до 16:00',
+            '3' => 'с 16:00 до 19:00',
+            '4' => 'с 19:00 до 22:00',
+            '5' => 'с 22:00 до 10:00'
+        );
+
+        if(isset($data['time']) && !empty($data['time']) && isset($times[$data['time']])) {
+
+            $data['time'] = $times[$data['time']];
+        
+        }
+
+        $html = view('order_make.partials.result_content')->with([
+            'items' => Cart::content(),
+            'data' => $data,
+            'user' => $user,
+            'distance' => $distance
+        ])->render();
+
+        return ['html' => $html];
+    
     }
 
 }

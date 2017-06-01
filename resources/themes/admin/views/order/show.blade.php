@@ -63,6 +63,12 @@
                                     {!! isset($times[$model->time]) ? $times[$model->time] : trans('labels.no') !!}
                                 </div>
                                 <div class="col-sm-12 col-md-6">
+                                    Оставить соседям
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->neighbourhood ? trans('labels.yes') : trans('labels.no') !!}
+                                </div>
+                                <div class="col-sm-12 col-md-6">
                                     Текст открытки
                                 </div>
                                 <div class="col-sm-12 col-md-6 m-marg">
@@ -160,6 +166,24 @@
                     <div class="clearfix"></div>
 
                     <h4 class="text-center">Сумма заказа</h4>
+                            <div class="col-sm-12 col-md-6">
+                                Отдаленность от МКАД
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! isset($model->address) && isset($model->address->distance) ? $model->address->distance : "Адрес не указан" !!}
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                Ночная доставка
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! $model->night ? trans('labels.yes') : trans('labels.no') !!}
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                Точность до 15 минут
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! $model->accuracy ? trans('labels.yes') : trans('labels.no') !!}
+                            </div>
                             <div class="col-sm-12 col-md-6">
                                 Скидка
                             </div>

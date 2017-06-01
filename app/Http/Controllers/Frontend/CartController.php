@@ -49,25 +49,6 @@ class CartController extends FrontendController
     }
 
     /**
-     * Return view with cart collection's items
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index() {
-
-        $this->_init();
-
-        if (Cart::count()) {
-            foreach (Cart::content() as $row) {
-                if ($row->options['category'] != 'sales')
-                    Cart::update($row->rowid, ['discount' => CartController::_itemDiscount($row->price)]);
-            }
-        }
-
-        return $this->render($this->pageService->getPageTemplate($this->page));
-    }
-
-    /**
      * Add item to cart collection
      *
      * @param Request $request
@@ -105,7 +86,8 @@ class CartController extends FrontendController
             'options' => [
                 'category' => 'sets',
                 'image' => $set->image,
-                'type' => (string)Set::class
+                'type' => (string)Set::class,
+                'url' => $set->getUrl()
             ]
         ]);
 
@@ -156,6 +138,7 @@ class CartController extends FrontendController
                 'category' => 'bouquets',
                 'image' => $bouquet->image,
                 'type' => (string)Bouquet::class,
+                'url' => $bouquet->getUrl()
             ]
         ]);
 
@@ -199,6 +182,7 @@ class CartController extends FrontendController
                 'category' => 'sales',
                 'image' => $sale->image,
                 'type' => (string)Sale::class,
+                'url' => $sale->getUrl()
             ]
         ]);
 
@@ -250,6 +234,7 @@ class CartController extends FrontendController
                 'category' => 'items',
                 'image' => $product->image,
                 'type' => (string)Product::class,
+                'url' => $product->getUrl()
             ]
         ]);
 
@@ -390,6 +375,101 @@ class CartController extends FrontendController
 
     public static function _itemDiscount($price) {
         return ceil($price / 100 * static::_cartDiscount(true));
+    }
+
+    public function popupLoad(Request $request) {
+
+        if (Cart::count()) {
+            foreach (Cart::content() as $row) {
+                if ($row->options['category'] != 'sales')
+                    Cart::update($row->rowid, ['discount' => CartController::_itemDiscount($row->price)]);
+            }
+        }
+
+        $html = view('partials.basket')->with(['items' => Cart::content(), 'user' => $this->user])->render();
+    
+        return ['status' => 'success', 'html' => $html];
+    
+    }
+
+    public function changeItem(Request $request) {
+    
+        $method = $request->get('method', null);
+
+        $id = $request->get('rowid', null);
+
+        if($method && $id) {
+
+            $item = Cart::get($id);
+
+            $item_price = 0;
+
+            $item_count = 0;
+        
+            switch($method) {
+                case 'more':
+
+                    $item_count = $item->qty + 1;
+
+                    Cart::update($id, $item_count);
+
+                    $item_price = $item->subtotal;
+
+                    break;
+
+                case 'less':
+
+                    if($item->qty > 1) {
+
+                        $item_count = $item->qty - 1;
+
+                        Cart::update($id, $item_count);
+
+                        $item_price = $item->subtotal;
+
+                    } else {
+
+                        $item_count = $item->qty;
+                    
+                    }
+
+                    break;
+
+                case 'remove':
+
+                    Cart::remove($id);
+
+                    break;
+            }
+
+            $total_price = 0;
+
+            foreach(Cart::content() as $item) {
+
+                $total_price += $item->subtotal;
+
+            }
+
+            if($request->ajax()) {
+            
+                return [
+                    'status' => 'success',
+                    'method' => $method,
+                    'item_price' => $item_price,
+                    'total_price' => $total_price + get_delivery_price(),
+                    'id' => $id,
+                    'item_count' => $item_count,
+                    'total_count' => Cart::count()
+                ];
+            
+            }
+
+            return redirect()->back();
+        
+        }
+
+        abort(404);
+    
     }
 
 }

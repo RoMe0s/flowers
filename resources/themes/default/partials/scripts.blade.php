@@ -10,8 +10,9 @@
 <script type="text/javascript" src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/slick-carousel/slick/slick.min.js') !!}"></script>
 <script type="text/javascript" src="{!! Theme::asset('js/app.js') !!}"></script>
-
+<script type="text/javascript" src="{!! Theme::asset("js/basket.js") !!}"></script>
 <script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
+<script type="text/javascript" src="{!! Theme::asset('js/ajax.js') !!}"></script>
 
 <script type="text/javascript">
     lightbox.option({
@@ -21,7 +22,7 @@
         'fadeDuration' : 100,
         'wrapAround' : true
     });
-    $('input[name=phone], input[name=recipient_phone], input[data-phone_input="true"]').inputmask({
+    $('input[name=phone], input[name=recipient_phone], input[data-phone_input="true"], [type="tel"]').inputmask({
         mask: "+7 (999) 999-99-99"
     });
     $('#use-email').on("click", function() {

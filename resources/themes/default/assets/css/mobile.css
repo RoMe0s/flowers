@@ -361,6 +361,152 @@
 
     }
 
+    /*order-make*/
+
+
+    div#order-make div#order-collapse ul li a, div#order-make div#order-collapse ul li span {
+
+        font-size: 14px;
+
+    }
+
+    div#order-make div#order-collapse div.order-result-info p {
+
+        margin-bottom: 5px;
+
+    }
+
+    div#order-make h3 {
+
+        font-size: 18px;
+
+    }
+
+    div#order-make div#order-collapse div.order-result-info {
+
+        font-size: 14px;
+
+    }
+
+    div#order-make span.custom-popover {
+
+        font-size: 16px;
+
+    }
+
+    .arrowtest-east {
+
+        left: -10px;
+
+        z-index: 1;
+
+    }
+
+    div#order-make ul.nav li a {
+
+        z-index: 3;
+
+    }
+
+    div#order-make ul.nav li a {
+
+        line-height: 94px;
+
+    }
+
+    div#order-make ul.nav li:nth-child(3) .arrowtest-east {
+
+        left: -25px;
+
+    }
+
+    div#order-make ul.nav li:nth-child(2) a i {
+
+        padding-left: 35px;
+
+    }
+
+    div#order-make ul.nav li:nth-child(1) a i {
+
+        padding-left: 10px;
+
+    }
+
+    div#order-make ul.nav li:nth-child(3) a i {
+
+        padding-left: 20px;
+
+    }
+
+    div#order-make ul.nav li a p {
+
+        display: none;
+
+    }
+
+    div#basket {
+
+        width: 100%;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content {
+
+        width: 100%;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-body {
+
+        width: 100%;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-header {
+
+        width: 100%;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-footer {
+
+        width: 100%;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li div.basket-item-info {
+
+        height: auto !important;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-body div.basket-item-count {
+
+        position: relative !important;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-body div.basket-item-count div.input-group {
+
+        width: 100%;
+
+        float: none !important;
+
+    }
+
+    div#basket div.modal-dialog div.modal-content div.modal-body div.basket-item-count span.basket-item-price {
+
+        float: none !important;
+
+    }
+
+
+    div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list {
+
+        margin-right: 0;
+
+    }
+    
 }
 
 @media (min-width: 768px) and (max-width: 991px) {

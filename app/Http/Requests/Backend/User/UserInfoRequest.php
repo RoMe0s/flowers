@@ -33,7 +33,6 @@ class UserInfoRequest extends FormRequest
         return [
             'name'     => 'required',
             'birthday' => 'date_format:d-m-Y',
-            'phone'    => 'string|regex:/^\+[0-9]+$/|max:17|min:' . config('user.min_phone_length'),
             'gender'   => 'in:' . implode(',', UserInfo::$genders)
         ];
     }

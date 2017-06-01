@@ -25,7 +25,13 @@ class Order extends Model
         'card_text',
         'status',
         'desc',
-        'result'
+        'result',
+
+        'specify',
+        'neighbourhood',
+        'accuracy',
+        'night',
+        'address_string'
     ];
 
     protected $casts = [
@@ -45,7 +51,7 @@ class Order extends Model
     }
 
     public function items() {
-        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable');
+        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable.translations');
     }
 
     public function getTotal() {
@@ -157,9 +163,19 @@ class Order extends Model
 
     public function getAddress() {
 
+        $address = null;
+
         if(isset($this->address)) {
-            return $this->address->address;
+
+            $address = $this->address->address;
+
+        } elseif(!empty($this->address_string)) {
+
+            $address = $this->address_string;
+
         }
+
+        return $address;
 
     }
 
@@ -171,7 +187,7 @@ class Order extends Model
         try {
             $order = Order::create([
                 'user_id' => $user->id,
-                'address_id' => $data['address_id'],
+                'address_id' => isset($data['address_id']) ? $data['address_id'] : null,
                 'prepay' => $data['prepay'] ?: 50,
                 'recipient_name' => isset($data['recipient_name']) ? $data['recipient_name'] : "",
                 'recipient_phone' => isset($data['recipient_phone']) ? $data['recipient_phone'] : "",
@@ -179,8 +195,14 @@ class Order extends Model
                 'date' => $data['date'],
                 'time' => $data['time'],
                 'card_text' => $data['card_text'],
-                'desc' => $data['desc'],
-                'discount' => CartController::_cartDiscount(true)
+                'desc' => isset($data['desc']) ? $data['desc'] : null,
+                'discount' => CartController::_cartDiscount(true),
+                'specify' => isset($data['specify']) ? $data['specify'] : null,
+                'neighbourhood' => isset($data['neighbourhood']) ? $data['neighbourhood'] : false,
+                'accuracy' => isset($data['accuracy']) ? $data['accuracy'] : false,
+                'night' => isset($data['night']) ? $data['night'] : false,
+                'address_string' => isset($data['address_string']) ? $data['address_string'] : null,
+                'delivery_price' => isset($data['delivery_price']) ? $data['delivery_price'] : 0
             ]);
 
             static::_proccessItemsFromCart($order);

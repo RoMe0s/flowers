@@ -15,8 +15,10 @@ class PopulateUsersTable extends Migration
     public function up()
     {
 
-        Sentry::register(
+        /*Sentry::register(
             [
+                'login'     => '70001112233',
+                'phone'     => '70001112233',
                 'email'     => 'admin@admin.com',
                 'password'  => 'admin',
                 'activated' => 1,
@@ -26,7 +28,7 @@ class PopulateUsersTable extends Migration
         // Assign user permissions
         $adminGroup = Sentry::getGroupProvider()->findByName('Administrators');
 
-        $adminUser = Sentry::getUserProvider()->findByLogin('admin@admin.com');
+        $adminUser = Sentry::getUserProvider()->findByLogin('70001112233');
 
         $adminUser->activated = true;
         $adminUser->save();
@@ -36,7 +38,7 @@ class PopulateUsersTable extends Migration
         ]);
         $adminUser->info()->save($user_info);
 
-        $adminUser->addGroup($adminGroup);
+        $adminUser->addGroup($adminGroup);*/
     }
 
     /**

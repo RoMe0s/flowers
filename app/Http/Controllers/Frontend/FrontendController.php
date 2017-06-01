@@ -55,7 +55,7 @@ class FrontendController extends BaseController
 
         parent::__construct();
 
-        Meta::title(Config::get('app.name', ''));
+//        Meta::title(Config::get('app.name', ''));
 
         $user = Sentry::getUser();
 

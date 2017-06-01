@@ -52,6 +52,26 @@
     </div>
 </div>
 
+<div class="form-group required @if ($errors->has('accuracy')) has-error @endif">
+    {!! Form::label('accuracy', 'Точность до 15 минут', ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
+
+    <div class="col-xs-12 col-sm-9">
+        {!! Form::select('accuracy', [0 => 'Нет', 1 => 'Да'], null, ['placeholder' => 'Точность до 15 минут', 'id' => 'order-accuracy', 'class' => 'form-control input-sm select2', 'required' => true]) !!}
+
+        {!! $errors->first('accuracy', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group required @if ($errors->has('night')) has-error @endif">
+    {!! Form::label('night', 'Ночная доставка', ['class' => 'control-label col-xs-4 col-sm-3 col-md-2']) !!}
+
+    <div class="col-xs-12 col-sm-9">
+        {!! Form::select('night', [0 => 'Нет', 1 => 'Да'], null, ['placeholder' => 'Ночная доставка', 'id' => 'order-night', 'class' => 'form-control input-sm select2', 'required' => true]) !!}
+
+        {!! $errors->first('night', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group required @if ($errors->has('prepay')) has-error @endif">
     {!! Form::label('prepay', trans('labels.prepay'), ['class' => 'control-label col-xs-12 col-sm-2']) !!}
 
