@@ -4,6 +4,25 @@
 
     <section>
         @include('partials.breadcrumbs')
+        @if(!$model instanceOf \App\Models\Product)
+        <div class="bullets" style="border-bottom: 1px solid #ddd">
+            <div class="row" style="margin: 0 0 10px 0;">
+                <div class="col-xs-6 text-center">
+                    <p><i class="fa fa-camera fa-purple fa-3x" aria-hidden="true"></i></p>
+                    <h4 style="margin-bottom: 0; height: inherit;">
+                        Фото перед отправкой
+                    </h4>
+                </div>
+
+                <div class="col-xs-6 text-center">
+                    <p><i class="fa fa-purple fa-3x fa-taxi" aria-hidden="true"></i></p>
+                    <h4 style="margin-bottom: 0; height: inherit">
+                        Бесплатная доставка
+                    </h4>
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="product-layout" itemscope itemtype="http://schema.org/Product">
             <div class="col-md-7 col-sm-12 text-center product-image-wrapper">
                     <div class="product-image">
