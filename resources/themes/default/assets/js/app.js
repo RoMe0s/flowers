@@ -123,7 +123,7 @@ var Alert = {
         if (css_class == 'notify-success') {
             var link = $('<a>')
                 .addClass('btn btn-outline btn-xs')
-                .attr('href', '/cart')
+                .attr('data-show-basket', 'data-show-basket')
                 .text('Оформить заказ');
         }
 
@@ -131,7 +131,7 @@ var Alert = {
             .addClass('notify ' + css_class)
             .html(message + ' ' + link[0].outerHTML)
             .fadeIn(300)
-            .delay(10000)
+            .delay(5000)
             .fadeOut(300)
             .appendTo($('#notifications'));
     },

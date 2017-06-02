@@ -1980,6 +1980,23 @@ div#basket div.modal-dialog div.modal-content div.modal-header i {
 
 }
 
+div#basket div.modal-dialog div.modal-content ul.basket-list li div.basket-item-name {
+
+    line-height: 16px;
+    max-height: 32px;
+    overflow: hidden;
+
+}
+
+div#basket div.modal-dialog div.modal-content ul.basket-list li div.basket-item-name button {
+
+    position: absolute;
+    bottom: 0;
+    background-color: white !important;
+    right: 0;
+
+}
+
 div#basket div.modal-dialog div.modal-content div.modal-header span {
 
     text-transform: uppercase;

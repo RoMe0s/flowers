@@ -25,15 +25,15 @@
                     {!! Form::open(['ajax', 'postAjax' => 'basket-item-changed', 'method' => 'POST', 'route' => 'basket.item.change']) !!}
                     {!! Form::hidden('rowid', $item->rowid) !!}
                     {!! Form::hidden("method", null) !!}
-                    <div class="col-xs-12">
+                    <div class="basket-item-name col-xs-12">
                         <a href="{!! $item->options['url'] !!}" target="_blank" title="{{$item->name}}" class="basket-item-title">
                             {{$item->name}}
                         </a>
                         &nbsp;
-                        <button class="like-href text-danger basket-item-title pull-right" data-method="remove" type="button">Удалить</button>
+                        <button class="like-href text-danger basket-item-title" data-method="remove" type="button">Удалить</button>
                     </div>
-                    <div class="basket-item-count">
-                        <div class="input-group col-xs-5 pull-left">
+                    <div class="basket-item-count col-sm-12 col-xs-8">
+                        <div class="input-group pull-left col-xs-5">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" data-method="less">-</button>
                             </span>
@@ -42,7 +42,7 @@
                                 <button class="btn btn-default" data-method="more" type="button">+</button>
                             </span>
                         </div>
-                        <span class="col-xs-7 text-success basket-item-price text-center pull-right">
+                        <span class="text-success basket-item-price text-center pull-right col-sm-7 col-xs-12">
                             {!! $item->subtotal !!} руб.
                         </span>
                     </div>
