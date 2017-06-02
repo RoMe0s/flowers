@@ -309,7 +309,11 @@ class AuthController extends FrontendController
 
             }
 
-            if($user->phone == $user->login) {
+            $decorated_phone = new Phone($user->phone);
+
+            $decorated_phone = $decorated_phone->getDecorated();
+
+            if($decorated_phone == $user->login) {
 
                 $code = random_int(1000, 9999);
 
@@ -362,6 +366,10 @@ class AuthController extends FrontendController
         $token = implode("", $digits);
 
         $login = $request->get('login');
+
+        $login = new Phone($login);
+
+        $login = $login->getDecorated();
 
         try {
             $user = Sentry::findUserByLogin($login);
