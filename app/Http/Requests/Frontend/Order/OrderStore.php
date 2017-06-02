@@ -55,8 +55,8 @@ class OrderStore extends FormRequest
             'recipient_name' => 'required_if:prepay,100',
             'recipient_phone' => 'required_if:prepay,100|regex:' . config('user.phone_regex'),
             'agreement'     => 'required',
-            'accuracy' => 'required_without:night',
-            'night'     => 'required_without:accuracy',
+            'accuracy' => 'boolean',
+            'night'     => 'boolean',
             'distance'  => 'integer',
             'anonymously' => 'boolean',
             'neighbourhood' => 'boolean'
@@ -79,8 +79,6 @@ class OrderStore extends FormRequest
             'address.distance.required' => 'Поле должно иметь числовой формат',
             'neighbourhood.boolean' => 'Поле "Оставить соседям" должно быть логического формата(Да, Нет)',
             'anonymously.boolean' => 'Поле "Анонимно" должно быть логического формата(Да, Нет)',
-            'accuracy.required_without' => 'Поле должно быть заполнено',
-            'night.required_without' => 'Поле должно быть заполнено',
             'specify.required_without' => 'Поле должно быть заполнено',
             'recipient_phone.regex' => 'Поле телефон имеет ошибочный формат'
         ];

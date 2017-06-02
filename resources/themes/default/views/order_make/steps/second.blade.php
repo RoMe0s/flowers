@@ -1,7 +1,7 @@
 <div role="tabpanel" class="tab-pane fade" id="second">
     <div class="cells text-right">
         Сумма заказа:
-        <span class="text-success price-string">{!! Cart::subtotal() + get_delivery_price() !!} руб.</span>
+        <span class="text-success price-string">{!! $cart_subtotal !!} руб.</span>
     </div>
     <br/>
     <div class="col-xs-12 col-sm-6 half">
@@ -42,18 +42,9 @@
             </button>
         </div>
         <div id="is-courier-delivery">
-            <div class="form-group" style="margin-bottom: 10px;">
-                        <span class="pull-right custom-popover">
-                            <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                               data-placement="bottom"
-                               data-content="{{variable('order-isset-address')}}"></i>
-                        </span>
-                <label>Существующий адрес</label>
-                {!! Form::select(null, $addresses->lists('address', 'id'), null, ['class' => 'form-control input-sm', 'data-name' => 'address_id', 'placeholder' => 'Существующий адрес', 'data-required']) !!}
-            </div>
             <button class="col-xs-12 text-center btn btn-default btn-sm like-href" data-input data-block="#new-address"
                     data-block-action="both" type="button" data-change-required="select[data-name='address_id']">
-                Или добавить новый
+                Добавить новый
             </button>
             <div id="new-address">
                 <div class="form-group">
@@ -76,6 +67,15 @@
                     <label>Код домофона</label>
                     {!! Form::text(null, null, ['class' => 'form-control input-sm', 'placeholder' => 'Код домофона', 'data-name' => 'address[code]', 'data-except' => 'new-address-input']) !!}
                 </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px;">
+                        <span class="pull-right custom-popover">
+                            <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                               data-placement="bottom"
+                               data-content="{{variable('order-isset-address')}}"></i>
+                        </span>
+                <label>Существующий адрес</label>
+                {!! Form::select(null, $addresses->lists('address', 'id'), null, ['class' => 'form-control input-sm', 'data-name' => 'address_id', 'placeholder' => 'Существующий адрес', 'data-required']) !!}
             </div>
             <div class="row clearfix">
                 <div class="col-xs-12 parent-for-inputs"  style="margin: 5px 0;">

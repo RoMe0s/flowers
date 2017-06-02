@@ -1,7 +1,7 @@
 <div role="tabpanel" class="tab-pane fade in active" id="first">
     <div class="cells text-right">
         Сумма заказа:
-        <span class="text-success price-string">{!! Cart::subtotal() + get_delivery_price() !!} руб.</span>
+        <span class="text-success price-string">{!! $cart_subtotal !!} руб.</span>
     </div>
     <br />
     {!! Form::hidden('prepay', null, ['required']) !!}

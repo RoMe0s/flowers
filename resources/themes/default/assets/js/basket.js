@@ -2,6 +2,18 @@ $(document).on("click", "[data-show-basket]", function(e) {
 
     $(document).find('form#cart-popup-load').submit();
 
+    var $this = $(this);
+
+    $this.css("pointer-events", "none");
+
+    var timeout = setTimeout(function() {
+
+        $this.css("pointer-events", "all");
+
+        clearTimeout(timeout);
+
+    }, 1500);
+
     e.preventDefault();
 
 });
@@ -73,7 +85,8 @@ $(document).on("basket-item-changed", function(e, response) {
         
         $order = $("div#order-make"),
         $prices = $order.find("span.price-string"),
-        $order_collapse = $order.find("div.collapse#order-collapse");
+        $order_collapse = $order.find("div.collapse#order-collapse"),
+        $delivery_element = $modal.find("li[data-delivery-price]");
 
     if(response.total_count !== undefined && response.total_count > 0) {
 
@@ -118,6 +131,19 @@ $(document).on("basket-item-changed", function(e, response) {
 
             });
         
+        }
+
+        if(response.use_delivery !== undefined &&
+        response.use_delivery > 0) {
+
+            $delivery_element.find("span").html(response.use_delivery);
+
+            $delivery_element.fadeIn("slow");
+
+        } else {
+
+            $delivery_element.fadeOut("fast");
+
         }
 
     } else {

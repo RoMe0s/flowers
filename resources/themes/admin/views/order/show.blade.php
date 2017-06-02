@@ -96,7 +96,7 @@
                                     <b>Анонимно</b>
                                 </div>
                                 <div class="col-sm-12 col-md-6 m-marg">
-                                    {!! $model->anonymously ? Да : trans('labels.no' ) !!}
+                                    {!! $model->anonymously ? trans('labels.yes') : trans('labels.no' ) !!}
                                 </div>
                             @endif
                             <div class="col-sm-12 col-md-6">

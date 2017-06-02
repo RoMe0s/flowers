@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if($request->ajax() && env('HANDLE_ERROR', true)) {
+        if($request->ajax() && env('HANDLE_ERROR', true) && $e->getMessage() != "") {
 
             $response = array();
 

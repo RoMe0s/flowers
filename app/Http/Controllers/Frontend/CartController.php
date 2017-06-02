@@ -386,7 +386,13 @@ class CartController extends FrontendController
             }
         }
 
-        $html = view('partials.basket')->with(['items' => Cart::content(), 'user' => $this->user])->render();
+        $delivery_price = get_delivery_price();
+
+        $html = view('partials.basket')->with([
+            'items' => Cart::content(),
+            'user' => $this->user,
+            'delivery_price' => $delivery_price
+        ])->render();
     
         return ['status' => 'success', 'html' => $html];
     
@@ -448,16 +454,19 @@ class CartController extends FrontendController
 
             }
 
+            $delivery_price = get_delivery_price();
+
             if($request->ajax()) {
             
                 return [
                     'status' => 'success',
                     'method' => $method,
                     'item_price' => $item_price,
-                    'total_price' => $total_price + get_delivery_price(),
+                    'total_price' => $total_price + $delivery_price,
                     'id' => $id,
                     'item_count' => $item_count,
-                    'total_count' => Cart::count()
+                    'total_count' => Cart::count(),
+                    'use_delivery' => $delivery_price
                 ];
             
             }

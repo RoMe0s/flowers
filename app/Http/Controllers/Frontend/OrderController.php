@@ -169,6 +169,18 @@ class OrderController extends FrontendController
             $addresses = array();
         }
 
+        $cart_subtotal = 0;
+
+        foreach(Cart::content() as $item) {
+
+            $cart_subtotal += $item->subtotal;
+
+        }
+
+        $cart_subtotal += get_delivery_price();
+
+        $this->data('cart_subtotal', $cart_subtotal);
+
         $this->data('addresses', $addresses);
 
         return $this->render($this->pageService->getPageTemplate($this->page));

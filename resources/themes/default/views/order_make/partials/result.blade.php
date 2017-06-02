@@ -14,7 +14,7 @@
         <h4 class="panel-body text-right">
             Сумма заказа:
             <span class="text-success price-string">
-                {!! Cart::subtotal() + get_delivery_price() !!}
+                {!! $cart_subtotal !!}
                 руб.
             </span>
         </h4>

@@ -141,6 +141,11 @@
                 {!! Form::close() !!}
             </li>
         @endif
+        <li data-delivery-price @if(!$delivery_price) style="display: none;" @endif>
+            <h4 class="text-center">
+                Стоимость доставки <span>{!! $delivery_price !!}</span> руб.
+            </h4>
+        </li>
     </ul>
 </div>
 @if(sizeof($items))
@@ -148,7 +153,7 @@
         <p class="text-center">
             Сумма:
             <span class="text-success" id="basket-subtotal">
-            {{Cart::subtotal() + get_delivery_price()}} руб.
+            {{Cart::subtotal() + $delivery_price}} руб.
         </span>
         </p>
         <a class="btn btn-purple col-xs-12" @if($user) href="{!! route('get.order') !!}"

@@ -1998,11 +1998,28 @@ div#basket div.modal-dialog div.modal-content div.modal-header i {
 
 }
 
+div#order-make button[data-block="#new-address"] {
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+
+    color: #9370db;
+
+}
+
+div#order-make button[data-block="#new-address"]:hover {
+
+    color: black;
+
+}
+
 div#basket div.modal-dialog div.modal-content ul.basket-list li div.basket-item-name {
 
     line-height: 16px;
     max-height: 32px;
     overflow: hidden;
+    min-height: 28px;
 
 }
 

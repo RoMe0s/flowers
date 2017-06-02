@@ -24,7 +24,7 @@ var Cart = {
             Cart.updateInfo(data.count);
 
             // Alert.success(data.msg);
-            $("[data-show-basket]").click();
+            $("a.mobile-cart[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -40,7 +40,7 @@ var Cart = {
             Cart.updateInfo(data.count);
 
             // Alert.success(data.msg);
-            $("[data-show-basket]").click();
+            $("a.mobile-cart[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -56,7 +56,7 @@ var Cart = {
             Cart.updateInfo(data.count);
 
             // Alert.success(data.msg);
-            $("[data-show-basket]").click();
+            $("a.mobile-cart[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -72,7 +72,7 @@ var Cart = {
             Cart.updateInfo(data.count);
 
             // Alert.success(data.msg);
-            $("[data-show-basket]").click();
+            $("a.mobile-cart[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
