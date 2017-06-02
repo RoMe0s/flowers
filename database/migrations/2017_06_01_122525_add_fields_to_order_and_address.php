@@ -17,10 +17,9 @@ class AddFieldsToOrderAndAddress extends Migration
             $table->boolean('neighbourhood')->default(false);
             $table->boolean('accuracy')->default(false);
             $table->boolean('night')->default(false);
+            $table->boolean('anonymously')->default(false);
             $table->string('address_string')->nullable();
-        });
-        Schema::table('addresses', function(Blueprint $table) {
-           $table->integer('distance')->unsigned()->default(0);
+            $table->integer('distance')->unsigned()->default(0);
         });
     }
 
@@ -36,8 +35,7 @@ class AddFieldsToOrderAndAddress extends Migration
             $table->dropColumn('neighbourhood');
             $table->dropColumn('accuracy');
             $table->dropColumn('night');
-        });
-        Schema::table('addresses', function (Blueprint $table) {
+            $table->dropColumn('anonymously');
             $table->dropColumn('distance');
         });
     }

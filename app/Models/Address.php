@@ -9,8 +9,7 @@ class Address extends Model
     protected $fillable = [
         'user_id',
         'address',
-        'code',
-        'distance'
+        'code'
     ];
 
     public function user() {

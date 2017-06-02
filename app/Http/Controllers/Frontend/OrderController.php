@@ -237,7 +237,7 @@ class OrderController extends FrontendController
                     $address->fill([
                         'address' => $address_string,
                         'code' => $address['code'],
-                        'distance' => $data['address']['distance']
+                        'distance' => isset($data['distance']) ? $data['distance'] : 0
                     ]);
 
                     $user->addresses()->save($address);
@@ -246,7 +246,7 @@ class OrderController extends FrontendController
 
                 } else {
 
-                    if (isset($data['specify'])) {
+                    if (!isset($data['specify'])) {
 
                         $data['address_string'] = 'Самовывоз';
 
@@ -276,9 +276,9 @@ class OrderController extends FrontendController
 
             }
 
-            if (isset($data['address']['distance']) && $data['address']['distance'] > 0) {
+            if (isset($data['distance']) && $data['distance'] > 0) {
 
-                $price = $data['address']['distance'] <= 5 ? variable('mkad-delivery-5', 250) : ($data['address']['distance'] <= 10 ? variable('mkad-delivery-10', 500) : $data['address']['distance'] * 50);
+                $price = $data['distance'] <= 5 ? variable('mkad-delivery-5', 250) : ($data['distance'] <= 10 ? variable('mkad-delivery-10', 500) : $data['distance'] * 50);
 
                 $data['delivery_price'] += $price;
 
@@ -443,7 +443,7 @@ class OrderController extends FrontendController
 
         $address_id = $request->get('address_id', null);
 
-        $distance = false;
+        $distance = $request->get('distance', null);
 
         if($address_id) {
         
@@ -458,14 +458,6 @@ class OrderController extends FrontendController
         } else {
         
             $address = isset($data['address']) ? $data['address'] : null;
-
-            if(isset($address['distance'])) {
-
-                $distance = $address['distance'];
-
-                unset($address['distance']);
-
-            }
 
             if(is_array($address)) {
             

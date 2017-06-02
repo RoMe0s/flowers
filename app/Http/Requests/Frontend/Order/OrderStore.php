@@ -35,8 +35,7 @@ class OrderStore extends FormRequest
                 'address_id'    => 'required_without:address.city',
                 'address.city' => 'required_without:address_id',
                 'address.street' => 'required_without:address_id',
-                'address.house' => 'required_without:address_id',
-                'address.distance' => 'required_without:address_id|integer',
+                'address.house' => 'required_without:address_id'
             ];
 
         }
@@ -56,9 +55,11 @@ class OrderStore extends FormRequest
             'recipient_name' => 'required_if:prepay,100',
             'recipient_phone' => 'required_if:prepay,100|regex:' . config('user.phone_regex'),
             'agreement'     => 'required',
-            'neighbourhood' => 'boolean',
             'accuracy' => 'required_without:night',
-            'night'     => 'required_without:accuracy'
+            'night'     => 'required_without:accuracy',
+            'distance'  => 'integer',
+            'anonymously' => 'boolean',
+            'neighbourhood' => 'boolean'
         ];
 
         return array_merge($rules, $address_rules);
@@ -76,10 +77,12 @@ class OrderStore extends FormRequest
             'time.required' => 'Выберите время доставки',
             'date.required' => 'Выберите дату доставки',
             'address.distance.required' => 'Поле должно иметь числовой формат',
-            'neighbourhood.required' => 'Поле "Оставить соседям" должно быть логического формата(Да, Нет)',
+            'neighbourhood.boolean' => 'Поле "Оставить соседям" должно быть логического формата(Да, Нет)',
+            'anonymously.boolean' => 'Поле "Анонимно" должно быть логического формата(Да, Нет)',
             'accuracy.required_without' => 'Поле должно быть заполнено',
             'night.required_without' => 'Поле должно быть заполнено',
-            'specify.required_without' => 'Поле должно быть заполнено'
+            'specify.required_without' => 'Поле должно быть заполнено',
+            'recipient_phone.regex' => 'Поле телефон имеет ошибочный формат'
         ];
     }
 }

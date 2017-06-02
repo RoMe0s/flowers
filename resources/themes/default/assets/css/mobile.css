@@ -480,6 +480,12 @@
 
     }
 
+    div#basket div.modal-dialog div.modal-content ul.basket-list li div.basket-item-name button {
+
+        font-size: 1.5em;
+
+    }
+
     div#basket div.modal-dialog div.modal-content div.modal-body div.basket-item-count {
 
         position: relative !important;

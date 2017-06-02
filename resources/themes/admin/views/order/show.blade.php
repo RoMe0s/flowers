@@ -92,6 +92,12 @@
                                 <div class="col-sm-12 col-md-6 m-marg">
                                     {!! $model->recipient_phone ?: trans('labels.no' ) !!}
                                 </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <b>Анонимно</b>
+                                </div>
+                                <div class="col-sm-12 col-md-6 m-marg">
+                                    {!! $model->anonymously ? Да : trans('labels.no' ) !!}
+                                </div>
                             @endif
                             <div class="col-sm-12 col-md-6">
                                 Клинет
@@ -170,7 +176,7 @@
                                 Отдаленность от МКАД
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
-                                {!! isset($model->address) && isset($model->address->distance) ? $model->address->distance : "Адрес не указан" !!}
+                                {!! isset($model->distance) ? $model->distance : "Адрес не указан" !!}
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 Ночная доставка

@@ -4,7 +4,7 @@
     <section>
         @include('errors.form')
         <div id="order-make">
-            {!! Form::open(['method' => 'POST', 'route' => 'post.order'/*, 'ajax', 'errorAjax' => 'order-store-error'*/]) !!}
+            {!! Form::open(['method' => 'POST', 'route' => 'post.order', 'ajax']) !!}
             <!-- Nav tabs -->
             <ul class="nav">
                 <li class="active col-xs-3 col-sm-4">

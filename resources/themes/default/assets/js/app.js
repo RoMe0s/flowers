@@ -23,7 +23,8 @@ var Cart = {
         }).success(function (data) {
             Cart.updateInfo(data.count);
 
-            Alert.success(data.msg);
+            // Alert.success(data.msg);
+            $("[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -38,7 +39,8 @@ var Cart = {
         }).success(function (data) {
             Cart.updateInfo(data.count);
 
-            Alert.success(data.msg);
+            // Alert.success(data.msg);
+            $("[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -53,7 +55,8 @@ var Cart = {
         }).success(function (data) {
             Cart.updateInfo(data.count);
 
-            Alert.success(data.msg);
+            // Alert.success(data.msg);
+            $("[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -68,7 +71,8 @@ var Cart = {
         }).success(function (data) {
             Cart.updateInfo(data.count);
 
-            Alert.success(data.msg);
+            // Alert.success(data.msg);
+            $("[data-show-basket]").click();
         }).error(function (data) {
             Alert.error(data.responseJSON);
         });
@@ -116,6 +120,7 @@ var Popup = {
 
 var Alert = {
     create: function (message, css_class) {
+
         if ($('#notifications .notify').size() > 0) {
             $('#notifications .notify').first().remove();
         }
@@ -127,9 +132,17 @@ var Alert = {
                 .text('Оформить заказ');
         }
 
+        var content = message;
+
+        if(link != undefined) {
+            
+            content += link[0].outerHTML;
+        
+        }
+
         $('<div>')
             .addClass('notify ' + css_class)
-            .html(message + ' ' + link[0].outerHTML)
+            .html(content)
             .fadeIn(300)
             .delay(5000)
             .fadeOut(300)

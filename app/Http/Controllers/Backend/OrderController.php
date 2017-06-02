@@ -586,7 +586,6 @@ class OrderController extends BackendController
     private function _proccessAddress($user_id) {
         $input['address'] = request('address');
         $input['code'] = request('code');
-        $input['distance'] = request('distance', 0);
         $input['user_id'] = $user_id;
         $address = new Address();
         $address->fill($input);

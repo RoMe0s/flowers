@@ -24,6 +24,17 @@
             <label>Имя получателя</label>
             {!! Form::text(null, null, array('placeholder' => 'Имя получателя', 'class' => 'form-control input-sm', 'data-required' => 'required', 'data-name' => 'recipient_name')) !!}
         </div>
+        <div class="checkbox col-xs-12 col-sm-6 col-sm-offset-3">
+            <span class="pull-right custom-popover">
+                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                   data-placement="bottom"
+                   data-content="{{variable('order-anonymously')}}"></i>
+            </span>
+            <label>
+                {!! Form::input("checkbox", null, 1, array("data-name" => 'anonymously')) !!}     
+                Анонимно
+            </label>
+        </div>
     </div>
     <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
         <label>Текст открытки</label>

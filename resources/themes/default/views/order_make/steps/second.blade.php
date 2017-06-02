@@ -42,16 +42,7 @@
             </button>
         </div>
         <div id="is-courier-delivery">
-            <div class="form-group">
-                        <span class="pull-right custom-popover">
-                            <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                               data-placement="bottom"
-                               data-content="{{variable('order-neighbourhood')}}"></i>
-                        </span>
-                <label>Оставить соседям</label>
-                {!! Form::select(null, [0 => 'Нет', '1' => 'Да'], null, ['class' => 'form-control input-sm', 'data-name' => 'neighbourhood']) !!}
-            </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 10px;">
                         <span class="pull-right custom-popover">
                             <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
                                data-placement="bottom"
@@ -85,13 +76,38 @@
                     <label>Код домофона</label>
                     {!! Form::text(null, null, ['class' => 'form-control input-sm', 'placeholder' => 'Код домофона', 'data-name' => 'address[code]', 'data-except' => 'new-address-input']) !!}
                 </div>
-                <div class="form-group">
-                            <span class="pull-right custom-popover">
-                                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                                   data-placement="bottom" data-content="{{variable('order-distance')}}"></i>
-                            </span>
-                    <label>Удаленность от МКАД</label>
-                    {!! Form::text(null, 0, ['class' => 'form-control input-sm', 'placeholder' => 'Удаленность от МКАД', 'data-name' => 'address[distance]', 'data-required', 'data-except' => 'new-address-input', 'data-price' => 'mkad', 'data-used' => '0']) !!}
+            </div>
+            <div class="row clearfix">
+                <div class="col-xs-12 parent-for-inputs"  style="margin: 5px 0;">
+                    <div class="checkbox">
+                        <span class="pull-right custom-popover">
+                            <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                               data-placement="bottom" data-content="{{variable('order-distance-5')}}"></i>
+                        </span>
+                        <label>
+                            {!! Form::input("checkbox", null, 5, ['data-name' => 'distance', 'data-price' => variable('mkad-delivery-5', 250), 'data-used' => '0']) !!}
+                            Доставка за МКАД (до 5 км.)&nbsp;
+                            <span class="text-info">+{!! variable('mkad-delivery-5', 250) !!} руб.</span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <span class="pull-right custom-popover">
+                            <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                               data-placement="bottom" data-content="{{variable('order-distance-10')}}"></i>
+                        </span>
+                        <label>
+                            {!! Form::input("checkbox", null, 10, ['data-name' => 'distance', 'data-price' => variable('mkad-delivery-10', 500), 'data-used' => '0']) !!}
+                            Доставка за МКАД (до 10 км.)&nbsp;
+                            <span class="text-info">+{!! variable('mkad-delivery-10', 500) !!} руб.</span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {!! Form::input("checkbox", null, 11, ['data-name' => 'distance', 'data-used' => '0', 'data-price' => '0']) !!}
+                            Доставка за МКАД (более 10 км.)&nbsp;
+                            <span class="text-info">По согласованию</span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,23 +126,35 @@
             <label>Время доставки</label>
             {!! Form::select('time', $times, null, array('class' => 'form-control input-sm', 'required')) !!}
         </div>
-        <div class="form-group" style="display: none;">
-                    <span class="pull-right custom-popover">
-                        <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                           data-placement="bottom"
-                           data-content="{{variable('order-night')}}"></i>
-                    </span>
-            <label>Ночная доставка</label>
-            {!! Form::select(null, [0 => 'Нет', '1' => 'Да'], null, ['class' => 'form-control', 'placeholder' => 'Ночная доставка', 'data-name' => 'night', 'data-price' => '800', 'data-used' => '0']) !!}
+        <div class="checkbox" style="display: none;">
+            <span class="pull-right custom-popover">
+                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                   data-placement="bottom"
+                   data-content="{{variable('order-night')}}"></i>
+            </span>
+            <label>
+                {!! Form::input('checkbox', null, 1, ['data-name' => 'night', 'data-price' => variable('night-delivery', 800), 'data-used' => '0']) !!}
+                Ночная доставка&nbsp;
+                <span class="text-info">+{!! variable('night-delivery', 800) !!} руб.</span>
+            </label>
         </div>
-        <div class="form-group">
-                    <span class="pull-right custom-popover">
-                        <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                           data-placement="bottom"
-                           data-content="{{variable('order-accuracy')}}"></i>
-                    </span>
-            <label>Точность до 15 минут</label>
-            {!! Form::select('accuracy', [0 => 'Нет', '1' => 'Да'], null, ['class' => 'form-control', 'placeholder' => 'Точность до 15 минут', 'data-name' => 'accuracy', 'required', 'data-price' => '300', 'data-used' => '0']) !!}
+        <div class="checkbox">
+            <span class="pull-right custom-popover">
+                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                   data-placement="bottom"
+                   data-content="{{variable('order-accuracy')}}"></i>
+            </span>
+            <label>
+                {!! Form::input("checkbox", 'accuracy',  1, ['data-name' => 'accuracy', 'data-price' => variable('accuracy-delivery' ,300), 'data-used' => '0']) !!}
+                Точность до 15 минут&nbsp;
+                <span class="text-info">+{!! variable('accuracy-delivery', 300) !!} руб.</span>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                {!! Form::input("checkbox", "neighbourhood" , 1) !!}
+                Если получателя не будет на месте, оставить заказ родственникам/друзьям/коллегам
+            </label>
         </div>
         <div class="form-group">
             <label>Комментарий</label>

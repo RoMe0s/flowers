@@ -4,6 +4,12 @@
 
 }
 
+label.has-error {
+
+    color: red !important;
+
+}
+
 div.additional-inputs a:hover {
 
 
@@ -1796,6 +1802,18 @@ div#order-make div.tab-content button {
 
 }
 
+div#order-make div.tab-content div.checkbox {
+
+    margin-top: 0;
+
+}
+
+div#order-make div.tab-content div.checkbox label {
+
+    font-weight: bold;
+
+}
+
 div#order-make div.tab-content button:focus, div#order-make div.tab-content button:active {
 
     outline: none !important;
@@ -1994,6 +2012,8 @@ div#basket div.modal-dialog div.modal-content ul.basket-list li div.basket-item-
     bottom: 0;
     background-color: white !important;
     right: 0;
+    font-size: 2em;
+    padding: 0;
 
 }
 
@@ -2013,7 +2033,15 @@ div#basket div.modal-dialog div.modal-content div.modal-footer {
 
     padding: 10px;
 
-    height: 96px;
+    height: 121px;
+
+}
+
+div#basket div.modal-dialog div.modal-content div.modal-footer a.footer-close {
+
+    font-size: 14px;
+
+    margin-top: 5px;
 
 }
 

@@ -104,13 +104,11 @@ $('button[data-input]').click(function (e) {
 
     } else if ($block) {
 
-        var $mkad = $block.find("[data-price='mkad']");
-
-        if($mkad.length) {
-
-            $mkad.val(0).change();
-
-        }
+        $block.find("[data-price]:checked").each(function() {
+        
+            $(this).prop("checked", false).change();
+        
+        });
 
         $block.fadeOut('fast', function () {
 
@@ -157,40 +155,49 @@ $("[data-toggle='popover']").popover();
 $("div#order-make").on("change", "[data-price]", function(e) {
 
     var used = parseInt($(this).attr("data-used")),
-        value = $(this).val(),
+        value = $(this).is(":checked"),
         change = parseInt($(this).attr('data-price')),
         $prices = $("div#order-make").find("span.price-string"),
-        price = parseInt($prices.html().replace(/\D/g, ""));
+        price = parseInt($prices.html().replace(/\D/g, "")),
+        $parent = $(this).closest(".parent-for-inputs"),
+        $this = $(this);
 
-    if($(this).is("select")) {
+    if($parent.length) {
+    
+        $parent.find("[type='checkbox']:checked").each(function() {
 
-        if (value == "1" && !used) {
+            var tmp_used = parseInt($(this).attr("data-used")),
+                tmp_change = parseInt($(this).attr("data-price"));
 
-            $(this).attr("data-used", "1");
+            if(tmp_change != change) {
+                
+                $(this).prop("checked", false);
 
-            price += change;
+                if(tmp_used != 0) {
+                
+                    $(this).attr("data-used", "0");
 
-        } else if (value == "0" && used) {
+                    price -= tmp_change;
+                
+                }
 
-            $(this).attr("data-used", "0");
+            }
 
-            price -= change;
+        });
+    
+    }
 
-        }
+    if (value && used == 0) {
 
-    } else {
+        $this.attr("data-used", "1");
 
-        price -= getMKADprice(used);
+        price += change;
 
-        value = parseInt(value);
+    } else if (!value && used != 0) {
 
-        value = value < 0 ? 0 : value;
+        $this.attr("data-used", "0");
 
-        price += getMKADprice(value);
-
-        $(this).val(value);
-
-        $(this).attr("data-used", value);
+        price -= change;
 
     }
 
@@ -198,35 +205,13 @@ $("div#order-make").on("change", "[data-price]", function(e) {
 
 });
 
-function getMKADprice(km) {
-
-    if(km > 0 && km <= 5) {
-
-        return 250;
-
-    } else if(km > 5 && km <= 10) {
-
-        return 500;
-
-    } else if(km > 10) {
-
-        return km * 50;
-
-    } else {
-
-        return 0;
-
-    }
-
-}
-
 $("div#order-make").on("change", "select[name='time']", function(e) {
 
     var $order_make = $("div#order-make"),
-        $night_select = $order_make.find("select[data-name='night']"),
-        $night_select_block = $night_select.closest('div.form-group'),
-        $accuracy_select = $order_make.find("select[data-name='accuracy']"),
-        $accuracy_select_block = $accuracy_select.closest("div.form-group"),
+        $night_select = $order_make.find("input[data-name='night']"),
+        $night_select_block = $night_select.closest('div.checkbox'),
+        $accuracy_select = $order_make.find("input[data-name='accuracy']"),
+        $accuracy_select_block = $accuracy_select.closest("div.checkbox"),
         $prices = $order_make.find("span.price-string"),
         price = parseInt($prices.html().replace(/\D/, ""));
 
@@ -236,13 +221,11 @@ $("div#order-make").on("change", "select[name='time']", function(e) {
 
             $night_select_block.fadeIn('fast');
 
-            $night_select.attr('required', 'required');
-
             $night_select.attr('name', $night_select.attr('data-name'));
 
         });
 
-        $accuracy_select.removeAttr('required').removeAttr('name');
+        $accuracy_select.removeAttr('name');
 
         if($accuracy_select.attr("data-used") == "1") {
 
@@ -254,7 +237,7 @@ $("div#order-make").on("change", "select[name='time']", function(e) {
 
         }
 
-        $accuracy_select.val('');
+        $accuracy_select.prop('checked', false);
 
     } else {
 
@@ -262,13 +245,11 @@ $("div#order-make").on("change", "select[name='time']", function(e) {
 
             $accuracy_select_block.fadeIn('fast');
 
-            $accuracy_select.attr('required', 'required');
-
             $accuracy_select.attr('name', $accuracy_select.attr('data-name'));
 
         });
 
-        $night_select.removeAttr('required').removeAttr('name');
+        $night_select.removeAttr('name');
 
         if($night_select.attr("data-used") == "1") {
 
@@ -280,7 +261,7 @@ $("div#order-make").on("change", "select[name='time']", function(e) {
 
         }
 
-        $night_select.val('');
+        $night_select.prop('checked', false);
 
     }
 
@@ -301,13 +282,21 @@ $("div#order-make").on("click", "[data-next-step]", function () {
 
     $tab.find("[name][required]").each(function () {
 
-        if (!$(this).val().length) {
+        if (!$(this).val().length || ($(this).is(":checkbox") && !$(this).is(":checked"))) {
 
             has_error = true;
 
             var $button = $tab.find("[data-input='" + $(this).attr('name') + "']");
 
-            $(this).addClass('has-error');
+            if(!$(this).is(":checkbox")) {
+
+                $(this).addClass('has-error');
+
+            } else {
+            
+                $(this).closest("label").addClass('has-error');
+            
+            }
 
             if($button.length) {
 
@@ -484,11 +473,5 @@ $(document).on("click", "a[href='#order-collapse']", function(e) {
     }
 
     e.preventDefault();
-
-});
-
-$(document).on("order-store-error", function(e, response) {
-
-    console.log(response);
 
 });

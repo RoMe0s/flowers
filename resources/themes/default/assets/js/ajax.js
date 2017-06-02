@@ -92,7 +92,7 @@ $(document).on("submit", 'form[ajax]', function(event) {
 
             if(passed_errors.indexOf(error) === -1) {
 
-                console.log('error', error);
+                Alert.error(error);
 
                 passed_errors.push(error);
 
@@ -104,7 +104,7 @@ $(document).on("submit", 'form[ajax]', function(event) {
 
         if(!passed_errors.length) {
 
-            console.log('error', 'Произошла ошибка, попробуйте пожалуйста позже');
+            Alert.error('Произошла ошибка, попробуйте пожалуйста позже');
 
         }
 

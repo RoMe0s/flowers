@@ -86,6 +86,17 @@
                             {!! $errors->first('recipient_phone', '<p class="help-block error">:message</p>') !!}
                         </div>
                     </div>
+
+
+                    <div class="form-group @if ($errors->has('anonymously')) has-error @endif">
+                        {!! Form::label('anonymously', 'Анонимно', ['class' => 'control-label col-xs-12 col-sm-2']) !!}
+
+                        <div class="col-xs-12 col-sm-9">
+                            {!! Form::select('anonymously', [0 => 'Нет', 1 => 'Да'], 0, ['class' => 'form-control input-sm']) !!}
+
+                            {!! $errors->first('anonymously', '<p class="help-block error">:message</p>') !!}
+                        </div>
+                    </div>
                     <br/>
                     <h4 class="text-center">Адрес</h4>
                     @include('order.tabs.address')

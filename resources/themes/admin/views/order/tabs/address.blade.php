@@ -49,11 +49,11 @@
     </div>
 </div>
 
-<div class="delivery_another_way form-group required @if ($errors->has('distance')) has-error @endif">
+<div class="form-group @if ($errors->has('distance')) has-error @endif">
     {!! Form::label('distance', 'Отдаленность от МКАД', ['class' => 'control-label col-xs-12 col-sm-2']) !!}
 
     <div class="col-xs-12 col-sm-9">
-        {!! Form::text('distance', isset($model->address) ? $model->address->distance : 0, ['placeholder' => 'Отдаленность от МКАД', 'class' => 'form-control input-sm', 'required']) !!}
+        {!! Form::text('distance', null, ['placeholder' => 'Отдаленность от МКАД', 'class' => 'form-control input-sm']) !!}
 
         {!! $errors->first('distance', '<p class="help-block error">:message</p>') !!}
     </div>

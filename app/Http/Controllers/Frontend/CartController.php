@@ -413,8 +413,6 @@ class CartController extends FrontendController
 
                     Cart::update($id, $item_count);
 
-                    $item_price = $item->subtotal;
-
                     break;
 
                 case 'less':
@@ -424,8 +422,6 @@ class CartController extends FrontendController
                         $item_count = $item->qty - 1;
 
                         Cart::update($id, $item_count);
-
-                        $item_price = $item->subtotal;
 
                     } else {
 
@@ -441,6 +437,8 @@ class CartController extends FrontendController
 
                     break;
             }
+
+            $item_price = $item->subtotal;
 
             $total_price = 0;
 

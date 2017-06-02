@@ -12,7 +12,7 @@ class Order extends Model
 {
 
     protected $fillable = [
-      'user_id',
+        'user_id',
         'courier_id',
         'address_id',
         'delivery_price',
@@ -31,7 +31,9 @@ class Order extends Model
         'neighbourhood',
         'accuracy',
         'night',
-        'address_string'
+        'anonymously',
+        'address_string',
+        'distance'
     ];
 
     protected $casts = [
@@ -202,7 +204,10 @@ class Order extends Model
                 'accuracy' => isset($data['accuracy']) ? $data['accuracy'] : false,
                 'night' => isset($data['night']) ? $data['night'] : false,
                 'address_string' => isset($data['address_string']) ? $data['address_string'] : null,
-                'delivery_price' => isset($data['delivery_price']) ? $data['delivery_price'] : 0
+                'delivery_price' => isset($data['delivery_price']) ? $data['delivery_price'] : 0,
+                'anonymously' => isset($data['anonymously']) ? $data['anonymously'] : false,
+                'distance' => isset($data['distance']) ? $data['distance'] : 0,
+                'specify' => isset($data['specify']) ? $data['specify'] : false
             ]);
 
             static::_proccessItemsFromCart($order);
