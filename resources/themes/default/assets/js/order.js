@@ -324,12 +324,6 @@ $("div#order-make").on("click", "[data-next-step]", function () {
 
 });
 
-$(document).on("focus", ".has-error", function(e) {
-
-   $(document).find('.has-error').removeClass('has-error');
-
-});
-
 
 $("div#order-make").on("change", "input#specify_field", function() {
 

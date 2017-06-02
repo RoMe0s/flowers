@@ -22,10 +22,17 @@
         'fadeDuration' : 100,
         'wrapAround' : true
     });
-    $('input[name=phone], input[name=recipient_phone], input[data-phone_input="true"], [type="tel"]').inputmask({
-        mask: "+7 (999) 999-99-99"
-    });
-    $('#use-email').on("click", function() {
+    window.phone_mask = function() {
+
+        $('input[name=phone], input[name=recipient_phone], input[data-phone_input="true"], [type="tel"]').inputmask({
+            mask: "+7 (999) 999-99-99"
+        });
+
+    };
+
+    window.phone_mask();
+
+    $(document).on("click", '#use-email, [data-use-email]', function() {
 
         var $group = $(this).closest('div.input-group'),
             $input = $group.find('input'),

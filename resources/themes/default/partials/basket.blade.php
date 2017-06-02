@@ -66,14 +66,79 @@
                 <h4>
                     Заказывали раньше?
                 </h4>
-                <a href="{!! route('login') !!}" title="Перейти на страницу входа"
-                   class="btn btn-sm btn-purple col-xs-12" style="margin-bottom: 10px;">
-                    Да, перейти на страницу входа
+                <a href="#" title="Да"
+                   class="btn btn-sm btn-purple col-xs-12" style="margin-bottom: 10px;" data-answer="login">
+                    Да
                 </a>
-                <a href="{!! route('reg') !!}" title="Перейти на страницу регистрации"
-                   class="btn btn-sm btn-purple col-xs-12">
-                    Нет, перейти на страницу регистрации
+                <a href="#" title="Нет"
+                   class="btn btn-sm btn-purple col-xs-12" data-answer="register">
+                    Нет
                 </a>
+            </li>
+            <li data-answer="login" style="display: none">
+                <h2 class="text-center">
+                    Вход
+                </h2>
+                {!! Form::open(["method" => "POST", "route" => "post.login", "class" => "col-xs-12", "answer-form" => "login", "ajax"]) !!}
+                {!! Form::hidden("redirect", route('get.order')) !!}
+                <div class="form-group">
+                    <label>
+                        Логин
+                    </label>
+                    <div class="input-group">
+                        @php($mask = preg_match('/@/',old('login', '')) ? 'false' : 'true')
+                        <input class="form-control input-sm" type="text" name="login" value="{{ old('login') }}" required data-phone_input="{!! $mask !!}"/>
+                        <span class="input-group-addon btn-purple" data-use-email>
+                            @if($mask == 'true')
+                                С помощью Email
+                            @else
+                                По номеру
+                            @endif
+                    </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Пароль
+                    </label>
+                    {!! Form::input("password", "password", null, ['class' => 'form-control input-sm', 'required']) !!}
+                </div>
+                {!! Form::close() !!}
+            </li>
+            <li data-answer="register" style="display: none">
+                <h2 class="text-center">
+                    Регистрация
+                </h2>
+                {!! Form::open(["method" => "POST", "route" => "reg", "ajax", "class" => "col-xs-12", "answer-form" => "register"]) !!}
+                {!! Form::hidden("redirect", route('get.order')) !!}
+                <div class="form-group">
+                    <label>
+                        Номер телефона
+                        <span class="text-danger">
+                            *
+                        </span>
+                    </label>
+                    {!! Form::input("tel", "phone", null, ['class' => 'form-control input-sm', 'required'] ) !!}
+                </div>
+                <div class="form-group">
+                    <label>
+                        ФИО
+                    </label>
+                    {!! Form::text("name", null, ['class' => 'form-control input-sm']) !!}
+                </div>
+                <div class="form-group">
+                    <label>
+                        Email
+                    </label>
+                    {!! Form::input("email", "email", null, ['class' => 'form-control input-sm']) !!}
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="agreement" value="1" required @if( old('agreement') ) checked @endif>
+                        Я ознакомился(-лась) и согласен(-сна) с <a href="{{ url('/offer') }}" target="_blank">условиями Публичной ОФЕРТЫ</a>.
+                    </label>
+                </div>
+                {!! Form::close() !!}
             </li>
         @endif
     </ul>

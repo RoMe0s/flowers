@@ -154,3 +154,71 @@ $("div.modal#basket").on("click", "a[data-show-question]", function(e) {
     return e.preventDefault();
 
 });
+
+$("div.modal#basket").on("click", "a[data-answer]", function(e) {
+
+    var answer = $(this).attr("data-answer"),
+        $modal = $("div.modal#basket"),
+        $list = $modal.find("ul.basket-list"),
+        $element = $list.find('li[data-answer="' + answer + '"]'),
+        $hide = $list.find('li[data-answer!="' + answer + '"]'),
+        $submit_button = $modal.find("div.modal-footer").find("a[data-show-question]");
+
+    if($element.length) {
+
+        $hide.remove();
+
+        $element.fadeIn("slow");
+
+        window.phone_mask();
+
+        $submit_button.attr("data-submit-answer", answer);
+
+    }
+
+});
+
+$("div.modal#basket").on("submit", "form[answer-form]", function(e) {
+
+    return e.preventDefault();
+
+});
+
+$("div.modal#basket").on("click", "a[data-show-question][data-submit-answer]", function(e) {
+
+   var answer = $(this).attr("data-submit-answer"),
+       $form = $("div.modal#basket").find('form[answer-form="' + answer + '"]'),
+       $required = $form.find("[name][required]"),
+       validated = true;
+
+   $required.each(function() {
+
+       if(!$(this).val().length || ($(this).is(":checkbox") && !$(this).is(':checked')) ) {
+
+           if($(this).is(":checkbox")) {
+
+               $(this).closest("label").addClass("has-error");
+
+           } else {
+
+               $(this).addClass("has-error");
+
+           }
+
+           validated = false;
+
+       }
+
+   });
+
+    if(validated) {
+
+        $form.submit();
+
+    } else {
+
+        e.preventDefault();
+
+    }
+
+});

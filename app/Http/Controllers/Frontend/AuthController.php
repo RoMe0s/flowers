@@ -108,6 +108,8 @@ class AuthController extends FrontendController
     public function postLogin($credentials = [])
     {
 
+        $redirect = request('redirect', null);
+
         $login = request()->get('login');
 
         $phone = new Phone($login);
@@ -149,11 +151,28 @@ class AuthController extends FrontendController
                     }
                 }
 
-                return redirect()->route('profile.orders');
+                if(request()->ajax()) {
+
+                    $redirect =  isset($redirect) ? $redirect : route('profile.orders');
+
+                    return ['status' => 'success', 'redirect' => $redirect];
+
+                }
+
+                return isset($redirect) ? redirect($redirect) : redirect()->route('profile.orders');
             }
         } catch (Exception $e) {
+
             FlashMessages::add('error', 'Неверный логин или пароль');
+
         }
+
+        if(request()->ajax()) {
+
+            throw new Exception("Неверный логин или пароль");
+
+        }
+
         return redirect()->back()->withInput(request()->all());
 
     }
@@ -180,16 +199,19 @@ class AuthController extends FrontendController
 
         return $this->render($this->pageService->getPageTemplate($this->page));
     }
-    
+
     /**
-     * @param \App\Http\Requests\Frontend\Auth\UserRegisterRequest $request
-     * @param \App\Services\AuthService                            $authService
-     *
-     * @return mixed
+     * @param UserRegisterRequest $request
+     * @param AuthService $authService
+     * @return $this|array|\Illuminate\Http\RedirectResponse
+     * @throws Exception
      */
     public function postRegister(UserRegisterRequest $request, AuthService $authService)
     {
+
         $input = $request->all();
+
+        $redirect = $request->get("redirect", null);
         
         DB::beginTransaction();
         
@@ -215,6 +237,14 @@ class AuthController extends FrontendController
 
             session()->flash('register_status', 'success');
 
+            if($request->ajax()) {
+
+                $redirect = isset($redirect) ? $redirect : route('home');
+
+                return ['status' => 'success', 'redirect' => $redirect];
+
+            }
+
             return redirect()->route('home');
 
         } catch (UserExistsException $e) {
@@ -225,6 +255,12 @@ class AuthController extends FrontendController
         }
 
         DB::rollBack();
+
+        if($request->ajax()) {
+
+            throw new Exception($message);
+
+        }
         
         FlashMessages::add('error', $message);
         
