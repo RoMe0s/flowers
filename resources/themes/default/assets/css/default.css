@@ -2181,9 +2181,9 @@ div#basket div.modal-dialog div.modal-content div.modal-body ul.basket-list li d
 
 button.to-top {
 
-    height: 36px;
-    width: 36px;
-    border-radius: 18px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
     float: right;
     padding: 0;
     font-size: 20px;
