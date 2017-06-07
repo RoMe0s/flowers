@@ -79,7 +79,7 @@
                     @endif
                     <div class="col-lg-3 col-sm-3 col-xs-12">
                         <a href="{{ $item->image }}" data-lightbox="order_{{ $order->id }}">
-                            <div class="photo photo-small" style="background-image: url('{!! thumb($item->image, 150) !!}');">
+                            <div class="photo photo-small" style="background-image: url('{!! $item->image !!}');">
                                 <div class="layout">
                                     <i class="fa fa-search"></i>
                                 </div>

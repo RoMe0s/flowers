@@ -80,7 +80,10 @@ class OrderStore extends FormRequest
             'neighbourhood.boolean' => 'Поле "Оставить соседям" должно быть логического формата(Да, Нет)',
             'anonymously.boolean' => 'Поле "Анонимно" должно быть логического формата(Да, Нет)',
             'specify.required_without' => 'Поле должно быть заполнено',
-            'recipient_phone.regex' => 'Поле телефон имеет ошибочный формат'
+            'recipient_phone.regex' => 'Поле телефон имеет ошибочный формат',
+            'address.house.required_without' => 'Поле "Дом" обязательно для заполнения',
+            'address.city.required_without' => 'Поле "Город" обязательно для заполнения', 
+            'address.street.required_without' => 'Поле "Улица" обязательно для заполнения' 
         ];
     }
 }

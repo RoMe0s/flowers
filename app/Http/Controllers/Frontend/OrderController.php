@@ -153,6 +153,16 @@ class OrderController extends FrontendController
 
         $this->_init('order-make');
 
+        $userphone = $this->user->phone;
+
+        if(!empty($userphone) && $userphone[0] == "8") {
+        
+            $userphone[0] = 7;
+        
+        }
+
+        $this->data('userphone', $userphone);
+
         $this->data('times', array(
             '1' => 'с 10:00 до 13:00',
             '2' => 'с 13:00 до 16:00',

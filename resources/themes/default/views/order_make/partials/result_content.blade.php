@@ -1,8 +1,11 @@
 <div class="text-center order-result-info">
+    @php($name = isset($data['recipient_name']) && !empty($data['recipient_name']) ? $data['recipient_name'] : $user->name)
+    @if(!empty($name))
     <p>
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-        {{ isset($data['recipient_name']) && !empty($data['recipient_name']) ? $data['recipient_name'] : $user->name }}
+        {{ $name }}
     </p>
+    @endif
     <p>
         <i class="fa fa-mobile" aria-hidden="true"></i>
         {{ isset($data['recipient_phone']) && !empty($data['recipient_phone']) ? $data['recipient_phone'] : $user->phone }}

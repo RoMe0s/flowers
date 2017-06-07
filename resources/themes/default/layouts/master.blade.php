@@ -44,6 +44,8 @@
     {!! Form::close() !!}
     @include('popups.basket')
 
+    @include('partials.totop')
+
     @section('scripts')
         @include('partials.scripts')
     @show

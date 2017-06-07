@@ -10,8 +10,8 @@
             Адрес
         </h4>
         <br/>
-        {!! Form::hidden('address_string', null, ['id' => 'address_field', 'required']) !!}
-        {!! Form::hidden('specify', null, ['id' => 'specify_field', 'required']) !!}
+        {!! Form::hidden('address_string', null, ['id' => 'address_field', 'required', 'data-name' => 'address_string']) !!}
+        {!! Form::hidden('specify', null, ['id' => 'specify_field', 'required', 'data-name' => 'specify']) !!}
         <div class="form-group">
                     <span class="pull-right custom-popover">
                         <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
@@ -132,7 +132,7 @@
                    data-placement="bottom"
                    data-content="{{variable('order-night')}}"></i>
             </span>
-            <label>
+            <label style="pointer-events: none;">
                 {!! Form::input('checkbox', null, 1, ['data-name' => 'night', 'data-price' => variable('night-delivery', 800), 'data-used' => '0']) !!}
                 Ночная доставка&nbsp;
                 <span class="text-info">+{!! variable('night-delivery', 800) !!} руб.</span>
@@ -146,7 +146,7 @@
             </span>
             <label>
                 {!! Form::input("checkbox", 'accuracy',  1, ['data-name' => 'accuracy', 'data-price' => variable('accuracy-delivery' ,300), 'data-used' => '0']) !!}
-                Точность до 15 минут&nbsp;
+                Доставка к точному времени (точность до 15 минут)
                 <span class="text-info">+{!! variable('accuracy-delivery', 300) !!} руб.</span>
             </label>
         </div>

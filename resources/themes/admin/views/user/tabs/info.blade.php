@@ -14,7 +14,7 @@
         {!! Form::label('email', trans('labels.email'), ['class' => 'col-md-3 control-label']) !!}
 
         <div class="col-md-3">
-            {!! Form::text('email', null, ['placeholder' => trans('labels.email'), 'class' => 'form-control input-sm', $disabled]) !!}
+            {!! Form::text('email', null, ['placeholder' => trans('labels.email'), 'class' => 'form-control input-sm']) !!}
 
             {!! $errors->first('email', '<p class="help-block error">:message</p>') !!}
         </div>

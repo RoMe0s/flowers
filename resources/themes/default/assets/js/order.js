@@ -57,11 +57,11 @@ $('button[data-input]').click(function (e) {
 
         if ($(this)[0].hasAttribute('name')) {
 
-            $(this).removeAttr('required').removeAttr('name');
+            $(this).removeAttr('required');
 
         } else {
 
-            $(this).attr('required', 'required').attr('name', $(this).attr('data-name'));
+            $(this).attr('required', 'required');
 
         }
 
@@ -112,7 +112,7 @@ $('button[data-input]').click(function (e) {
 
         $block.fadeOut('fast', function () {
 
-            $block.find("[name]").each(function() {
+            $block.find("[data-name]").each(function() {
 
                 if (except_selector && $(this)[0].hasAttribute('data-except')) {
 
@@ -219,25 +219,25 @@ $("div#order-make").on("change", "select[name='time']", function(e) {
 
         $accuracy_select_block.fadeOut('fast', function() {
 
+            $accuracy_select.removeAttr('name');
+
+            if($accuracy_select.attr("data-used") == "1") {
+
+                price -= parseInt($accuracy_select.attr("data-price"));
+
+                $accuracy_select.attr("data-used", "0");
+
+                $prices.html(price + " руб.");
+
+            }
+
+            $accuracy_select.prop('checked', false);
+
+            $night_select.attr('name', $night_select.attr('data-name')).prop("checked", true).change();
+
             $night_select_block.fadeIn('fast');
 
-            $night_select.attr('name', $night_select.attr('data-name'));
-
         });
-
-        $accuracy_select.removeAttr('name');
-
-        if($accuracy_select.attr("data-used") == "1") {
-
-            price -= parseInt($accuracy_select.attr("data-price"));
-
-            $accuracy_select.attr("data-used", "0");
-
-            $prices.html(price + " руб.");
-
-        }
-
-        $accuracy_select.prop('checked', false);
 
     } else {
 
@@ -467,5 +467,19 @@ $(document).on("click", "a[href='#order-collapse']", function(e) {
     }
 
     e.preventDefault();
+
+});
+
+$("div#order-make").on("click", "[data-username], [data-userphone]", function(e) {
+
+    var $order_make = $(this).closest("#order-make"),
+        $name_input = $order_make.find("input[name='recipient_name']"),
+        $phone_input = $order_make.find("input[name='recipient_phone']"),
+        name = $(this).attr('data-username'),
+        phone = $(this).attr('data-userphone');
+
+    $name_input.val(name);
+
+    $phone_input.val(phone);
 
 });

@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
         $id = $this->route()->parameter('user');
 
         $rules = [
-            'email'     => 'required|email|unique:users,email,'.$id,
+            'email'     => 'required|email',
             'activated' => 'required|boolean',
             'notifications'         => 'required|boolean',
             'start_discount'        => 'integer',

@@ -36,17 +36,21 @@ class OrderStatusChangedListener implements ShouldQueue
     {
         $user = $event->order->user;
 
-        $this->messageService->orderConfirmedSMS($user, $event->order);
+        if(isset($user)) {
 
-        if($user && !empty($user->email)) {
-            Mail::queue(
-                'emails.order_confirmed',
-                ['order' => $event->order],
-                function ($message) use ($user) {
-                    $message->to($user->email, $user->getFullName())
-                        ->subject('Ваш заказ подтверждён');
-                }
-            );
+            $this->messageService->orderConfirmedSMS($user, $event->order);
+
+            if($user && !empty($user->email)) {
+                Mail::queue(
+                    'emails.order_confirmed',
+                    ['order' => $event->order],
+                    function ($message) use ($user) {
+                        $message->to($user->email, $user->getFullName())
+                            ->subject('Ваш заказ подтверждён');
+                    }
+                );
+            }
+
         }
     }
 }

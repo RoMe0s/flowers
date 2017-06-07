@@ -262,3 +262,74 @@ $(document).on("focus", ".has-error", function(e) {
     $(document).find('.has-error').removeClass('has-error');
 
 });
+
+
+var toTopButton = {
+    $button: $("button.to-top"),
+    $scroll: $("html, body"),
+    resizeFunction: function() {
+
+        var offset = window.pageYOffset,
+            windowh = $(window).height(),
+            is_visible = toTopButton.$button.is(":visible"),
+            windoww = $(window).width();
+
+        if(windoww >= 768 && !is_visible) return;
+
+        if(windoww < 768 && offset > windowh && offset < (windowh * 2)) {
+
+            var opacity = 1 - ((windowh * 2) - offset) / windowh;
+
+            opacity = opacity.toString().substring(0,4);
+
+            if(!is_visible) {
+
+                toTopButton.$button.show();
+
+            }
+
+            toTopButton.$button.css("opacity", opacity);
+
+        } else if(offset >= (windowh * 2) && windoww < 768) {
+
+            if(!is_visible) {
+
+                toTopButton.$button.show();
+
+            } 
+
+            toTopButton.$button.css("opacity", "1");
+
+        } else if(offset <= windowh || windoww >= 768) {
+
+            if(is_visible) {
+
+                toTopButton.$button.hide();
+
+            }
+
+            toTopButton.$button.css("opacity", "0");
+
+        }
+
+    },
+    init: function() {
+
+        $(document).on("scroll", function(e) {
+
+            toTopButton.resizeFunction();
+
+        });
+
+        toTopButton.$button.on("click", function(e) {
+
+            toTopButton.$scroll.stop().animate({scrollTop:0}, 500, 'swing');
+
+        });
+
+        $(document).scroll();
+
+    }
+};
+
+toTopButton.init();

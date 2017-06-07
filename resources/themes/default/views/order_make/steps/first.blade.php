@@ -6,7 +6,7 @@
     <br />
     {!! Form::hidden('prepay', null, ['required']) !!}
     <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
-        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="hide" data-parent=".tab-content" data-value="50">
+        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="hide" data-parent=".tab-content" data-value="50" data-username="{!! !empty($user->name) ? $user->name : "Пользователь" !!}" data-userphone="{!! $userphone !!}">
             Для себя
         </button>
     </div>
@@ -18,11 +18,11 @@
     <div id="is-present">
         <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
             <label>Телефон получателя</label>
-            {!! Form::input('tel', null, null, array('placeholder' => 'Телефон получателя', 'class' => 'form-control input-sm', 'data-required' => 'required', 'data-name' => 'recipient_phone')) !!}
+            {!! Form::input('tel', 'recipient_phone', null, array('placeholder' => 'Телефон получателя', 'class' => 'form-control input-sm', 'required')) !!}
         </div>
         <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
             <label>Имя получателя</label>
-            {!! Form::text(null, null, array('placeholder' => 'Имя получателя', 'class' => 'form-control input-sm', 'data-required' => 'required', 'data-name' => 'recipient_name')) !!}
+            {!! Form::text('recipient_name', null, array('placeholder' => 'Имя получателя', 'class' => 'form-control input-sm', 'required')) !!}
         </div>
         <div class="checkbox col-xs-12 col-sm-6 col-sm-offset-3">
             <span class="pull-right custom-popover">
