@@ -9,6 +9,10 @@
 <script type="text/javascript" src="{!! asset('assets/components/select2/dist/js/select2.full.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/lightbox2/dist/js/lightbox.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/components/slick-carousel/slick/slick.min.js') !!}"></script>
+<!-- MENU -->
+<script src="{!! asset('assets/components/jquery-touchswipe/jquery.touchSwipe.min.js') !!}"></script>
+<script src="{!! asset('assets/components/slide-and-swipe-menu/jquery.slideandswipe.min.js') !!}"></script>
+<!-- END MENU -->
 <script type="text/javascript" src="{!! Theme::asset('js/app.js') !!}"></script>
 <script type="text/javascript" src="{!! Theme::asset("js/basket.js") !!}"></script>
 <script type="text/javascript" src="{{ asset('assets/themes/admin/vendor/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>

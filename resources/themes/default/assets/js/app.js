@@ -333,3 +333,22 @@ var toTopButton = {
 };
 
 toTopButton.init();
+
+var $mobile_menu = $('#nav-collapse'),
+    $overlay = $('.ssm-overlay');
+$mobile_menu.slideAndSwipe();
+$(window).resize(function() {
+
+    if($(window).width() > 767) {
+
+        if($mobile_menu.hasClass('ssm-nav-visible')) {
+
+            $overlay.click();
+
+        }
+
+        $mobile_menu.removeAttr("style");
+
+    }
+
+});

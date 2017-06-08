@@ -1,3 +1,32 @@
+/* overlay layer */
+.ssm-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.2);
+    display: none;
+    z-index: 998;
+}
+
+/* prevent scroll when nav is open */
+.is-navOpen{
+    overflow: hidden;
+}
+
+div.nav-mobile-buttons {
+
+    display: none;
+
+}
+
+div#nav-collapse li.mobile-menu-title {
+
+    display: none;
+
+}
+
 .has-error {
 
     border-color: red !important;
@@ -851,7 +880,7 @@ div.product-table {
         overflow: hidden;
     }
 
-    .header-menu ul {
+    nav ul {
         margin: 0;
     }
     .mobile-cart {
@@ -905,8 +934,9 @@ div.product-table {
     }
 }
 
-.header-menu a:not([href]) {
+nav a:not([href]) {
     color: #9370db;
+    text-transform: uppercase;
 }
 
 a.purple {

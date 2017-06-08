@@ -1,5 +1,30 @@
 @media (min-width: 320px) and (max-width: 767px) {
 
+    div.nav-mobile-buttons {
+
+        display: block;
+
+        position: fixed;
+
+        top: 0;
+
+        padding: 0 10px;
+
+        z-index: 1000;
+
+        background: white;
+
+        box-shadow: 0 0 5px rgba(0,0,0,.3);
+
+        transition: background .2s ease-in-out;
+
+    }
+
+    div.nav-mobile-buttons a, div.nav-mobile-buttons button {
+
+        margin: 5px 0;
+
+    }
 
     .main-section h1.main-h1 {
 
@@ -88,6 +113,68 @@
         padding-left: 20px !important;
     }
 
+    nav.nav {
+
+        position: static;
+
+        z-index: 1000;
+
+    }
+
+    div#nav-collapse {
+
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        bottom: 0;
+        background-color: white;
+        -webkit-transform: translate(-250px, 0px);
+        -moz-transform: translate(-250px, 0px);
+        -ms-transform: translate(-250px, 0px);
+        -o-transform: translate(-250px, 0px);
+        transform: translate(-250px, 0px);
+        z-index: 1001;
+        padding: 6px 0;
+        overflow-y: auto;
+        box-shadow: 0 0 5px rgba(0,0,0,.3);
+
+    }
+
+    div#nav-collapse li.mobile-menu-title {
+
+        display: block;
+
+        font-size: 18px;
+
+        text-align: left;
+
+        color: #9370db;
+
+        padding: 7px 0 13px 13px;
+
+    }
+
+    div#nav-collapse li.mobile-menu-title a {
+
+        padding: 0;
+
+    }
+
+    div#nav-collapse li.mobile-menu-title i {
+
+        position: absolute;
+
+        right: 15px;
+
+        top: 13px;
+
+        font-size: 24px;
+
+        color: black;
+
+    }
+
     nav .navbar-brand {
         height: 56px;
         line-height: 56px;
@@ -96,17 +183,97 @@
         padding: 0;
     }
 
-    nav ul.float-right {
+    nav .navbar-toggle {
+
+        padding: 5px 10px 5px 0px;
+
+    }
+
+    nav div#nav-collapse ul {
         float: none;
+        box-shadow: none;
+        margin: 0;
+        text-align: right;
     }
 
-    nav ul li {
+    nav div#nav-collapse ul:first-child {
+
+        border-bottom: 1px solid #eee;
+
+    }
+
+    nav div#nav-collapse ul li {
         display: block;
-        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+        padding-right: 25px;
     }
 
-    nav .dropdown-menu {
+    nav div#nav-collapse ul li.dropdown a.dropdown-toggle::after {
+
+        font-family: FontAwesome;
+        content: "\f0d7";
+
+    }
+
+    nav div#nav-collapse ul li.dropdown a.dropdown-toggle {
+
+        color: black;
+
+    }
+
+    nav div#nav-collapse ul li.dropdown a.dropdown-toggle[aria-expanded="true"]::after {
+
+        content: "\f0da";
+
+    }
+
+    nav div#nav-collapse ul li:last-child {
+
+        border-bottom: none;
+
+    }
+
+    nav div#nav-collapse .dropdown-menu {
         width: 100% !important;
+        position: static;
+        border: none;
+    }
+
+    nav div#nav-collapse .dropdown-menu li {
+
+        text-align: right;
+
+        border: none;
+
+        border-bottom: 1px solid #eee;
+
+        padding-right: 5px;
+
+    }
+
+    nav div#nav-collapse li a {
+
+        padding: 5px;
+
+    }
+
+    nav div#nav-collapse .dropdown-menu li a {
+
+        padding: 4px 0;
+
+    }
+
+    nav div#nav-collapse .dropdown-menu li a:hover {
+
+        background: transparent !important;
+
+    }
+
+    nav div#nav-collapse .dropdown-menu li:last-child {
+
+        border: none;
+
     }
 
     nav .dropdown-menu a {

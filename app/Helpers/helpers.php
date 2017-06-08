@@ -757,7 +757,11 @@ if(! function_exists('get_delivery_price')) {
 
     function get_delivery_price() {
 
-        foreach(\Kingpabel\Shoppingcart\Facades\Cart::content() as $item) {
+        $items = \Kingpabel\Shoppingcart\Facades\Cart::content();
+
+        if(!sizeof($items)) return 0;
+
+        foreach($items as $item) {
 
             try {
 
@@ -776,6 +780,16 @@ if(! function_exists('get_delivery_price')) {
         }
 
         return variable("default-delivery-price", 450);
+
+    }
+
+}
+
+if(! function_exists('check_current_url')) {
+
+    function check_current_url($url) {
+
+        return request()->url() == $url ? "" : "href=\"$url\"";
 
     }
 

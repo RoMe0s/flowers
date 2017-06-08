@@ -46,6 +46,8 @@
 
     @include('partials.totop')
 
+    <div class="ssm-overlay ssm-toggle-nav"></div>
+
     @section('scripts')
         @include('partials.scripts')
     @show
