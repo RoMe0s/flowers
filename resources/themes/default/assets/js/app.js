@@ -337,6 +337,15 @@ toTopButton.init();
 var $mobile_menu = $('#nav-collapse'),
     $overlay = $('.ssm-overlay');
 $mobile_menu.slideAndSwipe();
+$mobile_menu.on("click", "ul.dropdown-menu a", function(e) {
+
+    if($(window).width() < 768) {
+
+        e.stopPropagation();
+
+    }
+
+});
 $(window).resize(function() {
 
     if($(window).width() > 767) {
