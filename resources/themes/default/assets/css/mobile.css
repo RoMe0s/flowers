@@ -236,7 +236,7 @@
 
     nav div#nav-collapse .dropdown-menu {
         width: 100% !important;
-        position: static;
+        position: relative;
         border: none;
     }
 
@@ -267,6 +267,8 @@
     nav div#nav-collapse .dropdown-menu li a:hover {
 
         background: transparent !important;
+
+        color: #9370db;
 
     }
 
