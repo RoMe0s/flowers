@@ -20,7 +20,7 @@ return [
       'reg',
       'password-reset',
       'related-goods',
-      'flowers'
-
+      'flowers',
+      'after-order'
   ]
 ];

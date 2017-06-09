@@ -1,3 +1,20 @@
+.after-order p.info {
+
+    font-size: 16px;
+
+}
+.after-order h1 {
+
+    margin-top: 0;
+
+}
+.after-order ul li img {
+
+    max-width: 75px;
+    margin-right: 10px;
+
+}
+
 /* overlay layer */
 .ssm-overlay {
     position: fixed;

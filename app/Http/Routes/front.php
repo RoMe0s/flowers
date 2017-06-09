@@ -225,19 +225,28 @@ $router->group(
                 'middleware' => 'ajax'
             ]);
 
-            $router->group(['middleware' => ['auth', 'cart']], function () use ($router) {
+            $router->group(['middleware' => ['auth']], function () use ($router) {
 
-                $router->get('/make/order', [
-                    'as' => 'get.order',
-                    'uses' => 'Frontend\OrderController@create'
-                ]);
-                $router->get('/order/preview', [
-                    'middleware' => 'ajax',
-                    'uses' => 'Frontend\OrderController@preview'
-                ]);
-                $router->post('/make/order', [
-                    'as' => 'post.order',
-                    'uses' => 'Frontend\OrderController@store'
+                $router->group(['middleware' => 'cart'], function () use ($router) {
+
+                    $router->get('/make/order', [
+                        'as' => 'get.order',
+                        'uses' => 'Frontend\OrderController@create'
+                    ]);
+                    $router->get('/order/preview', [
+                        'middleware' => 'ajax',
+                        'uses' => 'Frontend\OrderController@preview'
+                    ]);
+                    $router->post('/make/order', [
+                        'as' => 'post.order',
+                        'uses' => 'Frontend\OrderController@store'
+                    ]);
+
+                });
+
+                $router->get('/order/success', [
+                    'as' => 'after-order',
+                    'uses' => 'Frontend\OrderController@realSuccess'
                 ]);
 
             });

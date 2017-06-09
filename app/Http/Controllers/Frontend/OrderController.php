@@ -318,13 +318,15 @@ class OrderController extends FrontendController
 
             Cart::destroy();
 
+            session()->put('stored_order', $order);
+
             if ($request->ajax()) {
 
-                return ['status' => 'success', 'redirect' => route('profile.orders')];
+                return ['status' => 'success', 'redirect' => route('after-order')];
 
             }
 
-            return redirect()->route('profile.orders');
+            return redirect()->route('after-order');
 
         } catch (\Exception $e) {
 
@@ -339,6 +341,21 @@ class OrderController extends FrontendController
             return redirect()->back()->withInput($data);
 
         }
+
+    }
+
+    public function realSuccess() {
+
+        $order = session()->pull('stored_order');
+
+        abort_if(!$order, 404);
+
+        $this->_init("after-order");
+
+        $this->data('order', $order);
+
+        return $this->render($this->pageService->getPageTemplate($this->page));
+
 
     }
 
