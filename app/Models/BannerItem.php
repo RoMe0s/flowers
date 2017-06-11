@@ -18,12 +18,17 @@ use Illuminate\Database\Eloquent\Model;
 class BannerItem extends Model
 {
 
+    public $timestamps = false;
+
     use Translatable;
 
     /**
      * @var array
      */
-    public $translatedAttributes = ['title', 'text'];
+    public $translatedAttributes = [
+        'name',
+        'content'
+    ];
 
     /**
      * @var array
@@ -31,11 +36,11 @@ class BannerItem extends Model
     protected $fillable = [
         'banner_id',
         'image',
-        'title',
-        'text',
-        'link',
+        'name',
+        'content',
         'status',
         'position',
+        'bullet'
     ];
 
     /**
@@ -65,13 +70,5 @@ class BannerItem extends Model
     public function scopePositionSorted($query, $order = 'ASC')
     {
         return $query->orderBy('position', $order);
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return localize_url(url($this->attributes['link']));
     }
 }

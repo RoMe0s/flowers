@@ -25,5 +25,8 @@ class BannerItemTranslation extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['title', 'text'];
+    protected $fillable = [
+        'name',
+        'content'
+    ];
 }

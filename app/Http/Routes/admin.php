@@ -181,6 +181,17 @@ $router->group(
                 );
                 $router->resource('filteritem', 'Backend\FilterItemController');
 
+                //banners
+                $router->post(
+                    'banner/{id}/ajax_field',
+                    [
+                        'middleware' => ['ajax'],
+                        'as'         => 'admin.banner.ajax_field',
+                        'uses'       => 'Backend\BannerController@ajaxFieldChange',
+                    ]
+                );
+                $router->resource('banner', 'Backend\BannerController');
+
 
                 //orders
                 $router->post(

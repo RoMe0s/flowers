@@ -1,3 +1,102 @@
+@font-face {
+    font-family: 'AvantGardeCTT';
+    font-style: normal;
+    font-weight: 400;
+    src: local('AvantGardeCTT'), local('AvantGardeCTT-Regular'),
+    url(../fonts/avantgardectt_caeaf746fc19648d748ca8d04dc796eb.woff) format('woff'),
+    url(../fonts/avantgardectt_caeaf746fc19648d748ca8d04dc796eb.ttf) format('truetype');
+}
+
+.banner-carousel {
+
+    margin: 25px 0;
+
+}
+.banner-carousel div.item {
+
+    background-position: top;
+
+    background-repeat: no-repeat;
+
+    background-size: cover;
+
+}
+.banner-carousel div.item img.main {
+
+    max-height: 480px;
+
+    visibility: hidden;
+
+}
+.banner-carousel div.item img.bullet {
+
+    max-width: 130px;
+
+    max-height: 130px;
+
+    position: absolute;
+
+    bottom: 30px;
+
+    left: 30px;
+
+}
+
+.banner-carousel div.item div.carousel-caption {
+
+    background-color: transparent;
+
+    border: 2px solid rgba(255,255,255, 0.9);
+
+    height: 150px;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+.banner-carousel div.item div.carousel-caption .inner {
+
+    display: table;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(255,255,255, 0.9);
+
+}
+
+.banner-carousel div.item div.carousel-caption .inner h2 {
+
+    font-family: 'AvantGardeCTT';
+
+    text-transform: uppercase;
+
+    font-size: 44px;
+
+    color: rgb(74,74,74);
+
+    padding: 0;
+
+    margin: 0;
+
+    display: table-cell;
+
+    vertical-align: middle;
+
+}
+.banner-carousel .carousel-control{
+
+    width: 8%;
+
+    opacity: 0.5;
+
+}
+
 .after-order p.info {
 
     font-size: 16px;

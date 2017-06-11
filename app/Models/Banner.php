@@ -8,8 +8,6 @@
 
 namespace App\Models;
 
-use App\Traits\Models\WithTranslationsTrait;
-use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,18 +17,16 @@ use Illuminate\Database\Eloquent\Model;
 class Banner extends Model
 {
 
-    use Translatable;
-    use WithTranslationsTrait;
+    public $timestamps = false;
 
     /**
      * @var array
      */
-    public $translatedAttributes = ['title'];
-
-    /**
-     * @var array
-     */
-    protected $fillable = ['layout_position', 'position', 'class', 'title', 'template', 'status', 'show_title'];
+    protected $fillable = [
+        'layout_position',
+        'status',
+        'template'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -48,16 +44,5 @@ class Banner extends Model
     public function scopeVisible($query)
     {
         return $query->whereStatus(true);
-    }
-
-    /**
-     * @param        $query
-     * @param string $order
-     *
-     * @return mixed
-     */
-    public function scopePositionSorted($query, $order = 'ASC')
-    {
-        return $query->orderBy('position', $order);
     }
 }

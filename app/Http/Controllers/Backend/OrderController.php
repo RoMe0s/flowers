@@ -845,8 +845,8 @@ class OrderController extends BackendController
 
             if(
                 in_array($input['status'], [3,6]) // при изменении статуса на оплачен
-                || in_array($old_status, [3,6]) // при изменении статуса с оплачен
-                || $old_status > $input['status'] // при откате статуса
+                || (in_array($old_status, [3,6]) && !in_array($input['status'], [4,5])) // при изменении статуса с оплачен
+                || ($old_status > $input['status'] && $input['status'] != 0) // при откате статуса
                 || (in_array($old_status, [0,1,2]) && in_array($input['status'], [4,5])) // при изменении статуса без его оплаты
             ) {
 

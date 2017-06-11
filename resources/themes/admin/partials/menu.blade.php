@@ -119,6 +119,23 @@
                 </li>
             @endif
 
+            @if ($user->hasAccess('banner.read'))
+                <li class="{!! active_class('admin.banner*') !!}">
+                    <a href="{!! route('admin.banner.index') !!}">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        <span>@lang('labels.banners')</span>
+
+                        @if ($user->hasAccess('banner.create'))
+                            <small class="label create-label pull-right bg-green"
+                                   title="@lang('labels.add_banner')"
+                                   data-href="{!! route('admin.banner.create') !!}">
+                                <i class="fa fa-plus"></i>
+                            </small>
+                        @endif
+                    </a>
+                </li>
+            @endif
+
             @if ($user->hasAccess('variablevalue.read'))
                 <li class="{!! active_class('admin.variable*') !!}">
                     <a href="{!! route('admin.variable.value.index') !!}">

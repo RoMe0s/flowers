@@ -14,6 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        \Sentry::createUser([
+            'login' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => 'admin'
+        ]);
+
         Model::reguard();
     }
 }

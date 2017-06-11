@@ -6,6 +6,8 @@
 
         <h1 class="text-right main-h1">Доставка цветов по Москве</h1>
 
+        @widget__banner('mainpage')
+
         {{--@widget__category()--}}
 
         @widget__mainpage_menu()

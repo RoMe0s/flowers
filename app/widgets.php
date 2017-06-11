@@ -19,3 +19,5 @@ Widget::register('widget__related_products', 'App\Widgets\RelatedProducts\Relate
 Widget::register('widget__hits', 'App\Widgets\Hits\HitsWidget@index');
 
 Widget::register('widget__mainpage_menu', 'App\Widgets\MainpageMenu\MainpageMenuWidget@index');
+
+Widget::register('widget__banner', 'App\Widgets\Banner\BannerWidget@index');
