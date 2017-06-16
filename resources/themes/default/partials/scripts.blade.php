@@ -36,9 +36,9 @@
 
     window.phone_mask();
 
-    $(document).on("click", '#use-email, [data-use-email]', function() {
+    function changeInputMask($this) {
 
-        var $group = $(this).closest('div.input-group'),
+        var $group = $this.closest('div.input-group'),
             $input = $group.find('input'),
             active_phone_mask = $input.attr('data-phone_input');
 
@@ -50,7 +50,7 @@
 
             $input.attr('data-phone_input', 'false');
 
-            $(this).html('По номеру');
+            $this.html('По номеру');
 
         } else {
 
@@ -58,9 +58,21 @@
 
             $input.attr('data-phone_input', 'true');
 
-            $(this).html('С помощью Email');
+            $this.html('С помощью Email');
 
         }
+
+    }
+
+    $(document).on('click', '[data-use-email]', function() {
+
+        changeInputMask($(this));
+
+    });
+
+    $('#use-email').click(function() {
+
+        changeInputMask($(this));
 
     });
 </script>

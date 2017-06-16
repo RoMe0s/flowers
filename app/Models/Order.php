@@ -33,7 +33,8 @@ class Order extends Model
         'night',
         'anonymously',
         'address_string',
-        'distance'
+        'distance',
+        'static_discount'
     ];
 
     protected $casts = [
@@ -66,6 +67,8 @@ class Order extends Model
         }
 
         $total_price += $this->delivery_price;
+
+        $total_price -= $this->static_discount;
 
         return $total_price;
 
@@ -207,7 +210,8 @@ class Order extends Model
                 'delivery_price' => isset($data['delivery_price']) ? $data['delivery_price'] : 0,
                 'anonymously' => isset($data['anonymously']) ? $data['anonymously'] : false,
                 'distance' => isset($data['distance']) ? $data['distance'] : 0,
-                'specify' => isset($data['specify']) ? $data['specify'] : false
+                'specify' => isset($data['specify']) ? $data['specify'] : false,
+                'static_discount' => isset($data['static_discount']) ? $data['static_discount'] : 0
             ]);
 
             static::_proccessItemsFromCart($order);

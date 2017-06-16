@@ -6,12 +6,12 @@
     <br />
     {!! Form::hidden('prepay', null, ['required']) !!}
     <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
-        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="hide" data-parent=".tab-content" data-value="50" data-username="{!! !empty($user->name) ? $user->name : "Пользователь" !!}" data-userphone="{!! $userphone !!}">
+        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="hide" data-parent="#first" data-value="50" data-username="{!! !empty($user->name) ? $user->name : "Пользователь" !!}" data-userphone="{!! $userphone !!}">
             Для себя
         </button>
     </div>
     <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
-        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="show" data-parent=".tab-content" data-value="100">
+        <button type="button" class="btn btn-default btn-sm form-control" data-input="prepay" data-block="#is-present" data-block-action="show" data-parent="#first" data-value="100">
             В подарок
         </button>
     </div>

@@ -117,6 +117,11 @@ return array (
     'order.write',
     'order.paystatus',
 
+    'banner.create',
+    'banner.read',
+    'banner.write',
+    'banner.delete',
+
     'set.create',
     'set.read',
     'set.write',

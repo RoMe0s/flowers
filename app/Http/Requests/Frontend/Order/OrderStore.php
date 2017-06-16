@@ -59,7 +59,8 @@ class OrderStore extends FormRequest
             'night'     => 'boolean',
             'distance'  => 'integer',
             'anonymously' => 'boolean',
-            'neighbourhood' => 'boolean'
+            'neighbourhood' => 'boolean',
+            'static_discount' => 'integer'
         ];
 
         return array_merge($rules, $address_rules);

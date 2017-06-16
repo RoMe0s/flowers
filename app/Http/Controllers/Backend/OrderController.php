@@ -86,7 +86,8 @@ class OrderController extends BackendController
                 'prepay',
                 'date',
                 'created_at',
-                'status'
+                'status',
+                'static_discount'
             );
 
             if($request->get('status') !== null && $request->get('status') !== "") {
@@ -134,6 +135,7 @@ class OrderController extends BackendController
                     }
                 )
                 ->setIndexColumn('id')
+                ->removeColumn('static_discount')
                 ->make();
         }
 

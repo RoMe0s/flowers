@@ -19,7 +19,19 @@ $('button[data-input]').click(function (e) {
     }
 
     $parent.find('button[data-input]').each(function() {
+
+        if($(this)[0].hasAttribute('data-has-related')) {
+
+            var $related = $('[data-related="' + $(this).attr('data-has-related') + '"]');
+
+            if($related.is(":checked")) {
     
+                $(this).trigger("has-related-change");
+
+            }
+
+        }
+        
         $(this).removeClass('selected');
 
         var tmp_parent_selector = $(this).attr('data-parent'),
@@ -34,6 +46,12 @@ $('button[data-input]').click(function (e) {
     });
 
     if(input_name.length) {
+
+        if($(this)[0].hasAttribute('data-has-related')) {
+        
+            $(this).trigger('has-related-change');
+        
+        }
 
         $(this).addClass('selected');
 
@@ -152,7 +170,7 @@ $('button[data-input]').click(function (e) {
 
 $("[data-toggle='popover']").popover();
 
-$("div#order-make").on("change", "[data-price]", function(e) {
+$("div#order-make").on("change", "[data-price]", function(e, custom) {
 
     var used = parseInt($(this).attr("data-used")),
         value = $(this).is(":checked"),
@@ -161,6 +179,26 @@ $("div#order-make").on("change", "[data-price]", function(e) {
         price = parseInt($prices.html().replace(/\D/g, "")),
         $parent = $(this).closest(".parent-for-inputs"),
         $this = $(this);
+
+    if($(this)[0].hasAttribute('data-related') === false && custom !== true) {
+        
+        var $data_price_related = $(document).find('[data-price][data-related]');
+
+        if($data_price_related.is(":checked")) {
+
+            var $related_field = $('[data-has-related="' + $data_price_related.attr('data-related') + '"]'),
+                $related_field_input = $("div#order-make").find('[data-name="' + $related_field.attr('data-input') + '"]'),
+                data_price_related_value = parseInt($data_price_related.attr('data-price'));
+
+            $related_field.removeClass('selected');
+            $related_field_input.val('').change();
+            $data_price_related.prop("checked", false).attr("data-used", "0");
+
+            price = price - data_price_related_value;
+
+        }
+
+    }
 
     if($parent.length) {
     
@@ -481,5 +519,31 @@ $("div#order-make").on("click", "[data-username], [data-userphone]", function(e)
     $name_input.val(name);
 
     $phone_input.val(phone);
+
+});
+
+$("div#order-make [data-has-related]").on("click, has-related-change", function() {
+
+    var related_selector = $(this).attr('data-has-related'),
+        $related = $(document).find('[data-related="' + related_selector + '"]'),
+        is_active = $(this).hasClass("selected");
+
+   if($related.is(":checkbox")) {
+
+        if($related.is(":checked") && is_active) {
+
+            $related.prop("checked", false).change();
+
+        } else if(!$related.is(":checked") && !is_active) {
+
+            $related.prop("checked", true).change();
+
+            $('[data-name="accuracy"], [data-name="night"]').prop('checked', false).trigger('change', true);
+
+            $('select[name="time"]').val(1).change();
+
+        }
+
+    }
 
 });

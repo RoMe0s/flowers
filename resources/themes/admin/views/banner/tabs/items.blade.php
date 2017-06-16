@@ -3,13 +3,10 @@
         <tbody>
         <tr>
             <th>{!! trans('labels.name') !!}<span class="required">*</span></th>
-            <th>
-                @lang('labels.image')<span class="required">*</span>
-                <br />
-                /Буллет
-            </th>
-            <th>{!! trans('labels.status') !!}<span class="required">*</span></th>
-            <th>{!! trans('labels.position') !!}<span class="required">*</span></th>
+            <th>@lang('labels.image')<span class="required">*</span></th>
+            <th>Буллет</th>
+            <th>{!! trans('labels.status') !!}<span class="required">*</span>&nbsp;&nbsp;/<br/>
+            {!! trans('labels.position') !!}<span class="required">*</span></th>
             <th>{!! trans('labels.delete') !!}</th>
         </tr>
 
@@ -40,6 +37,8 @@
                         <div class="form-group required @if ($errors->has('items.old.' .$item->id. '.image')) has-error @endif">
                             {!! Form::imageInput('items[old][' .$item->id. '][image]', $item->image, ['required' => true]) !!}
                         </div>
+                    </td>
+                    <td>
                         <div class="form-group @if ($errors->has('items.old.' .$item->id. '.bullet')) has-error @endif">
                             {!! Form::imageInput('items[old][' .$item->id. '][bullet]', $item->bullet) !!}
                         </div>
@@ -48,8 +47,6 @@
                         <div class="form-group required @if ($errors->has('items.old.' .$item->id. '.status')) has-error @endif">
                             {!! Form::select('items[old][' .$item->id. '][status]', ['1' => trans('labels.status_on'), '0' => trans('labels.status_off')], $item->status, ['id' => 'items.old.' .$item->id. '.position', 'class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'required' => true]) !!}
                         </div>
-                    </td>
-                    <td>
                         <div class="form-group required @if ($errors->has('items.old.' .$item->id. '.position')) has-error @endif">
                             {!! Form::text('items[old][' .$item->id. '][position]', $item->position, ['id' => 'items.old.' .$item->id. '.position', 'class' => 'form-control input-sm']) !!}
                         </div>
@@ -89,6 +86,8 @@
                             <div class="form-group required @if ($errors->has('items.new.' .$item_key. '.image')) has-error @endif">
                                 {!! Form::imageInput('items[new][' .$item_key. '][image]', $item['image'], ['required']) !!}
                             </div>
+                        </td>
+                        <td>
                             <div class="form-group @if ($errors->has('items.new.' .$item_key. '.bullet')) has-error @endif">
                                 {!! Form::imageInput('items[new][' .$item_key. '][bullet]', $item['bullet']) !!}
                             </div>
@@ -97,8 +96,6 @@
                             <div class="form-group required @if ($errors->has('items.new.' .$item_key. '.status')) has-error @endif">
                                 {!! Form::select('items[new][' .$item_key. '][status]', ['1' => trans('labels.status_on'), '0' => trans('labels.status_off')], $item['status'], ['id' => 'items.new.' .$item_key. '.status', 'class' => 'form-control select2 input-sm', 'aria-hidden' => 'true', 'required' => true]) !!}
                             </div>
-                        </td>
-                        <td>
                             <div class="form-group required @if ($errors->has('items.new.' .$item_key. '.position')) has-error @endif">
                                 {!! Form::text('items[new][' .$item_key. '][position]', $item['position'], ['id' => 'items.new.' .$item_key. '.position', 'class' => 'form-control input-sm']) !!}
                             </div>
@@ -137,9 +134,9 @@
                                 <input data-name="items[new][replaseme][{!! $locale !!}][name]" placeholder="@lang('labels.name')" data-required="required" class="form-control input-sm">
                             </div>
 
-                            <div>
-                                <textarea data-name="items[new][replaseme][{!! $locale !!}][content]" placeholder="@lang('labels.content')" class="form-control input-sm"></textarea>
-                            </div>
+                            {{--<div>--}}
+                                {{--<textarea data-name="items[new][replaseme][{!! $locale !!}][content]" placeholder="@lang('labels.content')" class="form-control input-sm"></textarea>--}}
+                            {{--</div>--}}
                         </div>
                     @endforeach
                 </div>
@@ -148,6 +145,8 @@
                 <div class="form-group required">
                     {!! Form::imageInput(null, null, ['data-required' => 'required', 'data-name' => 'items[new][replaseme][image]']) !!}
                 </div>
+            </td>
+            <td>
                 <div class="form-group">
                     {!! Form::imageInput(null, null, ['data-name' => 'items[new][replaseme][bullet]']) !!}
                 </div>
@@ -159,8 +158,6 @@
                         <option value="0">@lang('labels.status_off')</option>
                     </select>
                 </div>
-            </td>
-            <td>
                 <div class="form-group required">
                     <input data-name="items[new][replaseme][position]" value="0" data-required="required" class="form-control input-sm">
                 </div>

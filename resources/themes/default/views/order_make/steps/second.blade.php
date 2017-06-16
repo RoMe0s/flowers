@@ -12,6 +12,7 @@
         <br/>
         {!! Form::hidden('address_string', null, ['id' => 'address_field', 'required', 'data-name' => 'address_string']) !!}
         {!! Form::hidden('specify', null, ['id' => 'specify_field', 'required', 'data-name' => 'specify']) !!}
+        {!! Form::input("checkbox", "static_discount", variable('order-delivery-discount', 400) , ['data-price' => variable('order-delivery-discount', 400) * -1, 'data-used' => '0', 'style' => 'display: none;', 'data-related' => 'self-catering']) !!}
         <div class="form-group">
                     <span class="pull-right custom-popover">
                         <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
@@ -24,9 +25,14 @@
             </button>
         </div>
         <div class="form-group">
-            <button type="button" class="btn btn-default btn-sm form-control" data-input="address_string"
+            <button type="button" class="btn btn-default btn-sm form-control"
+                    data-input="address_string"
                     data-block="#is-courier-delivery"
-                    data-block-action="hide" data-parent=".half" data-value="Самовывоз">
+                    data-block-action="hide"
+                    data-parent=".half"
+                    data-value="Самовывоз"
+                    data-has-related="self-catering"
+            >
                 Самовывоз
             </button>
             <p class="col-xs-12 text-center our-address">

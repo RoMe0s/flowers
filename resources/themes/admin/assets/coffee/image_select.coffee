@@ -17,7 +17,7 @@ $(document).ready () ->
             getfile:
               oncomplete: 'destroy'
           getFileCallback: (file) ->
-            $(button.data('target')).val('/' + file.path).trigger("change")
+            button.closest('div.input-group').find(button.data('target')).val('/' + file.path).trigger("change")
             $('button.ui-dialog-titlebar-close').click()
             return
         ).elfinder 'instance'
@@ -28,7 +28,11 @@ $(document).ready () ->
 
   $(document).on 'change', 'input[data-related-image]', () ->
     $this = $(this)
-    $image = $($this.data('related-image'))
+    image_selector = $this.attr('data-related-image')
+    if image_selector.length > 1
+      $image = $(image_selector)
+    else
+      $image = $this.closest('div.form-group').find('img[data-default]')
 
     _src = $(this).val()
 

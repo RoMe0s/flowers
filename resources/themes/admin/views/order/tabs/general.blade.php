@@ -29,6 +29,16 @@
     </div>
 </div>
 
+<div class="form-group required @if ($errors->has('static_discount')) has-error @endif">
+    {!! Form::label('static_discount', "Статическая скидка", ['class' => 'control-label col-xs-12 col-sm-2']) !!}
+
+    <div class="col-xs-12 col-sm-9">
+        {!! Form::text('static_discount', $model->static_discount ?: 0, ['placeholder' => "Статическая скидка", 'class' => 'form-control input-sm', 'required' => true]) !!}
+
+        {!! $errors->first('static_discount', '<p class="help-block error">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group @if ($errors->has('date')) has-error @endif">
     {!! Form::label('date', trans('labels.date'), ['class' => 'control-label col-xs-12 col-sm-2']) !!}
 

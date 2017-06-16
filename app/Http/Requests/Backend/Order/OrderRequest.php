@@ -60,7 +60,8 @@ class OrderRequest extends FormRequest
             'date' => 'date',
             'status' => 'required',
             'password' => 'required_without:user_id',
-            'card_text' => 'max:150'
+            'card_text' => 'max:150',
+            'static_discount' => 'integer'
         ];
 
         if(empty($address_string)) {

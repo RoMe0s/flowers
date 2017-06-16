@@ -203,7 +203,13 @@
                                 {!! $model->delivery_price !!} руб.
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                Итого
+                                Статическая скидка("Самовывоз")
+                            </div>
+                            <div class="col-sm-12 col-md-6 m-marg">
+                                {!! $model->static_discount !!} руб.
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                Итого(все скидки учтены)
                             </div>
                             <div class="col-sm-12 col-md-6 m-marg">
                                 {!! $model->getTotal() !!} руб.
