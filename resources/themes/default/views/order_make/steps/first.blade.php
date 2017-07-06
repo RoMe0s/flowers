@@ -18,11 +18,11 @@
     <div id="is-present">
         <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
             <label>Телефон получателя</label>
-            {!! Form::input('tel', 'recipient_phone', null, array('placeholder' => 'Телефон получателя', 'class' => 'form-control input-sm', 'required')) !!}
+            {!! Form::input('tel', 'recipient_phone', null, array('placeholder' => 'Телефон получателя', 'class' => 'form-control input-sm', 'data-required', 'data-name' => 'recipient_phone')) !!}
         </div>
         <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
             <label>Имя получателя</label>
-            {!! Form::text('recipient_name', null, array('placeholder' => 'Имя получателя', 'class' => 'form-control input-sm', 'required')) !!}
+            {!! Form::text('recipient_name', null, array('placeholder' => 'Имя получателя', 'class' => 'form-control input-sm', 'data-required', 'data-name' => 'recipient_name')) !!}
         </div>
         <div class="checkbox col-xs-12 col-sm-6 col-sm-offset-3">
             <span class="pull-right custom-popover">

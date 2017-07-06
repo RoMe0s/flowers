@@ -54,7 +54,7 @@ class Order extends Model
     }
 
     public function items() {
-        return $this->hasMany(OrderItem::class)->with('itemable', 'itemable.translations');
+        return $this->hasMany(OrderItem::class)->with('itemable');
     }
 
     public function getTotal() {
